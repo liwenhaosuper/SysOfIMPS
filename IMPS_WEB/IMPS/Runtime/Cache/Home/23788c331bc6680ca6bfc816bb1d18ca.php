@@ -1,0 +1,237 @@
+<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>活动详情</title>
+    <link href="/IMPS/Tpl/default/common/css/frame.css" rel="stylesheet" type="text/css" />
+    <link href="/IMPS/Tpl/default/common/css/home-main.css" rel="stylesheet" type="text/css" />
+    <link href="/IMPS/Tpl/default/common/css/event.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="/IMPS/Tpl/default/common/js/jquery.js"></script>
+    <script type="text/javascript" src="/IMPS/Tpl/default/common/js/common.js"></script>
+    <script type="text/javascript" src="/IMPS/Tpl/default/common/js/jquery.form.js"></script>
+    <script type="text/javascript" src="/IMPS/Tpl/default/common/js/tbox/box.js"></script>
+    <script type="text/javascript" src="/IMPS/Tpl/default/common/js/rcalendar.js"></script>
+    <script type="text/javascript" src="/IMPS/Tpl/default/common/js/UbbEditor.js"></script>
+    <link rel="stylesheet" type="text/css" href="/IMPS/Tpl/default/common/css/jquery-ui.css" />
+    <script type="text/javascript" src="/IMPS/Tpl/default/common/js/jquery-ui-1.8.13.custom.min.js"></script>
+    <script type="text/javascript" src="/IMPS/Tpl/default/common/js/KindEditor/kindeditor.js"></script>
+
+    <script type="text/javascript">
+      $(document).ready(function() {
+          mouse_hover(".tab-menu ul li");
+      });
+      var editor;
+      function checkActivityForm(){
+	   $('#nameCheck').html("").show();$('#areaCheck').html("").show();$('#typeCheck').html("").show();
+	   $('#timeCheck').html("").show();$('#signinCheck').html("").show();$('#contantCheck').html("").show();
+	   $('#sponsorCheck').html("").show();$('#contactCheck').html("").show();
+	   if($('#activityName').val()==""){
+		   $('#nameCheck').html("活动名称不能为空!").show();
+		   return false;
+	   }	   
+	   if($('#activityArea').val()==""){
+		   $('#areaCheck').html("活动城市不能为空!").show();
+		   return false;
+	   }
+	   if($('#activityAddress').val()==""){
+		   $('#addressCheck').html("活动详细地点不能为空!").show();
+		   return false;
+	   }
+	   if($('#activityType').val()==-1){
+		   $('#typeCheck').html("活动分类不能为空!").show();
+		   return false;
+	   }
+	   if($('#sTime').val()==""||$('#eTime').val()==""){
+		   $('#timeCheck').html("活动时间不能为空!").show();
+		   return false;
+	   }
+	   if($('#signTime').val()==""){
+		   $('#signinCheck').html("活动截止报名时间不能为空!").show();
+		   return false;
+	   }
+	   if($('#sTime').val()>=$('#eTime').val()){
+		   $('#timeCheck').html("活动开始时间不能晚于结束时间").show();
+		   return false;
+	   }
+	   if($('#eTime').val()<$('#signTime').val()){
+		   $('#signinCheck').html("活动报名时间不能晚于活动结束时间");
+		   return false;
+	   }
+	   if($('#activityDetail').val()==""){
+		   $('#contentCheck').html("活动内容不能为空!").show();
+		   return false;
+	   }
+	   if($('#activitySponsor').val()==""){
+		   $('#sponsorCheck').html("活动发起方不能为空!").show();
+		   return false;
+	   }
+	   if($('#activityContact').val()==""){
+		   $('#contactCheck').html("活动联系方式不能为空!").show();
+		   return false;
+	   }
+	   return true;
+   }
+          function selectArea(){
+	     $('#areaDialog').dialog({ width: 650});
+	     var typevalue = $("#current").val();
+	     var ajax = {
+                 url: '/IMPS/Admin/Area/area/selected='+typevalue, type: 'GET', dataType: 'html', cache: false, success: function(html) {
+            	   $('#areaDialog').html(html).show();
+                 }
+             };
+          $('#areaDialog').html('正在加载中...').show();
+	  $.ajax(ajax);
+          }
+
+    </script>
+  </head>
+  <body>
+    <div id="home-wrap">
+      <div id="top">
+        <div id="navigation">
+          <div class="menu"><img src="/IMPS/Tpl/default/common/images/common/logo.png" style="padding-right: 20px;"/></div>
+          <div class="menu"><a href="<?php echo U('Home/User/index');?>">首页</a></div>
+          <div class="menu"><a href="#">个人主页</a></div>
+          <div class="menu"><a href="#">好友</a></div>
+          <div class="menu"><a href="<?php echo U('Home/Activity/index');?>">活动</a></div>
+          <div class="menu"><a href="#">相册</a></div>
+          <div class="menu"><a href="#">我的状态</a></div>
+          <div class="menu"><a href="#">留言板</a></div> 
+          <div class="menu" id="search-top">
+            <div><input type="text" autocomplete="off" class="searchtextbox gray" name="textfield" value="搜索好友、活动" /></div>
+            <div class="search_go"><a class="go" href="javascript:;">GO</a></div>
+          <div class="menu" id="logout"><a href="<?php echo U('User/logout');?>">登出</a></div>          </div>
+        </div>
+      </div>
+      <div style="margin: 0 auto; padding-top: 20px;">
+        <table id="home-main">
+          <tr>
+            <td id="frame-left">
+              <div class="content no_bg">
+		<div class="main no_l">
+		  <!-- 画布 begin  -->
+		  <div class="mainbox">
+		    
+		    <div class="mainbox_C">
+		      <div class="tab-menu">
+			<!-- 切换标签 begin  -->
+			<ul>
+			  <li style="float:right;padding-right: 15px;"><a href="<?php echo U('/activity/index');?>">返回活动首页</a></li>
+			</ul>
+		      </div>
+		      <!-- 切换标签 end  -->
+		      <div class="groupBox">
+			
+			<!-- 活动列表 begin  -->
+			<div class="boxL mLR15">
+			  <div id="creatmain" class="creatmain" >
+			    <div class="content">
+			      <div class="title">发起活动</div>
+			      <form action="<?php echo U('/activity/doAdd');?>" method="post" onsubmit="return checkActivityForm()" enctype="multipart/form-data">
+				<table id="actvform">
+				  <tr>
+				    <td class="tL" >活动名称：</td>
+				    <td class="tR" ><input type="text" class="medium bLeftRequire" id="actvName" name="actvName"/></td>
+				    <td class="result" id="nameCheck" style="color:#F63;"></td>
+				  </tr>
+				  <tr>
+				    <td class="tL" >活动城市：</td>
+				    <td class="tR" ><input type="text" class="medium bLeftRequire" id="activityArea" name="activityArea" readonly/>
+				      <input type="button" class="submit hMargin" id="selectarea" name="selectarea" value="选择城市" onclick="selectArea()"/>
+				      <input type="hidden" id="current" name="current" />
+				      <div id="areaDialog" title="选择地区" style="width:auto;"></div>
+				    </td>
+				    <td class="result" id="areaCheck" style="color:#F63;"></td>
+				  </tr>
+				  <tr>
+				    <td class="tL" >活动详细地点：</td>
+				    <td class="tR" ><input type="text" class="large bLeftRequire" id="activityAddress" name = "activityAddress" />
+				      <input type="button" class="submit hMargin" value="在地图上标记地点" />
+				    </td>
+				    <td class="result" id="addressCheck" style="color:#F63;"></td>
+				  </tr>
+				  <tr>
+				    <td class="tL">活动分类：</td>
+				    <td class="tR"><SELECT class="large bLeft"  name="activityType" id="activityType">
+					<option selected value="-1">请选择分类</option>
+					<?php if(is_array($type)): $i = 0; $__LIST__ = $type;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$item): ++$i;$mod = ($i % 2 )?><option value="<?php echo ($item["id"]); ?>"><?php echo ($item["name"]); ?></option><?php endforeach; endif; else: echo "" ;endif; ?>
+				      </SELECT>
+				    </td>
+				    <td class="result" id="typeCheck" style="color:#F63;"></td>
+				  </tr>
+				  <tr>
+				    <td class="tL">活动时间：</td>
+				    <td class="tR">
+				      <input name="sTime" type="text" class="text" id="sTime" onfocus="rcalendar(this,'full');" readonly />
+				      -
+				      <input name="eTime" type="text" class="text" id="eTime" onfocus="rcalendar(this,'full');" readonly />
+				    </td>
+				    <td class="result" id="timeCheck" style="color:#F63;"></td>
+				  </tr>
+				  <tr>
+				    <td class="tL">截止报名时间：</td>
+				    <td class="tR">
+				      <input name="signTime" type="text" class="text" id="signTime" onfocus="rcalendar(this,'full');" readonly />
+				    </td>
+				    <td class="result" id="signinCheck" style="color:#F63;"></td>
+				  </tr>
+				  <tr>
+				    <td class="tL">活动介绍：</td>
+				    <td class="tR">
+				      <textarea id="actvdetail" style="width:350px;height:150px;margin: 2px 2px 2px 2px;" name="activityDetail" id="activityDetail"></textarea>
+				    </td>
+				    <td class="result" id="contentCheck" style="color:#F63;"></td>             
+				  </tr>
+				  <tr>
+				    <td class="tL">活动发起单位：</td>
+				    <td class="tR" >
+				      <input type="text" class="large bLeftRequire" id="activitySponsor" name = "activitySponsor" />
+				    </td>
+				    <td class="result" id="sponsorCheck" style="color:#F63;"></td>
+				  </tr>
+				  <tr>
+				    <td class="tL">联系方式：</td>
+				    <td class="tR" >
+				      <input type="text" class="large bLeft" id="activityContact" name = "activityContact" />
+				    </td>
+				    <td class="result" id="contactCheck" style="color:#F63;"></td>
+				  </tr>
+				  <tr>
+				    <td class="tL" >活动海报：</td>
+				    <td class="tR">
+				      <input type="file"  name="cover" />
+				    </td>
+				    <td class="tR" id="file" name="file" style="color:#063;"></td>
+				  </tr>
+				  <tr>
+				    <td class="tL">
+				    </td>
+				    <td class="tR">
+				      <input type="submit" class="submit hMargin" value="发起活动" />
+				    </td>
+				  </tr>
+				</table>
+			      </form>
+			    </div>
+			  </div>
+			</div>
+			<!-- 活动列表 end  -->
+			<div class="c"></div>
+		      </div>
+		    </div>
+		    <div class="c"></div>
+		  </div>
+		</div>
+	      </div>
+            </td>
+          </tr>
+          <tr>
+            <td id="frame-right">
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    
+  </body>
+</html>

@@ -1,0 +1,46 @@
+/* for admin login page */
+
+body {
+	background: transparent url('../images/Home/background/top_bg.png') top center repeat-y;
+    background-color: #77d5fb;
+}
+
+#admin-login {
+    width: 320px;
+    margin: 0 auto;
+    padding-top: 100px;
+}
+
+#admin-login h1 a {
+     background: url("/IMPS/Tpl/default/common/images/Admin/admin-login.png");
+}
+
+#login-form {
+    background: white;
+    border: 1px solid #E5E5E5;
+    -moz-box-shadow: rgba(200,200,200,0.7) 0 4px 10px -1px;
+    -webkit-box-shadow: rgba(200,200,200,0.7) 0 4px 10px -1px;
+    box-shadow: rgba(200,200,200,0.7) 0 4px 10px -1px;
+    padding-top: 25px;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-bottom: 30px;
+}
+
+#login-form .input {
+    border: 1px solid #E5E5E5;
+    font-size: 24px;
+    padding: 3px 3px 3px 3px;
+    width: 100%;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    -moz-box-shadow: inset 1px 1px 2px rgba(200,200,200,0.2);
+    -webkit-box-shadow: inset 1px 1px 2px rgba(200,200,200,0.2);
+    box-shadow: inset 1px 1px 2px rgba(200,200,200,0.2);
+}
+
+input:focus {
+    outline-color: #777;
+    /* outline-style: none; */
+    outline-size: 1px;
+}

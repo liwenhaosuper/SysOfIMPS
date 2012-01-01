@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<form action="{:U('Home/Public/doRegister')}" method="post">
+  
+ <table>
+    <tr>
+       <td>
+         <input type="text" id="username" name="username" title="用户名" value="用户名" />
+       </td>
+    </tr>
+    <tr>
+      <td>
+         <input type="password" id="password" name="password" title="密码" value="密码"/>
+      </td>
+    </tr>
+    <tr>
+      <td>
+         <input type="text" id="email" name="email" title="邮箱" value="邮箱" />
+      </td>
+    </tr>
+        <tr>
+      <td>
+         <label>性别</label>
+         <input type="radio" id="gender" name="gender" value="0" title="男">男</input>
+         <input type="radio" id="gender" name="gender" value="1" title="女">女</input>
+      </td>
+    </tr>
+    <tr>
+       <td>
+         <input type="submit" id="submit" title="注册" value="注册"/>
+       </td>
+    </tr>
+   </table>
+ </form>
+</body>
+</html>

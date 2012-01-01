@@ -1,0 +1,124 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <link type="text/css" rel="stylesheet" href="/IMPS/Tpl/default/common/css/imps-admin.css" />
+    <script type="text/javascript" src="/IMPS/Tpl/default/common/js/jquery-1.5.2.min.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function () {
+          $(".op-item, #user-list li, #actv-list li, .modify, .submit").mouseover(function () 
+        		  { $(this).addClass("over"); }).mouseout(function () { $(this).removeClass("over"); }).mousedown(function () {});
+          $(".op-item").click(function () {
+              $(".op-item.active").removeClass("active");
+              $(this).addClass("active");
+          });
+          $(".modify").click(function () {
+              $(this).parent("div").css("display", "none").siblings("form").css("display", "block");
+              // TODO: use loop
+              $(this).parent("div").siblings("form").children(".userid").val($(this).siblings(".userid").text());
+              $(this).parent("div").siblings("form").children(".username").val($(this).siblings(".username").text());
+              $(this).parent("div").siblings("form").children(".useremail").val($(this).siblings(".useremail").text());
+          });
+          $(".submit").click(function () {
+              function usermod() {
+                  $(this).parent("form").css("display", "none").siblings("div").css("display", "block");
+              }
+              var url = "some.json";
+              var data =
+              {
+                  "userid": $(this).siblings(".userid").val(),
+                  "username": $(this).siblings(".username").val(),
+                  "useremail": $(this).siblings(".useremail").val()
+              };
+              $.ajax({
+                  type: "post",
+                  url: url,
+                  data: data,
+                  dataType: "json",
+                  success: usermod
+              });
+          });
+      });
+    </script>
+  </head>
+  <body>
+    <div id="main">
+      <div id="admin-header">
+        <h1>欢迎回来, admin</h1>
+      </div>
+      <table id="main-frame">
+        <tr>
+          <td style="width: 180px;">
+            <div id="admin-menu">
+              <ul id="op-menu">
+                <li><div class="op-item"><span>用户管理</span><div></li>
+                <li><div class="op-item"><span>活动管理</span></div></li>
+              </ul>
+            </div>
+          </td>
+          <td style="width: 600px;" align="center">
+            <div id="admin-op">
+              <div id="admin-op-header">Administrator</div>
+              <div id="op-main">
+                <div id="user-mgnt">
+		  <h3>User Management</h3>
+                  <ul id="user-list">
+                  <div class="userinfo">
+			 <span class="userid">用户ID</span>
+			<span class="username">用户名</span>
+			<span class="useremail">邮箱</span>
+			<span class="gender">性别</span>
+			<span class="password">密码</span>
+		      </div>
+              <volist name="data['users']" id="userlist">
+               <li>
+		      <div class="info">
+			<span class="userid">{$userlist.userid}</span>
+			<span class="username">{$userlist.username}</span>
+			<span class="useremail">{$userlist.email}</span>
+			<span class="gender">{$usrlist.gender=='M'?'男':'女'}</span>
+			<span class="password">{$userlist.password}</span>
+			<span class="modify">Modify</span>
+		      </div>
+		      <form class="commit-mod" method="post" style="display: none;">
+			<span class="userid">{$userlist.userid}</span>
+			<span class="username">{$userlist.username}</span>
+			<span class="useremail">{$userlist.email}</span>
+			<span class="gender">{$usrlist.gender=='M'?'男':'女'}</span>
+			<span class="password">{$userlist.password}</span>
+			<span class="submit">保存</span>
+		      </form>
+		    </li>
+		    </volist >
+                  </ul>
+                </div>
+                <div id="actv-mgnt">
+		  <h3>Activity management</h3>
+                  <ul id="actv-list">
+                    <li>
+		      <span class="actvid">1</span>
+		      <span class="actvname">asdfgh</span>
+		      <span class="actvstime">2011-12-1</span>
+		      <span class="actvetime">2011-12-3</span>
+		    </li>
+                    <li>
+		      <span class="actvid">1</span>
+		      <span class="actvname">asdfgh</span>
+		      <span class="actvstime">2011-12-1</span>
+		      <span class="actvetime">2011-12-3</span>
+		    </li>
+                    <li>
+		      <span class="actvid">1</span>
+		      <span class="actvname">asdfgh</span>
+		      <span class="actvstime">2011-12-1</span>
+		      <span class="actvetime">2011-12-3</span>
+		    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </body>
+</html>

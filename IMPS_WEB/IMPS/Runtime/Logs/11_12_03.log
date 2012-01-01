@@ -1,0 +1,2 @@
+[ 2011-12-03T22:45:50+08:00 ] SQL: SHOW COLUMNS FROM `user` [ RunTime:0.697947s ]
+[ 2011-12-03T22:45:50+08:00 ] SQL: SELECT * FROM `user` WHERE ( `username` = 'halou' ) LIMIT 1  [ RunTime:0.067473s ]

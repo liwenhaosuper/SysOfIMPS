@@ -1,0 +1,39 @@
+<include file="Common:header" />
+<div id="container" class="container" >
+<ul class="content_box">
+   <php>if(!empty($item)){</php>
+     <li class="actv-item" id="activity_{$item.id}">
+       <div class="actv-avatar"><a href="#"><img src="{$item.coverPath}" /></a></div>
+       <div class="actv-detail">
+         <div class="actv-title"><a href="#">{$item.name}</a></div>
+         <div><span class="ele">开始时间：</span><span>{$item.sTime}</span></div>
+         <div><span class="ele">结束时间：</span><span>{$item.eTime}</span></div>
+         <div><span class="ele">活动分类：</span><span>{$item.type}</span></div>
+         <div><span class="ele">截止报名时间：</span><span>{$item.signTime}</span></div>
+         <div><span class="ele">活动地点：</span><span>{$item.area} {$item.address}</span></div>
+         <div><span class="ele">发起方：</span><span>{$item.sponsor}</span></div>
+         <div><span class="ele">{$item.attentionCount}人参加</span></div>
+         <div><span class="ele">活动详情:</span></div>
+         <div><span class="ele">{$item.explaination}</span></div>
+         </div>
+         <div class="state">
+         <php>if(date('Y-m-d H:i:s')>$item.eTime){</php>
+              <p>活动已结束</p>
+              <p><a href="{:U('__URL__/activityDetail/activityId/'.$item.id)}">查看活动情况</a></p>
+         <php>}else if(date('Y-m-d H:i:s')>$item.sTime){</php>
+              <p>活动正在进行</p>
+              <p><a href="{:U('__URL__/activityDetail/activityId/'.$item.id)}">查看活动情况</a></p>
+         <php>}else if(date('Y-m-d H:i:s')<$item.signTime){</php>
+         	  <p>活动正接受报名</p>
+         	  <p><a href="{:U('__URL__/activityDetail/activityId/'.$item.id)}">我也参加</a></p>
+         <php>}else{</php>
+              <p>活动尚未开放</p>
+              <p><a href="{:U('__URL__/activityDetail/activityId/'.$item.id)}">查看活动情况</a></p>
+         <php>}</php>
+       </div>
+     </li>
+     <php>}else{</php>
+     <li><div class="detail">{$data}</div></li>
+     <php>}</php>
+ </ul>
+</div>

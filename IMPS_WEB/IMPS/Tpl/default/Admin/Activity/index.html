@@ -1,0 +1,35 @@
+﻿<include file="Common:header" />
+<div id="container" class="container" >
+<ul class="content_box">
+   <volist name="actvlist" id="vo">
+     <li class="actv-item" id="activity_{$vo['id']}">
+       <div class="actv-detail-simp">
+         <div class="actv-title-simp"><a href="{:U('/activity/activityDetail',array('activityId'=>$vo['id']))}">{$vo['name']}</a></div>
+       <div class="actv-avatar-simp"><a href="{:U('/activity/activityDetail',array('activityId'=>$vo['id']))}"><img src="{$vo['coverPath']}" /></a></div>
+<!--     <div><span class="ele">开始时间：</span><span>{$vo['sTime']}</span></div>
+         <div><span class="ele">结束时间：</span><span>{$vo['eTime']}</span></div>
+         <div><span class="ele">活动分类：</span><span>{$vo['type']}</span></div>
+         <div><span class="ele">截止报名时间：</span><span>{$vo['signTime']}</span></div>
+         <div><span class="ele">活动地点：</span><span>{$vo['area']} {$vo['address']}</span></div>
+         <div><span class="ele">发起方：</span><span>{$vo['sponsor']}</span></div> -->
+         <div><span class="ele">{$vo['attentionCount']}人参加</span></div>
+         </div>
+         <div class="state">
+         <php>if(date('Y-m-d H:i:s')>$vo['eTime']){</php>
+              <div>活动已结束</div>
+              <!-- <p><a href="{:U('/activity/activityDetail',array('activityId'=>$vo['id']))}">查看活动情况</a></p> -->
+         <php>}else if(date('Y-m-d H:i:s')>$vo['sTime']){</php>
+              <p>活动正在进行</p>
+              <p><a href="{:U('/activity/activityDetail',array('activityId'=>$vo['id']))}">查看活动情况</a></p>
+         <php>}else if(date('Y-m-d H:i:s')<$vo['signTime']){</php>
+         	  <p>活动正接受报名</p>
+         	  <p><a href="{:U('/activity/activityDetail',array('activityId'=>$vo['id']))}">我也参加</a></p>
+         <php>}else{</php>
+              <div>活动尚未开放</div>
+              <!-- <p><a href="{:U('/activity/activityDetail',array('activityId'=>$vo['id']))}">查看活动情况</a></p> -->
+         <php>}</php>
+       </div>
+     </li>
+   </volist>
+ </ul>
+</div>
