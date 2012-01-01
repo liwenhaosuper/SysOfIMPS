@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+      activitiesage="com.imps"
+      android:versionCode="1"
+      android:versionName="1.0" package="com.imps">
+    <application android:icon="@drawable/icon" android:label="@string/app_name">
+        <activity android:name=".activities.Login"
+                  android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <service android:name=".handler.IMService"></service>
+        <activity android:name=".activities.Search"></activity>
+        <activity android:name=".activities.Point" android:label="@string/app_point"></activity>
+        <activity android:name=".activities.Poi_edit" android:label="@string/app_edit"></activity>
+        <activity android:name=".activities.Poi_add" android:label="@string/app_add"></activity>
+        <activity android:name=".activities.Other"></activity>
+        <activity android:name=".activities.My_Map" ></activity>
+        <activity android:name=".activities.FriendTab" ></activity>
+        <activity android:name=".activities.ChatView"></activity>
+        <activity android:name =".activities.CurrentSessions"></activity>
+        <activity android:name=".activities.SystemMsg"></activity>
+        <activity android:name=".activities.AddFriend"></activity>
+        <activity android:name=".activities.MyTab"></activity>
+        <activity android:name=".activities.Configue"></activity>
+        <activity android:name=".activities.RegisterUser"></activity>
+        <activity android:name=".activities.AudioChat"></activity>
+        <activity android:name=".activities.VideoContact"></activity>
+        <activity android:name=".activities.VideoContact2"></activity>
+        <activity android:name=".activities.ControlTracking"></activity>
+        <activity android:name=".activities.Graffiti"></activity>
+        
+        <uses-library android:name="com.google.android.maps" />
+        <activity android:name=".activities.About"
+            android:theme="@android:style/Theme.Dialog">></activity>
+        <activity android:name=".activities.FaceDialog"
+         android:theme="@android:style/Theme.Dialog"></activity>
+    </application>
+    <uses-sdk android:minSdkVersion="3" />
+
+
+<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
+<uses-permission android:name="android.permission.INTERNET"></uses-permission>
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+<uses-permission android:name="android.permission.DELETE_activitiesAGES"></uses-permission>
+<uses-permission android:name="android.permission.RECORD_AUDIO"></uses-permission>
+<uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"></uses-permission>
+<uses-permission android:name="android.permission.CAMERA" />
+
+</manifest> 

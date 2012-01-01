@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout 
+	android:orientation="vertical" 
+	android:paddingLeft="6.0dip" 
+	android:paddingRight="6.0dip" 
+	android:layout_width="fill_parent" 
+	android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView 
+    	android:id="@+id/messagedetail_row_date" 
+    	style="@style/ChattingUISplit" />
+        <FrameLayout 
+        	android:background="@drawable/chatto_bg" 
+        	android:layout_width="wrap_content" 
+        	android:layout_height="wrap_content" 
+        	android:maxWidth="200.0dip">
+         <TextView 
+		      android:autoLink="web" 
+			  style="@style/ChattingUIText"
+		      android:id="@+id/messagedetail_row_name" 
+		      android:layout_width="wrap_content" 
+		      android:layout_height="wrap_content"
+		 />
+            <ImageView 
+            	android:layout_gravity="center" 
+            	android:id="@+id/message_bitmap" 
+            	android:layout_width="wrap_content" 
+            	android:layout_height="wrap_content" />
+        </FrameLayout>
+    </LinearLayout>

@@ -1,0 +1,108 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  Internal Error (classFileParser.cpp:3161), pid=3876, tid=5088
+#  Error: ShouldNotReachHere()
+#
+# JRE version: 6.0_22-b04
+# Java VM: Java HotSpot(TM) Client VM (17.1-b03 mixed mode windows-x86 )
+# If you would like to submit a bug report, please visit:
+#   http://java.sun.com/webapps/bugreport/crash.jsp
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x003a7000):  JavaThread "Unknown thread" [_thread_in_vm, id=5088, stack(0x00340000,0x00390000)]
+
+Stack: [0x00340000,0x00390000],  sp=0x0038f880,  free space=13e0038f890k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [jvm.dll+0x1fd0f0]
+V  [jvm.dll+0xa4679]
+V  [jvm.dll+0x75ec1]
+V  [jvm.dll+0x77564]
+V  [jvm.dll+0x1cbc85]
+V  [jvm.dll+0x1cc3bd]
+V  [jvm.dll+0x1cc775]
+V  [jvm.dll+0x1cc7bb]
+V  [jvm.dll+0x1cc8e2]
+V  [jvm.dll+0x1cc95a]
+V  [jvm.dll+0x1cce0d]
+V  [jvm.dll+0x1cd222]
+V  [jvm.dll+0x1ecf03]
+V  [jvm.dll+0x1ed2dc]
+V  [jvm.dll+0xdb681]
+V  [jvm.dll+0x1e6668]
+V  [jvm.dll+0x1065b0]
+C  [javaw.exe+0x1657]
+C  [javaw.exe+0x1e2c]
+C  [javaw.exe+0x8614]
+C  [kernel32.dll+0x51114]
+C  [ntdll.dll+0x5b429]
+C  [ntdll.dll+0x5b3fc]
+
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+
+Other Threads:
+
+=>0x003a7000 (exited) JavaThread "Unknown thread" [_thread_in_vm, id=5088, stack(0x00340000,0x00390000)]
+
+VM state:not at safepoint (not fully initialized)
+
+VM Mutex/Monitor currently owned by a thread: None
+
+Dynamic libraries:
+0x00400000 - 0x00424000 	F:\Program Files\Java\jre6\bin\javaw.exe
+0x76f50000 - 0x7708d000 	F:\Windows\SYSTEM32\ntdll.dll
+0x76430000 - 0x76504000 	F:\Windows\system32\kernel32.dll
+0x74f40000 - 0x74f8a000 	F:\Windows\system32\KERNELBASE.dll
+0x770c0000 - 0x77160000 	F:\Windows\system32\ADVAPI32.dll
+0x76090000 - 0x7613c000 	F:\Windows\system32\msvcrt.dll
+0x77090000 - 0x770a9000 	F:\Windows\SYSTEM32\sechost.dll
+0x76a00000 - 0x76aa1000 	F:\Windows\system32\RPCRT4.dll
+0x76270000 - 0x76339000 	F:\Windows\system32\USER32.dll
+0x75fd0000 - 0x7601e000 	F:\Windows\system32\GDI32.dll
+0x77160000 - 0x7716a000 	F:\Windows\system32\LPK.dll
+0x76140000 - 0x761dd000 	F:\Windows\system32\USP10.dll
+0x763a0000 - 0x763bf000 	F:\Windows\system32\IMM32.DLL
+0x76510000 - 0x765dc000 	F:\Windows\system32\MSCTF.dll
+0x7c340000 - 0x7c396000 	F:\Program Files\Java\jre6\bin\msvcr71.dll
+0x6d7f0000 - 0x6da97000 	F:\Program Files\Java\jre6\bin\client\jvm.dll
+0x74fc0000 - 0x74ff2000 	F:\Windows\system32\WINMM.dll
+0x6d7a0000 - 0x6d7ac000 	F:\Program Files\Java\jre6\bin\verify.dll
+0x6d320000 - 0x6d33f000 	F:\Program Files\Java\jre6\bin\java.dll
+0x6d280000 - 0x6d288000 	F:\Program Files\Java\jre6\bin\hpi.dll
+0x77170000 - 0x77175000 	F:\Windows\system32\PSAPI.DLL
+0x6d7e0000 - 0x6d7ef000 	F:\Program Files\Java\jre6\bin\zip.dll
+
+VM Arguments:
+jvm_args: -Dfile.encoding=GBK -Xbootclasspath:C:\java\android-sdk-windows\platforms\android-3\android.jar;C:\java\android-sdk-windows\add-ons\addon_google_apis_google_inc_3\libs\maps.jar 
+java_command: main.Client
+Launcher Type: SUN_STANDARD
+
+Environment Variables:
+JAVA_HOME=F:\Program Files\Java\jdk1.6.0_22
+JRE_HOME=F:\Program Files\Java\jre6
+CLASSPATH=F:\Program Files\Java\jdk1.6.0_22\lib;F:\Program Files\Java\jdk1.6.0_22\lib\tools.jar;F:\Program Files\Java\jdk1.6.0_22\lib\dt.jar;F:\Program Files\Java\jre6\lib;F:\Program Files\Java\jre6\lib\rt.jar;F:\Program Files\Java\jdk1.6.0_22\jre\lib;F:\Program Files\Java\jdk1.6.0_22\jre\lib\rt.jar
+PATH=F:/Program Files/Java/jre6/bin/client;F:/Program Files/Java/jre6/bin;F:/Program Files/Java/jre6/lib/i386;F:\Program Files\NVIDIA Corporation\PhysX\Common;F:\Program Files\PC Connectivity Solution\;F:\Windows\system32;F:\Windows;F:\Windows\System32\Wbem;F:\Windows\System32\WindowsPowerShell\v1.0\;F:\Program Files\Windows7Master;f:\Program Files\Microsoft SQL Server\90\Tools\binn\;F:\Program Files\Common Files\Thunder Network\KanKan\Codecs;F:\Program Files\Microsoft SQL Server\100\Tools\Binn\;F:\Program Files\Microsoft SQL Server\100\DTS\Binn\;d:\altera\90sp2\quartus\bin;;F:\Program Files\Microsoft SQL Server\100\Tools\Binn\VSShell\Common7\IDE\;D:\Program Files\TortoiseSVN\bin;D:\Program Files\Sybase\SQL Anywhere 12\bin32;D:\Program Files\Autodesk\Backburner\;C:\strawberry\c\bin;C:\strawberry\perl\bin;F:\Program Files\Java\jdk1.6.0_22\bin;C:\java\android-sdk-windows\tools;F:\Program Files\Java\jre6\bin;F:\Program Files\Java\jdk1.6.0_22\jre\bin;C:\java\android-sdk-windows\platform-tools;D:\python25;D:\Python25\Lib\site-packages\django\bin
+USERNAME=lhb
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=x86 Family 6 Model 23 Stepping 10, GenuineIntel
+
+
+
+---------------  S Y S T E M  ---------------
+
+OS: Windows 7 Build 7600 
+
+CPU:total 2 (2 cores per cpu, 1 threads per core) family 6 model 23 stepping 10, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3
+
+Memory: 4k page, physical 3132008k(1093180k free), swap 6260144k(4030300k free)
+
+vm_info: Java HotSpot(TM) Client VM (17.1-b03) for windows-x86 JRE (1.6.0_22-b04), built on Sep 15 2010 00:56:36 by "java_re" with MS VC++ 7.1 (VS2003)
+
+time: Sat Jul 16 19:07:06 2011
+elapsed time: 0 seconds
+

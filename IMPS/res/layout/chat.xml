@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:id="@+id/msg_layout"
+	android:background="#ffffff">
+    <ListView 
+    android:layout_width="fill_parent" 
+    android:id="@+id/lv_chat" 
+    android:divider="@drawable/line" 
+    android:listSelector="@drawable/chat_select" 
+    android:layout_height="wrap_content" 
+    android:layout_weight="49" 
+    android:transcriptMode="alwaysScroll"
+    android:cacheColorHint="#FFFFFF">
+    </ListView>
+    <LinearLayout android:layout_width="fill_parent" 
+    android:orientation="vertical" 
+    android:background="#585655" 
+    android:gravity="center_horizontal" 
+    android:id="@+id/bottom_bar" 
+    android:layout_weight="1" android:layout_gravity="bottom" android:layout_height="wrap_content">
+    
+     	<LinearLayout android:orientation="vertical" 
+     	android:layout_width="wrap_content" 
+     	android:id="@+id/bottom_1" android:layout_height="fill_parent">
+     		<LinearLayout android:layout_width="wrap_content" android:gravity="center_vertical" android:id="@+id/linearLayout2" android:layout_height="fill_parent">
+     			<LinearLayout android:layout_height="wrap_content" android:layout_width="wrap_content" android:gravity="center_vertical" android:id="@+id/msg_content_bg" android:layout_marginRight="5dip">
+     				<EditText android:layout_height="wrap_content" android:id="@+id/et_text" android:layout_marginLeft="14dip" android:layout_width="176dip" android:singleLine="true"></EditText>
+     			</LinearLayout>
+     			<Button android:layout_height="45dip" android:text="发    送" android:id="@+id/btn_send" android:layout_width="120dip" android:layout_gravity="center_vertical|right"></Button>
+     		</LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+</LinearLayout>

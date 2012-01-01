@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>  
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"  
+android:orientation="vertical" android:layout_width="fill_parent"  
+android:layout_height="fill_parent" android:background="@color/blue">  
+        <LinearLayout android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        > 
+        </LinearLayout>
+           <TextView android:id="@+id/textView02"
+           android:layout_width="fill_parent"
+           android:layout_height="wrap_content"
+           android:text="系统信息"
+           android:textSize="20px" android:textColor="#221101"></TextView>
+   <ListView android:id="@+id/systemMsg" 
+   android:layout_width="fill_parent" 
+   android:layout_height="fill_parent"></ListView>   
+</LinearLayout>

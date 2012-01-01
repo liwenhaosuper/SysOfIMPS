@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:id="@+id/RelativeLayout01"
+  android:layout_height="wrap_content"   >
+    <LinearLayout android:id="@+id/linearLayout1" android:layout_height="wrap_content" android:layout_width="fill_parent" android:orientation="vertical">
+        <TextView android:text="TextView" android:layout_height="wrap_content" 
+        		  android:id="@+id/dateText" android:layout_width="fill_parent" android:paddingBottom="2dip" android:textColor="#221101" android:textSize="16px"></TextView>
+        <TextView android:text="TextView" android:layout_width="fill_parent" 
+        		  android:id="@+id/messageText" android:layout_height="wrap_content" android:paddingBottom="4dip" android:textSize="14px" android:textColor="#221101"></TextView>
+    </LinearLayout>
+</RelativeLayout>

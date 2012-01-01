@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="strInputAccHint">输入帐号</string> 
+    <string name="strAccInputLabel">帐号</string> 
+    <string name="strPswInputLabel">密码</string> 
+    <string name="opt_remember">记住密码</string> 
+    <string name="login">登 录</string> 
+    <string name="opt_hideLogin">隐身登录</string> 
+    <string name="opt_silent">静音登录</string> 
+    <string name="opt_openVibra">开启振动</string> 
+    <string name="opt_acceptGroupMsg">接收群消息</string>
+    <string name="hello">Hello World, My_Map!</string>
+    <string name="app_name">IMPS</string>
+    <string name="app_point">"标记"</string>
+    <string name="app_edit">编辑</string>
+    <string name="app_add">添加</string>
+      <string name="service_gpsdisabled">GPS 已禁用，日志将是无效的。</string>
+    <string name="service_gpsenabled">GPS 已启用， 开始记录。</string>
+    <string name="service_connectiondisabled">网络被禁用，网络位置的日志将是无效的。</string>
+    <string name="service_datadisabled">网络位置被禁用，日志将是无效的。</string>
+    <string name="service_dataenabled">网络位置已启用，开始记录。</string>
+    
+    <string name="Search">搜索</string>
+    <string name="Directions">导航</string>
+    <string name="Point">指向</string>
+    <string name="Location">定位</string>
+    <string name="Layers">视图</string>
+    <string name="Track">轨迹</string>
+    <string name="About">关于</string>
+    <string name="Help">帮助</string>
+    <string name="Exit">注销</string>
+    <string name="search">查询</string>
+    <string name="input_empty">输入为空</string>
+    <string name="search_title">搜索及选择地址：</string>   
+    <string name="menu_edit">处理标记</string>
+    <string name="edit">编辑</string>
+    <string name="remove">删除</string>
+    
+    
+    <string name="poi_title">标题</string>
+    <string name="poiLat">纬度</string>
+    <string name="poiLng">经度</string>
+    <string name="poiDescr">备注</string>
+    <string name="menu_yes">确定</string>
+    <string name="menu_no">取消</string>    
+    <string name="add_location">是否添加当前定位</string>
+    <string name="begin">开始记录</string>
+    <string name="over">结束记录</string>
+    <string name="ok">确定</string>
+    <string name="addPoint">增加标记</string>
+    <string name="addpoint_promotion">点击地图添加标记，长按退出标记</string> 
+    
+    <string name="accept">接受</string>
+    <string name="deny">拒绝</string>
+    
+    <string name="add_new_fri">添加好友</string>
+    <string name="exit">退出程序</string>
+    
+    <string name="cancel">取消</string>
+    <string name="request_sent">请求已发送</string>
+    
+    <string name="sign_up">注册</string>
+    <string name="username">用户名</string>
+    <string name="password">密码</string>
+    <string name="password_again">确认密码</string>
+    <string name="email">邮箱</string>
+    <string name="gender">性别</string>
+    <string name="mail">男</string>
+    <string name="femail">女</string>
+    <string name="sysMsg">系统信息</string>
+    <string name="about">关于</string>
+     <string name="logcontrol_start">开始追踪</string>
+    <string name="logcontrol_pause">暂停追踪</string>
+    <string name="logcontrol_resume">恢复追踪</string>
+    <string name="logcontrol_stop">停止追踪</string>
+    <string name="dialog_tracking_title">追踪控制</string>
+    <string name="service_start">启动日志服务中</string>
+	<string name="service_gpsstatus">日志： %1$s (%2$s 使用 %3$d 个卫星)</string>
+	<string name="service_gpsnostatus">Logging: %1$s (Precision %2$s)</string>
+    <string name="service_networkstatus">日志： %1$s (%2$s 使用基站和WiFi)</string>
+    <string name="hand_write_gesture">手写板</string>
+    <string name="hand_write_graffiti">涂鸦板</string>
+</resources>

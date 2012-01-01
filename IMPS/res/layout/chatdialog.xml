@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent">
+    <TextView 
+  android:id="@+id/fristatus"
+  android:layout_width="fill_parent"  
+  android:layout_height="wrap_content"
+  android:textSize="20dp"
+  android:text="状态:"
+  />  
+  <TextView 
+  android:id="@+id/ch_lat"
+  android:layout_width="fill_parent"  
+  android:layout_height="wrap_content"
+  android:textSize="20dp"
+  android:text="纬度:"
+  />    
+  <TextView 
+  android:id="@+id/ch_lng"
+  android:textSize="20dp"
+  android:layout_width="fill_parent"  
+  android:layout_height="wrap_content"
+  android:text="经度:"
+  /> 
+  <EditText
+  android:id="@+id/ch_edt"
+  android:layout_width="200dip"
+  android:layout_height="100dip"
+  android:hint="发送即时信息给TA"
+   />
+  <Button 
+  android:id="@+id/ch_commit"
+  android:layout_width="100dip"
+  android:layout_height="40dip"
+  android:layout_gravity="center_horizontal"
+  android:text="发送"
+  />
+</LinearLayout>

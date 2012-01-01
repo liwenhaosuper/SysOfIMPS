@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>  
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"  
+android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent" android:background="@drawable/default_bg"> 
+           <TextView android:id="@+id/textView01"
+           android:layout_width="fill_parent"
+           android:text="当前会话"
+           android:background="@drawable/friend_title_bg1" android:textSize="20px" android:layout_height="35dip" android:paddingTop="1px" android:paddingLeft="4px" android:textColor="#FF000000"></TextView>
+           <LinearLayout android:id="@+id/linearLayout1" android:layout_width="fill_parent" android:orientation="horizontal" android:layout_weight="1" android:layout_height="wrap_content">
+               <ListView android:layout_width="fill_parent" android:id="@+id/concurSessions" android:layout_height="fill_parent"></ListView>
+           </LinearLayout> 
+         <LinearLayout android:orientation="horizontal" android:background="@drawable/main_nav_bar" android:gravity="bottom" android:layout_width="match_parent" android:layout_height="30dp">
+        <ImageButton android:layout_weight="1" android:id="@+id/current_talk_menu" android:layout_width="0dp" android:layout_height="wrap_content" android:src="@drawable/current_talk" android:layout_marginLeft="15dp" android:background="#00ffffff" android:clickable="true"></ImageButton>
+        <ImageButton android:layout_weight="1" android:id="@+id/main_menu" android:layout_width="0dp" android:layout_height="wrap_content" android:src="@drawable/tab2_over" android:layout_marginLeft="5dp" android:background="#00ffffff"></ImageButton>
+        <ImageButton android:layout_weight="1" android:id="@+id/friend_list_menu" android:layout_width="0dp" android:layout_height="wrap_content" android:src="@drawable/tab3_over" android:layout_marginLeft="5dp" android:background="#00ffffff"></ImageButton>
+    </LinearLayout>
+  
+</LinearLayout>

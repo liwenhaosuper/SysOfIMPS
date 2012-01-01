@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="integer" name="RESULT_SEARCH" format="integer">0</item><item type="integer" name="RESULT_ADD" format="integer">1</item>
+    <item type="integer" name="RESULT_MOVE" format="integer">2</item>
+    
+</resources>

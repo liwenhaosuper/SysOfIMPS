@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+	<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:orientation="vertical">
+		<TextView
+			android:text="@string/poi_title"
+			android:id="@+id/TextTitle"
+			android:textAppearance="?android:attr/textAppearance"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"></TextView>
+		<EditText
+			android:layout_height="wrap_content"
+			android:layout_width="fill_parent"
+			android:id="@+id/Title"></EditText>
+		
+		<TextView
+			android:text="@string/poiLat"	
+			android:textAppearance="?android:attr/textAppearance"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"></TextView>
+		<EditText		
+			android:layout_height="wrap_content"
+			android:layout_width="fill_parent"
+			android:id="@+id/Lat"></EditText>
+		<TextView
+			android:text="@string/poiLng"
+			android:textAppearance="?android:attr/textAppearance"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"></TextView>
+		<EditText
+			android:id="@+id/Lng"
+			android:layout_height="wrap_content"
+			android:layout_width="fill_parent"
+			></EditText>
+		<TextView
+			android:text="@string/poiDescr"
+			android:id="@+id/TextDescr"
+			android:textAppearance="?android:attr/textAppearance"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"></TextView>
+		<EditText
+			android:id="@+id/Descr"
+			android:layout_height="wrap_content"
+			android:layout_width="fill_parent"
+			android:minLines="4"
+			></EditText>
+
+		
+		<LinearLayout
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal"
+			style="@android:style/ButtonBar">
+
+			<Button
+				android:id="@+id/saveButton"
+				android:layout_width="0dip"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:text="@string/menu_yes" />
+
+			<Button
+				android:id="@+id/discardButton"
+				android:layout_width="0dip"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:text="@string/menu_no" />
+
+		</LinearLayout>
+	
+</LinearLayout>
