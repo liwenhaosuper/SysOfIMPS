@@ -1,1 +1,9 @@
-upgradeOfIMPS
+Plan needed to be done 
+Due on 20th, January
+
+liwenhaosuper:
+1. 
+Solve the NAT related problems and make the media chat available for Peers in GPRS-GPRS mode and GRPS-WIFI mode.
+Currently,I have found that the failure of connection between P2P is the NAT problems.
+2. 
+Implement the event handling for audio and media chat.
