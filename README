@@ -7,3 +7,12 @@ Solve the NAT related problems and make the media chat available for Peers in GP
 Currently,I have found that the failure of connection between P2P is the NAT problems.
 2. 
 Implement the event handling for audio and media chat.
+
+HongYang
+1. 
+finish transplanting the IMPS DB to IMPS_WEB(OOAD) DB.
+2.
+deal with the problem of unstable socket connection under the circumstance of gprs/wifi.
+3.
+implement sending picture and record audio data to peers via server.
+
