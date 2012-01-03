@@ -16,3 +16,6 @@ deal with the problem of unstable socket connection under the circumstance of gp
 3.
 implement sending picture and record audio data to peers via server.
 
+Wang Jiajun
+1.
+Find near place in the database according to the current location.
