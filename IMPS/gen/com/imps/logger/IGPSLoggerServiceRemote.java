@@ -1,6 +1,6 @@
 /*
  * This file is auto-generated.  DO NOT MODIFY.
- * Original file: D:\\programming\\Android\\IMPS\\src\\com\\imps\\logger\\IGPSLoggerServiceRemote.aidl
+ * Original file: D:\\dev\\SysOfIMPS\\IMPS\\src\\com\\imps\\logger\\IGPSLoggerServiceRemote.aidl
  */
 package com.imps.logger;
 public interface IGPSLoggerServiceRemote extends android.os.IInterface
