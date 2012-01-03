@@ -24,7 +24,8 @@ public class ServerBoot {
 			
 	    	try{
 			        Configure config = new Configure();
-			        config.setAddress(new InetSocketAddress("192.168.120.106",1200));
+			        // config.setAddress(new InetSocketAddress("192.168.120.106",1200));
+			        config.setAddress(new InetSocketAddress("192.168.0.102",1200));
 			        config.setProtocolHandler(new NetProtocolHandler());
 			        config.setIoHandler(new LogicHandler());
 			

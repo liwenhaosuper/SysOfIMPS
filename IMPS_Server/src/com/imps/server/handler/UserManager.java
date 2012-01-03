@@ -337,8 +337,8 @@ public class UserManager {
 			if(res.next())
 				flag = false;
 			else{
-			    int re = tdb.executeUpdate("insert into user(username,pwd,gender,email) values("+"'"+user.getUsername()+"','"+
-					    user.getPassword()+"',"+user.getGender()+",'"+user.getEmail()+"')");
+			    int re = tdb.executeUpdate("insert into user(username,password,email,gender) values("+"'"+user.getUsername()+"','"+
+					    user.getPassword()+"','"+user.getEmail()+"',"+user.getGender()+")");
 			    if(re!=0) flag=true;
 			}
 		}catch(Exception e)
@@ -367,11 +367,11 @@ public class UserManager {
 		{
 			user.setUserid(res.getLong("userid"));
 			user.setUsername(res.getString("username"));
-			user.setPassword(res.getString("pwd"));
-			user.setGender(res.getInt("gender"));
+			user.setPassword(res.getString("password"));
+			user.setGender(res.getString("gender").equals("M")?1:0);
 			user.setEmail(res.getString("email"));
 			return user;
-		}		
+		}
 		return null;
 	}
 	
@@ -389,8 +389,8 @@ public class UserManager {
 		{
 			user.setUserid(res.getLong("userid"));
 			user.setUsername(res.getString("username"));
-			user.setPassword(res.getString("pwd"));
-			user.setGender(res.getInt("gender"));
+			user.setPassword(res.getString("password"));
+			user.setGender(res.getString("gender").equals("M")?1:0);
 			user.setEmail(res.getString("email"));
 			return user;
 		}
