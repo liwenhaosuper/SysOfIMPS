@@ -64,16 +64,11 @@ public class IoServerImpl extends AbstractIoService implements Runnable{
 		ssChannel = ServerSocketChannel.open();
 		ssChannel.configureBlocking(false);       //设定为非阻塞
 		ServerSocket ss = ssChannel.socket();
-		ss.bind(this.getConfigure().getAddress());
-		
-				
+		ss.bind(this.getConfigure().getAddress());		
 		ssChannel.register(selector, SelectionKey.OP_ACCEPT);
-		
 		this.startIoReadWriteMachines();
-		
 		Thread t = new Thread(this, "IoAcceptor");
 		t.start();
-		
 		this.isStart = true;
 	}
 	

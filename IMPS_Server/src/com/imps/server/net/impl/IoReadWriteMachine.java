@@ -1,6 +1,8 @@
 ﻿package com.imps.server.net.impl;
 
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.SocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
@@ -14,12 +16,6 @@ import com.imps.server.net.IoFuture;
 import com.imps.server.net.IoSession;
 import com.imps.server.net.expand.ClientIoSession;
 import com.imps.server.net.expand.ConnectFuture;
-import com.imps.server.net.impl.CloseFuture;
-import com.imps.server.net.impl.DispatcherEventlListener;
-import com.imps.server.net.impl.IoSessionImpl;
-import com.imps.server.net.impl.MemoryObjInface;
-import com.imps.server.net.impl.MomoryManagerByte;
-import com.imps.server.net.impl.WriteFuture;
 
 /**
  * <p>
@@ -191,18 +187,18 @@ class IoReadWriteMachine implements Runnable {
 		if(session.getClass() == IoSessionImpl.class) {
 			//注册
 			SelectionKey selectKey = channel.register(selector, SelectionKey.OP_READ, session);  //向选择器注册通道
-
 			session.setSelectionKey(selectKey);   //设置会话的选择键
-
 			//session.setOwnerDispatcher(this);    //设置归属IO处理器
-
+			//System.out.println("register!!!");
+			//IoSessionImpl t = new IoSessionImpl();
 			this.onRegisterSession(session);
 		}
 		
 		else if(session.getClass() == ClientIoSession.class) {  //注册连接操作
 			ClientIoSession clientIoSession = (ClientIoSession) session;
 			SelectionKey selectKey = channel.register(selector, SelectionKey.OP_CONNECT, session);
-			channel.connect(clientIoSession.getConnectAddress());
+			SocketAddress addr = clientIoSession.getConnectAddress(); 
+			channel.connect(addr);
 			session.setSelectionKey(selectKey);
 		}
 		
@@ -333,7 +329,6 @@ class IoReadWriteMachine implements Runnable {
 			for(Iterator<SelectionKey> i = selector.selectedKeys().iterator(); i.hasNext();) {
 				SelectionKey sk = i.next();
 				i.remove();
-
 				
 				IoSessionImpl session = (IoSessionImpl) sk.attachment();
 				
