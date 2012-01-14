@@ -1,4 +1,4 @@
-
+ï»¿
 /*
  * Author: liwenhaosuper
  * Date: 2011/5/19
@@ -14,12 +14,12 @@ package com.imps.server.handler;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Timer;
 import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.imps.server.base.MessageFactory;
+import com.imps.server.base.NetAddress;
 import com.imps.server.base.OutputMessage;
 import com.imps.server.base.User;
 import com.imps.server.base.location;
@@ -36,13 +36,12 @@ public class UserManager {
 	
 	private Timer timer = new Timer(true);
 	
-	//ÔÚÏßÓÃ»§ÁĞ±í <username,user>
 	public ConcurrentHashMap<String, User> userMap = new ConcurrentHashMap<String, User>();
 
 	//<username,message>
 	public ConcurrentHashMap<String, Vector<OutputMessage>> UserDatas = 
 		new ConcurrentHashMap<String, Vector<OutputMessage>>();
-	
+	public ConcurrentHashMap<String,NetAddress> userAddress = new ConcurrentHashMap<String,NetAddress>();
 	public ConnectDB db;
 	
 	public UserManager() throws SQLException
@@ -51,7 +50,7 @@ public class UserManager {
 		    db = new ConnectDB();
 		}catch(Exception e)
 		{
-			System.out.println("ConnectDB³õÊ¼»¯Ê§°Ü£¡");
+			System.out.println("ConnectDB åˆå§‹åŒ–å¤±è´¥");
 			e.printStackTrace();
 		}
 		
@@ -87,7 +86,21 @@ public class UserManager {
 	public void setUserMap(ConcurrentHashMap<String, User> userMap) {
 		this.userMap = userMap;
 	}
-
+	public int addUserAddress(String name,NetAddress addr){
+		if(name.equals("")){
+			throw new NullPointerException("user name is null");
+		}
+		if(userMap.containsKey(name)){
+			userAddress.put(name, addr);
+			return 1;
+		}
+		return 0;
+	}
+	public void deleteUserAddress(String name){
+		if(userAddress.containsKey(name)){
+			userAddress.remove(name);
+		}
+	}
 
 	/**
 	 * @return the userMap
@@ -206,7 +219,6 @@ public class UserManager {
 				userMap.remove(user.getUsername());
 			else userMap.put(user.getUsername(), user);
 		}
-		//TODO:Í¨ÖªËùÓĞÅóÓÑ
 		User[] onlinefri = getOnlineFriendlist(user.getUsername());
 		if(onlinefri==null)
 			return;
@@ -308,9 +320,6 @@ public class UserManager {
 	 * 
 	 */
 	
-	/**
-	 * ÓÃ»§µÇÂ¼ÑéÖ¤
-	 */
 	public boolean checkUser(String username,String pwd) throws SQLException
 	{
 		User user = getUserFromDB(username);
@@ -343,12 +352,8 @@ public class UserManager {
 			}
 		}catch(Exception e)
 		{
-			System.out.println("Ìí¼ÓÓÃ»§´íÎó!");
 			e.printStackTrace();
 		}
-		if(flag)
-		    System.out.println("Ìí¼ÓÓÃ»§³É¹¦!");
-		
 		return flag;
 	}
 	
@@ -462,10 +467,6 @@ public class UserManager {
 		return true;
 	}
 	
-	/**
-	 * ¸üĞÂÓÃ»§Î»ÖÃĞÅÏ¢
-	 * @throws SQLException 
-	 */
 	public void updateLocation(String username,String p_time,double x,double y) throws SQLException
 	{
 		User user = getUserFromDB(username);
@@ -476,10 +477,6 @@ public class UserManager {
 		
 	}
 	
-	/**
-	 * »ñÈ¡ÓÃ»§Î»ÖÃĞÅÏ¢
-	 * @throws SQLException 
-	 */
 	public location getLocation(String username) throws SQLException
 	{
 		String p_time="";
@@ -501,10 +498,6 @@ public class UserManager {
 		return loc;
 	}
 	
-	/**
-	 * Ìí¼ÓÏûÏ¢¼ÇÂ¼
-	 * @throws SQLException 
-	 */
 	public boolean addMessage(String username,String friendname,String m_time,String msg) throws SQLException
 	{
 		User u1 = getUserFromDB(username);

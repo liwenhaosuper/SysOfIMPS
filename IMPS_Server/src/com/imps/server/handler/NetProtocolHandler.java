@@ -1,4 +1,4 @@
-package com.imps.server.handler;
+ï»¿package com.imps.server.handler;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
@@ -25,7 +25,7 @@ public class NetProtocolHandler implements ProtocolHandler {
 		{
 			if(data.remaining()<2)
 				break;
-			/** ¶ÁÈ¡Ð­ÒéÍ·*/
+			/** è¯»å–åè®®å¤´*/
 			
 /*			//test
             Charset charset  =   null ;
@@ -59,24 +59,24 @@ public class NetProtocolHandler implements ProtocolHandler {
 			}
 			//get length
 			
-			//o(¦á¦ä¦á)o °¦£¬µ÷ÁËÄÇÃ´¾Ã
+			//o(ï¸¶ï¸¿ï¸¶)o å”‰ï¼Œè°ƒäº†é‚£ä¹ˆä¹…
 			int contentlen = data.getInt();
 			System.out.println("data.getInt():"+contentlen+" and data.remaining() is "+data.remaining());
-			/**Ð­ÒéÍ·¶ÁÈ¡Íê±Ï*/
+			/**åè®®å¤´è¯»å–å®Œæ¯•*/
 			if(data.remaining() < contentlen) {
 				break;
 			}
 			
-			//»ñÈ¡Ð­ÒéÄÚÈÝËµÃ÷
+			//èŽ·å–åè®®å†…å®¹è¯´æ˜Ž
 			
 			byte[] content = new byte[(int)contentlen];
 			data.get(content);
 			ByteBuffer contentBuffer = ByteBuffer.wrap(content);
 			contentBuffer.clear();
-			byte cmdtype = contentBuffer.get();//»ñÈ¡ÃüÁîÀàÐÍ
-			long namesize = contentBuffer.getLong(); //»ñÈ¡username³¤¶È
+			byte cmdtype = contentBuffer.get();//èŽ·å–å‘½ä»¤ç±»åž‹
+			long namesize = contentBuffer.getLong(); //èŽ·å–usernameé•¿åº¦
 			byte[] username = new byte[(int) namesize]; 
-			contentBuffer.get(username);  //»ñÈ¡username
+			contentBuffer.get(username);  //èŽ·å–username
 			String nm = "";
 			try {
 				nm = new String(username,"gb2312");
@@ -84,7 +84,7 @@ public class NetProtocolHandler implements ProtocolHandler {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			byte[] msgbody = new byte[contentBuffer.remaining()];   //ÏûÏ¢Ìå
+			byte[] msgbody = new byte[contentBuffer.remaining()];   //æ¶ˆæ¯ä½“
 			contentBuffer.get(msgbody);
 			
 			InputMessage msg = new InputMessage(cmdtype,nm,msgbody); 

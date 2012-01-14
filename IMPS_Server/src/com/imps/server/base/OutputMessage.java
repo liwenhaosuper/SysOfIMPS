@@ -1,4 +1,4 @@
-
+ï»¿
 /*
  * Author: liwenhaosuper
  * Date: 2011/5/18
@@ -31,7 +31,7 @@ public class OutputMessage extends AbstractMessage implements NetMessage {
 	
 	public DataOutputStream getOutputStream() {
 		if(!isCanUseOutputStream) {
-			throw new UnsupportedOperationException("²»ÄÜ²Ù×÷");
+			throw new UnsupportedOperationException("ä¸èƒ½æ“ä½œ");
 		}
 		return dos;
 	}

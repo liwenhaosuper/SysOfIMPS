@@ -1,4 +1,4 @@
-
+ï»¿
 /*
  * Author: liwenhaosuper
  * Date: 2011/5/18
@@ -27,7 +27,7 @@ public class User {
 	private int gender;
 	private String email;
 	private byte status;
-	public long lastAccessTime = System.currentTimeMillis(); //×î½ü·ÃÎÊÊ±¼ä
+	public long lastAccessTime = System.currentTimeMillis(); //æœ€è¿‘è®¿é—®æ—¶é—´
 	
 	/**IoSessionId*/
 	private long sessionId;

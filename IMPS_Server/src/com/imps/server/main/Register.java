@@ -1,4 +1,4 @@
-package com.imps.server.main;
+锘縫ackage com.imps.server.main;
 
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -38,23 +38,23 @@ public class Register extends MessageProcessTask{
 		    if(manager.registerUser(user))
 		    {
 		    	outMsg = MessageFactory.createSRegisterRsp();
-		    	//注册成功
-		    	System.out.println("注册成功!");
+		    	//娉ㄥ唽鎴愬姛
+		    	System.out.println("娉ㄥ唽鎴愬姛!");
 		    	outMsg.getOutputStream().writeInt(1);
 		    }
 		    else{
 		    	outMsg = MessageFactory.createErrorMsg();
-		    	outMsg.getOutputStream().writeInt(1);//用户已经存在
-		    	System.out.println("注册失败!");
+		    	outMsg.getOutputStream().writeInt(1);//鐢ㄦ埛宸茬粡瀛樺湪
+		    	System.out.println("娉ㄥ唽澶辫触!");
 		    	outMsg.getOutputStream().writeInt(0);
 		    }
 		}catch(Exception e)
 		{
-			System.out.println("注册失败!");
+			System.out.println("娉ㄥ唽澶辫触!");
 			e.printStackTrace();
 		}
 		
-		//反馈给客户端
+		//鍙嶉缁欏鎴风
 		session.write(outMsg);
 		
 	}

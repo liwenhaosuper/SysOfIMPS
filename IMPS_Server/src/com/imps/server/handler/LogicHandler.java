@@ -1,4 +1,4 @@
-/*
+ï»¿/*
  * Author: liwenhaosuper
  * Date: 2011/5/19
  * Description:
@@ -40,7 +40,7 @@ public class LogicHandler extends IoHandlerAdapter {
 		InputMessage inMsg = (InputMessage) msg;
 		switch(inMsg.getCmdType()) {
 		case CommandId.C_LOGIN_REQ:
-			/**¿Í»§¶ËµÇÂ¼ÇëÇó*/
+			/**å®¢æˆ·ç«¯ç™»å½•è¯·æ±‚*/
 			System.out.println("server:login request received!");
             try {
 				new Login(session,inMsg).run();
@@ -50,7 +50,7 @@ public class LogicHandler extends IoHandlerAdapter {
 			}
 			break;
 		case CommandId.C_HEARTBEAT_REQ:
-			/** ĞÄÌø¼ì²â¿Í»§¶ËÇëÇó,Í¬Ê±½ÓÊÕµØÀíÎ»ÖÃĞÅÏ¢ */
+			/** å¿ƒè·³æ£€æµ‹å®¢æˆ·ç«¯è¯·æ±‚,åŒæ—¶æ¥æ”¶åœ°ç†ä½ç½®ä¿¡æ¯ */
 			System.out.println("server: heartbeat received!");
 			try {
 				new HeartBeat(session,inMsg).run();
@@ -60,7 +60,7 @@ public class LogicHandler extends IoHandlerAdapter {
 			}
 			break;
 		case CommandId.C_FRIENDLIST_REFURBISH_REQ:
-			/**ºÃÓÑÁĞ±íË¢ĞÂÇëÇó*/
+			/**å¥½å‹åˆ—è¡¨åˆ·æ–°è¯·æ±‚*/
 			System.out.println("server: friend list refresh");
 			try {
 				new FriendListRequest(session,inMsg).run();
@@ -70,7 +70,7 @@ public class LogicHandler extends IoHandlerAdapter {
 			}
 			break;
 		case CommandId.C_ADDFRIEND_REQ:
-		/**¿Í»§¶ËÌí¼ÓºÃÓÑÇëÇó*/
+		/**å®¢æˆ·ç«¯æ·»åŠ å¥½å‹è¯·æ±‚*/
 			System.out.println("server:add friend request receive");
 			try {
 				new AddFriendReq(session,inMsg).run();
@@ -80,7 +80,7 @@ public class LogicHandler extends IoHandlerAdapter {
 			}
 			break;
 		case CommandId.C_ADDFRIEND_RSP:
-			/** ¿Í»§¶ËÌí¼ÓºÃÓÑÏìÓ¦ */
+			/** å®¢æˆ·ç«¯æ·»åŠ å¥½å‹å“åº” */
 			System.out.println("server:add friend response receive");
 			try {
 				new AddFriendRsp(session,inMsg).run();
@@ -90,7 +90,7 @@ public class LogicHandler extends IoHandlerAdapter {
 			}
 			break;
 		case CommandId.C_SEND_MSG:
-			/**¿Í»§¶Ë·¢ËÍÏûÏ¢*/
+			/**å®¢æˆ·ç«¯å‘é€æ¶ˆæ¯*/
 			System.out.println("server: message from client to friend received");
 			try {
 				new SendMessage(session,inMsg).run();
@@ -100,7 +100,7 @@ public class LogicHandler extends IoHandlerAdapter {
 			}
 			break;
 		case CommandId.C_REGISTER:
-			/** ¿Í»§¶ËÓÃ»§×¢²á*/
+			/** å®¢æˆ·ç«¯ç”¨æˆ·æ³¨å†Œ*/
 			try {
 				new Register(session,inMsg).run();
 			} catch (SQLException e) {
@@ -109,7 +109,7 @@ public class LogicHandler extends IoHandlerAdapter {
 			}
 			break;
 		case CommandId.C_AUDIO_REQ:
-			/**¿Í»§¶ËÒôÆµÎÄ¼şÇëÇó**/
+			/**å®¢æˆ·ç«¯éŸ³é¢‘æ–‡ä»¶è¯·æ±‚**/
 			try {
 				System.out.println(" audio data received");
 				new SendAudio(session,inMsg).run();

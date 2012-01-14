@@ -1,4 +1,4 @@
-
+ï»¿
 /*
  * author: liwenhaosuper
  * Date:2011/5/18
@@ -13,61 +13,61 @@ package com.imps.server.base;
 
 public class CommandId {
 	
-	/**¿Í»§¶ËµÇÂ¼ÇëÇó**/
+	/**å®¢æˆ·ç«¯ç™»å½•è¯·æ±‚**/
 	public static final byte C_LOGIN_REQ = 1;
-	/**·şÎñÆ÷µÇÂ¼ÏìÓ¦**/
+	/**æœåŠ¡å™¨ç™»å½•å“åº”**/
 	public static final byte S_LOGIN_RSP = 2;
 	
 	
-	/** ĞÄÌø¼ì²â¿Í»§¶ËÇëÇó,Í¬Ê±·¢ËÍµØÀíÎ»ÖÃĞÅÏ¢ */
+	/** å¿ƒè·³æ£€æµ‹å®¢æˆ·ç«¯è¯·æ±‚,åŒæ—¶å‘é€åœ°ç†ä½ç½®ä¿¡æ¯ */
 	public static final byte C_HEARTBEAT_REQ = 3;
-	/**·şÎñÆ÷ĞÄÌøÏìÓ¦*/
+	/**æœåŠ¡å™¨å¿ƒè·³å“åº”*/
 	public static final byte S_HEARTBEAT_RSP = 4;
 	
 	
-	/**ºÃÓÑÁĞ±íË¢ĞÂÇëÇó*/
+	/**å¥½å‹åˆ—è¡¨åˆ·æ–°è¯·æ±‚*/
 	public static final byte C_FRIENDLIST_REFURBISH_REQ = 5;
-	/**ºÃÓÑÁĞ±íË¢ĞÂÏìÓ¦*/
+	/**å¥½å‹åˆ—è¡¨åˆ·æ–°å“åº”*/
 	public static final byte S_FRIENDLIST_REFURBISH_RSP = 6;
 	
 	
-	/**¿Í»§¶ËÌí¼ÓºÃÓÑÇëÇó*/
+	/**å®¢æˆ·ç«¯æ·»åŠ å¥½å‹è¯·æ±‚*/
 	public static final byte C_ADDFRIEND_REQ = 7;
-	/** ¿Í»§¶ËÌí¼ÓºÃÓÑÏìÓ¦ */
+	/** å®¢æˆ·ç«¯æ·»åŠ å¥½å‹å“åº” */
 	public static final byte C_ADDFRIEND_RSP = 8;
 	
-	/**·şÎñ¶ËÌí¼ÓºÃÓÑÇëÇó*/
+	/**æœåŠ¡ç«¯æ·»åŠ å¥½å‹è¯·æ±‚*/
 	public static final byte S_ADDFRIEND_REQ = 9;
-	/**·şÎñÆ÷Ìí¼ÓºÃÓÑÏìÓ¦*/
+	/**æœåŠ¡å™¨æ·»åŠ å¥½å‹å“åº”*/
 	public static final byte S_ADDFRIEND_RSP = 10;
 	
 
-	/**¿Í»§¶Ë·¢ËÍÏûÏ¢*/
+	/**å®¢æˆ·ç«¯å‘é€æ¶ˆæ¯*/
 	public static final byte C_SEND_MSG = 11;
-	/**·şÎñÆ÷·¢ËÍÏûÏ¢*/
+	/**æœåŠ¡å™¨å‘é€æ¶ˆæ¯*/
 	public static final byte S_SEND_MSG = 12;
 	  
-	/**¿Í»§¶Ë×´Ì¬Í¨Öª */
+	/**å®¢æˆ·ç«¯çŠ¶æ€é€šçŸ¥ */
 	public static final byte C_STATUS_NOTIFY = 13;
-	/**·şÎñ¶Ë×´Ì¬ÏìÓ¦ */
+	/**æœåŠ¡ç«¯çŠ¶æ€å“åº” */
 	public static final byte S_STATUS_NOTIFY = 14;
 	
 	
-	/** ¿Í»§¶ËÓÃ»§×¢²á*/
+	/** å®¢æˆ·ç«¯ç”¨æˆ·æ³¨å†Œ*/
 	public static final byte C_REGISTER = 15;
-	/**·şÎñ¶ËÓÃ»§×¢²áÏìÓ¦ */
+	/**æœåŠ¡ç«¯ç”¨æˆ·æ³¨å†Œå“åº” */
 	public static final byte S_REGISTER = 16;
 
-	/**·şÎñ¶Ë´íÎóÏìÓ¦*/
+	/**æœåŠ¡ç«¯é”™è¯¯å“åº”*/
 	public static final byte S_ERROR = 17;
 	/**
-	 * Â¼Òô´«ËÍ
+	 * å½•éŸ³ä¼ é€
 	 */
 	public static final byte C_AUDIO_REQ = 18;
 	public static final byte S_AUDIO_RSP = 19;
 	
 	/**
-	 * ÊÓÆµ£¬ÓïÒô¶Ô»°
+	 * è§†é¢‘ï¼Œè¯­éŸ³å¯¹è¯
 	 */
 	public static final byte C_PTP_AUDIO_REQ  =20;
 	public static final byte S_PTP_AUDIO_REQ = 21;

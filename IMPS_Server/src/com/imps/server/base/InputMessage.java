@@ -1,4 +1,4 @@
-package com.imps.server.base;
+锘縫ackage com.imps.server.base;
 
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
@@ -56,11 +56,11 @@ public class InputMessage extends AbstractMessage implements NetMessage {
 
 	@Override
 	public byte[] getContent() {
-		throw new UnsupportedOperationException("不能操作...");
+		throw new UnsupportedOperationException("涓嶈兘鎿嶄綔...");
 	}
 	
 	/**
-	 * 获得输流
+	 * 鑾峰緱杈撴祦
 	 */
 	public DataInputStream getInputStream() {
 		if(dis == null) {

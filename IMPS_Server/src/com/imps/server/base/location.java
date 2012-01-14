@@ -1,4 +1,4 @@
-package com.imps.server.base;
+﻿package com.imps.server.base;
 
 public class location{
 	public  String ptime;

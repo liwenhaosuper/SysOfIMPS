@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import com.imps.server.base.InputMessage;
 import com.imps.server.base.MessageFactory;
 import com.imps.server.base.MessageProcessTask;
+import com.imps.server.base.NetAddress;
 import com.imps.server.base.OutputMessage;
 import com.imps.server.base.User;
 import com.imps.server.base.userStatus;
@@ -60,14 +61,17 @@ public class SendPTPVideoRsp extends MessageProcessTask{
 			System.out.println("video rsp ip is "+ ip+" !!!");
 			//get the port
 			int port = inMsg.readInt();
-			//获取时间
+			NetAddress netAddr = UserManager.getInstance().userAddress.get(message.getUserName());
+			netAddr.addNATAddress(ip, port);
+			UserManager.getInstance().addUserAddress(message.getUserName(), netAddr);
+			
 			SimpleDateFormat tempDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			String datetime = tempDate.format(new java.util.Date());
-			//将username添加入usermap之中
+			
 			User curuser = manager.getUser(message.getUserName());
 			if(curuser==null)
 			{
-				//从数据库中添加进来
+			
 				curuser = manager.getUserFromDB(message.getUserName());
 				if(curuser==null)
 				{
@@ -77,19 +81,18 @@ public class SendPTPVideoRsp extends MessageProcessTask{
 				curuser.setSessionId(session.getId());
 				manager.getUserMap().putIfAbsent(message.getUserName(), curuser);
 			}
-			//设置session
+			
 			if(curuser.getSessionId()==-1)
 				curuser.setSessionId(session.getId());
 			
 			if(manager.getUserMap().containsKey(friendname))
 			{
-				//向好友发送信息
-				//获取好友的session
+				
 		        IoService myserver = ServerBoot.server;
 		        User fri = manager.getUser(friendname);
 		        IoSession mysession = myserver.getIoSession(fri.getSessionId());
 		       // OutputMessage;
-		        OutputMessage remsg = MessageFactory.createSPTPVideoRsp(message.getUserName(), ip,port,res==1?true:false);
+		        OutputMessage remsg = MessageFactory.createSPTPVideoRsp(message.getUserName(), ip,port,res==1?true:false,netAddr.getPubIp(),netAddr.getPubPort());
 		        IoFuture iof = mysession.write(remsg);
 		        if(iof.isCannel()||iof.isComplete()||iof.isComplete())
 		        {
@@ -98,7 +101,7 @@ public class SendPTPVideoRsp extends MessageProcessTask{
 		        System.out.println(" send msg to "+friendname+" successfully!");
 			}
 			else{
-				//该好友不在线
+				
 			    System.out.println(" user is now offline and could not sent video response to him~");
 				OutputMessage remsg = MessageFactory.createErrorMsg();
 				remsg.getOutputStream().writeInt(5);

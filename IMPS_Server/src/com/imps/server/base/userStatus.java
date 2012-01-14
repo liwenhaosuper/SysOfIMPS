@@ -1,11 +1,11 @@
-
+ï»¿
 
 package com.imps.server.base;
 
 public class userStatus{
-    public static final byte	ONLINE = 1 ;  //ÔÚÏß
-	public static final byte  OFFLINE = 2;  //ÀëÏß
-	public static final byte  HIDE = 3;      //ÒşÉí
+    public static final byte	ONLINE = 1 ;  //åœ¨çº¿
+	public static final byte  OFFLINE = 2;  //ç¦»çº¿
+	public static final byte  HIDE = 3;      //éšèº«
 	
 
 }

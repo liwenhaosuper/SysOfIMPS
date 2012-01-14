@@ -1,4 +1,4 @@
-
+ï»¿
 
 
 
@@ -7,20 +7,18 @@ package com.imps.server.main;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 
-
-import com.imps.server.base.CommandId;
 import com.imps.server.base.InputMessage;
 import com.imps.server.base.MessageFactory;
 import com.imps.server.base.MessageProcessTask;
+import com.imps.server.base.NetAddress;
 import com.imps.server.base.OutputMessage;
 import com.imps.server.base.User;
 import com.imps.server.base.userStatus;
 import com.imps.server.handler.RegularUserCheck;
-import com.imps.server.net.IoFuture;
 import com.imps.server.net.IoService;
 import com.imps.server.net.IoSession;
+import com.imps.server.net.impl.IoSessionImpl;
 
 
 
@@ -35,8 +33,7 @@ public class Login extends MessageProcessTask{
 	@Override
 	public void parse() throws IOException {
 		// TODO Auto-generated method stub
-		//²»ÖªµÀ»á²»»á³öÏÖÂÒÂëà¸¡£¡£¡£¡£¡£¡£
-	}
+}
 
 	@Override
 	public void execute()  {
@@ -46,8 +43,7 @@ public class Login extends MessageProcessTask{
 			if(!validate())
 			{
 				outMsg = MessageFactory.createErrorMsg();
-				outMsg.getOutputStream().writeInt(6);				   
-				//Ìí¼ÓµÇÂ¼·´À¡
+				outMsg.getOutputStream().writeInt(6);
 				session.write(outMsg);
 			}
 			else
@@ -62,7 +58,7 @@ public class Login extends MessageProcessTask{
 							if(user==null)
 								return;
 						}
-						else{//ÒÑµÇÂ¼
+						else{
 							long sid = user.getSessionId();
 							if(sid!=-1)
 							{
@@ -99,18 +95,14 @@ public class Login extends MessageProcessTask{
 						if(manager.getUser(user.getUsername())==null)
 						      manager.addUser(user);
 						else manager.getUser(user.getUsername()).setSessionId(session.getId());
-						
-						
+						NetAddress netaddr = new NetAddress();
+						netaddr.addPublicAddress(((IoSessionImpl)session).getChannel().socket().getInetAddress().getAddress().toString(),
+								((IoSessionImpl)session).getChannel().socket().getPort());
+						manager.addUserAddress(user.getUsername(), netaddr);
 						//TODO: notify friends
-						manager.updateUserStatus(user);
-						
-						   
-						//Ìí¼ÓµÇÂ¼·´À¡
+						manager.updateUserStatus(user);						
 						session.write(outMsg);
-						//Æô¶¯¼ì²é
 						RegularUserCheck check = new RegularUserCheck(user);
-						
-						//10ÃëÖÓ¼ì²éÒ»´Î
 						manager.getTimer().schedule(check, 1000*1,1000*10);
 						
 						System.out.println("check starts:"+user.getUsername());
@@ -131,7 +123,7 @@ public class Login extends MessageProcessTask{
 	}
 	
 	/**
-	 * 0£ºnot valid username or password
+	 * 0é”Ÿæ–¤æ‹·not valid username or password
 	 * 1: valid information 
 	 * @return
 	 * @throws IOException
@@ -155,7 +147,7 @@ public class Login extends MessageProcessTask{
 			e.printStackTrace();
 		}
 		if(res == false)
-	     	System.out.println("ÓÃ»§Ãû»òÃÜÂë²»ÕıÈ·£¡");
+	     	System.out.println("ç”¨æˆ·åæˆ–å¯†ç é”™è¯¯");
 		return res;
 	}
 

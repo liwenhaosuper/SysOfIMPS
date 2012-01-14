@@ -1,4 +1,4 @@
-
+ï»¿
 /*
  * Author: liwenhaosuper
  * Date: 2011/5/19
@@ -15,58 +15,35 @@ import java.io.UnsupportedEncodingException;
 
 public class MessageFactory {
 	
-	/**
-	 * ´´½¨·şÎñÆ÷¶ËµÇÂ¼ÏìÓ¦
-	 * @param type Ğ­ÒéÀàĞÍ
-	 * @param status ×´Ì¬
-	 * @return
-	 */
+
 	public static OutputMessage createSLoginRsp() {
 		OutputMessage outMsg = new OutputMessage(CommandId.S_LOGIN_RSP);
-		
-		//ÎÒÊ²Ã´Ò²²»×ö¡£¡£¡£
-/*		try {
-			//outMsg.getOutputStream().writeInt(validateCode);
-		} catch (IOException e) {}
-		*/
+
 		return outMsg;
 	}
-	/**
-	 * ´´½¨·şÎñ¶Ë×¢²áÏìÓ¦
-	 * @return
-	 * @throws IOException 
-	 */
+
 	public static OutputMessage createSRegisterRsp() throws IOException
 	{
 		OutputMessage outMsg = new OutputMessage(CommandId.S_REGISTER);
-		outMsg.getOutputStream().writeInt(1);  //×¢²á³É¹¦
+		outMsg.getOutputStream().writeInt(1);  //×¢ï¿½ï¿½É¹ï¿½
 		return outMsg;
 	}
 	
-	/**
-	 * ´´½¨·şÎñ¶Ë´íÎóÏìÓ¦
-	 */
+
 	public static OutputMessage createErrorMsg()
 	{
 		OutputMessage outMsg = new OutputMessage(CommandId.S_ERROR);
 		return outMsg;
 	}
 	
-	/**
-	 * ´´½¨·şÎñ¶ËĞÄÌøÏìÓ¦
-	 */
+
 	public static OutputMessage createSHeartbeatRsp()
 	{
 		OutputMessage outMsg = new OutputMessage(CommandId.S_HEARTBEAT_RSP);
 		return outMsg;
 	}
 	
-	/**
-	 * ´´½¨ÔÚÏß×´Ì¬Í¨Öª
-	 * @param username
-	 * @param status
-	 * @return
-	 */
+
 	public static OutputMessage createOnlineStatusNotify(String username, byte status) {
 		OutputMessage outMsg = new OutputMessage(CommandId.S_STATUS_NOTIFY);
 		try {
@@ -79,28 +56,23 @@ public class MessageFactory {
 		
 		return outMsg;
 	}
-	/**
-	 * ´´½¨·şÎñÆ÷·¢ËÍĞÅÏ¢ÏìÓ¦
-	 * friendname:Ä¿µÄµØÓÃ»§
-	 * 
-	 */
+
 	public static OutputMessage createSSendMsg(String friendName,String msg,String datetime)
 	{
 		OutputMessage outMsg = new OutputMessage(CommandId.S_SEND_MSG);
 		try {
-			//·¢ËÍºÃÓÑÃû
+
 			long len = friendName.getBytes("gb2312").length;
 			byte[] fri = new byte[(int)len];
 			fri = friendName.getBytes("gb2312");
 			outMsg.getOutputStream().writeLong(len);
 			outMsg.getOutputStream().write(fri);
-			//·¢ËÍĞÅÏ¢ÄÚÈİ
+
 			len = msg.getBytes("gb2312").length;
 			byte[] msgcont = new byte[(int)len];
 			msgcont = msg.getBytes("gb2312");
 			outMsg.getOutputStream().writeLong(len);
 			outMsg.getOutputStream().write(msgcont);
-			//·¢ËÍÊ±¼ä
 			len = datetime.getBytes("gb2312").length;
 			byte[] tm = new byte[(int)len];
 			tm = datetime.getBytes("gb2312");
@@ -116,27 +88,22 @@ public class MessageFactory {
 		}
 		return outMsg;
 	}
-	/**
-	 * ´´½¨·şÎñÆ÷·¢ËÍÒôÆµÏìÓ¦
-	 * @param friendName
-	 * @return
-	 */
+
 	public static OutputMessage createSAudioRsp(String friendName,byte[] data,String datetime)
 	{
 		OutputMessage outMsg = new OutputMessage(CommandId.S_AUDIO_RSP);
 		try {
-			//·¢ËÍºÃÓÑÃû
+
 			long len = friendName.getBytes("gb2312").length;
 			byte[] fri = new byte[(int)len];
 			fri = friendName.getBytes("gb2312");
 			outMsg.getOutputStream().writeLong(len);
 			outMsg.getOutputStream().write(fri);
-			//·¢ËÍĞÅÏ¢ÄÚÈİ
+
 			len = data.length;
 			byte[] listData = new byte[(int)len];
 			outMsg.getOutputStream().writeLong(len);
 			outMsg.getOutputStream().write(listData);
-			//·¢ËÍÊ±¼ä
 			len = datetime.getBytes("gb2312").length;
 			byte[] tm = new byte[(int)len];
 			tm = datetime.getBytes("gb2312");
@@ -153,9 +120,7 @@ public class MessageFactory {
 		return outMsg;
 	}
 	
-	/*
-	 * ´´½¨·şÎñ¶ËÌí¼ÓºÃÓÑÇëÇó
-	 */
+
 	public static OutputMessage createSAddFriReq(String friendName)
 	{
 		OutputMessage outMsg = new OutputMessage(CommandId.S_ADDFRIEND_REQ);
@@ -176,9 +141,7 @@ public class MessageFactory {
 
 		return outMsg;
 	}
-	/**
-	 * ´´½¨·şÎñ¶ËÌí¼ÓºÃÓÑÏìÓ¦
-	 */
+
 	public static OutputMessage createSAddFriRsp(String friendName,int res)
 	{
 		OutputMessage outMsg = new OutputMessage(CommandId.S_ADDFRIEND_RSP);
@@ -200,9 +163,7 @@ public class MessageFactory {
 
 		return outMsg;
 	}
-	/**
-	 * ´´½¨·şÎñÆ÷ÒôÆµÇëÇó
-	 */
+
 	public static OutputMessage createSPTPAudioReq(String username,String ip,int port)
 	{
 		OutputMessage outMsg = new OutputMessage(CommandId.S_PTP_AUDIO_REQ);
@@ -222,10 +183,8 @@ public class MessageFactory {
 		} catch (IOException e) {}		
 		return outMsg;
 	}
-	/**
-	 * ´´½¨·şÎñÆ÷ÊÓÆµÇëÇó
-	 */
-	public static OutputMessage createSPTPVideoReq(String username,String ip,int port)
+
+	public static OutputMessage createSPTPVideoReq(String username,String ip,int port,String pubIp,int pubPort)
 	{
 		OutputMessage outMsg = new OutputMessage(CommandId.S_PTP_VIDEO_REQ);
 		try {
@@ -241,14 +200,19 @@ public class MessageFactory {
 			outMsg.getOutputStream().write(nm);
 			//port
 			outMsg.getOutputStream().writeInt(port);
+			//public ip
+			len = pubIp.getBytes("gb2312").length;
+			nm = pubIp.getBytes("GB2312");
+			outMsg.getOutputStream().writeLong(len);
+			outMsg.getOutputStream().write(nm);
+			//public port
+			outMsg.getOutputStream().writeInt(pubPort);
 		} catch (IOException e) {}		
 		return outMsg;
 	}
 	
 	
-	/**
-	 * ´´½¨·şÎñÆ÷ÒôÆµÏìÓ¦
-	 */
+
 	public static OutputMessage createSPTPAudioRsp(String username,String ip,int port,boolean res)
 	{
 		OutputMessage outMsg = new OutputMessage(CommandId.S_PTP_AUDIO_RSP);
@@ -269,10 +233,8 @@ public class MessageFactory {
 		return outMsg;
 	}
 	
-	/**
-	 * ´´½¨·şÎñÆ÷ÊÓÆµÏìÓ¦
-	 */
-	public static OutputMessage createSPTPVideoRsp(String username,String ip,int port,boolean res)
+
+	public static OutputMessage createSPTPVideoRsp(String username,String ip,int port,boolean res,String pubIp,int pubPort)
 	{
 		OutputMessage outMsg = new OutputMessage(CommandId.S_PTP_VIDEO_RSP);
 		try {
@@ -288,6 +250,11 @@ public class MessageFactory {
 			outMsg.getOutputStream().write(ip.getBytes("gb2312"));
 			//port
 			outMsg.getOutputStream().writeInt(port);
+			//public ip
+			outMsg.getOutputStream().writeLong(pubIp.getBytes("gb2312").length);
+			outMsg.getOutputStream().write(pubIp.getBytes("gb2312"));
+			//public port
+			outMsg.getOutputStream().writeInt(pubPort);
 		} catch (IOException e) {}		
 		return outMsg;
 	}
@@ -299,7 +266,7 @@ public class MessageFactory {
 	
 *//**
 	 * <p>
-	 * ´´½¨ºÃÓÑÀı±íË¢ĞÂÏìÓ¦
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë¢ï¿½ï¿½ï¿½ï¿½Ó¦
 	 * </p>
 	 * <br>
 	 * @param type
@@ -326,7 +293,7 @@ public class MessageFactory {
 	
 	*//**
 	 * <p>
-	 * ´´½¨ÑéÖ¤´íÎó
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¤ï¿½ï¿½ï¿½ï¿½
 	 * </p>
 	 * <br>
 	 * @param type
@@ -340,7 +307,7 @@ public class MessageFactory {
 	
 	*/
 	/**
-	 * ´´½¨ĞÄÌøÏìÓ¦
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦
 	 * @param type
 	 * @return
 	 *//*
@@ -363,7 +330,7 @@ public class MessageFactory {
 	
 	*//**
 	 * <p>
-	 * ´´½¨Ìí¼ÓºÃÓÑÏìÓ¦
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Óºï¿½ï¿½ï¿½ï¿½ï¿½Ó¦
 	 * </p>
 	 * <br>
 	 * @param type
@@ -375,7 +342,7 @@ public class MessageFactory {
 		
 		byte status = 0;
 		if(friend == null) {
-			status = 1;      //ºÃÓÑ²»´æÔÚ
+			status = 1;      //ï¿½ï¿½ï¿½Ñ²ï¿½ï¿½ï¿½ï¿½ï¿½
 		}
 		
 		try {
@@ -394,7 +361,7 @@ public class MessageFactory {
 	
 	*//**
 	 * <p>
-	 * ´´½¨ÏûÏ¢·¢ËÍ
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½
 	 * </p>
 	 * <br>
 	 * @param type
@@ -416,7 +383,7 @@ public class MessageFactory {
 	
 	*//**
 	 * <p>
-	 * ´´½¨CMWAP°ó¶¨ÏûÏ¢
+	 * ï¿½ï¿½ï¿½ï¿½CMWAPï¿½ï¿½ï¿½ï¿½Ï¢
 	 * </p>
 	 * <br>
 	 * @param msgs

@@ -1,4 +1,4 @@
-package com.imps.server.handler;
+ï»¿package com.imps.server.handler;
 
 import java.sql.SQLException;
 import java.util.TimerTask;
@@ -9,7 +9,7 @@ import com.imps.server.main.ServerBoot;
 
 
 public class RegularUserCheck extends TimerTask{
-	public static final long OVERTIME = 5 * 60 * 1000;   //3·ÖÖÓ
+	public static final long OVERTIME = 5 * 60 * 1000;   //3åˆ†é’Ÿ
 	
 	private User user;
 	
@@ -41,7 +41,7 @@ public class RegularUserCheck extends TimerTask{
 					    User iusr = manager.getUser(tuser.getUsername());
 					    manager.deleteUser(iusr);
 						User[] friends = tuser.getOnlineFriendList();
-						//Í¨ÖªËùÓĞÅóÓÑ²»ÔÚÏßÁË
+						//é€šçŸ¥æ‰€æœ‰æœ‹å‹ä¸åœ¨çº¿äº†
 						if(friends==null)
 							return ;
 						for(int i=0;i<friends.length;i++)

@@ -1,4 +1,4 @@
-/*
+ï»¿/*
  * Author: liwenhaosuper
  * Date: 2011/5/18
  * Description: 
@@ -8,10 +8,10 @@
 package com.imps.server.base;
 
 public abstract class AbstractMessage {
-	/**ÏûÏ¢ÀàĞÍ*/
+	/**æ¶ˆæ¯ç±»å‹*/
 	protected byte cmdtype;
 	
-	/**°üÌå*/
+	/**åŒ…ä½“*/
 	protected byte[] body;
 	
 	

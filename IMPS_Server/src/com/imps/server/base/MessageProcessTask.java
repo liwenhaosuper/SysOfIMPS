@@ -1,4 +1,4 @@
-package com.imps.server.base;
+ï»¿package com.imps.server.base;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -24,20 +24,20 @@ public abstract class MessageProcessTask implements Runnable{
 	
 
 	/**
-	 * ×Ö·û´®½âÎö
+	 * å­—ç¬¦ä¸²è§£æ
 	 * @throws IOException
 	 */
 	public abstract void parse() throws IOException;
 	
 
 	/**
-	 * Ö´ĞĞ
+	 * æ‰§è¡Œ
 	 */
 	public abstract void execute();
 	 
 
 	/**
-	 * ÈÕÖ¾´¦Àí£¬ÓÃÓÚ²âÊÔ£¬ÀÁµÃÊµÏÖ¡£¡£¡£¡£¡£¡£
+	 * æ—¥å¿—å¤„ç†ï¼Œç”¨äºæµ‹è¯•ï¼Œæ‡’å¾—å®ç°ã€‚ã€‚ã€‚ã€‚ã€‚ã€‚
 	 * @return
 	 */
 	public StringBuilder toInputString(){
@@ -52,7 +52,7 @@ public abstract class MessageProcessTask implements Runnable{
 	@Override
 	public void run() {
 		try {
-			//ÏÈ½âÎö
+			//å…ˆè§£æ
 			parse();
 			
 			StringBuilder inputStrBuffer = toInputString();
@@ -60,7 +60,7 @@ public abstract class MessageProcessTask implements Runnable{
 				printLog(inputStrBuffer.toString());
 			}
 			
-			//ÔÙÖ´ĞĞ
+			//å†æ‰§è¡Œ
 			execute();
 			
 			StringBuilder outputStrBuffer = toOutputString();
@@ -69,13 +69,13 @@ public abstract class MessageProcessTask implements Runnable{
 			}
 		}
 		catch(Exception e) {
-			//TODO:×öÒ»Ğ©ÊÂ·¢Éú´íÎóÊ±µÄ´¦Àí£¬Ò»°ãÊÇ·¢ÉúÁË²»¿É»Ö¸´µÄ´íÎó
+			//TODO:åšä¸€äº›äº‹å‘ç”Ÿé”™è¯¯æ—¶çš„å¤„ç†ï¼Œä¸€èˆ¬æ˜¯å‘ç”Ÿäº†ä¸å¯æ¢å¤çš„é”™è¯¯
 			e.printStackTrace();
 		}
 	}
 	
 	
 	protected final void printLog(String logmsg) {
-		//TODO:ÕâÀï¿ÉÒÔ·ÅÈë´òÓ¡£¬¿ÉÒÔÊ¹ÓÃLog4j£¬»òÆäËüµÄÒ»Ğ©´òÓ¡ÈÕÖ¾µÄ·½·¨,ÄãÓĞĞËÈ¤Ã´£¿
+		//TODO:è¿™é‡Œå¯ä»¥æ”¾å…¥æ‰“å°ï¼Œå¯ä»¥ä½¿ç”¨Log4jï¼Œæˆ–å…¶å®ƒçš„ä¸€äº›æ‰“å°æ—¥å¿—çš„æ–¹æ³•,ä½ æœ‰å…´è¶£ä¹ˆï¼Ÿ
 	}
 }

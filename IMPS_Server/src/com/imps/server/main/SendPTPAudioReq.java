@@ -1,4 +1,4 @@
-package com.imps.server.main;
+ï»¿package com.imps.server.main;
 
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -57,14 +57,14 @@ public class SendPTPAudioReq extends MessageProcessTask{
 			System.out.println("server: ip request is "+ip);
 			//get port
 			int port = inMsg.read();
-			//»ñÈ¡Ê±¼ä
+			//è·å–æ—¶é—´
 			SimpleDateFormat tempDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			String datetime = tempDate.format(new java.util.Date());
-			//½«usernameÌí¼ÓÈëusermapÖ®ÖĞ
+			//å°†usernameæ·»åŠ å…¥usermapä¹‹ä¸­
 			User curuser = manager.getUser(message.getUserName());
 			if(curuser==null)
 			{
-				//´ÓÊı¾İ¿âÖĞÌí¼Ó½øÀ´
+				//ä»æ•°æ®åº“ä¸­æ·»åŠ è¿›æ¥
 				curuser = manager.getUserFromDB(message.getUserName());
 				if(curuser==null)
 				{
@@ -74,14 +74,14 @@ public class SendPTPAudioReq extends MessageProcessTask{
 				curuser.setSessionId(session.getId());
 				manager.getUserMap().putIfAbsent(message.getUserName(), curuser);
 			}
-			//ÉèÖÃsession
+			//è®¾ç½®session
 			if(curuser.getSessionId()==-1)
 				curuser.setSessionId(session.getId());
 			
 			if(manager.getUserMap().containsKey(friendname))
 			{
-				//ÏòºÃÓÑ·¢ËÍĞÅÏ¢
-				//»ñÈ¡ºÃÓÑµÄsession
+				//å‘å¥½å‹å‘é€ä¿¡æ¯
+				//è·å–å¥½å‹çš„session
 		        IoService myserver = ServerBoot.server;
 		        User fri = manager.getUser(friendname);
 		        IoSession mysession = myserver.getIoSession(fri.getSessionId());
@@ -95,7 +95,7 @@ public class SendPTPAudioReq extends MessageProcessTask{
 		        System.out.println(" send msg to "+friendname+" successfully!");
 			}
 			else{
-				//¸ÃºÃÓÑ²»ÔÚÏß
+				//è¯¥å¥½å‹ä¸åœ¨çº¿
 			    System.out.println(" user is now offline and could not sent audio request to him~");
 				OutputMessage remsg = MessageFactory.createErrorMsg();
 				remsg.getOutputStream().writeInt(5);

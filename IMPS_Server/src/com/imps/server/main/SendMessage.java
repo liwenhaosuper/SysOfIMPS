@@ -1,4 +1,4 @@
-
+ï»¿
 
 /*
  * Author: liwenhaosuper
@@ -64,17 +64,17 @@ public class SendMessage extends MessageProcessTask{
 			inMsg.read(bmsg);
 			String msg = new String(bmsg,"gb2312");		
 			System.out.println("friend:"+friendname+" msg:"+msg);
-			//»ñÈ¡Ê±¼ä
+			//è·å–æ—¶é—´
 			SimpleDateFormat tempDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			String datetime = tempDate.format(new java.util.Date());
 			
-			//´æÈëÊı¾İ¿âÖĞ
+			//å­˜å…¥æ•°æ®åº“ä¸­
 			manager.addMessage(message.getUserName(), friendname, datetime, msg);
-			//½«usernameÌí¼ÓÈëusermapÖ®ÖĞ
+			//å°†usernameæ·»åŠ å…¥usermapä¹‹ä¸­
 			User curuser = manager.getUser(message.getUserName());
 			if(curuser==null)
 			{
-				//´ÓÊı¾İ¿âÖĞÌí¼Ó½øÀ´
+				//ä»æ•°æ®åº“ä¸­æ·»åŠ è¿›æ¥
 				curuser = manager.getUserFromDB(message.getUserName());
 				if(curuser==null)
 				{
@@ -84,14 +84,14 @@ public class SendMessage extends MessageProcessTask{
 				curuser.setSessionId(session.getId());
 				manager.getUserMap().putIfAbsent(message.getUserName(), curuser);
 			}
-			//ÉèÖÃsession
+			//è®¾ç½®session
 			if(curuser.getSessionId()==-1)
 				curuser.setSessionId(session.getId());
 			
 			if(manager.getUserMap().containsKey(friendname))
 			{
-				//ÏòºÃÓÑ·¢ËÍĞÅÏ¢
-				//»ñÈ¡ºÃÓÑµÄsession
+				//å‘å¥½å‹å‘é€ä¿¡æ¯
+				//è·å–å¥½å‹çš„session
 		        IoService myserver = ServerBoot.server;
 		        User fri = manager.getUser(friendname);
 		        IoSession mysession = myserver.getIoSession(fri.getSessionId());
@@ -105,7 +105,7 @@ public class SendMessage extends MessageProcessTask{
 		        System.out.println(" send msg to "+friendname+" successfully!");
 			}
 			else{
-				//¸ÃºÃÓÑ²»ÔÚÏß
+				//è¯¥å¥½å‹ä¸åœ¨çº¿
 			    System.out.println(" user is now offline and could not sent msg to him~");
 				OutputMessage remsg = MessageFactory.createErrorMsg();
 				remsg.getOutputStream().writeInt(5);
