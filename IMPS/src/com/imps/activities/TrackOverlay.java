@@ -1,4 +1,4 @@
-package com.imps.activities;
+ï»¿package com.imps.activities;
 
 import java.util.ArrayList;
 
@@ -15,7 +15,7 @@ import com.google.android.maps.OverlayItem;
 import com.google.android.maps.Projection;
 
 /**
-* µØÍ¼ÉÏµÄÏßĞÍÍ¼²ã:°üÀ¨Ò»¸öÆğµã,Ò»¸öÖÕµã,ÒÔ¼°Ö®¼äµÄÇúÏß
+* åœ°å›¾ä¸Šçš„çº¿å‹å›¾å±‚:åŒ…æ‹¬ä¸€ä¸ªèµ·ç‚¹,ä¸€ä¸ªç»ˆç‚¹,ä»¥åŠä¹‹é—´çš„æ›²çº¿
 * @author superwang
 */
 public class TrackOverlay extends ItemizedOverlay<OverlayItem> {
@@ -23,12 +23,12 @@ public class TrackOverlay extends ItemizedOverlay<OverlayItem> {
 	Canvas.HAS_ALPHA_LAYER_SAVE_FLAG | Canvas.FULL_COLOR_LAYER_SAVE_FLAG | Canvas.CLIP_TO_LAYER_SAVE_FLAG;
 	
 	/**
-	 * ÓÃÓÚ±£´æÆğµã/ÖÕµãÊı¾İ
+	 * ç”¨äºä¿å­˜èµ·ç‚¹/ç»ˆç‚¹æ•°æ®
 	 */
 	private final ArrayList<OverlayItem> mOverlays = new ArrayList<OverlayItem>();
 
 	/**
-	 * ÓÃÓÚ±£´æ¹¹³ÉÇúÏßµÄµãµÄÊı¾İ
+	 * ç”¨äºä¿å­˜æ„æˆæ›²çº¿çš„ç‚¹çš„æ•°æ®
 	 */
 	private final ArrayList<GeoPoint> linePoints = new ArrayList<GeoPoint>();
 
@@ -58,7 +58,7 @@ public class TrackOverlay extends ItemizedOverlay<OverlayItem> {
 	}
 
 	/**
-	 * µ÷¼ÛÆğµã/ÖÕµã
+	 * è°ƒä»·èµ·ç‚¹/ç»ˆç‚¹
 	 * description:
 	 * @param overlay
 	 */
@@ -68,7 +68,7 @@ public class TrackOverlay extends ItemizedOverlay<OverlayItem> {
 	}
 
 	/**
-	 * Ìí¼ÓÇúÏßÖĞµÄµã
+	 * æ·»åŠ æ›²çº¿ä¸­çš„ç‚¹
 	 * description:
 	 * @param point
 	 */
@@ -81,7 +81,7 @@ public class TrackOverlay extends ItemizedOverlay<OverlayItem> {
 	}
 
 	/**
-	 * »­Æğµã/ÖÕµã/¹ì¼£
+	 * ç”»èµ·ç‚¹/ç»ˆç‚¹/è½¨è¿¹
 	 */
 	@Override
 	public void draw(Canvas canvas, MapView mapView, boolean shadow) {
@@ -98,29 +98,29 @@ public class TrackOverlay extends ItemizedOverlay<OverlayItem> {
 			paint.setAntiAlias(true);
 			OverlayItem overLayItem;
 
-			//»­Æğµã/ÖÕµã
+			//ç”»èµ·ç‚¹/ç»ˆç‚¹
 			for (int i = 0; i < size; i++) {
 				overLayItem = mOverlays.get(i);
 
 				Drawable marker = overLayItem.getMarker(0);
 				//marker.getBounds()
-				/* ÏóËØµãÈ¡µÃ×ª»» */
+				/* è±¡ç´ ç‚¹å–å¾—è½¬æ¢ */
 				projection.toPixels(overLayItem.getPoint(), point);
 
 				if (marker != null) {
 					boundCenterBottom(marker);
 				}
 
-				/* Ô²È¦ */
+				/* åœ†åœˆ */
 				//Paint paintCircle = new Paint();
 				//paintCircle.setColor(Color.RED);
 				paint.setColor(Color.RED);
 				canvas.drawCircle(point.x, point.y, 5, paint);
 
-				/* ÎÄ×ÖÉèÖÃ */
-				/* ±êÌâ */
+				/* æ–‡å­—è®¾ç½® */
+				/* æ ‡é¢˜ */
 				String title = overLayItem.getTitle();
-				/* ¼ò½é */
+				/* ç®€ä»‹ */
 				//    String snippet = overLayItem.getSnippet();
 				//
 				//    StringBuffer txt = new StringBuffer();
@@ -143,8 +143,8 @@ public class TrackOverlay extends ItemizedOverlay<OverlayItem> {
 
 			}
 
-			//»­Ïß
-			boolean prevInBound = false;//Ç°Ò»¸öµãÊÇ·ñÔÚ¿ÉÊÓÇøÓò
+			//ç”»çº¿
+			boolean prevInBound = false;//å‰ä¸€ä¸ªç‚¹æ˜¯å¦åœ¨å¯è§†åŒºåŸŸ
 			Point prev = null;
 			int mapWidth = mapView.getWidth();
 			int mapHeight = mapView.getHeight();
@@ -158,12 +158,12 @@ public class TrackOverlay extends ItemizedOverlay<OverlayItem> {
 			//path.setFillType(Path.FillType.INVERSE_WINDING);
 			for (int i = 0; i < count; i++) {
 				GeoPoint geoPoint = linePoints.get(i);
-				//projection.toPixels(geoPoint, point); //ÕâÒ»ĞĞËÆºõÓĞÎÊÌâ
+				//projection.toPixels(geoPoint, point); //è¿™ä¸€è¡Œä¼¼ä¹æœ‰é—®é¢˜
 				point = projection.toPixels(geoPoint, null);
 				if (prev != null) {
 					if (point.x >= 0 && point.x <= mapWidth && point.y >= 0 && point.y <= mapHeight) {
 						if ((Math.abs(prev.x - point.x) > 2 || Math.abs(prev.y - point.y) > 2)) {
-							//ÕâÀïÅĞ¶ÏµãÊÇ·ñÖØºÏ£¬ÖØºÏµÄ²»»­Ïß£¬¿ÉÄÜ»áµ¼ÖÂ»­Ïß²»ÔÚÂ·ÉÏ
+							//è¿™é‡Œåˆ¤æ–­ç‚¹æ˜¯å¦é‡åˆï¼Œé‡åˆçš„ä¸ç”»çº¿ï¼Œå¯èƒ½ä¼šå¯¼è‡´ç”»çº¿ä¸åœ¨è·¯ä¸Š
 							canvas.drawLine(prev.x, prev.y, point.x, point.y, paint);
 							//path.lineTo(point.x, point.y);
 
@@ -173,8 +173,8 @@ public class TrackOverlay extends ItemizedOverlay<OverlayItem> {
 						}
 					} 
 					else {
-						//ÔÚ¿ÉÊÓÇøÓëÖ®Íâ
-						if (prevInBound) {//Ç°Ò»¸öµãÔÚ¿ÉÊÓÇøÓòÄÚ£¬Ò²ĞèÒª»®Ïß
+						//åœ¨å¯è§†åŒºä¸ä¹‹å¤–
+						if (prevInBound) {//å‰ä¸€ä¸ªç‚¹åœ¨å¯è§†åŒºåŸŸå†…ï¼Œä¹Ÿéœ€è¦åˆ’çº¿
 							//path.lineTo(point.x, point.y);
 							canvas.drawLine(prev.x, prev.y, point.x, point.y, paint);
 						}

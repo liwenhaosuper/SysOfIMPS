@@ -1,4 +1,4 @@
-package com.imps.activities;
+ï»¿package com.imps.activities;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -23,8 +23,8 @@ public class MyTab extends Activity{
 		setContentView(R.layout.mytab);
 		User me=UserManager.getGlobaluser();
 		tv=(TextView)findViewById(R.id.textView000);
-		String gender=me.getGender()==0?"ÄĞ":"Å®";
-		tv.setText("¸öÈË×ÊÁÏ£º/n"+"ĞÕÃû: "+me.getUsername()+"\n ĞÔ±ğ"+gender+"\n ÓÊ¼ş"+me.getEmail());
+		String gender=me.getGender()==0?"ç”·":"å¥³";
+		tv.setText("ä¸ªäººèµ„æ–™ï¼š/n"+"å§“å: "+me.getUsername()+"\n æ€§åˆ«"+gender+"\n é‚®ä»¶"+me.getEmail());
 	}   
 	@Override
 	public void onResume()

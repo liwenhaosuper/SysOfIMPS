@@ -1,4 +1,4 @@
-package com.imps.activities;
+ï»¿package com.imps.activities;
 
 import java.io.IOException;
 import java.util.List;
@@ -93,7 +93,7 @@ public class VideoContact extends Activity implements Callback {
 			updateStatus(status);
 			if(friName!=null&&!"".equals(friName))
 			{
-				setTitle("Óë"+friName+"ÊÓÆµÍ¨»°");
+				setTitle("ä¸"+friName+"è§†é¢‘é€šè¯");
 			}
 			if(!"127.0.0.1".equals(ip))
 			    showDialog(ALERT);
@@ -151,7 +151,7 @@ public class VideoContact extends Activity implements Callback {
 				String fri = bundle.getString("fUsername");
 				if(fri!=null&&!"".equals(fri))
 				{
-					setTitle("Óë"+friName+"ÊÓÆµÍ¨»°");
+					setTitle("ä¸"+friName+"è§†é¢‘é€šè¯");
 				}
 				int res = bundle.getInt("result");
 				//res = 3;
@@ -302,23 +302,23 @@ public class VideoContact extends Activity implements Callback {
     	this.status = status;
     	switch(status){
     	case READY:
-    		updateStatus("×¼±¸ÖĞ..."); 
+    		updateStatus("å‡†å¤‡ä¸­..."); 
     		break;
     	case CANCEL:
-    		updateStatus("Í¨»°ÒÑÈ¡Ïû...");
+    		updateStatus("é€šè¯å·²å–æ¶ˆ...");
     		stopVideo();
     		break;
     	case START:
-    		updateStatus("ÕıÔÚÍ¨»°ÖĞ...");
+    		updateStatus("æ­£åœ¨é€šè¯ä¸­...");
     		startVideo();
     		break;
     	case EXIT:
-    		updateStatus("ÕıÔÚ¹Ø±Õ...");
+    		updateStatus("æ­£åœ¨å…³é—­...");
     		stopVideo();
     		finish();
     		break;
     	case REJECT:
-    		updateStatus("ºÃÓÑÒÑ¾Ü¾øÄúµÄÊÓÆµÍ¨»°ÇëÇó");
+    		updateStatus("å¥½å‹å·²æ‹’ç»æ‚¨çš„è§†é¢‘é€šè¯è¯·æ±‚");
     		stopVideo();
     		break;
     	}
@@ -330,8 +330,8 @@ public class VideoContact extends Activity implements Callback {
     	Builder b = new AlertDialog.Builder(this);
     	switch (id){
     	case ALERT:
-    		b.setTitle("ÊÓÆµÍ¨Ñ¶ÇëÇó");
-    		b.setMessage("ÊÇ·ñ½ÓÊÜ"+friName+"µÄÊÓÆµÍ¨»°ÇëÇó£¿");
+    		b.setTitle("è§†é¢‘é€šè®¯è¯·æ±‚");
+    		b.setMessage("æ˜¯å¦æ¥å—"+friName+"çš„è§†é¢‘é€šè¯è¯·æ±‚ï¼Ÿ");
     		b.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {				
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
@@ -340,7 +340,7 @@ public class VideoContact extends Activity implements Callback {
 					int cnt = 0;
 					while("".equals(myip)||myip==null)
 					{
-						Toast.makeText(AudioChat.mContext, " µ±Ç°ÍøÂç²»¿ÉÓÃ£¬ÕıÔÚÖØÊÔ...", Toast.LENGTH_LONG);
+						Toast.makeText(AudioChat.mContext, " å½“å‰ç½‘ç»œä¸å¯ç”¨ï¼Œæ­£åœ¨é‡è¯•...", Toast.LENGTH_LONG);
 						try {
 							Thread.sleep(200);
 						} catch (InterruptedException e) {
@@ -366,7 +366,7 @@ public class VideoContact extends Activity implements Callback {
 					int cnt = 0;
 					while("".equals(myip))
 					{
-						Toast.makeText(AudioChat.mContext, " µ±Ç°ÍøÂç²»¿ÉÓÃ£¬ÕıÔÚÖØÊÔ...", Toast.LENGTH_LONG);
+						Toast.makeText(AudioChat.mContext, " å½“å‰ç½‘ç»œä¸å¯ç”¨ï¼Œæ­£åœ¨é‡è¯•...", Toast.LENGTH_LONG);
 						try {
 							Thread.sleep(200);
 						} catch (InterruptedException e) {

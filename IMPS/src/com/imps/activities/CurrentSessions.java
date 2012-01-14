@@ -128,7 +128,7 @@ public class CurrentSessions extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-	       		ComponentName cn=new ComponentName(CurrentSessions.this,FriendTab.class);			
+	       		ComponentName cn=new ComponentName(CurrentSessions.this,FriendListTab.class);			
 				Intent intent=new Intent();
 				intent.setComponent(cn);
 				startActivity(intent);

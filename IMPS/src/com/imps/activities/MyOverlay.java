@@ -1,4 +1,4 @@
-package com.imps.activities;
+ï»¿package com.imps.activities;
 
 
 import android.graphics.Canvas;
@@ -28,23 +28,23 @@ public class MyOverlay extends Overlay {
       Projection projection = mapView.getProjection();
       if (shadow == false) 
       {      
-        /* ÉèÖÃ±ÊË¢ */ 
+        /* è®¾ç½®ç¬”åˆ· */ 
         Paint paint = new Paint();
         paint.setAntiAlias(true);
         paint.setColor(Color.BLUE);
 
         Point point = new Point();
         projection.toPixels(gp1, point);
-        /* mode=1£º´´½¨Æğµã */
+        /* mode=1ï¼šåˆ›å»ºèµ·ç‚¹ */
         if(mode==1)
         {
-          /* ¶¨ÒåRectF¶ÔÏó */
+          /* å®šä¹‰RectFå¯¹è±¡ */
           RectF oval=new RectF(point.x - mRadius, point.y - mRadius,
                                point.x + mRadius, point.y + mRadius); 
-          /* »æÖÆÆğµãµÄÔ²ĞÎ */ 
+          /* ç»˜åˆ¶èµ·ç‚¹çš„åœ†å½¢ */ 
           canvas.drawOval(oval, paint);
         }
-        /* mode=2£º»­Â·Ïß */
+        /* mode=2ï¼šç”»è·¯çº¿ */
         else if(mode==2)
         {
           Point point2 = new Point(); 
@@ -53,24 +53,24 @@ public class MyOverlay extends Overlay {
           paint.setStrokeWidth(5);
           paint.setAlpha(120);
           Log.d(tag, "hua");
-          /* »­Ïß */ 
+          /* ç”»çº¿ */ 
           canvas.drawLine(point.x, point.y, point2.x,point2.y, paint);
           Log.d(tag, "le");
         }
-        /* mode=3£º´´½¨ÖÕµã */
+        /* mode=3ï¼šåˆ›å»ºç»ˆç‚¹ */
         else if(mode==3)
         {
-          /* ±ÜÃâÎó²î£¬ÏÈ»­×îºóÒ»¶ÎµÄÂ·Ïß */
+          /* é¿å…è¯¯å·®ï¼Œå…ˆç”»æœ€åä¸€æ®µçš„è·¯çº¿ */
           Point point2 = new Point(); 
           projection.toPixels(gp2, point2);
           paint.setStrokeWidth(5);
           paint.setAlpha(120);
           canvas.drawLine(point.x, point.y, point2.x,point2.y, paint);
           
-          /* ¶¨ÒåRectF¶ÔÏó */ 
+          /* å®šä¹‰RectFå¯¹è±¡ */ 
           RectF oval=new RectF(point2.x - mRadius,point2.y - mRadius,  
                                point2.x + mRadius,point2.y + mRadius);
-          /* »æÖÆÖÕµãµÄÔ²ĞÎ */
+          /* ç»˜åˆ¶ç»ˆç‚¹çš„åœ†å½¢ */
           paint.setAlpha(255);
           canvas.drawOval(oval, paint);
         }

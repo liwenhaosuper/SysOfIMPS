@@ -1,6 +1,6 @@
-package com.imps.activities;
+ï»¿package com.imps.activities;
 
-/* importÏà¹Øclass */
+/* importç›¸å…³class */
 import java.util.List;
 
 import com.imps.R;
@@ -13,26 +13,26 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-/* ×Ô¶¨ÒåµÄAdapter£¬¼Ì³Ğandroid.widget.BaseAdapter */
+/* è‡ªå®šä¹‰çš„Adapterï¼Œç»§æ‰¿android.widget.BaseAdapter */
 public class MyAdapter extends BaseAdapter
 {
-  /* ±äÁ¿ÉùÃ÷ */
+  /* å˜é‡å£°æ˜ */
   private LayoutInflater mInflater;
   private List<String> items;
   private List<String> values;
  
-  /* MyAdapterµÄ¹¹ÔìÆ÷£¬´«ÈëÈı¸ö²ÎÊı  */  
+  /* MyAdapterçš„æ„é€ å™¨ï¼Œä¼ å…¥ä¸‰ä¸ªå‚æ•°  */  
   public MyAdapter(Context context,List<String> item,
                    List<String> value)
   {
-    /* ²ÎÊı³õÊ¼»¯ */
+    /* å‚æ•°åˆå§‹åŒ– */
     mInflater = LayoutInflater.from(context);
     items = item;
     values = value;
   
   }
   
-  /* Òò¼Ì³ĞBaseAdapter£¬Ğè¸²¸ÇÒÔÏÂ·½·¨ */
+  /* å› ç»§æ‰¿BaseAdapterï¼Œéœ€è¦†ç›–ä»¥ä¸‹æ–¹æ³• */
   
   public int getCount()
   {
@@ -58,9 +58,9 @@ public class MyAdapter extends BaseAdapter
   
     if(convertView == null)
     {
-      /* Ê¹ÓÃ×Ô¶¨ÒåµÄfile_row×÷ÎªLayout */
+      /* ä½¿ç”¨è‡ªå®šä¹‰çš„file_rowä½œä¸ºLayout */
       convertView = mInflater.inflate(R.layout.row_layout,null);
-      /* ³õÊ¼»¯holderµÄtextÓëicon */
+      /* åˆå§‹åŒ–holderçš„textä¸icon */
       holder = new ViewHolder();
       holder.text1=(TextView)convertView.findViewById(R.id.myText1);
       holder.text2=(TextView)convertView.findViewById(R.id.myText2);
@@ -71,7 +71,7 @@ public class MyAdapter extends BaseAdapter
     {
       holder = (ViewHolder) convertView.getTag();
     }
-    /* ÉèÖÃÒªÏÔÊ¾µÄĞÅÏ¢ */
+    /* è®¾ç½®è¦æ˜¾ç¤ºçš„ä¿¡æ¯ */
     holder.text1.setText(items.get(position).toString());
     holder.text2.setText(values.get(position).toString());
    
@@ -81,8 +81,8 @@ public class MyAdapter extends BaseAdapter
   /* class ViewHolder */
   private class ViewHolder
   {
-    /* text1£ºĞÅÏ¢Ãû³Æ
-     * text2£ºĞÅÏ¢ÄÚÈİ */
+    /* text1ï¼šä¿¡æ¯åç§°
+     * text2ï¼šä¿¡æ¯å†…å®¹ */
     TextView text1;
     TextView text2;
    

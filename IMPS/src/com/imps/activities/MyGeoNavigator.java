@@ -1,4 +1,4 @@
-package com.imps.activities;
+ï»¿package com.imps.activities;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -36,8 +36,8 @@ import android.widget.Toast;
 import com.google.android.maps.GeoPoint;
 
 /**
- * ¶¨Î»Àà
- * @author Administrator
+ * gps module
+ * @author liwenhaosuper
  *
  */
 public class MyGeoNavigator {
@@ -45,44 +45,40 @@ public class MyGeoNavigator {
 	/**
 	 * private members
 	 */
-	//¶¨Î»·½·¨
-	private final static String Satellite = "ÎÀĞÇ";
-	private final static String BaseLocation = "»ùÕ¾";
-	private final static String NullDevice = "ÔİÎŞ¶¨Î»ĞÅÏ¢";
-	private enum LocOfType{  //¶¨Î»ÀàĞÍ
-		GPS_LOCATION,  //gps¶¨Î»
-		BASE_TOWER,    //»ùÕ¾¶¨Î»
-		WIFI_LOCATION  //wifi¶¨Î»
+
+	private final static String Satellite = "å«æ˜Ÿ";
+	private final static String BaseLocation = "åŸºç«™";
+	private final static String NullDevice = "æ— å®šä½è®¾å¤‡";
+	private enum LocOfType{  
+		GPS_LOCATION,  
+		BASE_TOWER,    
+		WIFI_LOCATION  
 	}
-	private static MyGeoNavigator navigator = null;//ÊµÀı 
+	private static MyGeoNavigator navigator = null;
 	private static Context myContext;     
 	private LocationManager mLocationManager;	
 	private Location mLocation;
 	private String strLocationProvider;
 	//private LocationListener mLocationListener;
-	private static LocationCallBack mCallback;  //map activity»Øµ÷±äÁ¿
-	private GeoPoint currentGeoPoint;   //ÓÃ»§µ±Ç°Î»ÖÃ
+	private static LocationCallBack mCallback; 
+	private GeoPoint currentGeoPoint;   
 	private TelephonyManager tm;
-	private static LocOfType MyLocType;      //µ±Ç°¶¨Î»·½·¨
+	private static LocOfType MyLocType;      
 	private static Handler mHandler;         
-	//ÎÀĞÇ¶¨Î»Ïà¹Ø
-	private List<GpsSatellite> numSatelliteList = new ArrayList<GpsSatellite>(); // ÎÀĞÇĞÅºÅ
-	private static final int MINTIME = 2000;   //×îĞ¡¶¨Î»¸üĞÂÊ±¼ä¼ä¸ô
-	private static final int MININSTANCE = 2;  //×îĞ¡¶¨Î»¸üĞÂÎ»ÖÃ¾àÀë
-	//private GpsStatus.Listener statusListener; //ÎÀĞÇ×´Ì¬¼àÌıÆ÷
-	private int satelliteCount = 0;//ÎÀĞÇÊıÁ¿
+	private List<GpsSatellite> numSatelliteList = new ArrayList<GpsSatellite>(); 
+	private static final int MINTIME = 2000;   
+	private static final int MININSTANCE = 2;  
+	private int satelliteCount = 0;
 	public final static int LOCATION_BASE_ID = 100;
 	private Timer timer;
 	
-	//»ñÈ¡¶¨Î»ÊµÀı
+
 	public static MyGeoNavigator getInstance()
 	{
 		if(navigator==null)
 			navigator = new MyGeoNavigator();
 		return navigator;
 	}
-	
-	//³õÊ¼»¯ÎÀĞÇ×´Ì¬¼àÌıÆ÷
 	private GpsStatus.Listener statusListener = new GpsStatus.Listener() {		
 		@Override
 		public void onGpsStatusChanged(int event) {
@@ -113,7 +109,6 @@ public class MyGeoNavigator {
 			}
 		}
 	};
-   //³õÊ¼»¯Î»ÖÃ¼àÌıÆ÷
 	private LocationListener mLocationListener = new LocationListener(){
 
 		@Override
@@ -148,7 +143,6 @@ public class MyGeoNavigator {
 		}
 	};
 	
-	//³õÊ¼»¯³ÉÔ±
 	public void initMethod()
 	{
 	    timer = new Timer();
@@ -180,59 +174,55 @@ public class MyGeoNavigator {
 	    }, 3000,10000);
 	    
 	}
-	//³õÊ¼»¯µØÍ¼.¸Ã·½·¨±ØĞëÔÚÉú³ÉÊµÀıÇ°µ÷ÓÃ
+
 	public static void init(Context context,LocationCallBack locationcallback,Handler handler)
 	{
 		myContext = context;
 		mCallback = locationcallback;
 		mHandler = handler;
 	}
-	//¹¹Ôìº¯Êı
+
 	public MyGeoNavigator()
 	{
 		tm = (TelephonyManager) myContext.getSystemService(Context.TELEPHONY_SERVICE);
 		mLocationManager = (LocationManager)myContext.getSystemService(Context.LOCATION_SERVICE);
-		OpenGPSDevice(); //´ò¿ªGPS
-		mLocationManager.addGpsStatusListener(statusListener); //Ìí¼Ó¼àÌı
+		OpenGPSDevice(); 
+		mLocationManager.addGpsStatusListener(statusListener); 
 		mLocation = getLocationProvider(mLocationManager);
 		mLocationManager.requestLocationUpdates(strLocationProvider, 0, 0, mLocationListener);
 		initMethod();
 		Log.d("MyGeoNavigator", strLocationProvider);
 		
 	}
+
 	
-	/**
-	 * ¶¨Î»·½Ê½ÉèÖÃ
-	 * 
-	 */
-	
-	//ÉèÖÃµ±Ç°×îÊÊÒËµÄ¶¨Î»·½Ê½,·µ»Øµ±Ç°¶¨Î»·½Ê½
+
 	public LocOfType SetBestLocator()
 	{
 		return null;
 	}
-	//»ñÈ¡µ±Ç°×îÊÊÒËµÄ¶¨Î»·½Ê½
+
 	public LocOfType GetBestLocator()
 	{
 		return null;
 	}
-	//ÉèÖÃµ±Ç°¶¨Î»·½Ê½ÎªGPS¶¨Î»£¬³É¹¦Ôò·µ»Øtrue
+
 	public boolean SetGPSLocator()
 	{
 		return false;
 	}
-	//ÉèÖÃµ±Ç°¶¨Î»·½Ê½Îªwifi¶¨Î»£¬³É¹¦Ôò·µ»Øtrue
+
 	public boolean SetWifiLocator()
 	{
 		return false;
 	}
-	//ÉèÖÃµ±Ç°¶¨Î»·½Ê½Îª»ùÕ¾¶¨Î»£¬³É¹¦Ôò·µ»Øtrue
+
 	public boolean SetBaseTowerLocator()
 	{
 		return false;
 	}
 	
-	//¸üĞÂµØÍ¼µ½ĞÂµÄÎ»ÖÃ
+
 	private void updateToNewLocation(Location location)
 	{
 		Log.d("MyNavigator", "updating location");
@@ -250,16 +240,16 @@ public class MyGeoNavigator {
 		mLocation = location;
 		mCallback.onCurrentLocation(currentGeoPoint);
 	}
-    //¿ªÆôGPS
+
 	public boolean OpenGPSDevice()
 	{
 		if (mLocationManager.isProviderEnabled(android.location.LocationManager.GPS_PROVIDER ) && mLocationManager.isProviderEnabled(android.location.LocationManager.NETWORK_PROVIDER)) {
 			return true;
 		}
-		Toast.makeText(myContext, "Çë¿ªÆôGPSÓëÎŞÏßÍøÂç¶¨Î»", Toast.LENGTH_LONG).show();
+		Toast.makeText(myContext, "è¯·æ‰“å¼€GPSä¸æ— çº¿ç½‘ç»œå®šä½", Toast.LENGTH_LONG).show();
 		return false;
 	}
-	//»ñÈ¡×î¾«È·µÄÎ»ÖÃ
+
 	public GeoPoint getBestLocation()
 	{	
 		GeoPoint tpoint= getGeoByLocation(mLocation);
@@ -267,13 +257,12 @@ public class MyGeoNavigator {
 		{
 			return tpoint;
 		}
-		if(satelliteCount<1)//ÎÀĞÇÊıÁ¿Ğ¡ÓÚ4¿Å,ÆôÓÃ»ùÕ¾¶¨Î»
+		if(satelliteCount<1)
 		{
 		    new Thread(new Runnable(){
 				@Override
 				public void run() {
 					// TODO Auto-generated method stub	
-					Log.d("MyGeoNavigator", "»ùÕ¾¶¨Î»...");
 					Message msg =  new Message();	
 					msg.what = LOCATION_BASE_ID;
 					msg.obj = getNetWorkLocation();
@@ -288,19 +277,19 @@ public class MyGeoNavigator {
 			return getGeoByLocation(mLocation);
 		}
 	}
-	//GPS¶¨Î»
+
 	private Location getLocationProvider(LocationManager mLocationManager) {
 		// TODO Auto-generated method stub
 		Location location = null;
 		try {
 			Criteria mcriteria = new Criteria();
-			mcriteria.setAccuracy(Criteria.ACCURACY_FINE);//¶¨Î»¾«¶È
-			mcriteria.setAltitudeRequired(false);//ÊÇ·ñÓĞº£°ÎĞèÒª
-			mcriteria.setBearingRequired(false); //ÊÇ·ñÓĞ·½Ïò¸ĞµÄĞèÒª
-			mcriteria.setCostAllowed(true); //ÔÊĞí¶¨Î»ÏûºÄĞèÒªÇ®µÄÁ÷Á¿
+			mcriteria.setAccuracy(Criteria.ACCURACY_FINE);
+			mcriteria.setAltitudeRequired(false);
+			mcriteria.setBearingRequired(false); 
+			mcriteria.setCostAllowed(true); 
 			mcriteria.setPowerRequirement(Criteria.POWER_MEDIUM);
 			strLocationProvider = mLocationManager.getBestProvider(mcriteria,
-					true);  //·µ»ØÊÊºÏÕâÖÖ¶¨Î»×¼ÔòµÄ×î¼ÑLocationManager
+					true);  
 			location = mLocationManager.getLastKnownLocation(strLocationProvider);					
 /*			if(getGeoByLocation(location)==null)
 			{
@@ -314,8 +303,11 @@ public class MyGeoNavigator {
 		}
 		return location;
 	}
-	//»ùÕ¾¶¨Î»
+
 	private GeoPoint getNetWorkLocation(){
+		if(true){
+			return null;
+		}
 		tm = (TelephonyManager) myContext.getSystemService(Context.TELEPHONY_SERVICE);
 		GsmCellLocation gcl = (GsmCellLocation) tm.getCellLocation();
 		int cid = gcl.getCid();
@@ -325,7 +317,7 @@ public class MyGeoNavigator {
 		int mnc = Integer.valueOf(tm.getNetworkOperator().substring(3,
 				5));
 		try {
-			// ×é×°JSON²éÑ¯×Ö·û´®
+			
 			JSONObject holder = new JSONObject();
 			holder.put("version", "1.1.0");
 			holder.put("host", "maps.google.com");
@@ -339,7 +331,6 @@ public class MyGeoNavigator {
 			data.put("mobile_network_code", mnc);// 0
 			array.put(data);
 			holder.put("cell_towers", array);
-			// ´´½¨Á¬½Ó£¬·¢ËÍÇëÇó²¢½ÓÊÜ»ØÓ¦
 			DefaultHttpClient client = new DefaultHttpClient();
 			HttpPost post = new HttpPost(
 					"http://www.google.com/loc/json");
@@ -428,11 +419,9 @@ public class MyGeoNavigator {
 	    } 
 	    return provider1.equals(provider2); 
 	}
-	
-	//Î»ÖÃ»Øµ÷½Ó¿Ú£¬½«ÓÉmapµÄactivityÊµÏÖ
+
 	public interface LocationCallBack
 	{
-		//location: µ±Ç°Î»ÖÃ
 		void onCurrentLocation(GeoPoint location);
 	}
 		

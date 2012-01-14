@@ -1,4 +1,4 @@
-package com.imps.activities;
+锘縫ackage com.imps.activities;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -170,7 +170,7 @@ public class SystemMsg extends Activity{
 				      	  String stime = dt.format(now);
 						UserManager.getInstance().AddFriRsp(friName, true);
 						appendToList("You have accepted "+friName+" as your new friend",stime);
-						//请求好友列表
+						//璇锋眰濂藉弸鍒楄〃
 						UserManager.getInstance().SendFriListReq();
 					}
 				}).setNegativeButton(R.string.deny, new DialogInterface.OnClickListener() {

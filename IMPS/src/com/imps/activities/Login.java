@@ -1,5 +1,5 @@
-package com.imps.activities;
-//登录界面
+锘縫ackage com.imps.activities;
+
 
 
 import java.io.IOException;
@@ -102,13 +102,10 @@ public class Login extends Activity {
         gv.setGifImage(R.drawable.earth);
         
         pd = new ProgressDialog(Login.this);
-		//设置进度条风格，风格为圆形，旋转的 
-		pd.setProgressStyle(ProgressDialog.STYLE_SPINNER); 
-		//设置ProgressDialog 提示信息 
-		pd.setMessage("登录中，请稍后..."); 
-		//设置ProgressDialog 的进度条是否不明确 
+
+		pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);  
+		pd.setMessage(getResources().getString(R.string.login_loading)); 
 		pd.setIndeterminate(false); 
-		//设置ProgressDialog 是否可以按退回按键取消 
 		pd.setCancelable(false); 
         
         java.lang.System.setProperty("java.net.preferIPv6Addresses", "false");
@@ -184,8 +181,8 @@ public class Login extends Activity {
     	Builder b = new AlertDialog.Builder(this);
     	switch (id){
     	case ALERT_DIALOG:
-    		b.setTitle("登录错误").setIcon(R.drawable.icon);
-    		b.setMessage("请输入用户名");
+    		b.setTitle(getResources().getString(R.string.login_error)).setIcon(R.drawable.icon);
+    		b.setMessage(getResources().getString(R.string.login_username_required));
     		b.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {				
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
@@ -195,8 +192,8 @@ public class Login extends Activity {
     		dialog = b.create();
     		break;
     	case ALERT_DIALOG + 1:
-    		b.setTitle("登录错误").setIcon(R.drawable.icon);
-    		b.setMessage("请输入密码");
+    		b.setTitle(getResources().getString(R.string.login_error)).setIcon(R.drawable.icon);
+    		b.setMessage(getResources().getString(R.string.login_password_required));
     		b.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 				
 				@Override
@@ -207,8 +204,8 @@ public class Login extends Activity {
     		dialog = b.create();
     		break;
     	case ALERT_DIALOG + 2:
-    		b.setTitle("登录错误").setIcon(R.drawable.icon);
-    		b.setMessage("用户名或密码错误");
+    		b.setTitle(getResources().getString(R.string.login_error)).setIcon(R.drawable.icon);
+    		b.setMessage(getResources().getString(R.string.login_username_password_error));
     		b.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 				
 				@Override
@@ -220,8 +217,8 @@ public class Login extends Activity {
     		dialog = b.create();
     		break;
     	case NET_ERROR:
-    		b.setTitle("网络错误").setIcon(R.drawable.icon);
-    		b.setMessage("您当前网络不佳，请检查网络并稍后重试");
+    		b.setTitle(getResources().getString(R.string.login_net_error)).setIcon(R.drawable.icon);
+    		b.setMessage(getResources().getString(R.string.net_problem));
     		b.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 				
 				@Override
@@ -233,7 +230,7 @@ public class Login extends Activity {
     		dialog = b.create();   	
     		break;
     	case ERROR:
-    		b.setTitle("登录错误").setIcon(R.drawable.icon);
+    		b.setTitle(getResources().getString(R.string.login_error)).setIcon(R.drawable.icon);
     		b.setMessage(errorMsg);
     		b.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 				
@@ -314,9 +311,8 @@ public class Login extends Activity {
 			}
 			else if("login_success".equals(action))
 			{
-				Toast.makeText(Login.this, "登录成功", Toast.LENGTH_SHORT).show();
+				Toast.makeText(Login.this,getResources().getString(R.string.login_success), Toast.LENGTH_SHORT).show();
 				System.out.println("!!!login_success has been received!!!");
-				//请求好友列表
 				UserManager.getInstance().SendFriListReq();
 				ComponentName cn=new ComponentName(Login.this,My_Map.class);
 				Intent ti=new Intent();
@@ -341,11 +337,7 @@ public class Login extends Activity {
     public void initialConfig() throws Exception
     {
     	Configure config = new Configure();
-        /**
-         * 127.0.0.1换成响应的服务器IP
-         * 1200为对应的端口号
-         */
-        config.setAddress(new InetSocketAddress("192.168.0.102",1200));
+        config.setAddress(new InetSocketAddress("169.254.95.183",1200));
         config.setProtocolHandler(new NetProtocolHandler());
         config.setIoHandler(new LogicHandler());
         Client.connector = new IoConnector();

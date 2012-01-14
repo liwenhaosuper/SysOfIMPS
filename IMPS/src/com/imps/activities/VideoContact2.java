@@ -1,4 +1,4 @@
-package com.imps.activities;
+锘縫ackage com.imps.activities;
 
 import java.lang.reflect.Method;
 import java.util.List;
@@ -26,13 +26,14 @@ import android.widget.Toast;
 import com.imps.R;
 import com.imps.handler.UserManager;
 import com.imps.media.rtp.core.NetworkFactory;
+import com.imps.media.video.IVideoEventListener;
 import com.imps.media.video.LiveVideoPlayer;
 import com.imps.media.video.VideoRenderer;
 import com.imps.media.video.VideoSurfaceView;
 import com.imps.media.video.codec.H263Config;
 import com.imps.util.CommonHelper;
 
-public class VideoContact2 extends Activity implements SurfaceHolder.Callback{
+public class VideoContact2 extends Activity implements SurfaceHolder.Callback,IVideoEventListener{
 
 	private final static byte READY = 0;
 	private final static byte CANCEL = 1;
@@ -101,7 +102,7 @@ public class VideoContact2 extends Activity implements SurfaceHolder.Callback{
 	private String friName;
 	private ExitReceiver exitReceiver = new ExitReceiver();
 	private boolean isDebug = false;
-	
+	private boolean isStarted = false;
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
@@ -131,6 +132,7 @@ public class VideoContact2 extends Activity implements SurfaceHolder.Callback{
         }
         outgoingPlayer = new LiveVideoPlayer(outgoingVideoFormat);
         outgoingVideoView.setAspectRatio(videoWidth, videoHeight);
+        outgoingPlayer.addIMediaEventListener(this);
         mSurfaceHolder = outgoingVideoView.getHolder();
         mSurfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
         mSurfaceHolder.addCallback(this);
@@ -140,20 +142,23 @@ public class VideoContact2 extends Activity implements SurfaceHolder.Callback{
         incomingVideoView.setAspectRatio(videoWidth, videoHeight);
         incomingRenderer = new VideoRenderer(incomingVideoFormat);
         incomingRenderer.setVideoSurface(incomingVideoView);
-      
+        incomingRenderer.addIMediaEventListener(this);
         Intent fi = this.getIntent();
 		if(fi!=null)
 		{
 			friName = fi.getStringExtra("fUsername");
 			ip = fi.getStringExtra("ip");
-			if(ip==null)
+			if(ip==null){
 				ip = "127.0.0.1";
+				incomingRenderer.notifyPlayerEventError(getResources().getString(R.string.unknow_request));
+				return;
+			}
 			else Log.d("VideoContact2", "oncreate: IP is "+ip);
 			port = fi.getIntExtra("port", 1300);
 			updateStatus(status);
 			if(friName!=null&&!"".equals(friName))
 			{
-				setTitle("与"+friName+"视频通话");
+				setTitle(getResources().getString(R.string.video_chat_title,friName));
 			}
 			if(!"127.0.0.1".equals(ip))
 			    showDialog(ALERT);
@@ -201,23 +206,23 @@ public class VideoContact2 extends Activity implements SurfaceHolder.Callback{
 	    	this.status = status;
 	    	switch(status){
 	    	case READY:
-	    		updateStatus("准备中..."); 
+	    		updateStatus(getResources().getString(R.string.audio_status_ready)); 
 	    		break;
 	    	case CANCEL:
-	    		updateStatus("通话已取消...");
+	    		updateStatus(getResources().getString(R.string.audio_status_cancel));
 	    		stopVideo();
 	    		break;
 	    	case START:
-	    		updateStatus("正在通话中...");
+	    		updateStatus(getResources().getString(R.string.audio_status_start));
 	    		startVideo();
 	    		break;
 	    	case EXIT:
-	    		updateStatus("正在关闭...");
+	    		updateStatus(getResources().getString(R.string.audio_status_exit));
 	    		stopVideo();
 	    		finish();
 	    		break;
 	    	case REJECT:
-	    		updateStatus("好友已拒绝您的视频通话请求");
+	    		updateStatus(getResources().getString(R.string.video_request_reject));
 	    		stopVideo();
 	    		break;
 	    	}
@@ -365,7 +370,7 @@ public class VideoContact2 extends Activity implements SurfaceHolder.Callback{
 				String fri = bundle.getString("fUsername");
 				if(fri!=null&&!"".equals(fri))
 				{
-					setTitle("与"+friName+"视频通话");
+					setTitle(getResources().getString(R.string.video_chat_title,fri));
 				}
 				int res = bundle.getInt("result");
 				//res = 3;
@@ -378,10 +383,12 @@ public class VideoContact2 extends Activity implements SurfaceHolder.Callback{
 						ip = "127.0.0.1";
 					}
 					port = bundle.getInt("port", 1300);
-					updateStatus(START);
+					//updateStatus(START);
+					onMediaAccept();
 				}
 				else {
-					updateStatus(REJECT);
+					//updateStatus(REJECT);
+					onMediaReject();
 				}
 			}
 		}		
@@ -402,31 +409,36 @@ public class VideoContact2 extends Activity implements SurfaceHolder.Callback{
     	isRunning = true;
     	receiver = new VideoReceiver(this,mSurfaceHolder,ip,2011);
     	receiver.start();*/
+    	if(isStarted)
+    		return;
     	Log.d("VideoContact2", "startVideo is called");
     	if(isDebug)
     	{
     		incomingRenderer.open("127.0.0.1", 1300);   	
         	incomingRenderer.start();
-        	outgoingPlayer.open("127.0.0.1", 1300);//sender
+        	outgoingPlayer.open("127.0.0.1", port);//sender
         	outgoingPlayer.start();
     	}
     	else{
-    		incomingRenderer.open(ip, 1300);   	
+    		incomingRenderer.open(ip, port);   	
         	incomingRenderer.start();
-        	outgoingPlayer.open(ip, 1300);//sender
+        	outgoingPlayer.open(ip, port);//sender
         	outgoingPlayer.start();
     	}
-    	
+    	isStarted = true;
     }
     public void stopVideo(){
 /*    	isRunning = false;
     	Log.d("VideoContact", "stopVideo is called");
     	sender.stopThread();
     	receiver.closeCameraSource();*/
+    	if(!isStarted)
+    		return;
     	incomingRenderer.stop();
     	incomingRenderer.close();
     	outgoingPlayer.close();   	
     	outgoingPlayer.stop();
+    	isStarted = false;
     }
     
     protected Dialog onCreateDialog(int id){
@@ -434,8 +446,8 @@ public class VideoContact2 extends Activity implements SurfaceHolder.Callback{
     	Builder b = new AlertDialog.Builder(this);
     	switch (id){
     	case ALERT:
-    		b.setTitle("视频通讯请求");
-    		b.setMessage("是否接受"+friName+"的视频通话请求？");
+    		b.setTitle(getResources().getString(R.string.video_chat_request_title));
+    		b.setMessage(getResources().getString(R.string.video_chat_request_message,friName));
     		b.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {				
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
@@ -444,7 +456,7 @@ public class VideoContact2 extends Activity implements SurfaceHolder.Callback{
 					int cnt = 0;
 					while("".equals(myip)||myip==null)
 					{
-						Toast.makeText(AudioChat.mContext, " 当前网络不可用，正在重试...", Toast.LENGTH_LONG);
+						Toast.makeText(AudioChat.mContext,getResources().getString(R.string.net_problem_and_retrying), Toast.LENGTH_LONG);
 						try {
 							Thread.sleep(200);
 						} catch (InterruptedException e) {
@@ -470,7 +482,7 @@ public class VideoContact2 extends Activity implements SurfaceHolder.Callback{
 					int cnt = 0;
 					while("".equals(myip))
 					{
-						Toast.makeText(AudioChat.mContext, " 当前网络不可用，正在重试...", Toast.LENGTH_LONG);
+						Toast.makeText(AudioChat.mContext,getResources().getString(R.string.net_problem_and_retrying), Toast.LENGTH_LONG);
 						try {
 							Thread.sleep(200);
 						} catch (InterruptedException e) {
@@ -493,6 +505,44 @@ public class VideoContact2 extends Activity implements SurfaceHolder.Callback{
     		break;
     	} 
     	return dialog;
+	}
+	@Override
+	public void onMediaOpened() {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void onMediaClosed() {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void onMediaStarted() {
+		// TODO Auto-generated method stub
+		startVideo();
+	}
+	@Override
+	public void onMediaStopped() {
+		// TODO Auto-generated method stub
+		//updateStatus("");
+		stopVideo();
+	}
+	@Override
+	public void onMediaError(String errorMsg) {
+		// TODO Auto-generated method stub
+		updateStatus(errorMsg);
+	}
+	@Override
+	public void onMediaAccept() {
+		// TODO Auto-generated method stub
+		updateStatus(getResources().getString(R.string.audio_status_start));
+		startVideo();
+	}
+	@Override
+	public void onMediaReject() {
+		// TODO Auto-generated method stub
+		updateStatus(getResources().getString(R.string.video_request_reject));
+		stopVideo();
 	}
     
 }

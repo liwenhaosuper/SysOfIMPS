@@ -1,4 +1,4 @@
-package com.imps.activities;
+ï»¿package com.imps.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -46,7 +46,8 @@ implements ColorPickerDialog.OnColorChangedListener {
         super.onCreate(savedInstanceState);
         getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.graffiti);
-        setTitle("ÊÖÐ´°å");
+        String title = getResources().getString(R.string.hand_write_gesture);
+        setTitle(title);
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
         mPaint.setDither(true);
@@ -95,12 +96,12 @@ implements ColorPickerDialog.OnColorChangedListener {
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         
-        menu.add(0, COLOR_MENU_ID, 0, "ÑÕÉ«").setShortcut('3', 'c');
-        menu.add(0, EMBOSS_MENU_ID, 0, "¸ßÁÁ").setShortcut('4', 's');
-        menu.add(0, BLUR_MENU_ID, 0, "Ä£ºý").setShortcut('5', 'z');
-        menu.add(0, ERASE_MENU_ID, 0, "ÏðÆ¤").setShortcut('5', 'z');
-        menu.add(0, SRCATOP_MENU_ID, 0, "Í¹ºÛ").setShortcut('5', 'z');
-        menu.add(0,CLEAR_ID,0,"Çå³ý").setShortcut('5','z');
+        menu.add(0, COLOR_MENU_ID, 0, getResources().getString(R.string.graffiti_color)).setShortcut('3', 'c');
+        menu.add(0, EMBOSS_MENU_ID, 0, getResources().getString(R.string.graffiti_highlight)).setShortcut('4', 's');
+        menu.add(0, BLUR_MENU_ID, 0, getResources().getString(R.string.graffiti_bold)).setShortcut('5', 'z');
+        menu.add(0, ERASE_MENU_ID, 0, getResources().getString(R.string.graffiti_eraser)).setShortcut('5', 'z');
+        menu.add(0, SRCATOP_MENU_ID, 0, getResources().getString(R.string.graffiti_trace)).setShortcut('5', 'z');
+        menu.add(0,CLEAR_ID,0,getResources().getString(R.string.graffiti_clear)).setShortcut('5','z');
         return true;
     }
     @Override

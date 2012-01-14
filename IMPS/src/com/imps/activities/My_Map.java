@@ -1,4 +1,4 @@
-package com.imps.activities;
+锘縫ackage com.imps.activities;
 
 
 import java.io.IOException;
@@ -85,9 +85,9 @@ public class My_Map extends MapActivity implements LocationCallBack,View.OnClick
 	private static final int MENU_Exit = Menu.FIRST + 4;
 	private static final int MENU_Configue=Menu.FIRST+7;
 	private static final int MENU_About = Menu.FIRST + 8;
-	//好友位置 string:friname  geopoint: position
+	
 	private static HashMap<User,GeoPoint> friPosList = null;
-	public static GeoPoint currentGeoPoint ;//我的位置
+	public static GeoPoint currentGeoPoint ;
 	private static boolean addPointFlag = false;
 	private static ImageButton curSessionsTab, friendListTab, mainMenuTab;	
 	private static String username = null;
@@ -96,10 +96,10 @@ public class My_Map extends MapActivity implements LocationCallBack,View.OnClick
 	private static ArrayList<String> pointItems_address = new ArrayList<String>();
 	private static MyGeoNavigator myNavigator = null;
 	private Handler myhander;
-	private defaultPopUpOverlay myLocationOverlay;  //我的位置层
-	private defaultPopUpOverlay onlineFriLocationOverlay; //在线好友位置层
-	private defaultPopUpOverlay offlineFriLocationOverlay; //离线好友位置层
-	private defaultPopUpOverlay longPressOverlay;  //长按时间层
+	private defaultPopUpOverlay myLocationOverlay;  
+	private defaultPopUpOverlay onlineFriLocationOverlay; 
+	private defaultPopUpOverlay offlineFriLocationOverlay; 
+	private defaultPopUpOverlay longPressOverlay;
 	private List<Overlay> mapOverlays;
 	public GeoPoint locPoint;
 	public final int MSG_VIEW_LONGPRESS = 10001;
@@ -135,7 +135,6 @@ public class My_Map extends MapActivity implements LocationCallBack,View.OnClick
 	{
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		//初始化UI
 		setContentView(R.layout.my_map);
 		System.out.println(" map creates");
 		map = (MapView) findViewById(R.id.MapView);
@@ -166,13 +165,13 @@ public class My_Map extends MapActivity implements LocationCallBack,View.OnClick
 		longPressOverlay = new defaultPopUpOverlay(this.getResources().getDrawable(R.drawable.point_start),this,map,popView,mc);
 		mapOverlays.add(new LongPressOverlay(this, map, myhander, mc));
 		mc.setZoom(12);
-		//定位管理
+
 		MyGeoNavigator.init(My_Map.this.getApplicationContext(), My_Map.this, myhander);
 		myNavigator = MyGeoNavigator.getInstance();
 		displayFriLocation();
 		displayMyLocation();
-		//服务器通讯
-		check = new RegularUserCheck(UserManager.getGlobaluser());//心跳检测。。。
+
+		check = new RegularUserCheck(UserManager.getGlobaluser());
 		UserManager.getTimer().schedule(check, 1000*5,1000*20);
 		try {
 			NetworkFactory.loadFactory("com.imps.media.rtp.core.AndroidNetworkFactory");
@@ -180,7 +179,7 @@ public class My_Map extends MapActivity implements LocationCallBack,View.OnClick
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//位置显示
+
 	/*	this.startService(new Intent(Constants.SERVICENAME));
 	      Object previousInstanceData = getLastNonConfigurationInstance();
 	      if( previousInstanceData != null && previousInstanceData instanceof GPSLoggerServiceManager )
@@ -194,8 +193,7 @@ public class My_Map extends MapActivity implements LocationCallBack,View.OnClick
 	      mLoggerServiceManager.startup();
 	      Log.d("My_Map", "gps logger service start");*/
 	}
-	//菜单按钮事件
-	//菜单按钮事件
+
 	void processTabClick()
 	{
 		curSessionsTab.setOnClickListener(new View.OnClickListener() {			
@@ -219,7 +217,7 @@ public class My_Map extends MapActivity implements LocationCallBack,View.OnClick
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-	       		ComponentName cn=new ComponentName(My_Map.this,FriendTab.class);				
+	       		ComponentName cn=new ComponentName(My_Map.this,FriendListTab.class);				
 				Bundle bundle = new Bundle();
 				if (username != null){
 					bundle.putString("mUsername", username);
@@ -248,7 +246,7 @@ public class My_Map extends MapActivity implements LocationCallBack,View.OnClick
 			return;
 		}
 		Log.d("My_Map", ""+location.getLatitudeE6()+":"+location.getLongitudeE6());	
-		OverlayItem overlayitem = new OverlayItem(point, "我", "");
+		OverlayItem overlayitem = new OverlayItem(point, getResources().getString(R.string.me), "");
 		if(myLocationOverlay.size() > 0){
 			myLocationOverlay.removeOverlay(0);
 		}
@@ -256,7 +254,6 @@ public class My_Map extends MapActivity implements LocationCallBack,View.OnClick
 		mapOverlays.add(myLocationOverlay);
 		currentGeoPoint = point;
 	}
-	//显示好友位置
 	public void displayFriLocation()
 	{
 		initialFriLocation();
@@ -271,11 +268,11 @@ public class My_Map extends MapActivity implements LocationCallBack,View.OnClick
 				return;
 			if(tmpUser.getStatus()==userStatus.ONLINE)
 			{
-	            OverlayItem item = new OverlayItem(gp,tmpUser.getUsername(),"在线");
+	            OverlayItem item = new OverlayItem(gp,tmpUser.getUsername(),getResources().getString(R.string.online));
 	            onlineFriLocationOverlay.addOverlay(item);
 			}
 			else{
-	            OverlayItem item = new OverlayItem(gp,tmpUser.getUsername(),"离线");
+	            OverlayItem item = new OverlayItem(gp,tmpUser.getUsername(),getResources().getString(R.string.offline));
 	            offlineFriLocationOverlay.addOverlay(item);
 			}
 		}
@@ -286,7 +283,7 @@ public class My_Map extends MapActivity implements LocationCallBack,View.OnClick
 		}
 
 	}
-	//显示我的位置
+
 	public void displayMyLocation()
 	{
 		User me=UserManager.getGlobaluser();
@@ -300,12 +297,12 @@ public class My_Map extends MapActivity implements LocationCallBack,View.OnClick
 			}
 				
 		}
-		String str = "经度："+_fformat(currentGeoPoint.getLatitudeE6()/1E6)+"\n纬度: "+_fformat(currentGeoPoint.getLongitudeE6()/1E6);
-		OverlayItem item = new OverlayItem(currentGeoPoint,"我",str);
+		String str = getResources().getString(R.string.poiLat)+":"+_fformat(currentGeoPoint.getLatitudeE6()/1E6)+"\n"+getResources().getString(R.string.poiLng)+":"+_fformat(currentGeoPoint.getLongitudeE6()/1E6);
+		OverlayItem item = new OverlayItem(currentGeoPoint,getResources().getString(R.string.me),str);
 	    myLocationOverlay.addOverlay(item);
 	    mapOverlays.add(myLocationOverlay);
 	}
-	//初始化friPosList
+
 	void initialFriLocation()
 	{
 		List<User> friendlist=UserManager.AllFriList;
@@ -318,7 +315,7 @@ public class My_Map extends MapActivity implements LocationCallBack,View.OnClick
 			friPosList.put(f, gp);
 		}
 	}
-	//初始化popView
+
 	public void initPopView()
 	{
     	if(null == popView){
@@ -330,7 +327,7 @@ public class My_Map extends MapActivity implements LocationCallBack,View.OnClick
 			popView.setVisibility(View.GONE);
     	}
 	}
-	//初始化chengyuan
+
 	public void initHandler()
 	{
 		myhander = new Handler(){
@@ -339,7 +336,7 @@ public class My_Map extends MapActivity implements LocationCallBack,View.OnClick
 			{
 				switch(msg.what)
 				{
-				case MSG_VIEW_LONGPRESS://处理长按时间返回位置信息
+				case MSG_VIEW_LONGPRESS:
 				{
 					if(null == locPoint) 
 					{
@@ -360,8 +357,6 @@ public class My_Map extends MapActivity implements LocationCallBack,View.OnClick
 								}
 								count++;
 								addressName = getLocationAddress(locPoint);
-								Log.d("My_Map", "获取地址名称");
-								//请求三次获取不到结果就返回
 								if("".equals(addressName) && count > 4){
 									Message msg1 = new Message();
 									msg1.what = MSG_VIEW_ADDRESSNAME_FAIL;
@@ -384,8 +379,8 @@ public class My_Map extends MapActivity implements LocationCallBack,View.OnClick
 						}
 					}
 					).start();
-					OverlayItem overlayitem = new OverlayItem(locPoint, "地址名称",
-							"正在地址加载...");
+					OverlayItem overlayitem = new OverlayItem(locPoint, getResources().getString(R.string.address_name),
+							getResources().getString(R.string.address_loading));
 					if(longPressOverlay.size() > 0){
 						longPressOverlay.removeOverlay(0);
 					}
@@ -398,12 +393,12 @@ public class My_Map extends MapActivity implements LocationCallBack,View.OnClick
 				}
 				case MSG_VIEW_ADDRESSNAME:
 				{
-					//获取到地址后显示在泡泡上
+					
 					TextView desc = (TextView) popView.findViewById(R.id.map_bubbleText);
 					desc.setText((String)msg.obj);
 					popView.setVisibility(View.VISIBLE);
 					android.os.Handler hander= new android.os.Handler();
-					//设定定时器并在设定时间后使对话框关闭
+					
 					    hander.postDelayed(new Runnable() {     
 					     @Override
 					     public void run() {
@@ -415,10 +410,10 @@ public class My_Map extends MapActivity implements LocationCallBack,View.OnClick
 				case MSG_VIEW_ADDRESSNAME_FAIL:
 				{
 					TextView desc = (TextView) popView.findViewById(R.id.map_bubbleText);
-					desc.setText("获取地址失败");
+					desc.setText(getResources().getString(R.string.address_load_failed));
 					popView.setVisibility(View.VISIBLE);
 					android.os.Handler hander= new android.os.Handler();
-					//设定定时器并在设定时间后使对话框关闭
+					
 					    hander.postDelayed(new Runnable() {     
 					     @Override
 					     public void run() {
@@ -441,7 +436,7 @@ public class My_Map extends MapActivity implements LocationCallBack,View.OnClick
 					if(point==null||point.getLatitudeE6()<=0||point.getLongitudeE6()<=0)
 						return;
 					currentGeoPoint = point;
-					OverlayItem overlayitem = new OverlayItem(point, "我的位置", "");
+					OverlayItem overlayitem = new OverlayItem(point,getResources().getString(R.string.my_location), "");
 					mc.setZoom(16);
 					if(myLocationOverlay.size() > 0){
 						myLocationOverlay.removeOverlay(0);
@@ -455,7 +450,7 @@ public class My_Map extends MapActivity implements LocationCallBack,View.OnClick
 			}
 		};
 	}
-	//处理三个button的事件
+
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
@@ -479,7 +474,7 @@ public class My_Map extends MapActivity implements LocationCallBack,View.OnClick
 		}
 		case R.id.layer:
 		{
-			selectViewMode();  //选择视图模式，街景模式，卫星模式等
+			selectViewMode();  
 			break;
 		}
 		default:break;
@@ -487,7 +482,7 @@ public class My_Map extends MapActivity implements LocationCallBack,View.OnClick
 	}
 	@Override
 	public boolean onSearchRequested(){
-		//打开浮动搜索框（第一个参数默认添加到搜索框的值）
+
 		Log.d("My_Map", "search button clicked...");
 		startSearch(null, false, null, false);
 		return true;
@@ -536,7 +531,7 @@ public class My_Map extends MapActivity implements LocationCallBack,View.OnClick
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// TODO Auto-generated method stub
-		menu.add(0,MENU_Configue,0,"我的信息").setIcon(
+		menu.add(0,MENU_Configue,0,getResources().getString(R.string.my_infomation)).setIcon(
 				android.R.drawable.ic_menu_preferences);
 		menu.add(0, MENU_Search, 1, R.string.Search).setIcon(
 				android.R.drawable.ic_search_category_default);
@@ -560,7 +555,7 @@ public class My_Map extends MapActivity implements LocationCallBack,View.OnClick
 			//Configue();
 			break;
 		case MENU_Search:
-			search();          //查找地点
+			search();          
 			break;
 		case MENU_Directions:
 			directions();  
@@ -574,7 +569,7 @@ public class My_Map extends MapActivity implements LocationCallBack,View.OnClick
 			UserManager.setInstance(null);
 			Intent i = new Intent();
 			i.setAction("exit");
-			sendBroadcast(i);//退出
+			sendBroadcast(i);
 			break;
 		case MENU_About:
 			ComponentName cn=new ComponentName(My_Map.this,About.class);
@@ -590,11 +585,11 @@ public class My_Map extends MapActivity implements LocationCallBack,View.OnClick
 	{
 		if(currentGeoPoint==null||currentGeoPoint.getLatitudeE6()<=0||currentGeoPoint.getLongitudeE6()<=0)
 		{
-			Toast.makeText(this, "暂时无法定位", Toast.LENGTH_LONG);
+			Toast.makeText(this, getResources().getString(R.string.positioning_unavailable), Toast.LENGTH_LONG);
 		}
 		else if(currentGeoPoint.getLatitudeE6()==0&&currentGeoPoint.getLongitudeE6()==0)
 		{
-			Toast.makeText(this, "暂时无法定位", Toast.LENGTH_LONG);
+			Toast.makeText(this,getResources().getString(R.string.positioning_unavailable), Toast.LENGTH_LONG);
 		
 		}
 		else{
@@ -603,11 +598,7 @@ public class My_Map extends MapActivity implements LocationCallBack,View.OnClick
 		}
 	}
 	
-	/**
-	 * 通过经纬度获取地址
-	 * @param point
-	 * @return
-	 */
+
 	private String getLocationAddress(GeoPoint point){
 		String add = "";
 		Geocoder geoCoder = new Geocoder(getBaseContext(),
@@ -635,9 +626,9 @@ public class My_Map extends MapActivity implements LocationCallBack,View.OnClick
 		switch (keyCode){
 		case KeyEvent.KEYCODE_BACK:
 			new AlertDialog.Builder(this)
-				.setTitle("退出提示")
-				.setMessage("注销登录？")
-				.setPositiveButton("确定", new OnClickListener(){
+				.setTitle(getResources().getString(R.string.exit_warning))
+				.setMessage(getResources().getString(R.string.log_out))
+				.setPositiveButton(getResources().getString(R.string.ok), new OnClickListener(){
 
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
@@ -651,16 +642,14 @@ public class My_Map extends MapActivity implements LocationCallBack,View.OnClick
 					}
 					
 				})
-				.setNegativeButton("取消", null)
+				.setNegativeButton(getResources().getString(R.string.cancel), null)
 				.setIcon(android.R.drawable.ic_dialog_alert)
 				.show();
 			return true;
 		}
 		return super.onKeyDown(keyCode, event);
 	}
-	/**
-	 * 搜索
-	 */
+
 	private void search() {
 		// TODO Auto-generated method stub
 		Intent intent = new Intent();
@@ -668,9 +657,7 @@ public class My_Map extends MapActivity implements LocationCallBack,View.OnClick
 		startActivityForResult(intent, 0);
 	}
 	
-	/**
-	 * 选择视图模式 :街景、卫星、交通
-	 */
+
 	private void selectViewMode() {
 		// TODO Auto-generated method stub
 		OnClickListener listener = new DialogInterface.OnClickListener() {
@@ -698,21 +685,19 @@ public class My_Map extends MapActivity implements LocationCallBack,View.OnClick
 			}
 		};
 
-		String[] menu = { "街景模式", "交通流量", "卫星地图" };
-		new AlertDialog.Builder(My_Map.this).setTitle("请选择地图模式").setItems(menu,
+		String[] menu = { getResources().getString(R.string.street_view), getResources().getString(R.string.traffic_view), getResources().getString(R.string.satellite_view) };
+		new AlertDialog.Builder(My_Map.this).setTitle(getResources().getString(R.string.select_mapview_mode)).setItems(menu,
 				listener).show();
 	}
 	
-	/**
-	 * 导航
-	 */
+
 private void directions() {
 	// TODO Auto-generated method stub
 	final LayoutInflater factory = LayoutInflater.from(My_Map.this);
 	final View dialogview = factory.inflate(R.layout.direction, null);
 
 	new AlertDialog.Builder(this)
-		.setTitle("请输入地址")
+		.setTitle(getResources().getString(R.string.enter_address))
 		.setView(dialogview)
 		.setPositiveButton(R.string.menu_yes, 
 				new AlertDialog.OnClickListener() {
@@ -749,7 +734,7 @@ private void directions() {
 						}   
 						
 						if (-1 == strResult.indexOf("<status>OK</status>")){   
-							Toast.makeText(My_Map.this, "获取导航路线失败!", Toast.LENGTH_SHORT).show();   
+							Toast.makeText(My_Map.this,getResources().getString(R.string.fail_load_navigation), Toast.LENGTH_SHORT).show();   
 							return;   
 						}   
 						
@@ -812,12 +797,7 @@ public static GeoPoint getGeoPoint(JSONObject jsonObject) {
 	}
 	return new GeoPoint((int) (lat * 1E6), (int) (lon * 1E6));
 }	
-/**   
- * 解析返回xml中overview_polyline的路线编码  
- *   
- * @param encoded  
- * @return  
-*/  
+
 private List<GeoPoint> decodePoly(String encoded) {
 	List<GeoPoint> poly = new ArrayList<GeoPoint>();   
 	int index = 0, len = encoded.length();   
@@ -850,11 +830,7 @@ private List<GeoPoint> decodePoly(String encoded) {
 	return poly;   
 }
 
-/**
- * 获取位置信息
- * @param address
- * @return
- */
+
 public static JSONObject getLocationInfo(String address) {
 
 	HttpGet httpGet = new HttpGet("http://maps.google."

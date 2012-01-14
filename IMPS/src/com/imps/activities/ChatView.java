@@ -1,6 +1,5 @@
 package com.imps.activities;
 
-//好友列表界面
 
 
 import java.io.ByteArrayOutputStream;
@@ -68,7 +67,7 @@ public class ChatView extends Activity {
 	@Override
 	public void onResume()
 	{
-		//设置当前活跃用户
+		
 		UserManager.activeFriend = fUsername;
 		//broadcast filter
 		IntentFilter i = new IntentFilter();
@@ -81,7 +80,7 @@ public class ChatView extends Activity {
 	}
 	@Override
 	public void onPause()
-	{   //取消当前活跃用户
+	{   
 		super.onPause();
 		UserManager.activeFriend = null;
 		//remove broadcast filter
@@ -108,7 +107,7 @@ public class ChatView extends Activity {
 		graffitiImageIv = (ImageView)findViewById(R.id.start_graffiti);
 		graffitiImageIv.setOnClickListener(l);
 		captureImageIv.setOnClickListener(l);
-		((TextView)findViewById(R.id.chatting_contact_name)).setText("与"+fUsername+"聊天中");
+		((TextView)findViewById(R.id.chatting_contact_name)).setText(this.getResources().getString(R.string.chat_title, fUsername));
 		recording = findViewById(R.id.recording);
 		recording.setOnTouchListener(new View.OnTouchListener() {
 
@@ -127,7 +126,7 @@ public class ChatView extends Activity {
 					Date now = new Date(); 
 					SimpleDateFormat d1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				    String date = d1.format(now);
-                	ListContentEntity listval = new ListContentEntity("系统提示",date,"音频发送成功！",ListContentEntity.MESSAGE_TO);
+                	ListContentEntity listval = new ListContentEntity(getResources().getString(R.string.chat_system_tip),date,getResources().getString(R.string.audio_data_send_success),ListContentEntity.MESSAGE_TO);
                 	list.add(listval);
                 	record.stopThread();
                     Track track = new Track();
@@ -136,7 +135,7 @@ public class ChatView extends Activity {
                     	track.data.add(record.dataList.get(i));
                     }
                     track.run();
-					//发送
+					
 					UserManager.getInstance().SendAudio(fUsername, record.dataList);
                     
 					break;
@@ -169,7 +168,7 @@ public class ChatView extends Activity {
 				String ip = CommonHelper.getLocalIpAddress();
 				if(ip==null||"".equals(ip))
 				{
-					Toast.makeText(ChatView.this, "当前网络状态不佳，请稍后重试", Toast.LENGTH_LONG);
+					Toast.makeText(ChatView.this, getResources().getString(R.string.net_problem), Toast.LENGTH_LONG);
 					return;
 				}
 				Log.d("ChatView", "IP sent is "+ ip);
@@ -213,10 +212,9 @@ public class ChatView extends Activity {
 		        Drawable drawable = getResources().getDrawable(faceId);   
 		        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());   
 		        SpannableString spannable = new SpannableString(id);   
-		        //要让图片替代指定的文字就要用ImageSpan   
+		       
 		        ImageSpan span = new ImageSpan(drawable, ImageSpan.ALIGN_BASELINE);   
-		        //开始替换，注意第2和第3个参数表示从哪里开始替换到哪里替换结束（start和end）   
-		        //最后一个参数类似数学中的集合,[5,12)表示从5到12，包括5但不包括12 
+		      
 		        spannable.setSpan(span, 0, id.length(), 
 		        		Spannable.SPAN_INCLUSIVE_EXCLUSIVE);     
 		        textEditor.append(spannable);
@@ -362,7 +360,7 @@ public class ChatView extends Activity {
 				String ip = CommonHelper.getLocalIpAddress();
 				if(ip==null||"".equals(ip))
 				{
-					Toast.makeText(ChatView.this, "当前网络状态不佳，请稍后重试", Toast.LENGTH_LONG);
+					Toast.makeText(ChatView.this,getResources().getString(R.string.net_problem), Toast.LENGTH_LONG);
 					return;
 				}
 				Log.d("ChatView", "IP sent is "+ ip);
@@ -382,7 +380,6 @@ public class ChatView extends Activity {
 			}
 		}
 
-		// 发送消息
 		private void sendMessage(String sendStr) {
 			UserManager.getInstance().SendMsg(fUsername, sendStr);
 			Date now = new Date(); 
@@ -391,7 +388,7 @@ public class ChatView extends Activity {
 			list.add(new ListContentEntity(UserManager.getGlobaluser().getUsername(),date,sendStr,ListContentEntity.MESSAGE_TO));
 			listAdapter.notifyDataSetChanged();
 			String text = UserManager.getGlobaluser().getUsername()+"|"+date+"|"+sendStr;
-			//加入当前会话
+
 			if(UserManager.CurSessionFriList.containsKey(fUsername))
 			{
 				 UserManager.CurSessionFriList.get(fUsername).add(text);

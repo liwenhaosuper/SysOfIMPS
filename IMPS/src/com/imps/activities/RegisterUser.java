@@ -1,4 +1,4 @@
-package com.imps.activities;
+ï»¿package com.imps.activities;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -54,7 +54,7 @@ public class RegisterUser extends Activity{
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.registeruser);
-		setTitle("×¢²áÐÂÓÃ»§");
+		setTitle("×¢ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½");
 		genderRadio = (RadioButton)findViewById(R.id.mail);
 		usernameText = (EditText)findViewById(R.id.userName);
 		passwordText = (EditText)findViewById(R.id.password);
@@ -107,7 +107,7 @@ public class RegisterUser extends Activity{
 						 user.setUsername(usernameText.getText().toString());
 						 user.setPassword(passwordText.getText().toString());
 						 user.setEmail(eMailText.getText().toString());
-						 user.setGender(genderRadio.isChecked()?1:0);//1ÎªÄÐ£¬0ÎªÅ®
+						 user.setGender(genderRadio.isChecked()?1:0);//1Îªï¿½Ð£ï¿½0ÎªÅ®
 						 try {
 							UserManager.getInstance().register(user);
 						} catch (IOException e) {
@@ -161,7 +161,7 @@ public class RegisterUser extends Activity{
 			}
 			else if("register_success".equals(action))
 			{
-				Toast.makeText(RegisterUser.this,"×¢²á³É¹¦£¬Çë·µ»ØÖØÐÂµÇÂ¼£¡",Toast.LENGTH_SHORT).show();
+				Toast.makeText(RegisterUser.this,"×¢ï¿½ï¿½É¹ï¿½ï¿½ï¿½ï¿½ë·µï¿½ï¿½ï¿½ï¿½ï¿½Âµï¿½Â¼ï¿½ï¿½",Toast.LENGTH_SHORT).show();
 				finish();
 			}
 			else if("exit".equals(action))
@@ -178,8 +178,8 @@ public class RegisterUser extends Activity{
     	Builder b = new AlertDialog.Builder(this);
     	switch (id){
     	case USER_NAME:
-    		b.setTitle("×¢²á´íÎó").setIcon(R.drawable.icon);
-    		b.setMessage("ÓÃ»§Ãû²»ÄÜÎª¿Õ");
+    		b.setTitle("×¢ï¿½ï¿½ï¿½ï¿½ï¿½").setIcon(R.drawable.icon);
+    		b.setMessage("ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½");
     		b.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {				
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
@@ -189,8 +189,8 @@ public class RegisterUser extends Activity{
     		dialog = b.create();
     		break;
     	case VALID:
-    		b.setTitle("×¢²á´íÎó").setIcon(R.drawable.icon);
-    		b.setMessage("Á½´ÎÊäÈëµÄÃÜÂë²»Ò»ÖÂ");
+    		b.setTitle("×¢ï¿½ï¿½ï¿½ï¿½ï¿½").setIcon(R.drawable.icon);
+    		b.setMessage("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ë²»Ò»ï¿½ï¿½");
     		b.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 				
 				@Override
@@ -201,8 +201,8 @@ public class RegisterUser extends Activity{
     		dialog = b.create();
     		break;
     	case USEREXIST:
-    		b.setTitle("×¢²á´íÎó").setIcon(R.drawable.icon);
-    		b.setMessage("ÓÃ»§ÃûÒÑ¾­´æÔÚ,ÇëÖØÐÂÑ¡ÔñÓÃ»§Ãû");
+    		b.setTitle("×¢ï¿½ï¿½ï¿½ï¿½ï¿½").setIcon(R.drawable.icon);
+    		b.setMessage("ï¿½Ã»ï¿½ï¿½ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½");
     		b.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 				
 				@Override
@@ -213,8 +213,8 @@ public class RegisterUser extends Activity{
     		dialog = b.create();
     		break;
     	case NET_ERROR:
-    		b.setTitle("ÍøÂç´íÎó").setIcon(R.drawable.icon);
-    		b.setMessage("Äúµ±Ç°ÍøÂç²»¼Ñ£¬Çë¼ì²éÍøÂç²¢ÉÔºóÖØÊÔ");
+    		b.setTitle("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½").setIcon(R.drawable.icon);
+    		b.setMessage("ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ç²»ï¿½Ñ£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ç²¢ï¿½Ôºï¿½ï¿½ï¿½ï¿½ï¿½");
     		b.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 				
 				@Override
@@ -234,11 +234,7 @@ public class RegisterUser extends Activity{
     public void initialConfig() throws Exception
     {
     	Configure config = new Configure();
-        /**
-         * 127.0.0.1»»³ÉÏìÓ¦µÄ·þÎñÆ÷IP
-         * 1200Îª¶ÔÓ¦µÄ¶Ë¿ÚºÅ
-         */
-        config.setAddress(new InetSocketAddress("192.168.0.102",1200));
+        config.setAddress(new InetSocketAddress("169.254.95.183",1200));
         config.setProtocolHandler(new NetProtocolHandler());
         config.setIoHandler(new LogicHandler());
         Client.connector = new IoConnector();

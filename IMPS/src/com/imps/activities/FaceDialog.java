@@ -1,4 +1,4 @@
-package com.imps.activities;
+ï»¿package com.imps.activities;
 
 import com.imps.R;
 
@@ -48,12 +48,12 @@ public class FaceDialog extends Activity {
 
 	private void setProperty() {
 		// TODO Auto-generated method stub
-		//window = getWindow();				//»ñµÃ¶Ô»°¿ò´°¿Ú
+		//window = getWindow();				//è·å¾—å¯¹è¯æ¡†çª—å£
 		//window.setBackgroundDrawable(this.getResources().getDrawable(R.drawable.left));
       //  WindowManager.LayoutParams wmlp = window.getAttributes();
-      //  wmlp.alpha = 0.0f;					//ÉèÖÃÍ¸Ã÷¶È
-      //  wmlp.dimAmount = 0.0f;				//ÉèÖÃºÚ¶È
-       // wmlp.gravity = Gravity.CENTER;		//¶Ô»°¿òÎ»ÖÃ
+      //  wmlp.alpha = 0.0f;					//è®¾ç½®é€æ˜åº¦
+      //  wmlp.dimAmount = 0.0f;				//è®¾ç½®é»‘åº¦
+       // wmlp.gravity = Gravity.CENTER;		//å¯¹è¯æ¡†ä½ç½®
      //   window.setAttributes(wmlp); 
 	}
 	

@@ -38,8 +38,7 @@ public class AddFriend extends Activity{
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.addfriend);
-		setTitle("ÃÌº”∫√”—");
-		
+		setTitle(this.getResources().getString(R.string.add_new_fri));
 		Button addFriButton = (Button)findViewById(R.id.addFriend);
 		Button cancelButton = (Button)findViewById(R.id.cancel);
 		friendText = (EditText)findViewById(R.id.newFriendUsername);

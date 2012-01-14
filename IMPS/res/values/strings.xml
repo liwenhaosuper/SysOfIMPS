@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="strInputAccHint">输入帐号</string> 
     <string name="strAccInputLabel">帐号</string> 
@@ -80,4 +80,89 @@
     <string name="service_networkstatus">日志： %1$s (%2$s 使用基站和WiFi)</string>
     <string name="hand_write_gesture">手写板</string>
     <string name="hand_write_graffiti">涂鸦板</string>
+	<!-- audioChat -->
+	<string name="audio_chat_title">与 %1$s 语音通话</string>
+	<string name="audio_status_ready">准备中 </string>
+	<string name="audio_status_cancel">已取消 </string>
+	<string name="audio_status_start">正在通话中 </string>
+	<string name="audio_status_exit">正在退出 </string>
+	<string name="audio_status_reject">对方拒绝您的语音通话请求 </string>
+	<string name="audio_chat_request_title">语音通讯请求</string>
+	<string name="audio_chat_request_message">是否接受 %1$s 的语音通话请求？</string>
+	<string name="net_problem_and_retrying"> 当前网络不可用，正在重试...</string>
+	<!--chatView-->
+	<string name="chat_title">与 %1$s 聊天中</string>
+	<string name="chat_system_tip">系统提示</string>
+	<string name="audio_data_send_success">音频发送成功</string>
+	<string name="net_problem">当前网络状态不佳，请稍后重试</string>
+	<string name="online">在线</string>
+	<string name="offline">离线</string>
+
+	<string name="graffiti_color">颜色</string>
+	<string name="graffiti_highlight">高亮</string>
+	<string name="graffiti_bold">模糊</string>
+	<string name="graffiti_eraser">橡皮</string>
+	<string name="graffiti_trace">凸痕</string>
+	<string name="graffiti_clear">清除</string>
+	
+	<!--Login -->
+	<string name="login_loading">正在登陆，请稍候...</string>
+	<string name="login_error">登录错误</string>
+	<string name="login_username_required">请输入用户名</string>
+	<string name="login_password_required">请输入密码</string>
+	<string name="login_username_password_error">用户名或密码错误</string>
+	<string name="login_net_error">网络错误</string>
+	<string name="login_success">登录成功</string>
+	
+	<!--my_map -->
+	<string name="me">我</string>
+	<string name="address_name">地址名称</string>
+	<string name="address_loading">正在加载地址...</string>
+	<string name="address_load_failed">地址加载失败</string>
+	<string name="my_location">我的位置</string>
+	<string name="my_infomation">我的信息</string>
+	<string name="positioning_unavailable">暂时无法定位</string>
+	<string name="exit_warning">退出提示</string>
+	<string name="log_out">注销登陆？</string>
+	<string name="street_view">街景模式</string>
+	<string name="traffic_view">交通流量</string>
+	<string name="satellite_view">卫星视图</string>
+	<string name="select_mapview_mode">请选择地图模式</string>
+	<string name="enter_address">请输入地址</string>
+	<string name="fail_load_navigation">获取导航路线失败</string>
+	<string name="open_gps_wifi_position">请开启GPS与无线网络定位</string>
+	<string name="satellite">卫星</string>
+	<string name="base_location">基站</string>
+	<string name="null_position">暂无定位信息</string>
+	
+	<string name="unsort_group">未分组</string>
+	<string name="friend_group">我的好友</string>
+	<string name="family_group">家人</string>
+	<string name="colleague_group">同事</string>
+	<string name="classmate_group">同学</string>
+	
+	<string name="about_copyright" formatted="false">
+					关于IMPS			\n 
+					IMPS是一款交友社区类与生活应用类紧密结合在一起的基于地理位置的实时互动通信应用。
+				IMPS用户能够基于位置服务进行基于CS模式的包括文字、图片、语音对讲机在内的聊天实时互
+				动和基于P2P模式的多媒体通讯（包括视频共享，语音视频通讯等），并能够使用手写与涂鸦分
+				享功能增加互动的趣味性。另外还能让用户利用移动设备上的多种定位手段来获取更丰富的位置
+				信息服务。\n
+					IMPS构建了一个基于多协议（包括tcp,udp,rtp等）的多媒体传输基础架构服务，能够作为平台服
+				务为不同程序提供多媒体传输与处理服务。在媒体处理上实现了用PCMU编解码音频，用H264、H263
+				压缩率很高、在工业界得到广泛认可的算法编解码视频的功能，同时在服务通信并发进行了很大的优化。\n
+					IMPS主要具有如下特点：\n
+					1. 构建了一个基于多协议（包括tcp,udp,rtp等）的多媒体传输基础架构服务，能够作为平台服务为
+				不同程序提供多媒体传输与压缩处理服务。\n
+				   2. 实现了一个拓展型NIO服务通信框架，对通信并发进行了较多优化。\n
+					3. 具备基于手机设备的多种自适应定位（GPS、基站定位、wifi定位）功能。\n
+					4. 具备基于手机地理位置的包括文字、图片、语音、视频等在内的即时通信功能，融合了社区交友与生活
+				元素，实现趣味性互动。\n
+	</string>
+	<!--Video Chat-->
+	<string name="unknow_request">无法解析的用户请求</string>
+	<string name="video_chat_title">与 %1$s 视频通话</string>
+	<string name="video_request_reject">对方拒绝了您的通话请求</string>
+	<string name="video_chat_request_title">视频通话请求</string>
+	<string name="video_chat_request_message">是否接受 %1$s 的视频通话请求？</string>
 </resources>

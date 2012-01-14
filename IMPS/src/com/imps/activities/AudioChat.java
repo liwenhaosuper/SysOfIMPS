@@ -76,7 +76,8 @@ public class AudioChat extends Activity implements View.OnTouchListener{
 		updateStatus(status);
 		if(friname!=null&&!"".equals(friname))
 		{
-			setTitle("与"+friname+"语音通话");
+			String title = this.getResources().getString(R.string.audio_chat_title, friname);
+			setTitle(title);
 		}
 		if(!"".equals(ip))
 		    showDialog(ALERT);
@@ -116,27 +117,27 @@ public class AudioChat extends Activity implements View.OnTouchListener{
     	this.status = status;
     	switch(status){
     	case READY:
-    		updateStatus("准备中...");
+    		updateStatus(this.getResources().getString(R.string.audio_status_ready));
     		pushToTalkButton.setBackgroundDrawable(this.getResources().getDrawable(R.drawable.btn_speak_normal));
     		break;
     	case CANCEL:
-    		updateStatus("通话已取消...");
+    		updateStatus(this.getResources().getString(R.string.audio_status_cancel));
     		pushToTalkButton.setBackgroundDrawable(this.getResources().getDrawable(R.drawable.btn_speak_normal));
     		stopAudio();
     		break;
     	case START:
-    		updateStatus("正在通话中...");
+    		updateStatus(this.getResources().getString(R.string.audio_status_start));
     		pushToTalkButton.setBackgroundDrawable(this.getResources().getDrawable(R.drawable.btn_speak_pressed));
     		startAudio();
     		break;
     	case EXIT:
-    		updateStatus("正在关闭...");
+    		updateStatus(this.getResources().getString(R.string.audio_status_exit));
     		pushToTalkButton.setBackgroundDrawable(this.getResources().getDrawable(R.drawable.btn_speak_normal));
     		stopAudio();
     		finish();
     		break;
     	case REJECT:
-    		updateStatus("好友已拒绝您的语音通话请求");
+    		updateStatus(this.getResources().getString(R.string.audio_status_reject));
     		pushToTalkButton.setBackgroundDrawable(this.getResources().getDrawable(R.drawable.btn_speak_normal));
     		stopAudio();
     		break;
@@ -193,7 +194,8 @@ public class AudioChat extends Activity implements View.OnTouchListener{
 				String fri = bundle.getString("fUsername");
 				if(fri!=null&&!"".equals(fri))
 				{
-					setTitle("与"+friname+"语音通话");
+					String title = getResources().getString(R.string.audio_chat_title, friname);
+					setTitle(title);
 				}
 				int res = bundle.getInt("result");
 				//res = 3;
@@ -217,8 +219,8 @@ public class AudioChat extends Activity implements View.OnTouchListener{
     	Builder b = new AlertDialog.Builder(this);
     	switch (id){
     	case ALERT:
-    		b.setTitle("语音通讯请求");
-    		b.setMessage("是否接受"+friname+"的语音通话请求？");
+    		b.setTitle(getResources().getString(R.string.audio_chat_request_title));
+    		b.setMessage(getResources().getString(R.string.audio_chat_request_message,friname));
     		b.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {				
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
@@ -227,7 +229,7 @@ public class AudioChat extends Activity implements View.OnTouchListener{
 					int cnt = 0;
 					while("".equals(myip))
 					{
-						Toast.makeText(AudioChat.mContext, " 当前网络不可用，正在重试...", Toast.LENGTH_LONG);
+						Toast.makeText(AudioChat.mContext, getResources().getString(R.string.net_problem_and_retrying), Toast.LENGTH_LONG);
 						try {
 							Thread.sleep(200);
 						} catch (InterruptedException e) {
@@ -253,7 +255,7 @@ public class AudioChat extends Activity implements View.OnTouchListener{
 					int cnt = 0;
 					while("".equals(myip))
 					{
-						Toast.makeText(AudioChat.mContext, " 当前网络不可用，正在重试...", Toast.LENGTH_LONG);
+						Toast.makeText(AudioChat.mContext,getResources().getString(R.string.net_problem_and_retrying), Toast.LENGTH_LONG);
 						try {
 							Thread.sleep(200);
 						} catch (InterruptedException e) {

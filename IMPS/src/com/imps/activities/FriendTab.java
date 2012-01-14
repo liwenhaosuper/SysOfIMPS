@@ -1,6 +1,5 @@
-package com.imps.activities;
+ï»¿package com.imps.activities;
 
-//ºÃÓÑÁÐ±í½çÃæ
 
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -34,7 +33,12 @@ import android.widget.TextView;
 
 import com.imps.R;
 import com.imps.util.ContactsManagerDbAdater;
-
+/**
+ * please use FriendListTab.class instead
+ * @author liwenhaosuper
+ *
+ */
+@Deprecated
 public class FriendTab extends ExpandableListActivity {
 	private ExpandableListView friendList;
 	//private static ArrayList<HashMap<String, Object>> listItem;
@@ -56,10 +60,10 @@ public class FriendTab extends ExpandableListActivity {
 	private MyCursrTreeAdapter myCursorTreeAdapter;
 	private int groupNameIndex;
 	private ContactsManagerDbAdater contactsManagerDbAdapter;
-	//×éÉÏgroupName×Ö¶ÎË÷Òý
+
 	private static final int groupName_index=1;
 	private Cursor groupCursor;
-	//ÁªÏµÈË¸÷¸ö×Ö¶ÎË÷Òý
+
 	private static final int icon_index=2;  //icon
 	private static final int name_index=1;   //friname
 	private static final int description_index=8;  //not used
@@ -87,9 +91,9 @@ public class FriendTab extends ExpandableListActivity {
 		friendList = getExpandableListView();
         initMyAdapter();
 		initPopupWindow();
-        friendList.setCacheColorHint(0);//ÍÏ¶¯Ê±±ÜÃâ³öÏÖºÚÉ«
-        friendList.setDivider(null);//È¥µôÃ¿ÏîÏÂÃæµÄºÚÏß(·Ö¸îÏß)
-        //×Ô¶¨ÒåÏÂÀ­Í¼±ê
+        friendList.setCacheColorHint(0);
+        friendList.setDivider(null);
+
         friendList.setGroupIndicator(getResources().getDrawable(R.drawable.expander_ic_folder));
 		friendList.setOnTouchListener(new OnTouchListener(){
 
@@ -110,7 +114,7 @@ public class FriendTab extends ExpandableListActivity {
 		//SimpleAdapter listItemAdapter = new SimpleAdapter(this, listItem, R.layout.friend, 
 			//	new String[]{"avatar", "name"}, new int[]{R.id.avatar, R.id.name});
 		//friendList.setAdapter(listItemAdapter);  
-		//³¤°´ÊÂ¼þ¼àÌý
+		//ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½
 		/*friendList.setOnItemLongClickListener(new OnItemLongClickListener(){
 		    public boolean onItemLongClick(AdapterView<?> arg0,View arg1,int arg2,long arg3){
 		    	AlertDialog.Builder dialog=new AlertDialog.Builder(FriendTab.this);
@@ -126,21 +130,21 @@ public class FriendTab extends ExpandableListActivity {
 		    	if(friend!=null){
 		    		selectedFri = friend.getUsername();
 		    	    dialog.setTitle(friend.getUsername());
-		    	    String gender=friend.getGender()==0?"ÄÐ":"Å®";
-		    	    String status=friend.getStatus()==userStatus.OFFLINE?"ÀëÏß":"ÔÚÏß";
-		    	    selectedMsg = "ÐÔ±ð: "+gender+"\nÓÊÏä:"+friend.getEmail()+"\n×´Ì¬:"+status;
+		    	    String gender=friend.getGender()==0?"ï¿½ï¿½":"Å®";
+		    	    String status=friend.getStatus()==userStatus.OFFLINE?"ï¿½ï¿½ï¿½ï¿½":"ï¿½ï¿½ï¿½ï¿½";
+		    	    selectedMsg = "ï¿½Ô±ï¿½: "+gender+"\nï¿½ï¿½ï¿½ï¿½:"+friend.getEmail()+"\n×´Ì¬:"+status;
 		    	    System.out.println(selectedFri);
 		    	    dialog.setItems(R.array.friTab_choice, new DialogInterface.OnClickListener() {				
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						// TODO Auto-generated method stub
-						System.out.println("Äúµã»÷ÁË "+getResources().getStringArray(R.array.friTab_choice)[which]);
+						System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ "+getResources().getStringArray(R.array.friTab_choice)[which]);
 					    switch(which)
 					    {
-					    case 0://¸öÈË×ÊÁÏ
+					    case 0://ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 					    	showDialog(VIEW_INTO);
 					    	break;
-					    case 1://²é¿´Î»ÖÃ
+					    case 1://ï¿½é¿´Î»ï¿½ï¿½
 					    	if(selectedFri==null)
 					    		return ;				    	
 					    	ComponentName cn=new ComponentName(FriendTab.this,My_Map.class);
@@ -152,9 +156,9 @@ public class FriendTab extends ExpandableListActivity {
 							startActivity(ti);
 					    	finish();
 					    	break;
-					    case 2://ÒôÆµÍ¨»°
+					    case 2://ï¿½ï¿½ÆµÍ¨ï¿½ï¿½
 					    	break;
-					    case 3://ÊÓÆµÍ¨»°
+					    case 3://ï¿½ï¿½ÆµÍ¨ï¿½ï¿½
 					    	break;
 					    default:
 					    	break;
@@ -216,7 +220,7 @@ public class FriendTab extends ExpandableListActivity {
 		btnEmail=(Button)popViewItem.findViewById(R.id.btnEmail);
 		btnCall=(Button)popViewItem.findViewById(R.id.btnCall);
 	}
-    //¸øÊÊÅäÆ÷¸³Öµ£¬Ë¢ÐÂ½çÃæµÄÊ±ºòÒ²»áÓÃµ½
+
     public void initMyAdapter(){
     	groupCursor=contactsManagerDbAdapter.getAllGroups();
         startManagingCursor(groupCursor);
@@ -442,7 +446,7 @@ public class FriendTab extends ExpandableListActivity {
 
 		@Override
 		protected Cursor getChildrenCursor(Cursor groupCursor) {
-			String groupName=groupCursor.getString(groupName_index);//µÃµ½µ±Ç°µÄ×éÃû
+			String groupName=groupCursor.getString(groupName_index);//ï¿½Ãµï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			Cursor childCursor=contactsManagerDbAdapter.getContactsByGroupName(groupName);
 			startManagingCursor(childCursor);
 			return childCursor;
@@ -473,7 +477,7 @@ public class FriendTab extends ExpandableListActivity {
 			description.setTextKeepState(cursor.getString(description_index));
 			
 			TextView statusView = (TextView)view.findViewById(R.id.status);
-			statusView.setText(cursor.getInt(status_index)==1?"ÔÚÏß":"ÀëÏß");
+			statusView.setText(cursor.getInt(status_index)==1?getResources().getString(R.string.online):getResources().getString(R.string.offline));
 			//final String email=cursor.getString(email_index);
 			
 			ImageView  mycursor=(ImageView)view.findViewById(R.id.myCursor);
@@ -482,7 +486,7 @@ public class FriendTab extends ExpandableListActivity {
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
-					//showToast("µã»÷ÁËÍ¼Æ¬");
+					//showToast("ï¿½ï¿½ï¿½ï¿½ï¿½Í¼Æ¬");
 					if(listPopupWindow.isShowing())
 					{
 						listPopupWindow.dismiss();
@@ -503,7 +507,7 @@ public class FriendTab extends ExpandableListActivity {
 								startActivity(intent);
 								//Uri uri=Uri.parse("smsto:"+phoneNumber);
 								//Intent it = new Intent(Intent.ACTION_SENDTO, uri);   
-								//it.putExtra("sms_body", "ºÇºÇ£¡ºÃ¾Ã²»¼û");   
+								//it.putExtra("sms_body", "ï¿½ÇºÇ£ï¿½ï¿½Ã¾Ã²ï¿½ï¿½ï¿½");   
 								//startActivity(it);  
 							}
 						});
@@ -535,7 +539,7 @@ public class FriendTab extends ExpandableListActivity {
 		}
     }
 	
-	  //µÃµ½´æ´¢ÔÚÊý¾Ý¿âÖÐµÄÍ·Ïñ
+
 	public Bitmap getBitmapFromByte(byte[] temp){
 		if(temp!=null){
 			Bitmap bitmap=BitmapFactory.decodeByteArray(temp, 0, temp.length);
