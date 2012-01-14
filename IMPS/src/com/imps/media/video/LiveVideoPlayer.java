@@ -385,7 +385,7 @@ public class LiveVideoPlayer extends IMediaPlayer implements Camera.PreviewCallb
     /**
      * Notify player event started
      */
-    private void notifyPlayerEventStarted() {
+    public void notifyPlayerEventStarted() {
     	if(iMediaEventListener==null)
     		return;
         Iterator<IMediaEventListener> ite = iMediaEventListener.iterator();
@@ -401,7 +401,7 @@ public class LiveVideoPlayer extends IMediaPlayer implements Camera.PreviewCallb
     /**
      * Notify player event stopped
      */
-    private void notifyPlayerEventStopped() {
+    public void notifyPlayerEventStopped() {
 
     	if(iMediaEventListener==null)
     		return;
@@ -414,7 +414,7 @@ public class LiveVideoPlayer extends IMediaPlayer implements Camera.PreviewCallb
     /**
      * Notify player event opened
      */
-    private void notifyPlayerEventOpened() {
+    public void notifyPlayerEventOpened() {
 
     	if(iMediaEventListener==null)
     		return;
@@ -427,7 +427,7 @@ public class LiveVideoPlayer extends IMediaPlayer implements Camera.PreviewCallb
     /**
      * Notify player event closed
      */
-    private void notifyPlayerEventClosed() {
+    public void notifyPlayerEventClosed() {
 
     	if(iMediaEventListener==null)
     		return;
@@ -440,7 +440,7 @@ public class LiveVideoPlayer extends IMediaPlayer implements Camera.PreviewCallb
     /**
      * Notify player event error
      */
-    private void notifyPlayerEventError(String error) {
+    public void notifyPlayerEventError(String error) {
     	Log.d("LiveVideoPlayer", "LiveVideoPlayer error:"+error);
     	if(iMediaEventListener==null)
     		return;

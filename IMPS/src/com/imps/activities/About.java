@@ -18,7 +18,7 @@ public class About extends Activity {
 		setContentView(R.layout.about);
 		aboutView = (TextView)findViewById(R.id.about_content);
 		aboutView.setText(
-				getResources().getString(R.string.about)
+				getResources().getString(R.string.about_copyright)
 				);		
 		//aboutView.setTextColor(color.darker_gray);
 	}

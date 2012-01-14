@@ -16,7 +16,7 @@ import android.util.Log;
 import com.imps.base.User;
 import com.imps.base.userStatus;
 import com.imps.handler.UserManager;
-
+@Deprecated
 public class ContactsManagerDbAdater {
 	public static final String TAG="ContactsManagerDbAdater";
 	public static final String DATABASE_NAME="imps_contactsmanager.db";
@@ -34,24 +34,24 @@ public class ContactsManagerDbAdater {
 	public static final String TABLECONTACTS=
 		"create table contacts("+
 		"_id INTEGER PRIMARY KEY,"+//rowID    //0
-		"username TEXT  NOT NULL,"+ //ÐÕÃû      //1
-		"contactIcon BLOB,"+ //ÁªÏµÈËÍ¼±ê         //2
-		"gender INTEGER,"+ //ÐÔ±ð 1ÎªÄÐ 0ÎªÅ®    //3
-		"groupName TEXT,"+ //ËùÊô×éÃû      //4
-		"longitude FLOAT,"+ //¾­¶È      //5
-		"latitude FLOAT,"+ //Î³¶È          //6
-		"email TEXT NOT NULL,"+ //ÓÊÏä         //7
-		"description TEXT NOT NULL,"+ //Ç©Ãû       //8
-		"modifyTime TEXT,"+ //¸üÐÂÊ±¼ä          //9
+		"username TEXT  NOT NULL,"+ //ï¿½ï¿½ï¿½ï¿½      //1
+		"contactIcon BLOB,"+ //ï¿½ï¿½Ïµï¿½ï¿½Í¼ï¿½ï¿½         //2
+		"gender INTEGER,"+ //ï¿½Ô±ï¿½ 1Îªï¿½ï¿½ 0ÎªÅ®    //3
+		"groupName TEXT,"+ //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½      //4
+		"longitude FLOAT,"+ //ï¿½ï¿½ï¿½ï¿½      //5
+		"latitude FLOAT,"+ //Î³ï¿½ï¿½          //6
+		"email TEXT NOT NULL,"+ //ï¿½ï¿½ï¿½ï¿½         //7
+		"description TEXT NOT NULL,"+ //Ç©ï¿½ï¿½       //8
+		"modifyTime TEXT,"+ //ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½          //9
 		"status INTEGER,"+  //×´Ì¬
 		"ownername TEXT"+
 		");";
 	public static final String TABLEGROUPS=
 		"create table groups("+
 		"_id INTEGER PRIMARY KEY,"+ //rowId
-		"groupName TEXT UNIQUE NOT NULL,"+ //×éÃû
-		"createTime TEXT,"+ //´´½¨Ê±¼ä
-		"modifyTime TEXT,"+ //ÐÞ¸ÄÊ±¼ä
+		"groupName TEXT UNIQUE NOT NULL,"+ //ï¿½ï¿½ï¿½ï¿½
+		"createTime TEXT,"+ //ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
+		"modifyTime TEXT,"+ //ï¿½Þ¸ï¿½Ê±ï¿½ï¿½
 		"ownername TEXT"+
 		");";
 	public static final String TABLEMESSAGE=
@@ -99,8 +99,8 @@ public class ContactsManagerDbAdater {
 			db.execSQL(TABLECONTACTS);
 			db.execSQL(TABLEGROUPS);
 			db.execSQL(TABLEMESSAGE);
-			//´´½¨ÁÙÊ±µÄ×é
-			String tempGroups[]={"Î´·Ö×é","ÎÒµÄºÃÓÑ","Í¬Ñ§","Í¬ÊÂ","¼ÒÈË"};
+			//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½
+			String tempGroups[]={"Î´ï¿½ï¿½ï¿½ï¿½","ï¿½ÒµÄºï¿½ï¿½ï¿½","Í¬Ñ§","Í¬ï¿½ï¿½","ï¿½ï¿½ï¿½ï¿½"};
 			for(int i=0;i<tempGroups.length;i++){
 				String sql="insert into groups values(?,?,null,null,?)";
 				Object[] bindArgs={i+1,tempGroups[i],UserManager.getGlobaluser().getUsername()};
@@ -124,21 +124,21 @@ public class ContactsManagerDbAdater {
 			int index=0;
 			*//**
 			 * 		"_id INTEGER PRIMARY KEY,"+//rowID    //0
-		"username TEXT  NOT NULL,"+ //ÐÕÃû      //1
-		"contactIcon BLOB,"+ //ÁªÏµÈËÍ¼±ê         //2
-		"gender INTEGER,"+ //ÐÔ±ð 1ÎªÄÐ 0ÎªÅ®    //3
-		"groupName TEXT,"+ //ËùÊô×éÃû      //4
-		"longitude FLOAT,"+ //¾­¶È      //5
-		"latitude FLOAT,"+ //Î³¶È          //6
-		"email TEXT NOT NULL,"+ //ÓÊÏä         //7
-		"description TEXT NOT NULL,"+ //Ç©Ãû       //8
-		"modifyTime TEXT"+ //¸üÐÂÊ±¼ä          //9
+		"username TEXT  NOT NULL,"+ //ï¿½ï¿½ï¿½ï¿½      //1
+		"contactIcon BLOB,"+ //ï¿½ï¿½Ïµï¿½ï¿½Í¼ï¿½ï¿½         //2
+		"gender INTEGER,"+ //ï¿½Ô±ï¿½ 1Îªï¿½ï¿½ 0ÎªÅ®    //3
+		"groupName TEXT,"+ //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½      //4
+		"longitude FLOAT,"+ //ï¿½ï¿½ï¿½ï¿½      //5
+		"latitude FLOAT,"+ //Î³ï¿½ï¿½          //6
+		"email TEXT NOT NULL,"+ //ï¿½ï¿½ï¿½ï¿½         //7
+		"description TEXT NOT NULL,"+ //Ç©ï¿½ï¿½       //8
+		"modifyTime TEXT"+ //ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½          //9
 			 *//*
-			//´´½¨ÁÙÊ±µÄÁªÏµÈË
+			//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½
 			for(int i=0;i<10;i++){
 				String sql="insert into contacts values(?,?,null,0,?,?,?,'liwenhaosuper@126.com',?,?,?)";
 				index=random.nextInt(tempGroups.length);
-				Object[] bindArgs={i+1,tempName[i],tempGroups[index],i*10+8,i*11+9,"Õâ¼Ò»ïÊ²Ã´Ò²²»Ëµ...",getSysNowTime(),0};
+				Object[] bindArgs={i+1,tempName[i],tempGroups[index],i*10+8,i*11+9,"ï¿½ï¿½Ò»ï¿½Ê²Ã´Ò²ï¿½ï¿½Ëµ...",getSysNowTime(),0};
 				db.execSQL(sql, bindArgs);
 			}
 			
@@ -155,7 +155,7 @@ public class ContactsManagerDbAdater {
 	}
 	
 	
-	//½«Í·Ïñ×ª»»³Ébyte[]ÒÔ±ãÄÜ½«Í¼Æ¬´æµ½Êý¾Ý¿â
+	//ï¿½ï¿½Í·ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½byte[]ï¿½Ô±ï¿½ï¿½Ü½ï¿½Í¼Æ¬ï¿½æµ½ï¿½ï¿½Ý¿ï¿½
 	public byte[] getBitmapByte(Bitmap bitmap){
 		ByteArrayOutputStream out=new ByteArrayOutputStream();
 		bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
@@ -170,15 +170,15 @@ public class ContactsManagerDbAdater {
 	}
 	
 	/*
-	 * 		"username TEXT  NOT NULL,"+ //ÐÕÃû
-"contactIcon BLOB,"+ //ÁªÏµÈËÍ¼±ê
-"gender INTEGER,"+ //ÐÔ±ð 1ÎªÄÐ 0ÎªÅ®
-"groupName TEXT,"+ //ËùÊô×éÃû
-"longitude FLOAT,"+ //¾­¶È
-"latitude FLOAT,"+ //Î³¶È
-"email TEXT NOT NULL,"+ //ÓÊÏä
-"description TEXT NOT NULL,"+ //Ç©Ãû
-"modifyTime TEXT"+ //¸üÐÂÊ±¼ä
+	 * 		"username TEXT  NOT NULL,"+ //ï¿½ï¿½ï¿½ï¿½
+"contactIcon BLOB,"+ //ï¿½ï¿½Ïµï¿½ï¿½Í¼ï¿½ï¿½
+"gender INTEGER,"+ //ï¿½Ô±ï¿½ 1Îªï¿½ï¿½ 0ÎªÅ®
+"groupName TEXT,"+ //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+"longitude FLOAT,"+ //ï¿½ï¿½ï¿½ï¿½
+"latitude FLOAT,"+ //Î³ï¿½ï¿½
+"email TEXT NOT NULL,"+ //ï¿½ï¿½ï¿½ï¿½
+"description TEXT NOT NULL,"+ //Ç©ï¿½ï¿½
+"modifyTime TEXT"+ //ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
 	 */
 	//table contacts
 	public static final String contacts_id="_id";
@@ -231,7 +231,7 @@ public class ContactsManagerDbAdater {
 			message_ownername
 	};
 	
-	//²éÕÒËùÓÐ×é
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	public Cursor getAllGroups(){
 		return mSQLiteDatabase.query(
 				TABLE_GROUPS, 
@@ -239,7 +239,7 @@ public class ContactsManagerDbAdater {
 				null, null, null, null, null);
 		
 	}
-	//µÃµ½¸ø¶¨×éµÄËùÓÐ³ÉÔ±
+	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð³ï¿½Ô±
 	public Cursor getContactsByGroupName(String groupName){
 		if(UserManager.getGlobaluser()==null)
 			return null;
@@ -249,7 +249,7 @@ public class ContactsManagerDbAdater {
 				"groupName='"+groupName+"' AND ownername='"+UserManager.getGlobaluser().getUsername()+"'", 
 				null, null, null, null);
 	}
-	//Í³¼Æ¸ø¶¨×éµÄÈËÊý
+	//Í³ï¿½Æ¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	public int getCountContactByGroupName(String groupName){
 		int count=0;
 		String sql="select count(*) from contacts where groupName='"+groupName+"' AND ownername='"+UserManager.getGlobaluser().getUsername()+"'";
@@ -260,7 +260,7 @@ public class ContactsManagerDbAdater {
 		cursor.close();
 		return count;
 	}
-	//Í³¼Æ¸ø¶¨×éÔÚÏßÈËÊý
+	//Í³ï¿½Æ¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	public int getOnlineCountContactByGroupName(String groupName){
 		if(UserManager.getGlobaluser()==null)
 			return 0;
@@ -275,12 +275,12 @@ public class ContactsManagerDbAdater {
 		return count;
 	}
 	
-	//Í¬²½¸üÐÂcontactsÀïgroupName×Ö¶ÎÐÅÏ¢
+	//Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½contactsï¿½ï¿½groupNameï¿½Ö¶ï¿½ï¿½ï¿½Ï¢
 	public void updateSyncData(String sql,Object[] Args){
 		mSQLiteDatabase.execSQL(sql, Args);
 	}
 	
-	//²éÑ¯ÁªÏµÈËÔÚÄÄ¸ö×é
+	//ï¿½ï¿½Ñ¯ï¿½ï¿½Ïµï¿½ï¿½ï¿½ï¿½ï¿½Ä¸ï¿½ï¿½ï¿½
 	public String checkContactGroup(String sql,String selectionArgs[]){
 		String groupName="";
 		Cursor cursor=mSQLiteDatabase.rawQuery(sql, selectionArgs);
@@ -291,12 +291,12 @@ public class ContactsManagerDbAdater {
 		return groupName;
 	}
 	
-	//²éÑ¯
+	//ï¿½ï¿½Ñ¯
 	public Cursor getCursorBySql(String sql,String selectionArgs[]){
 		return mSQLiteDatabase.rawQuery(sql, selectionArgs);
 	}
 	
-	//Ìí¼ÓÒ»¸ö×é
+	//ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½
 	public long inserDataToGroups(String groupName){
 		
 		String formatTime=getSysNowTime();
@@ -309,12 +309,12 @@ public class ContactsManagerDbAdater {
 		
 	}
 	
-	//É¾³ýÒ»¸ö×é
+	//É¾ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½
 	public int deleteDataFromGroups(String groupName){
 		return mSQLiteDatabase.delete(TABLE_GROUPS, "groupName='"+groupName+"' AND ownername='"+UserManager.getGlobaluser().getUsername()+"'", null);
 	}
 	
-	//¸üÐÂÒ»¸ö×é
+	//ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½
 	public int updateDataToGroups(String newgroupName,String oldgroupName){
 		String formatTime=getSysNowTime();
 		ContentValues content=new ContentValues();
@@ -322,7 +322,7 @@ public class ContactsManagerDbAdater {
 		content.put("modifyTime", formatTime);
 		return mSQLiteDatabase.update(TABLE_GROUPS, content, "groupName='"+oldgroupName+"' ownername='"+UserManager.getGlobaluser().getUsername()+"'", null);
 	}
-	//Ìí¼ÓÒ»ÌõÐÅÏ¢
+	//ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Ï¢
 	public long insertDataToMessage(String friName,String message,String stime)
 	{
 		ContentValues content = new ContentValues();
@@ -332,7 +332,7 @@ public class ContactsManagerDbAdater {
 		content.put("ownername", UserManager.getGlobaluser().getUsername());
 		return mSQLiteDatabase.insert(TABLEMESSAGE, null, content);
 	}
-	//»ñÈ¡ºÃÓÑÐÅÏ¢
+	//ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
 	public String[] getMessageByFriendName(String friName)
 	{
 		
@@ -351,7 +351,7 @@ public class ContactsManagerDbAdater {
 	}
 	
 	
-	//Ìí¼ÓÒ»¸öÁªÏµÈË
+	//ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½
 	public long insertDataToContacts(User contactInfo){
 			ContentValues content=new ContentValues();
 			content.put("username", contactInfo.getUsername());
@@ -377,7 +377,7 @@ public class ContactsManagerDbAdater {
 			}
 			
 		}
-	//²éÕÒÓÃ»§ÊÇ·ñ´æÔÚ
+	//ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½
 	public boolean isContactExist(String name){
 		Cursor cursor = mSQLiteDatabase.rawQuery("select count(*) from contacts where username='"+name+"' AND ownername='"+UserManager.getGlobaluser().getUsername()+"'", null);
 	    boolean res = false;
@@ -393,16 +393,16 @@ public class ContactsManagerDbAdater {
 	    return res;
 	}
 		
-	//É¾³ýÒ»¸öÁªÏµÈË
+	//É¾ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½
 	public int deleteDataFromContacts(String name){
 		return mSQLiteDatabase.delete(TABLE_CONTACTS, "username='"+name+"' AND ownername='"+UserManager.getGlobaluser().getUsername()+"'", null);
 	}
 	
-	//¸üÐÂÁªÏµÈË
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½
 	/**
 	 * 
-	 * contactInfo:ÓÃ»§ÖØÐÂ±à¼­µÄÁªÏµÈËÐÅÏ¢
-	 * name:±à¼­µÄÊÇÄÄ¸öÁªÏµÈË
+	 * contactInfo:ï¿½Ã»ï¿½ï¿½ï¿½ï¿½Â±à¼­ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½ï¿½ï¿½Ï¢
+	 * name:ï¿½à¼­ï¿½ï¿½ï¿½ï¿½ï¿½Ä¸ï¿½ï¿½ï¿½Ïµï¿½ï¿½
 	 */
 	public int updateDataToContacts(User contactInfo,String name){
 		ContentValues content=new ContentValues();

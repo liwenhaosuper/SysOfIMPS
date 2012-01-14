@@ -38,4 +38,16 @@ public class IAudioEventListener implements IMediaEventListener {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void onMediaAccept() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onMediaReject() {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -7,7 +7,7 @@
 package com.imps.media.rtp;
 
 
-/** °üÀ¨ÊµÊ±ÓïÒô¡¢ÊµÊ±ÊÓÆµ¡¢ÊÓÆµ·ÖÏí¡¢ÓïÒô·ÖÏí¡¢¶àÈËÓïÒô¡¢¶àÈËÊÓÆµ¡£
+/** ï¿½ï¿½ï¿½ï¿½ÊµÊ±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÊµÊ±ï¿½ï¿½Æµï¿½ï¿½ï¿½ï¿½Æµï¿½ï¿½ï¿½?ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½?ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æµï¿½ï¿½
  * 
  * @pdOid 2f7bcee3-20b2-4756-99f0-f2127375e2e1 */
 public abstract interface IMediaEventListener {
@@ -25,4 +25,8 @@ public abstract interface IMediaEventListener {
 
 	// Media has failed
 	public abstract void onMediaError(String errorMsg);
+	
+	public abstract void onMediaAccept();
+	
+	public abstract void onMediaReject();
 }

@@ -217,32 +217,32 @@ public class IMService extends Service {
 			if(res==1)
 			{
 				System.out.println("the username is already exists~");
-				message = "¸ÃÓÃ»§ÃûÒÑ¾­´æÔÚ";
+				message = "ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½";
 			}
 			else if(res==2)
 			{
 				System.out.println("the username is not exists~"); 
-				message ="¸ÃÓÃ»§Ãû²»´æÔÚ";
+				message ="ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½";
 			}
 			else if(res==3)
 			{
 				System.out.println("the user is not in state~");
-				message = "¸ÃÓÃ»§²»ÔÚÏß";
+				message = "ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½";
 			}
 			else if(res==4)
 			{
 				System.out.println("you have already logged on~");
-				message = "ÄúÒÑ¾­µÇÂ¼";
+				message = "ï¿½ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½Â¼";
 			}
 			else if(res==5)
 			{
 				System.out.println("user is now offline~");
-				message = "¸ÃÓÃ»§µ±Ç°´¦ÓÚÀëÏß×´Ì¬";
+				message = "ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×´Ì¬";
 			}
 			else if(res ==6)
 			{
 				System.out.println(" username or password is not valid!");
-				message = "ÓÃ»§Ãû»òÕßÃÜÂë´íÎó";
+				message = "ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½";
 			}
 			i.putExtra("message",message);
 			intentMessage.add(i);
@@ -321,19 +321,19 @@ public class IMService extends Service {
 			{
 				UserManager.getInstance();
 				List<String> msgbox = UserManager.CurSessionFriList.get(friName);
-				msgbox.add("ÒôÆµ" + "|" + stime + "|" + friName+" ¸øÄú·¢ËÍÁËÒ»¶ÎÒôÆµ");
+				msgbox.add("ï¿½ï¿½Æµ" + "|" + stime + "|" + friName+" ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Æµ");
 			}
 			else if(UserManager.activeFriend==null||!UserManager.activeFriend.equals(friName)){
 				List<String> newmsgbox = new ArrayList<String>();
-				newmsgbox.add("ÒôÆµ" + "|" + stime + "|" + friName+" ¸øÄú·¢ËÍÁËÒ»¶ÎÒôÆµ");
+				newmsgbox.add("ï¿½ï¿½Æµ" + "|" + stime + "|" + friName+" ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Æµ");
 				UserManager.getInstance();
 				UserManager.CurSessionFriList.put(friName, newmsgbox);
 			}
 			if(UserManager.activeFriend==null||!UserManager.activeFriend.equals(friName))
 			{
 				notify tnty = new notify();
-				tnty.friname = "ÒôÆµ";
-				tnty.msg = friName+" ¸øÄú·¢ËÍÁËÒ»¶ÎÒôÆµ.";
+				tnty.friname = "ï¿½ï¿½Æµ";
+				tnty.msg = friName+" ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Æµ.";
 				tnty.stime = stime;
 				notifyMessage.add(tnty);
 			}
@@ -369,19 +369,19 @@ public class IMService extends Service {
 			{
 				UserManager.getInstance();
 				List<String> msgbox = UserManager.CurSessionFriList.get(friName);
-				msgbox.add("ÒôÆµÍ¨ĞÅ" + "|" + " " + "|" + friName+"ÏòÄú·¢³öÓïÒôÁÄÌìÇëÇó");
+				msgbox.add("ï¿½ï¿½ÆµÍ¨ï¿½ï¿½" + "|" + " " + "|" + friName+"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 			}
 			else if(UserManager.activeFriend==null||!UserManager.activeFriend.equals(friName)){
 				List<String> newmsgbox = new ArrayList<String>();
-				newmsgbox.add("ÒôÆµÍ¨ĞÅ" + "|" + " " + "|" + friName+"ÏòÄú·¢³öÓïÒôÁÄÌìÇëÇó");
+				newmsgbox.add("ï¿½ï¿½ÆµÍ¨ï¿½ï¿½" + "|" + " " + "|" + friName+"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 				UserManager.getInstance();
 				UserManager.CurSessionFriList.put(friName, newmsgbox);
 			}
 			if(UserManager.activeFriend==null||!UserManager.activeFriend.equals(friName))
 			{
 /*				notify tnty = new notify();
-				tnty.friname = "ÒôÆµÍ¨ĞÅ";
-				tnty.msg = friName+" ÏòÄú·¢³öÓïÒôÁÄÌìÇëÇó.";
+				tnty.friname = "ï¿½ï¿½ÆµÍ¨ï¿½ï¿½";
+				tnty.msg = friName+" ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.";
 				tnty.stime = stime;
 				notifyMessage.add(tnty);*/
 			}
@@ -418,10 +418,10 @@ public class IMService extends Service {
 				List<String> msgbox = UserManager.CurSessionFriList.get(friName);
 				if("".equals(Msg))
 				{
-					msgbox.add("ÒôÆµÍ¨ĞÅ" + "|" + " " + "|" + friName+"¾Ü¾øÁËÓïÒôÁÄÌìÇëÇó");
+					msgbox.add("ï¿½ï¿½ÆµÍ¨ï¿½ï¿½" + "|" + " " + "|" + friName+"ï¿½Ü¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 				}
 				else{
-					msgbox.add("ÒôÆµÍ¨ĞÅ" + "|" + " " + "|" + friName+"½ÓÊÜÁËÓïÒôÁÄÌìÇëÇó");
+					msgbox.add("ï¿½ï¿½ÆµÍ¨ï¿½ï¿½" + "|" + " " + "|" + friName+"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 				}
 				
 			}
@@ -429,10 +429,10 @@ public class IMService extends Service {
 				List<String> newmsgbox = new ArrayList<String>();
 				if("".equals(Msg))
 				{
-					newmsgbox.add("ÒôÆµÍ¨ĞÅ" + "|" + " " + "|" + friName+"¾Ü¾øÁËÓïÒôÁÄÌìÇëÇó");
+					newmsgbox.add("ï¿½ï¿½ÆµÍ¨ï¿½ï¿½" + "|" + " " + "|" + friName+"ï¿½Ü¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 				}
 				else{
-					newmsgbox.add("ÒôÆµÍ¨ĞÅ" + "|" + " " + "|" + friName+"½ÓÊÜÁËÓïÒôÁÄÌìÇëÇó");
+					newmsgbox.add("ï¿½ï¿½ÆµÍ¨ï¿½ï¿½" + "|" + " " + "|" + friName+"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 				}
 				UserManager.getInstance();
 				UserManager.CurSessionFriList.put(friName, newmsgbox);
@@ -440,8 +440,8 @@ public class IMService extends Service {
 			if(UserManager.activeFriend==null||!UserManager.activeFriend.equals(friName))
 			{
 /*				notify tnty = new notify();
-				tnty.friname = "ÒôÆµÍ¨ĞÅ";
-				tnty.msg = friName+" ¾Ü¾øÁËÓïÒôÁÄÌìÇëÇó.";
+				tnty.friname = "ï¿½ï¿½ÆµÍ¨ï¿½ï¿½";
+				tnty.msg = friName+" ï¿½Ü¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.";
 				tnty.stime = stime;
 				notifyMessage.add(tnty);*/
 			}
@@ -459,19 +459,19 @@ public class IMService extends Service {
 			{
 				UserManager.getInstance();
 				List<String> msgbox = UserManager.CurSessionFriList.get(friName);
-				msgbox.add("ÊÓÆµÍ¨ĞÅ" + "|" + " " + "|" + friName+"ÏòÄú·¢³öÊÓÆµÁÄÌìÇëÇó");
+				msgbox.add("ï¿½ï¿½ÆµÍ¨ï¿½ï¿½" + "|" + " " + "|" + friName+"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 			}
 			else if(UserManager.activeFriend==null||!UserManager.activeFriend.equals(friName)){
 				List<String> newmsgbox = new ArrayList<String>();
-				newmsgbox.add("ÊÓÆµÍ¨ĞÅ" + "|" + " " + "|" + friName+"ÏòÄú·¢³öÊÓÆµÁÄÌìÇëÇó");
+				newmsgbox.add("ï¿½ï¿½ÆµÍ¨ï¿½ï¿½" + "|" + " " + "|" + friName+"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 				UserManager.getInstance();
 				UserManager.CurSessionFriList.put(friName, newmsgbox);
 			}
 			if(UserManager.activeFriend==null||!UserManager.activeFriend.equals(friName))
 			{
 /*				notify tnty = new notify();
-				tnty.friname = "ÒôÆµÍ¨ĞÅ";
-				tnty.msg = friName+" ÏòÄú·¢³öÓïÒôÁÄÌìÇëÇó.";
+				tnty.friname = "ï¿½ï¿½ÆµÍ¨ï¿½ï¿½";
+				tnty.msg = friName+" ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.";
 				tnty.stime = stime;
 				notifyMessage.add(tnty);*/
 			}
@@ -506,20 +506,20 @@ public class IMService extends Service {
 				List<String> msgbox = UserManager.CurSessionFriList.get(friName);
 				if("".equals(Msg))
 				{
-					msgbox.add("ÊÓÆµÍ¨ĞÅ" + "|" + " " + "|" + friName+"¾Ü¾øÁËÊÓÆµÁÄÌìÇëÇó");
+					msgbox.add("ï¿½ï¿½ÆµÍ¨ï¿½ï¿½" + "|" + " " + "|" + friName+"ï¿½Ü¾ï¿½ï¿½ï¿½ï¿½ï¿½Æµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 				}
 				else{
-					msgbox.add("ÊÓÆµÍ¨ĞÅ" + "|" + " " + "|" + friName+"½ÓÊÜÁËÊÓÆµÁÄÌìÇëÇó");
+					msgbox.add("ï¿½ï¿½ÆµÍ¨ï¿½ï¿½" + "|" + " " + "|" + friName+"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 				}				
 			}
 			else if(UserManager.activeFriend==null||!UserManager.activeFriend.equals(friName)){
 				List<String> newmsgbox = new ArrayList<String>();
 				if("".equals(Msg))
 				{
-					newmsgbox.add("ÊÓÆµÍ¨ĞÅ" + "|" + " " + "|" + friName+"¾Ü¾øÁËÊÓÆµÁÄÌìÇëÇó");
+					newmsgbox.add("ï¿½ï¿½ÆµÍ¨ï¿½ï¿½" + "|" + " " + "|" + friName+"ï¿½Ü¾ï¿½ï¿½ï¿½ï¿½ï¿½Æµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 				}
 				else{
-					newmsgbox.add("ÊÓÆµÍ¨ĞÅ" + "|" + " " + "|" + friName+"½ÓÊÜÁËÊÓÆµÁÄÌìÇëÇó");
+					newmsgbox.add("ï¿½ï¿½ÆµÍ¨ï¿½ï¿½" + "|" + " " + "|" + friName+"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 				}
 				UserManager.getInstance();
 				UserManager.CurSessionFriList.put(friName, newmsgbox);
@@ -527,8 +527,8 @@ public class IMService extends Service {
 			if(UserManager.activeFriend==null||!UserManager.activeFriend.equals(friName))
 			{
 /*				notify tnty = new notify();
-				tnty.friname = "ÒôÆµÍ¨ĞÅ";
-				tnty.msg = friName+" ¾Ü¾øÁËÓïÒôÁÄÌìÇëÇó.";
+				tnty.friname = "ï¿½ï¿½ÆµÍ¨ï¿½ï¿½";
+				tnty.msg = friName+" ï¿½Ü¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.";
 				tnty.stime = stime;
 				notifyMessage.add(tnty);*/
 			}
@@ -551,13 +551,13 @@ public class IMService extends Service {
 		//the pendingIntent to launch our activity if the user selects this notification
 		PendingIntent contentIntent = PendingIntent.getActivity(this,0,i,0);
 		//set the info for the views that show in the notification panel.
-		notification.setLatestEventInfo(this, "À´×Ô"+friName+"µÄĞÂÏûÏ¢", msg, contentIntent);
+		notification.setLatestEventInfo(this, "ï¿½ï¿½ï¿½ï¿½"+friName+"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢", msg, contentIntent);
 		notification.flags|=Notification.FLAG_AUTO_CANCEL;
 		mNM.notify((friName+msg+stime).hashCode(),notification);
 	}
 	public void showAudioNotification(String friName,String ip,int port)
 	{
-		String title = friName+" ÇëÇóÓëÄúÓïÒôÍ¨»°";
+		String title = friName+" ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¨ï¿½ï¿½";
 		Notification notification = new Notification(com.imps.R.drawable.stat,title,System.currentTimeMillis());
 		Intent i = new Intent(this,AudioChat.class);
 		i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -567,13 +567,13 @@ public class IMService extends Service {
 		i.putExtra("port", port);
 		Log.d("IMService","showaudionotification: ip is "+ ip );
 		PendingIntent contentIntent = PendingIntent.getActivity(this,0,i,PendingIntent.FLAG_UPDATE_CURRENT);
-		notification.setLatestEventInfo(this, "ÓïÒôÁÄÌìÇëÇó", title, contentIntent);
+		notification.setLatestEventInfo(this, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", title, contentIntent);
 		notification.flags|=Notification.FLAG_AUTO_CANCEL;
-		mNM.notify(("ÓïÒôÁÄÌìÇëÇó"+title+System.currentTimeMillis()).hashCode(),notification);
+		mNM.notify(("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"+title+System.currentTimeMillis()).hashCode(),notification);
 	}
 	public void showVideoNotification(String friName,String ip,int port)
 	{
-		String title = friName+" ÇëÇóÓëÄúÊÓÆµÍ¨»°";
+		String title = friName+" ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÆµÍ¨ï¿½ï¿½";
 		Notification notification = new Notification(com.imps.R.drawable.stat,title,System.currentTimeMillis());
 		Intent i = new Intent(this,VideoContact2.class);
 		i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -583,9 +583,9 @@ public class IMService extends Service {
 		i.putExtra("port", port);
 		Log.d("IMService","showaudionotification: ip is "+ ip );
 		PendingIntent contentIntent = PendingIntent.getActivity(this,0,i,PendingIntent.FLAG_UPDATE_CURRENT);
-		notification.setLatestEventInfo(this, "ÊÓÆµÁÄÌìÇëÇó", title, contentIntent);
+		notification.setLatestEventInfo(this, "ï¿½ï¿½Æµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", title, contentIntent);
 		notification.flags|=Notification.FLAG_AUTO_CANCEL;
-		mNM.notify(("ÊÓÆµÁÄÌìÇëÇó"+title+System.currentTimeMillis()).hashCode(),notification);
+		mNM.notify(("ï¿½ï¿½Æµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"+title+System.currentTimeMillis()).hashCode(),notification);
 	}
 	public void showAddFriNotification(String friName,int type,int res)
 	{
@@ -598,19 +598,19 @@ public class IMService extends Service {
 		String brief = "";
 		if(type==0)
 		{
-			title+="ÇëÇóÌí¼ÓÄúÎªºÃÓÑ";
-			brief = "ĞÂµÄºÃÓÑÇëÇó";
+			title+="ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½";
+			brief = "ï¿½ÂµÄºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½";
 			i.setAction("add_fri_req");
 		}
 		else if(type==1)
 		{
-			title+="»Ø¸´ÁËÄúµÄÌí¼ÓºÃÓÑÇëÇó";
+			title+="ï¿½Ø¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Óºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½";
 			i.putExtra("result", res);
-			brief = " ºÃÓÑÇëÇó»Ø¸´";
+			brief = " ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø¸ï¿½";
 			i.setAction("add_fri_rsq");
 			if(res ==1)
 			{
-				//ÇëÇóºÃÓÑÁĞ±í
+				//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğ±ï¿½
 				UserManager.getInstance().SendFriListReq();
 			}
 		}
@@ -708,7 +708,7 @@ public class IMService extends Service {
 		public void execute() {
 			// TODO Auto-generated method stub
 			DataInputStream body = message.getInputStream();
-			//»ñÈ¡ĞÅÏ¢´úÂë
+			//ï¿½ï¿½È¡ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½
 			try {
 				int res = body.readInt();
 				if(res==1)
@@ -822,26 +822,26 @@ public class IMService extends Service {
 			// TODO Auto-generated method stub
 			try {
 				DataInputStream body = message.getInputStream();
-				//»ñÈ¡ÓÃ»§Ãû
+				//ï¿½ï¿½È¡ï¿½Ã»ï¿½ï¿½ï¿½
 				long len = body.readLong();
 				byte[] nm = new byte[(int) len];			
 				body.read(nm);
 				String username = new String(nm);
 				System.out.println("username:"+username);
-				//»ñÈ¡ĞÔ±ğ
+				//ï¿½ï¿½È¡ï¿½Ô±ï¿½
 				int gender=body.readInt();
-				//»ñÈ¡email
+				//ï¿½ï¿½È¡email
 				len = body.readLong();
 				byte[] mail = new byte[(int)len];
 				body.read(mail);
 				String email = new String(mail);
-				//´´½¨ÓÃ»§
+				//ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½
 				User myuser = new User();
 				myuser.setEmail(email);
 				myuser.setGender(gender);
 				myuser.setUsername(username);
 				myuser.setStatus(userStatus.ONLINE);
-				//ÉèÖÃÓÃ»§
+				//ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½
 				UserManager.setGlobaluser(myuser);
 				//open the db
 				contactsManagerDbAdapter.open();
@@ -850,8 +850,8 @@ public class IMService extends Service {
 				i.setAction("login_success");
 				intentMessage.add(i);
 				/**
-				 * µÇÂ½³É¹¦
-				 * TODO:ÔÚ´Ë´¦Ìí¼ÓµÇÂ½³É¹¦ºóµÄ´¦ÀíĞÅÏ¢
+				 * ï¿½ï¿½Â½ï¿½É¹ï¿½
+				 * TODO:ï¿½Ú´Ë´ï¿½ï¿½ï¿½Óµï¿½Â½ï¿½É¹ï¿½ï¿½ï¿½Ä´ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
 				 */
 	/*			try {
 					new HeartBeat(session,message).run();
@@ -918,17 +918,17 @@ public class IMService extends Service {
 			DataInputStream body = message.getInputStream();
 			long len;
 			try {
-				//ºÃÓÑÃû
+				//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				len = body.readLong();
 				byte[] nm = new byte[(int)len];
 				body.read(nm);
 				String friname = new String(nm,"gb2312");
-				//ÏûÏ¢ÄÚÈİ
+				//ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½
 				len = body.readLong();
 				byte[] msgcnt = new byte[(int)len];
 				body.read(msgcnt);
 				String msg = new String(msgcnt,"gb2312");
-				//·¢ËÍÊ±¼ä
+				//ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
 				len = body.readLong();
 				byte[] sendtime = new byte[(int)len];
 				body.read(sendtime);
@@ -966,14 +966,14 @@ public class IMService extends Service {
 			DataInputStream body = message.getInputStream();
 			long len;
 			try {
-				//ºÃÓÑÃû
+				//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				len = body.readLong();
 				byte[] nm = new byte[(int)len];
 				body.read(nm);
 				String friname = new String(nm,"gb2312");
-				//ÏûÏ¢ÄÚÈİ
+				//ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½
 				len = body.readLong();
-				//Çå¿ÕÔ­À´µÄÊı¾İ
+				//ï¿½ï¿½ï¿½Ô­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				//audioData.clear();
 				byte[]taudioData = new byte[(int)len];
 				body.read(taudioData);
@@ -984,7 +984,7 @@ public class IMService extends Service {
 					body.read(new byte[(int)len]);
 					return;
 				}			
-				//·¢ËÍÊ±¼ä
+				//ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
 				len = body.readLong();
 				byte[] sendtime = new byte[(int)len];
 				body.read(sendtime);
@@ -999,7 +999,7 @@ public class IMService extends Service {
 		
 	}
 	/**
-	 * ÓïÒôÁÄÌìÇëÇó
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 */
 	public class SendPTPAudioReq extends MessageProcessTask{
 
@@ -1021,7 +1021,7 @@ public class IMService extends Service {
 			DataInputStream body = message.getInputStream();
 			long len;
 			try {
-				//ºÃÓÑÃû
+				//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				len = body.readLong();
 				byte[] nm = new byte[(int)len];
 				body.read(nm);
@@ -1044,7 +1044,7 @@ public class IMService extends Service {
 		
 	}
 	/**
-	 * ÊÓÆµÁÄÌìÇëÇó
+	 * ï¿½ï¿½Æµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 */
 	public class SendPTPVideoReq extends MessageProcessTask{
 
@@ -1066,7 +1066,7 @@ public class IMService extends Service {
 			DataInputStream body = message.getInputStream();
 			long len;
 			try {
-				//ºÃÓÑÃû
+				//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				len = body.readLong();
 				byte[] nm = new byte[(int)len];
 				body.read(nm);
@@ -1079,6 +1079,14 @@ public class IMService extends Service {
 				Log.d("IMService", "request received:ip received is "+myip);
 				//port 
 				int port = body.readInt();
+				//public ip
+				len = body.readLong();
+				ipbyte = new byte[(int)len];
+				body.read(ipbyte);
+				myip = new String(ipbyte,"gb2312");
+				Log.d("IMService", "request received:public ip received is "+myip);
+				//public port 
+				port = body.readInt();
 				messageReceived(message.getCmdType(),friname,myip,String.valueOf(port));
 			}
 			catch (IOException e) {
@@ -1091,7 +1099,7 @@ public class IMService extends Service {
 	
 	
 	/**
-	 * ÓïÒôÁÄÌìÏìÓ¦
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦
 	 */
 	public class SendPTPAudioRsp extends MessageProcessTask
 	{
@@ -1111,7 +1119,7 @@ public class IMService extends Service {
 		@Override
 		public void execute() {
 			// TODO Auto-generated method stub
-			//¶ÁÈ¡ºÃÓÑÃû³Æ
+			//ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			Log.d("IMService", "audio rsp message received...");
 			DataInputStream body = message.getInputStream();
 			long len;
@@ -1144,7 +1152,7 @@ public class IMService extends Service {
 		
 	}
 	/**
-	 * ÊÓÆµÁÄÌìÏìÓ¦
+	 * ï¿½ï¿½Æµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦
 	 */
 	public class SendPTPVideoRsp extends MessageProcessTask
 	{
@@ -1164,7 +1172,7 @@ public class IMService extends Service {
 		@Override
 		public void execute() {
 			// TODO Auto-generated method stub
-			//¶ÁÈ¡ºÃÓÑÃû³Æ
+			//ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			Log.d("IMService", "video rsp message received...");
 			DataInputStream body = message.getInputStream();
 			long len;
@@ -1181,6 +1189,12 @@ public class IMService extends Service {
 				body.read(ipbyte);
 				String ip = new String(ipbyte,"gb2312");
 				int port = body.readInt();
+				//public ip
+				len = body.readLong();
+				ipbyte = new byte[(int)len];
+				body.read(ipbyte);
+				ip = new String(ipbyte,"gb2312");
+				port = body.readInt();
 				Log.d("IMService", "res is "+res+" and ip is "+ip+" and port is "+port);
 				if(res==0)
 				{
@@ -1215,7 +1229,7 @@ public class IMService extends Service {
 		@Override
 		public void execute() {
 			// TODO Auto-generated method stub
-			//¶ÁÈ¡ºÃÓÑÃû³Æ
+			//ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			DataInputStream body = message.getInputStream();
 			long len;
 			try {

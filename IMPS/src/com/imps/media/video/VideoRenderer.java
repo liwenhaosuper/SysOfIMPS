@@ -412,7 +412,7 @@ public class VideoRenderer extends IMediaPlayer {
     /**
      * Notify player event started
      */
-    private void notifyPlayerEventStarted() {
+    public void notifyPlayerEventStarted() {
     	if(iMediaEventListener==null)
     		return;
         Iterator<IMediaEventListener> ite = iMediaEventListener.iterator();
@@ -424,7 +424,7 @@ public class VideoRenderer extends IMediaPlayer {
     /**
      * Notify player event stopped
      */
-    private void notifyPlayerEventStopped() {
+    public void notifyPlayerEventStopped() {
     	if(iMediaEventListener==null)
     		return;
         Iterator<IMediaEventListener> ite = iMediaEventListener.iterator();
@@ -436,7 +436,7 @@ public class VideoRenderer extends IMediaPlayer {
     /**
      * Notify player event opened
      */
-    private void notifyPlayerEventOpened() {
+    public void notifyPlayerEventOpened() {
     	if(iMediaEventListener==null)
     		return;
         Iterator<IMediaEventListener> ite = iMediaEventListener.iterator();
@@ -448,7 +448,7 @@ public class VideoRenderer extends IMediaPlayer {
     /**
      * Notify player event closed
      */
-    private void notifyPlayerEventClosed() {
+    public void notifyPlayerEventClosed() {
     	if(iMediaEventListener==null)
     		return;
         Iterator<IMediaEventListener> ite = iMediaEventListener.iterator();
@@ -460,7 +460,7 @@ public class VideoRenderer extends IMediaPlayer {
     /**
      * Notify player event error
      */
-    private void notifyPlayerEventError(String error) {
+    public void notifyPlayerEventError(String error) {
     	Log.d("VideoRenderer", "VideoRenderer error:"+error);
     	if(iMediaEventListener==null)
     		return;
