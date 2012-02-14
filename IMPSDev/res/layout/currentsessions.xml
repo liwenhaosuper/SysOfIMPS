@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>  
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"  
+android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent" android:background="@drawable/default_bg"> 
+   <LinearLayout android:id="@+id/linearLayout1" android:layout_width="fill_parent" android:orientation="horizontal" android:layout_weight="1" android:layout_height="wrap_content">
+       <ListView android:layout_width="fill_parent" android:id="@+id/concurSessions" android:layout_height="fill_parent"></ListView>
+   </LinearLayout> 
+  
+</LinearLayout>

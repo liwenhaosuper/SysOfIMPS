@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout android:orientation="horizontal" android:paddingLeft="10.0dip" 
+    android:paddingRight="10.0dip" android:layout_width="fill_parent" 
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:id="@+id/container" android:layout_width="fill_parent" 
+        android:layout_height="wrap_content">
+        <ImageView android:id="@+id/find_icon" 
+         android:layout_width="48.0dip"
+		android:layout_height="48.0dip"
+		android:scaleType="fitCenter"
+  		android:layout_marginLeft="10.0dip"
+		android:layout_marginTop="5.0dip"
+		android:layout_marginBottom="5.0dip"
+		/>/
+        <TextView android:textSize="18.0dip" android:textStyle="bold" 
+            android:textColor="@drawable/read_black_color" android:gravity="center_vertical" 
+            android:layout_gravity="center_vertical" android:id="@+id/find_content" android:paddingLeft="10.0dip" 
+            android:paddingTop="5.0dip" android:paddingBottom="5.0dip" android:layout_width="0.0dip" 
+            android:layout_height="wrap_content" android:drawablePadding="10.0dip"
+             android:layout_weight="1.0" />
+        <ImageView android:layout_gravity="center_vertical" android:id="@+id/indicator" 
+            android:layout_width="wrap_content" android:layout_height="fill_parent" 
+            android:layout_marginRight="10.0dip" android:src="@drawable/namecard_clickable" />
+        <Button android:textSize="18.0dip" android:textColor="#c0000000"
+             android:layout_gravity="center" android:id="@+id/btn_share" 
+             android:background="@drawable/button_white_dimorphism" android:paddingTop="5.0dip" 
+             android:paddingBottom="5.0dip" android:visibility="gone" android:layout_width="0.0dip"
+              android:layout_height="wrap_content"
+               android:layout_weight="1.0" />
+    </LinearLayout>
+</LinearLayout>

@@ -597,3 +597,9 @@ CREATE TABLE `validation` (
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2012-01-03 18:09:46
+insert into user(userid,username,password,email,gender) values(1,'IMPSAssistor','liwenhaosuper','impsweb@126.com','F');
+
+create trigger add_assistor after insert on user
+for each row
+insert into friend(userid,use_userid) values(1,new.userid);
+
