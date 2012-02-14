@@ -95,6 +95,12 @@ public class FindFriend extends Activity{
 		item2.text = getResources().getString(R.string.recommend_friend);
 		item2.cls = SearchFriend.class;
 		mItems.add(item2);
+		//search friend
+		FindFriendItem item3 = new FindFriendItem();
+		item3.image = R.drawable.icon_search;
+		item3.text = getResources().getString(R.string.search_friend);
+		item3.cls = SearchFriend.class;
+		mItems.add(item3);
 		defaultAdapter.notifyDataSetChanged();
 	}
 

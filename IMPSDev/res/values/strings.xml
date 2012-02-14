@@ -129,6 +129,7 @@
 	<string name="search_friend_hint">输入好友名或关键字</string>
 	<string name="find_nearby_friend">查找附近朋友</string>
 	<string name="recommend_friend">推荐好友</string>
+	<string name="search_friend">查找好友</string>
 	<string name="whether_add_new_friend">添加 %1$s 为好友？</string>
 	<string name="add_friend_req_sent">好友请求已发送</string>
 	<string name="add_friend_rsp_sent">好友回应已发送</string>
