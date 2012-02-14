@@ -20,8 +20,13 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.jboss.netty.buffer.ChannelBuffers;
+import org.jboss.netty.channel.Channel;
+
 import com.imps.server.db.ConnectDB;
+import com.imps.server.main.IMPSTcpServer;
 import com.imps.server.main.basetype.NetAddress;
+import com.imps.server.main.basetype.OutputMessage;
 import com.imps.server.main.basetype.User;
 import com.imps.server.main.basetype.location;
 import com.imps.server.main.basetype.userStatus;
@@ -232,15 +237,13 @@ public class UserManager {
 			return;
 		for(int  i= 0 ;i<onlinefri.length;i++)
 		{
-/*			IoSession session = ServerBoot.server.getIoSession(onlinefri[i].getSessionId());
-			if(session == null || session.isCloseing()){
+			Channel session = IMPSTcpServer.getAllGroups().find(onlinefri[i].getSessionId());
+			if(session==null||!session.isConnected()){
 				continue;
+			}else{
+				OutputMessage msg = MessageFactory.createOnlineStatusNotify(user.getUsername(), user.getStatus());
+				session.write(ChannelBuffers.wrappedBuffer(msg.build()));
 			}
-			else
-			{
-			   OutputMessage msg = MessageFactory.createOnlineStatusNotify(user.getUsername(), user.getStatus());
-			   session.write(msg);
-			}*/
 		}
 	}
 	

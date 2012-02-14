@@ -121,6 +121,13 @@ public class LogicHandler extends SimpleChannelUpstreamHandler{
 				e1.printStackTrace();
 			}
     	}
+    	try {
+			super.exceptionCaught(ctx, e);
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		e.getChannel().close();
     }
     @Override
     public void channelDisconnected(ChannelHandlerContext ctx, ChannelStateEvent e){
