@@ -37,24 +37,24 @@ public class Login extends MessageProcessTask{
 		UserManager manager = null;
 		try {
 			manager = UserManager.getInstance();
-			if(!validate()){//wrong login
-				if(!validate())
-				{
-					outMsg = MessageFactory.createErrorMsg();
-					try {
-						outMsg.getOutputStream().writeInt(CommandId.S_LOGIN_ERROR);
-						outMsg.getOutputStream().writeInt(CommandId.S_LOGIN_ERROR_UNVALID);
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-					session.write(ChannelBuffers.wrappedBuffer(outMsg.build()));
-				}
+			if(!validate()){
+				// [ERROR] login failure
+			    outMsg = MessageFactory.createErrorMsg();
+			    try {
+					outMsg.getOutputStream().writeInt(CommandId.S_LOGIN_ERROR);
+					outMsg.getOutputStream().writeInt(CommandId.S_LOGIN_ERROR_UNVALID);
+			    } catch (IOException e) {
+					e.printStackTrace();
+			    }
+			    session.write(ChannelBuffers.wrappedBuffer(outMsg.build()));
 			}else{
+				// [SUCCE] login ok
 				User user = manager.getUser(userName);
 				if(user==null)
 				{
 					user = manager.getUserFromDB(userName);
 					if(user==null){
+						// TODO E....
 						outMsg = MessageFactory.createErrorMsg();
 						try {
 							outMsg.getOutputStream().writeInt(CommandId.S_LOGIN_ERROR);
@@ -66,41 +66,46 @@ public class Login extends MessageProcessTask{
 						session.write(ChannelBuffers.wrappedBuffer(outMsg.build()));
 						return;
 					}
-				}
-				Integer sid = user.getSessionId();
-				if(sid.intValue()!=-1)
-				{
-					Channel mysession = IMPSTcpServer.getAllGroups().find(sid);
-					if(mysession!=null)
+					Integer sid = user.getSessionId();
+					if(sid!=-1)
 					{
-						OutputMessage remsg = MessageFactory.createErrorMsg();
-						remsg.getOutputStream().writeInt(CommandId.S_LOGIN_ERROR);
-						remsg.getOutputStream().writeInt(CommandId.S_LOGIN_ERROR_OTHER_PLACE);
-						mysession.write(ChannelBuffers.wrappedBuffer(remsg.build()));
-						mysession.close();
-						System.out.println("disconnect the older connection: "+user.getUsername());
+						Channel mysession = IMPSTcpServer.getAllGroups().find(sid);
+						if(mysession!=null)
+						{
+							OutputMessage remsg = MessageFactory.createErrorMsg();
+							remsg.getOutputStream().writeInt(CommandId.S_LOGIN_ERROR);
+							remsg.getOutputStream().writeInt(CommandId.S_LOGIN_ERROR_OTHER_PLACE);
+							mysession.write(ChannelBuffers.wrappedBuffer(remsg.build()));
+							mysession.close();
+							System.out.println("disconnect the older connection: "+user.getUsername());
+						}
 					}
+					outMsg = MessageFactory.createSLoginRsp();
+					//username
+					outMsg.getOutputStream().writeInt(user.getUsername().getBytes("gb2312").length);
+					outMsg.getOutputStream().write(user.getUsername().getBytes("gb2312"));
+					
+					//gender
+					outMsg.getOutputStream().writeInt(user.getGender());
+					
+					//email
+					outMsg.getOutputStream().writeInt(user.getEmail().getBytes("gb2312").length);
+					outMsg.getOutputStream().write(user.getEmail().getBytes("gb2312"));
+					
+					//add the user to the userlist
+					user.setStatus(userStatus.ONLINE);
+					//set session id
+					user.setSessionId(session.getId());
+					manager.updateUserStatus(user);					
+					session.write(ChannelBuffers.wrappedBuffer(outMsg.build()));
+					System.out.println("Login ok...");
+
+					// check OFFLINE msg
+					manager.getOfflineMsg(userName);
+				}else{
+					
 				}
-				outMsg = MessageFactory.createSLoginRsp();
-				//username
-				outMsg.getOutputStream().writeInt(user.getUsername().getBytes("gb2312").length);
-				outMsg.getOutputStream().write(user.getUsername().getBytes("gb2312"));
-				
-				//gender
-				outMsg.getOutputStream().writeInt(user.getGender());
-				
-				//email
-				outMsg.getOutputStream().writeInt(user.getEmail().getBytes("gb2312").length);
-				outMsg.getOutputStream().write(user.getEmail().getBytes("gb2312"));
-				
-				//add the user to the userlist
-				user.setStatus(userStatus.ONLINE);
-				//set session id
-				user.setSessionId(session.getId());
-				manager.updateUserStatus(user);					
-				session.write(ChannelBuffers.wrappedBuffer(outMsg.build()));
-				System.out.println("Login ok...");
-			}			
+			} // END of login [SUCCE]
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

@@ -177,5 +177,12 @@ public class ContactService implements IContactService,IContactEvent{
 	    String date = d1.format(now);
 	    return date;
 	}
+	
+	public void sendOfflineMsgReq() {
+		if(ServiceManager.getmTcpConn().getChannel().isConnected()){
+			ServiceManager.getmTcpConn().getChannel().write(ChannelBuffers.wrappedBuffer(
+					MessageFactory.createCOfflineMsgReq(UserManager.getGlobaluser().getUsername()).build()));
+		}
+	}
 
 }

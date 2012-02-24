@@ -20,19 +20,19 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.jboss.netty.buffer.ChannelBuffers;
-import org.jboss.netty.channel.Channel;
-
 import com.imps.server.db.ConnectDB;
-import com.imps.server.main.IMPSTcpServer;
 import com.imps.server.main.basetype.NetAddress;
-import com.imps.server.main.basetype.OutputMessage;
 import com.imps.server.main.basetype.User;
+import com.imps.server.main.basetype.UserMessage;
 import com.imps.server.main.basetype.location;
 import com.imps.server.main.basetype.userStatus;
 
 
 
+/**
+ * @author Styx
+ *
+ */
 public class UserManager {
 
 	private static UserManager instance;
@@ -237,13 +237,15 @@ public class UserManager {
 			return;
 		for(int  i= 0 ;i<onlinefri.length;i++)
 		{
-			Channel session = IMPSTcpServer.getAllGroups().find(onlinefri[i].getSessionId());
-			if(session==null||!session.isConnected()){
+/*			IoSession session = ServerBoot.server.getIoSession(onlinefri[i].getSessionId());
+			if(session == null || session.isCloseing()){
 				continue;
-			}else{
-				OutputMessage msg = MessageFactory.createOnlineStatusNotify(user.getUsername(), user.getStatus());
-				session.write(ChannelBuffers.wrappedBuffer(msg.build()));
 			}
+			else
+			{
+			   OutputMessage msg = MessageFactory.createOnlineStatusNotify(user.getUsername(), user.getStatus());
+			   session.write(msg);
+			}*/
 		}
 	}
 	
@@ -529,7 +531,7 @@ public class UserManager {
 		return loc;
 	}
 	
-	public boolean addMessage(String username,String friendname,String m_time,String msg) throws SQLException
+    public boolean addMessage(String username,String friendname,String m_time,String msg, int sent) throws SQLException
 	{
 		User u1 = getUserFromDB(username);
 		User u2 = getUserFromDB(friendname);
@@ -538,12 +540,40 @@ public class UserManager {
 			return false;
 		}
 		ConnectDB tdb = new ConnectDB();
-		tdb.executeUpdate("insert into message(userid,use_userid,m_time,message) values("+u1.getUserid()+","+u2.getUserid()
-				+",'"+m_time+"','"+msg+"')");
+		tdb.executeUpdate("insert into message(userid,use_userid,m_time,message, sent) values("+u1.getUserid()+","+u2.getUserid() + ",'"+m_time+"','"+msg+"'," + sent + ")");
 		return true;
 	}
 	
+    /**
+     * Get offline message which send to username
+     * @param username the receiver
+     * @return list of {@link UserMessage}
+     * @throws SQLException
+     */
+	public ArrayList< UserMessage > getOfflineMsg(String username) throws SQLException {
+		User user = getUserFromDB(username);
+		if (user == null)
+			return null;
+		ConnectDB tdb = new ConnectDB();
+		ResultSet msgList = tdb.executeSQL("select * from message where use_userid=" + user.getUserid() + " and sent= 0");
+
+		// fill the message list to be returned
+		ArrayList< UserMessage > msgs = new ArrayList< UserMessage >();
+		while (msgList.next()) {
+			UserMessage msg = new UserMessage(msgList.getInt(1),
+					msgList.getInt(2), msgList.getInt(3), msgList.getString(4),
+					msgList.getString(5));
+			msgs.add(msg);
+		}
+		return msgs;
+	}
 	
-	
-	
+	public void markRead(int m_id) {
+		try {
+			ConnectDB tdb = new ConnectDB();
+			tdb.executeUpdate("update message set sent = 1 where m_id=" + m_id);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }

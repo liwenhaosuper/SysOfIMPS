@@ -101,4 +101,7 @@ public class CommandId {
 	public static final int S_SMS_ERROR = 3;
 	public static final int S_P2PAUDIO_ERROR = 6;
 	public static final int S_P2PVIDEO_ERROR = 7;
+	
+	public static final int C_OFFLINE_MSG_REQ = 34;
+	public static final int S_OFFLINE_MSG_RSP = 35;
 }

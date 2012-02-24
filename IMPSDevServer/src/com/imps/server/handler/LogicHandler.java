@@ -15,6 +15,7 @@ import com.imps.server.handler.baseLogic.AddFriendReq;
 import com.imps.server.handler.baseLogic.AddFriendRsp;
 import com.imps.server.handler.baseLogic.FriendListRequest;
 import com.imps.server.handler.baseLogic.Login;
+import com.imps.server.handler.baseLogic.OfflineMsg;
 import com.imps.server.handler.baseLogic.Register;
 import com.imps.server.handler.baseLogic.SearchFriendReq;
 import com.imps.server.handler.baseLogic.SendAudio;
@@ -96,6 +97,10 @@ public class LogicHandler extends SimpleChannelUpstreamHandler{
 		case CommandId.C_IMAGE_REQ:
 			new SendImageReq(e.getChannel(),buffer).run();
 			break;
+		case CommandId.C_OFFLINE_MSG_REQ:
+			System.out.println("== REQ: GET OFFLINE MSG ==");
+			new OfflineMsg(e.getChannel(), buffer).run();
+			break;
 		default:
 			System.out.println("server:unhandled msg received:"+cmdType);
 			buffer.clear();
@@ -121,13 +126,6 @@ public class LogicHandler extends SimpleChannelUpstreamHandler{
 				e1.printStackTrace();
 			}
     	}
-    	try {
-			super.exceptionCaught(ctx, e);
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		e.getChannel().close();
     }
     @Override
     public void channelDisconnected(ChannelHandlerContext ctx, ChannelStateEvent e){

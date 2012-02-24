@@ -60,6 +60,9 @@ public class Login extends Activity implements ILoginEvent{
 					pd.dismiss();
 				}
 				ServiceManager.getmContact().sendFriListReq();
+				
+				ServiceManager.getmContact().sendOfflineMsgReq();
+				
 				Toast.makeText(Login.this, getResources().getString(R.string.login_success), Toast.LENGTH_LONG);
 				Intent start = new Intent(Login.this,IMPSContainer.class);
 				startActivity(start);

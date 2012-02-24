@@ -95,6 +95,9 @@ public class CommandId {
 	public static final byte S_IMAGE_REQ = 33;
 	
 	/**error list */
-	public static final int S_LOGIN_ERROR = 1;
-	public static final int S_REG_ERROR = 2;
+	public static final byte S_LOGIN_ERROR = 1;
+	public static final byte S_REG_ERROR = 2;
+	
+	public static final byte C_OFFLINE_MSG_REQ = 34;
+	public static final byte S_OFFLINE_MSG_RSP = 35;
 }
