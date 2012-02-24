@@ -39,7 +39,6 @@ public class SendMessage extends MessageProcessTask{
 
 	@Override
 	public void parse(){
-		// TODO Auto-generated method stub
 		int len = inMsg.readInt();
 		byte nm[] = new byte[len];
 		inMsg.readBytes(nm);
@@ -47,16 +46,17 @@ public class SendMessage extends MessageProcessTask{
 			String userName = new String(nm,"gb2312");
 			manager = UserManager.getInstance();
 			user = manager.getUser(userName);
-			if(user==null)
+			if(user==null) // If the user is offline or heartbeats are not received
 			{
 				user = manager.getUserFromDB(userName);
 				user.setStatus(userStatus.ONLINE);
 				user.setSessionId(session.getId());
 				manager.addUser(user);
 				User[] friends = user.getOnlineFriendList();
+				// TODO 这里还是有问题
 				//通知所有朋友
 				if(friends==null)
-					return ;
+				    return;
 				for(int i=0;i<friends.length;i++)
 				{
 				     manager.updateUserStatus(user);
@@ -91,8 +91,14 @@ public class SendMessage extends MessageProcessTask{
 			SimpleDateFormat tempDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			String datetime = tempDate.format(new java.util.Date());
 			
+			// decide whether the message is to be an OFFLINE-MSG
+			int sent = 1;
+			if (manager.getUser(friendname) == null
+			    || manager.getUser(friendname).getStatus() == userStatus.OFFLINE)
+			    sent = 0;
+
 			//存入数据库中
-			manager.addMessage(user.getUsername(), friendname, datetime, msg);
+			manager.addMessage(user.getUsername(), friendname, datetime, msg, sent);
 
 
 			if(manager.getUserMap().containsKey(friendname))
@@ -110,7 +116,7 @@ public class SendMessage extends MessageProcessTask{
 			}
 			else{
 				//该好友不在线
-			    System.out.println(" user is now offline and could not sent msg to him~");
+			    System.out.println("==   W: " + user.getUsername() + "[" + user.getStatus() + "] -> " + friendname + "[0] ==");
 				OutputMessage remsg = MessageFactory.createErrorMsg();
 				remsg.getOutputStream().writeInt(CommandId.S_SMS_ERROR);
 				remsg.getOutputStream().writeInt(CommandId.S_SMS_ERROR_OFFLINE);

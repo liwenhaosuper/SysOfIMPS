@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 
+import android.R.string;
 import android.util.Log;
 
 import com.imps.IMPSDev;
@@ -287,5 +288,22 @@ public class MessageFactory {
 			e.printStackTrace();
 		}		
 		return msg;
+	}
+	
+	/**
+	 * Create offline message request to the server 
+	 * to get offline message
+	 * @param username the receivers of the message fetched
+	 * @return
+	 */
+	public static OutputMessage createCOfflineMsgReq(String username) {
+		OutputMessage outMsg = new OutputMessage(CommandId.C_OFFLINE_MSG_REQ);
+		try {
+			outMsg.getOutputStream().writeInt(username.length());
+			outMsg.getOutputStream().write(username.getBytes("GB2312"));
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+		return outMsg;
 	}
 }
