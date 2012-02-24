@@ -16,7 +16,7 @@
              <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
-        </activity>
+        </activity>"res/values/attrs.xml"
         <activity android:name=".activities.IMPSContainer" android:launchMode="singleTop">
         </activity>
         <activity
