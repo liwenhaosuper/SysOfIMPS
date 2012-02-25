@@ -733,7 +733,7 @@ public class NetMsgLogicHandler extends SimpleChannelUpstreamHandler implements 
 			byte[] msgcnt = new byte[(int)len];
 			inMsg.readBytes(msgcnt);
 			String msg = new String(msgcnt,"gb2312");
-			media.setMsgContant(msg);
+			media.setMsgContent(msg);
 			len = inMsg.readInt();
 			byte[] sendtime = new byte[(int)len];
 			inMsg.readBytes(sendtime);

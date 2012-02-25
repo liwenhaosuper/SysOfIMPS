@@ -30,4 +30,9 @@ public class LocalDBHelper extends SQLiteOpenHelper {
 
 	}
 
+	public void storeMsg(String content, String time, String sender) {
+		SQLiteDatabase msgdb = getReadableDatabase();
+		msgdb.execSQL("INSERT INTO localmsg (content, time, sender) values ("
+				+ content + ", " + time + ", " + sender + ")");
+	}
 }

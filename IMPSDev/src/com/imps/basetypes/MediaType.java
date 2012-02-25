@@ -69,10 +69,10 @@ public class MediaType {
 	public void setContant(List<byte[]> content){
 		this.content = content;
 	}
-	public String getMsgContant(){
+	public String getMsgContent(){
 		return msg;
 	}
-	public void setMsgContant(String msg){
+	public void setMsgContent(String msg){
 		this.msg = msg;
 	}
 	public void addFrame(byte[] data){

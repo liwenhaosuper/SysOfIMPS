@@ -73,7 +73,7 @@ public class PopupMsg extends Activity {
 					return;
 				}
 				MediaType item = new MediaType(MediaType.SMS,friName,MediaType.to);
-				item.setMsgContant(replay);
+				item.setMsgContent(replay);
 				//ServiceManager.getmSms().sendSms(item);
 				Toast.makeText(PopupMsg.this, getResources().getString(R.string.sending), Toast.LENGTH_LONG);
 				mReplay.setText("");

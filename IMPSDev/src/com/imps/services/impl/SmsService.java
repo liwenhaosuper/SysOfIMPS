@@ -85,7 +85,7 @@ public class SmsService implements ISmsService,ISmsEvent{
 		if(ServiceManager.getmTcpConn().getChannel().isConnected()){
 			ServiceManager.getmTcpConn().getChannel().write(ChannelBuffers.wrappedBuffer(
 					MessageFactory.createCSendMsgReq(UserManager.getGlobaluser().getUsername(),
-				item.getFriend(), item.getMsgContant(),item.getId()).build()));
+				item.getFriend(), item.getMsgContent(),item.getId()).build()));
 		}
 		return 0;
 	}
@@ -132,8 +132,8 @@ public class SmsService implements ISmsService,ISmsEvent{
 			schedule.schedule(new Scheduler(), Scheduler.DELAY,Scheduler.INTERRUPT);
 		}
 		mUnsendList.add(item);
-		if(item.getType()==MediaType.IMAGE&&item.getMsgContant()!=null&&!item.getMsgContant().equals("")){
-			Bitmap tmap = BitmapFactory.decodeFile(item.getMsgContant());
+		if(item.getType()==MediaType.IMAGE&&item.getMsgContent()!=null&&!item.getMsgContent().equals("")){
+			Bitmap tmap = BitmapFactory.decodeFile(item.getMsgContent());
 			if(DEBUG) {Log.d(TAG,"Path is:"+saveImage(tmap));}
 			if(tmap!=null){
 				byte[] container = bitmapToBytes(tmap);
@@ -323,7 +323,7 @@ public class SmsService implements ISmsService,ISmsEvent{
 					if(ServiceManager.getmTcpConn().getChannel().isConnected()){
 						ServiceManager.getmTcpConn().getChannel().write(ChannelBuffers.wrappedBuffer(
 								MessageFactory.createCSendMsgReq(UserManager.getGlobaluser().getUsername(),
-							mUnsendList.get(i).getFriend(), mUnsendList.get(i).getMsgContant(),mUnsendList.get(i).getId()).build()));
+							mUnsendList.get(i).getFriend(), mUnsendList.get(i).getMsgContent(),mUnsendList.get(i).getId()).build()));
 					}
 				}
 			}
@@ -342,7 +342,7 @@ public class SmsService implements ISmsService,ISmsEvent{
 			item.add(media);
 			UserManager.CurSessionFriList.put(media.getFriend(), item);
 		}
-		String snip = media.getMsgContant();
+		String snip = media.getMsgContent();
 		if(snip.length()>10){
 			snip = snip.substring(0,9)+"...";
 		}
@@ -456,7 +456,7 @@ public class SmsService implements ISmsService,ISmsEvent{
 			}
 			if(DEBUG) Log.d(TAG,"Bitmap bytes size is :"+packet.length);
 			MediaType media = new MediaType(MediaType.IMAGE,MediaType.from);
-			media.setMsgContant(saveImage(bMap));
+			media.setMsgContent(saveImage(bMap));
 			media.setFriend(userName);
 			media.setTime(getTime());
 			if(UserManager.CurSessionFriList.containsKey(userName))
@@ -471,7 +471,7 @@ public class SmsService implements ISmsService,ISmsEvent{
 				if(DEBUG) Log.d(TAG,"adding to the list with new image");
 			}
 			if(UserManager.activeFriend!=null&&UserManager.activeFriend.equals(userName)){
-				ListContentEntity entity = new ListContentEntity(userName,media.getTime(),"",ListContentEntity.MESSAGE_FROM_PICTURE,media.getMsgContant());
+				ListContentEntity entity = new ListContentEntity(userName,media.getTime(),"",ListContentEntity.MESSAGE_FROM_PICTURE,media.getMsgContent());
 				ChatView.list.add(entity);
 				//TODO:Notify the user
 			}else{

@@ -82,6 +82,12 @@ public class ChatView extends Activity implements  IP2PEvent,ISmsEvent{
 		}
 	};
 	
+	/**
+	 * Sole database instance</br>
+	 * used to get database connection to restore history message
+	 */
+	static private LocalDBHelper localDB = new LocalDBHelper(null);
+	
 	@Override
 	public void onResume()
 	{
@@ -362,7 +368,7 @@ public class ChatView extends Activity implements  IP2PEvent,ISmsEvent{
 				if(DEBUG) Log.d(TAG, ""+i+" "+ mbox.get(i));
 				media = mbox.get(i);
                 String fname = media.getDirecet()==MediaType.from?media.getFriend():UserManager.globaluser.getUsername();
-                msg = media.getMsgContant();
+                msg = media.getMsgContent();
                 String date = media.getTime();
                 if(fname.equals(UserManager.getGlobaluser().getUsername()))
                 {
@@ -370,7 +376,7 @@ public class ChatView extends Activity implements  IP2PEvent,ISmsEvent{
                     	ListContentEntity d1 = new ListContentEntity(fname,date,msg,ListContentEntity.MESSAGE_TO);
                     	list.add(d1);
                 	}else if(media.getType()==MediaType.IMAGE){
-                		list.add(new ListContentEntity(fname,date,"",ListContentEntity.MESSAGE_TO_PICTURE,media.getMsgContant()));
+                		list.add(new ListContentEntity(fname,date,"",ListContentEntity.MESSAGE_TO_PICTURE,media.getMsgContent()));
                 	}else if(media.getType()==MediaType.AUDIO){
                 		list.add(new ListContentEntity(fname,date,"",ListContentEntity.MESSAGE_TO_AUDIO,media.getContant()));
                 	}
@@ -381,7 +387,7 @@ public class ChatView extends Activity implements  IP2PEvent,ISmsEvent{
                     	list.add(d1);
                 	}
                 	else if(media.getType()==MediaType.IMAGE){
-                		list.add(new ListContentEntity(fname,date,"",ListContentEntity.MESSAGE_FROM_PICTURE,media.getMsgContant()));
+                		list.add(new ListContentEntity(fname,date,"",ListContentEntity.MESSAGE_FROM_PICTURE,media.getMsgContent()));
                 	}else if(media.getType()==MediaType.AUDIO){
                 		list.add(new ListContentEntity(fname,date,"",ListContentEntity.MESSAGE_FROM_AUDIO,media.getContant()));
                 	}
@@ -457,7 +463,7 @@ public class ChatView extends Activity implements  IP2PEvent,ISmsEvent{
 		list.add(new ListContentEntity(UserManager.getGlobaluser().getUsername(),date,"",ListContentEntity.MESSAGE_TO_PICTURE,path));
 		listAdapter.notifyDataSetChanged();
 		MediaType item = new MediaType(MediaType.IMAGE,MediaType.to);
-		item.setMsgContant(path);
+		item.setMsgContent(path);
 		item.setFriend(fUsername);
 		if(UserManager.CurSessionFriList.containsKey(fUsername))
 		{
@@ -492,11 +498,14 @@ public class ChatView extends Activity implements  IP2PEvent,ISmsEvent{
 	}
 
 
-	@Override
+	/**
+	 * When a new message comes,</br>
+	 * respond to it and add it to the ChatView with a bubble
+	 * @param media message body
+	 */
 	public void onSmsRecv(MediaType media) {
-		// TODO Auto-generated method stub
 		if(media.getFriend().equals(fUsername)){
-			appendToList(media.getFriend(),media.getMsgContant(),media.getTime());
+			appendToList(media.getFriend(),media.getMsgContent(),media.getTime());
 			
 			Message msg = new Message();
 			msg.what = REFRESH;
@@ -504,6 +513,7 @@ public class ChatView extends Activity implements  IP2PEvent,ISmsEvent{
 			if(UserManager.UnReadMessages.containsKey(fUsername)){
 				UserManager.UnReadMessages.remove(fUsername);
 			}
+			localDB.storeMsg(media.getMsgContent(), media.getTime(), media.getFriend());
 		}	
 	}
 	@Override
