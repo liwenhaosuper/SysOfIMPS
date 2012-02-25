@@ -240,7 +240,13 @@ public class SmsService implements ISmsService,ISmsEvent{
 	@Override
 	public void onSmsSendFail(String errorCode, int smsId) {
 		// TODO Auto-generated method stub
-		
+		for(int i=0;i<mUnsendList.size();i++){
+			if(mUnsendList.get(i).getId()==smsId){
+				MediaType item = mUnsendList.remove(i);
+				mSentList.add(item);
+				break;
+			}
+		}
 	}
 
 	@Override
