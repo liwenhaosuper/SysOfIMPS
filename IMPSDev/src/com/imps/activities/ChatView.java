@@ -9,9 +9,12 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import android.R.integer;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -47,6 +50,7 @@ import com.imps.net.handler.NetMsgLogicHandler;
 import com.imps.net.handler.UserManager;
 import com.imps.services.impl.ServiceManager;
 import com.imps.ui.widget.ChattingAdapter;
+import com.imps.util.LocalDBHelper;
 
 public class ChatView extends Activity implements  IP2PEvent,ISmsEvent{
 	protected static final String TAG = ChatView.class.getCanonicalName();
@@ -97,6 +101,22 @@ public class ChatView extends Activity implements  IP2PEvent,ISmsEvent{
 	}
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
+		
+		// test sqlite database
+//		LocalDBHelper dbHelper = new LocalDBHelper(getBaseContext());
+//		SQLiteDatabase msg_db = dbHelper.getWritableDatabase();
+//		if (msg_db.isOpen()) {
+//			msg_db.execSQL("INSERT INTO localmsg (time, content, sender) values ('2012', 'haha', 'me')");
+//		}
+//		SQLiteDatabase read_db = dbHelper.getReadableDatabase();
+//		Cursor cursor = read_db.query("localmsg", null, null, null, null, null, null);
+//		cursor.moveToPosition(0);
+//		Log.d("DBTEST", new Integer(cursor.getCount()).toString());
+//		dbHelper = null;
+//		read_db = null;
+//		msg_db = null;
+		// end of test
+		
 		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 		setContentView(R.layout.chatview);
 		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.chatting_title_bar);

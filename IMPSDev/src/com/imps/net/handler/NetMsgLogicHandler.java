@@ -35,6 +35,7 @@ import com.imps.events.ISmsEventDispacher;
 import com.imps.events.IVideoEvent;
 import com.imps.events.IVideoEventDispacher;
 import com.imps.services.impl.ServiceManager;
+import com.imps.util.LocalDBHelper;
 
 public class NetMsgLogicHandler extends SimpleChannelUpstreamHandler implements ISmsEventDispacher
 ,IAudioEventDispacher,IVideoEventDispacher,IContactEventDispacher,IRegisterEventDispacher,ILoginEventDispacher,IConnEventDispacher{
