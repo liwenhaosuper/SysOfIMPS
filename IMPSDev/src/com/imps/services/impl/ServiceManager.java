@@ -114,8 +114,8 @@ public class ServiceManager extends Service implements IConnEvent{
 				new Intent(IMPSDev.getContext(), ServiceManager.class));
 		boolean success = true;
 		//for DEBUG purpose
-		//success&=ServiceManager.getmTcpConn().startTcp();
-		//success&= ServiceManager.getmAccount().start();
+		success&=ServiceManager.getmTcpConn().startTcp();
+		success&= ServiceManager.getmAccount().start();
 		success&= ServiceManager.getmBsstion().start();
 		success&= ServiceManager.getmConfig().start();
 		success&= ServiceManager.getmNet().start();
