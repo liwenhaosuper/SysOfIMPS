@@ -1,4 +1,6 @@
 .classpath
+.project
+IMPSDevServer/bin/
 IMPS_Server/bin/
 IMPS_Server/src/com/imps/server/main/ServerBoot.java
 IMPS/bin/
