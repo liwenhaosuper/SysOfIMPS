@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapController;
@@ -32,6 +33,7 @@ public class CrashFixMyLocationOverlay extends MyLocationOverlay implements OnCl
 	private int layout_x = 0; 
 	private int layout_y = -30; 
 	private Context context;
+	private String streetName = "";
     public CrashFixMyLocationOverlay(Context context, MapView mapView) {
         super(context, mapView);
     }
@@ -102,7 +104,7 @@ public class CrashFixMyLocationOverlay extends MyLocationOverlay implements OnCl
 		if(this.getMyLocation()==null){
 			return context.getResources().getString(R.string.addressnotavailable);
 		}
-		Geocoder gecoder = new Geocoder(context,Locale.CHINA);
+		Geocoder gecoder = new Geocoder(context,Locale.getDefault());
 		String strname = context.getResources().getString(R.string.longitude)+":"+this.getMyLocation().getLongitudeE6()/1E6+","+
 		 context.getResources().getString(R.string.latitude)+":"+this.getMyLocation().getLatitudeE6()/1E6+"\n";
 		try {
@@ -117,5 +119,13 @@ public class CrashFixMyLocationOverlay extends MyLocationOverlay implements OnCl
 			return strname;
 		}
 		return strname;
+	}
+	public void animateToMyLocation(int zoomLevel){
+		if(getMyLocation()==null){
+			Toast.makeText(context, context.getResources().getString(R.string.positioning_unavailable), Toast.LENGTH_LONG);
+			return;
+		}
+		mMapCtrl.setZoom(zoomLevel);
+		mMapCtrl.animateTo(getMyLocation());
 	}
 }

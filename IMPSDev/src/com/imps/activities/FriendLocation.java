@@ -3,7 +3,11 @@ package com.imps.activities;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.AlertDialog;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Rect;
@@ -16,14 +20,21 @@ import android.view.animation.AnimationSet;
 import android.view.animation.RotateAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
+import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
+import com.google.android.maps.OverlayItem;
 import com.imps.IMPSDev;
 import com.imps.R;
+import com.imps.basetypes.UserStatus;
+import com.imps.net.handler.UserManager;
 import com.imps.receivers.IMPSBroadcastReceiver;
 import com.imps.ui.map.CrashFixMyLocationOverlay;
+import com.imps.ui.map.FriendLocationOverlay;
 
 public class FriendLocation extends MapActivity implements View.OnClickListener{
 	private static boolean DEBUG = IMPSDev.isDEBUG();
@@ -38,6 +49,11 @@ public class FriendLocation extends MapActivity implements View.OnClickListener{
 	private Button mFriendsactivity;
 	private Button mMyvalidlocation;
 	private Button mNearbyactivity;
+	
+	private ImageButton loction_Btn;
+	private ImageButton layer_Btn;
+	private ImageButton about_Btn;
+	private Button search_btn;
 
 	private List<AnimationSet> mOutAnimatinSets = new ArrayList<AnimationSet>();
 	private List<AnimationSet> mInAnimatinSets = new ArrayList<AnimationSet>();
@@ -49,7 +65,10 @@ public class FriendLocation extends MapActivity implements View.OnClickListener{
     private MapView mMapView;
     private MapController mMapController;
     private CrashFixMyLocationOverlay mMyLocationOverlay;
+    private FriendLocationOverlay mOnlineFrilocOverlay;
+    private FriendLocationOverlay mOfflineFrilocOverlay;
     private View mMyPopView;
+    private View mFriLocPopView;
     private FriendLocationReceiver receiver = new FriendLocationReceiver();
 	
     @Override
@@ -58,6 +77,7 @@ public class FriendLocation extends MapActivity implements View.OnClickListener{
         setContentView(R.layout.friendlocation);
         initViews();
         initAnimation();
+        //initOverlays();
     }
     @Override
     public void onResume(){
@@ -80,8 +100,26 @@ public class FriendLocation extends MapActivity implements View.OnClickListener{
 					MapView.LayoutParams.BOTTOM_CENTER));
 			mMyPopView.setVisibility(View.GONE);
     	}
+    	if(null == mFriLocPopView){
+    		mFriLocPopView = getLayoutInflater().inflate(R.layout.friendlocationoverlay, null);
+			mMapView.addView(mFriLocPopView, new MapView.LayoutParams(
+					MapView.LayoutParams.WRAP_CONTENT,
+					MapView.LayoutParams.WRAP_CONTENT, null,
+					MapView.LayoutParams.BOTTOM_CENTER));
+			mFriLocPopView.setVisibility(View.GONE);
+    	}
     }
 	public void initViews(){
+        loction_Btn = (ImageButton)findViewById(R.id.loction);
+    	layer_Btn = (ImageButton)findViewById(R.id.layer);
+    	about_Btn = (ImageButton)findViewById(R.id.about);
+    	search_btn = (Button)findViewById(R.id.search);
+    	loction_Btn.setOnClickListener(this);
+    	layer_Btn.setOnClickListener(this);
+    	about_Btn.setOnClickListener(this);
+    	search_btn.setOnClickListener(this);
+		
+		
 		mMapView = (MapView) findViewById(R.id.MapView);
 		//mMapView.setBuiltInZoomControls(true);
 	    mMapController = mMapView.getController();
@@ -107,6 +145,29 @@ public class FriendLocation extends MapActivity implements View.OnClickListener{
     	
     	mMyLocationOverlay = new CrashFixMyLocationOverlay(this, mMapView,mMyPopView);
     	mMapView.getOverlays().add(mMyLocationOverlay);
+    	
+    	mOnlineFrilocOverlay = new FriendLocationOverlay(this.getResources().getDrawable(R.drawable.online),this,mMapView,
+    			mFriLocPopView);
+    	mOfflineFrilocOverlay = new FriendLocationOverlay(this.getResources().getDrawable(R.drawable.offline),this,mMapView,
+    			mFriLocPopView);
+    	mMapView.getOverlays().add(mOnlineFrilocOverlay);
+    	mMapView.getOverlays().add(mOfflineFrilocOverlay);
+    	
+	}
+	public void initAllFriendLocationOverlays(){
+		mOnlineFrilocOverlay.removeAllItems();
+		mOfflineFrilocOverlay.removeAllItems();
+		for(int i=0;i<UserManager.AllFriList.size();i++){
+			GeoPoint point = new GeoPoint((int)(UserManager.AllFriList.get(i).getLocX()*1E6),(int)(UserManager.AllFriList.get(i).getLocY()*1E6));
+			OverlayItem item = new OverlayItem(point,UserManager.AllFriList.get(i).getUsername(),
+					getResources().getString(R.string.lastupdatetime)+":"+UserManager.AllFriList.get(i).getLoctime()+"\n"+UserManager.AllFriList.get(i).getDescription());
+			if(UserManager.AllFriList.get(i).getStatus()==UserStatus.ONLINE){
+				mOnlineFrilocOverlay.addOverlay(item);
+			}else{
+				mOfflineFrilocOverlay.addOverlay(item);
+			}
+			
+		}
 	}
 	
 	
@@ -134,6 +195,8 @@ public class FriendLocation extends MapActivity implements View.OnClickListener{
 			if(DEBUG) Log.d(TAG,"Friends Activity click...");
 			startInAnimation();
 			isIn = true;
+			Toast.makeText(FriendLocation.this,getResources().getString(R.string.friendlocation_loading), Toast.LENGTH_SHORT).show();
+			initAllFriendLocationOverlays();
 		}else if(v==mMyvalidlocation){
 			if(DEBUG) Log.d(TAG,"My location click...");
 			startInAnimation();
@@ -145,8 +208,38 @@ public class FriendLocation extends MapActivity implements View.OnClickListener{
 		}
 		else{
 			if(DEBUG) Log.d(TAG,"click:"+v.getId());
+			switch(v.getId()){
+			case R.id.loction:
+			{
+				AnimateToMyLocation(18);
+				break;
+			}			
+			case R.id.search:
+			{
+				onSearchRequested();
+				break;
+			}		
+			case R.id.about:
+			{
+				ComponentName cn=new ComponentName(FriendLocation.this,About.class);
+				Intent intent=new Intent();
+				intent.setComponent(cn);
+				startActivity(intent);
+				break;
+			}
+			case R.id.layer:
+			{ 
+				selectViewMode();
+				break;
+			}
+			default:break;
+			}
 		}
 	}
+	public void AnimateToMyLocation(int zoomLevel){
+		mMyLocationOverlay.animateToMyLocation(zoomLevel);
+	}
+	
     private void initAnimation() {
     	RotateAnimation outRotaAni = new RotateAnimation(0, 720, 0, 0);
     	outRotaAni.setDuration(ANIMATION_TIME);
@@ -260,6 +353,38 @@ public class FriendLocation extends MapActivity implements View.OnClickListener{
 		}
 		isInit=true;
 	}
+	private void selectViewMode() {
+		OnClickListener listener = new DialogInterface.OnClickListener() {
+
+			public void onClick(DialogInterface dialog, int which) {
+				switch (which) {
+				case 0:
+					mMapView.setTraffic(false);
+					mMapView.setSatellite(false);
+					mMapView.setStreetView(true);
+					break;
+				case 1:
+					mMapView.setSatellite(false);
+					mMapView.setStreetView(false);
+					mMapView.setTraffic(true);
+					break;
+				case 2:
+					mMapView.setStreetView(false);
+					mMapView.setTraffic(false);
+					mMapView.setSatellite(true);
+					break;
+				}
+
+			}
+		};
+
+		String[] menu = { getResources().getString(R.string.street_view), getResources().getString(R.string.traffic_view), getResources().getString(R.string.satellite_view) };
+		new AlertDialog.Builder(FriendLocation.this.getParent()).setTitle(getResources().getString(R.string.select_mapview_mode)).setItems(menu,
+				listener).show();
+	}
+	
+	
+	
 	public class FriendLocationReceiver extends IMPSBroadcastReceiver{
 		@Override
 		public void onReceive(Context context,Intent intent){

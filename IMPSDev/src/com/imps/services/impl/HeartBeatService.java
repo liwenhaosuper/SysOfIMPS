@@ -50,7 +50,7 @@ public class HeartBeatService extends TimerTask implements IHeartBeatService{
 		if(location==null||username==null||username.equals("")||!ServiceManager.getmNet().isAvailable()){
 			return;
 		}
-		if(ServiceManager.getmTcpConn().getChannel().isConnected()){
+		if(ServiceManager.getmTcpConn().getChannel()!=null&&ServiceManager.getmTcpConn().getChannel().isConnected()){
 			ServiceManager.getmTcpConn().getChannel().write(ChannelBuffers.wrappedBuffer(
 					MessageFactory.createCHeartbeatReq(username, location.getLatitudeE6(), location.getLongitudeE6()).build())
 					);
@@ -74,7 +74,7 @@ public class HeartBeatService extends TimerTask implements IHeartBeatService{
 			if(location==null){
 				return;
 			}
-			if(ServiceManager.getmTcpConn().getChannel().isConnected()){
+			if(ServiceManager.getmTcpConn().getChannel()!=null&&ServiceManager.getmTcpConn().getChannel().isConnected()){
 				ServiceManager.getmTcpConn().getChannel().write(ChannelBuffers.wrappedBuffer(
 						MessageFactory.createCHeartbeatReq(username, location.getLatitudeE6(), location.getLongitudeE6()).build())
 						);

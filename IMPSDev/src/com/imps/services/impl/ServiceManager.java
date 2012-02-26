@@ -291,9 +291,6 @@ public class ServiceManager extends Service implements IConnEvent{
 	}
 
 	public static GPSService getmGPS() {
-		if(!mGPS.isStarted()){
-			mGPS.start();
-		}
 		return mGPS;
 	}
 
