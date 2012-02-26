@@ -131,10 +131,11 @@ public class Login extends Activity{
 			}});
 	}
 	public void startLogin(){
-		if(!ServiceManager.getmNet().isAvailable()){
+		//for test purpose
+/*		if(!ServiceManager.getmNet().isAvailable()){
 			showDialog(NET_ERROR);
 			return;
-		}
+		}*/
 		username = account.getText().toString();
 		password = pwd.getText().toString();
 		if(username==null||password==null||"".equals(username)||"".equals(password)){
@@ -176,7 +177,7 @@ public class Login extends Activity{
 
 		@Override
 		protected String doInBackground(String... params) {
-			ServiceManager.getmAccount().login(username, password);
+			//ServiceManager.getmAccount().login(username, password);
 			return null;
 		}
 		@Override
@@ -191,11 +192,11 @@ public class Login extends Activity{
 				pd.dismiss();	
 			}
 			//for DEBUG purpose
-/*			ServiceManager.getmTcpConn().stopTcp();
+			ServiceManager.getmTcpConn().stopTcp();
 			Intent start = new Intent(Login.this,IMPSContainer.class);
 			start.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(start);
-			finish();*/
+			finish();
 		}
 		@Override
 		protected void onProgressUpdate(String... params){

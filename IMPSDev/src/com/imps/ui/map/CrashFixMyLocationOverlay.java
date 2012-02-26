@@ -1,9 +1,13 @@
 package com.imps.ui.map;
 
-import android.content.ComponentName;
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
+
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Canvas;
+import android.location.Address;
+import android.location.Geocoder;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -25,8 +29,8 @@ public class CrashFixMyLocationOverlay extends MyLocationOverlay implements OnCl
     private MapView mMapview;
     private MapController mMapCtrl;
     private boolean isShowing = false;
-	private int layout_x = 0; // 用于设置popview 相对某个位置向x轴偏移
-	private int layout_y = -30; // 用于设置popview 相对某个位置向x轴偏移
+	private int layout_x = 0; 
+	private int layout_y = -30; 
 	private Context context;
     public CrashFixMyLocationOverlay(Context context, MapView mapView) {
         super(context, mapView);
@@ -59,19 +63,17 @@ public class CrashFixMyLocationOverlay extends MyLocationOverlay implements OnCl
     		}else{
     			isShowing = true;
     			MapView.LayoutParams params = (MapView.LayoutParams) mPopView.getLayoutParams();
-    			params.x = this.layout_x;//Y轴偏移
-    			params.y = this.layout_y;//Y轴偏移
+    			params.x = this.layout_x;
+    			params.y = this.layout_y;
     			point = this.getMyLocation();
     			params.point = point;
     			mMapCtrl.animateTo(point);
     			TextView title_TextView = (TextView) mPopView.findViewById(R.id.map_bubbleTitle);
     			title_TextView.setText(context.getResources().getString(R.string.iamhear));
     			TextView desc_TextView = (TextView) mPopView.findViewById(R.id.map_bubbleText);
-    			if(UserManager.getGlobaluser().getDescription().equals("")){
-    				desc_TextView.setText("不说话的网友不是好网友...");
-    			}else{
-    				desc_TextView.setText(UserManager.getGlobaluser().getDescription());
-    			}
+    			
+    			desc_TextView.setText(getStreet());
+    			
     			RelativeLayout button = (RelativeLayout) mPopView.findViewById(R.id.map_bubblebtn);
     			button.setOnClickListener(this);    			
     			mMapview.updateViewLayout(mPopView, params);
@@ -95,5 +97,25 @@ public class CrashFixMyLocationOverlay extends MyLocationOverlay implements OnCl
 			if(DEBUG) Log.d(TAG,"Why click me?");
 			break;				
 		}
+	}
+	private String getStreet(){
+		if(this.getMyLocation()==null){
+			return context.getResources().getString(R.string.addressnotavailable);
+		}
+		Geocoder gecoder = new Geocoder(context,Locale.CHINA);
+		String strname = context.getResources().getString(R.string.longitude)+":"+this.getMyLocation().getLongitudeE6()/1E6+","+
+		 context.getResources().getString(R.string.latitude)+":"+this.getMyLocation().getLatitudeE6()/1E6+"\n";
+		try {
+			//getAddressLine(0):country，getAddressLine(1):area，getAddressLine(2):street
+			List places = gecoder.getFromLocation(this.getMyLocation().getLatitudeE6()/1E6,this.getMyLocation().getLongitudeE6()/1E6,5);
+			if(places!=null&&places.size()>0){
+				strname+=context.getResources().getString(R.string.locatedat)+((Address)places.get(0)).getAddressLine(0)+""+((Address)places.get(0)).getAddressLine(1)+
+				((Address)places.get(0)).getAddressLine(2);
+			}
+		} catch (IOException e) {
+			if(DEBUG) e.printStackTrace();
+			return strname;
+		}
+		return strname;
 	}
 }

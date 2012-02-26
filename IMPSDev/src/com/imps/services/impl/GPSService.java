@@ -83,6 +83,7 @@ public class GPSService extends Observable implements IGPSService,LocationListen
 		}
 		GeoPoint point = getGeoByLocation(mLastLocation);
 		mCurrent = new GeoLocation(point.getLatitudeE6(),point.getLongitudeE6());
+		mCurrent.setGeoType(GeoLocation.TYPE_GPS);
 		return mCurrent;
 	}
 

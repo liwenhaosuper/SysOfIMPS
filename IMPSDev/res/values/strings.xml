@@ -158,4 +158,8 @@
 	<string name="checkin">签到</string>
 	
 	<string name="iamhear">我在这里</string>
+	<string name="longitude">经度</string>
+	<string name="latitude">纬度</string>
+	<string name="addressnotavailable">暂时无法获取位置</string>
+	<string name="locatedat">位于</string>
 </resources>

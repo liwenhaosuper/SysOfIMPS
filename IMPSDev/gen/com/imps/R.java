@@ -620,6 +620,7 @@ containing a value of this type.
         public static final int add_friend_rsp_denied=0x7f080069;
         public static final int add_friend_rsp_sent=0x7f080065;
         public static final int add_new_fri=0x7f080030;
+        public static final int addressnotavailable=0x7f08007e;
         public static final int app_name=0x7f080001;
         public static final int assistor=0x7f080038;
         public static final int audio_chat_request_message=0x7f080056;
@@ -676,7 +677,9 @@ containing a value of this type.
         public static final int hello=0x7f080000;
         public static final int iamhear=0x7f08007b;
         public static final int image_send_success=0x7f080044;
+        public static final int latitude=0x7f08007d;
         public static final int launch_main=0x7f080039;
+        public static final int locatedat=0x7f08007f;
         public static final int login=0x7f080007;
         public static final int login_account_at_other_place=0x7f080024;
         /**  Login 
@@ -689,6 +692,7 @@ containing a value of this type.
         public static final int login_unknown_error=0x7f080025;
         public static final int login_username_password_error=0x7f080023;
         public static final int login_username_required=0x7f080021;
+        public static final int longitude=0x7f08007c;
         public static final int mail=0x7f08000e;
         public static final int map=0x7f080016;
         public static final int mylocation=0x7f080075;
@@ -732,7 +736,7 @@ containing a value of this type.
         public static final int strPswInputLabel=0x7f080004;
         public static final int sysMsg=0x7f08002a;
         public static final int sysmsg=0x7f080015;
-        public static final int talk=0x7f08007c;
+        public static final int talk=0x7f080080;
         /** Video Chat
          */
         public static final int unknow_request=0x7f08005a;

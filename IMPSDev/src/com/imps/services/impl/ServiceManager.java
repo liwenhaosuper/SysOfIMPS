@@ -30,6 +30,7 @@ public class ServiceManager extends Service implements IConnEvent{
 	private static ConnectionService mTcpConn;
 	private static AccountService mAccount;
 	private static ReceiverChannelService mReceiver;
+	private static HeartBeatService mHeartbeat;
 	//TAG
 	public static String TAG = ServiceManager.class.getCanonicalName();
 	public static boolean DEBUG = IMPSDev.isDEBUG();
@@ -66,6 +67,7 @@ public class ServiceManager extends Service implements IConnEvent{
 		setmNet(new NetworkService());
 		setmAccount(new AccountService());
 		setmReceiver(new ReceiverChannelService());
+		setmHeartbeat(new HeartBeatService());
 	}
 	
 
@@ -111,8 +113,9 @@ public class ServiceManager extends Service implements IConnEvent{
 		IMPSDev.getContext().startService(
 				new Intent(IMPSDev.getContext(), ServiceManager.class));
 		boolean success = true;
-		success&=ServiceManager.getmTcpConn().startTcp();
-		success&= ServiceManager.getmAccount().start();
+		//for DEBUG purpose
+		//success&=ServiceManager.getmTcpConn().startTcp();
+		//success&= ServiceManager.getmAccount().start();
 		success&= ServiceManager.getmBsstion().start();
 		success&= ServiceManager.getmConfig().start();
 		success&= ServiceManager.getmNet().start();
@@ -432,6 +435,16 @@ public class ServiceManager extends Service implements IConnEvent{
 
 	public static ReceiverChannelService getmReceiver() {
 		return mReceiver;
+	}
+
+
+	public static void setmHeartbeat(HeartBeatService mHeartbeat) {
+		ServiceManager.mHeartbeat = mHeartbeat;
+	}
+
+
+	public static HeartBeatService getmHeartbeat() {
+		return mHeartbeat;
 	}
 
 }
