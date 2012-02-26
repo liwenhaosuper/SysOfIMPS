@@ -113,7 +113,7 @@ public class ServiceManager extends Service implements IConnEvent{
 		boolean success = true;
 		success&=ServiceManager.getmTcpConn().startTcp();
 		success&= ServiceManager.getmAccount().start();
-		//success&= ServiceManager.getmBsstion().start();
+		success&= ServiceManager.getmBsstion().start();
 		success&= ServiceManager.getmConfig().start();
 		success&= ServiceManager.getmNet().start();
 		success&= ServiceManager.getmContact().start();

@@ -156,4 +156,6 @@
 	<string name="nearbyactivity">附近动态</string>
 	<string name="emptymap">不加载地图数据</string>
 	<string name="checkin">签到</string>
+	
+	<string name="iamhear">我在这里</string>
 </resources>

@@ -79,7 +79,9 @@ public class ConnectionService{
 		if(DEBUG)Log.d(TAG,"stopTcp...");
 		isStarted = false;
 		try {
-			future.close().await();
+			if(future!=null){
+				future.close().await();
+			}
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

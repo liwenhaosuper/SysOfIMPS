@@ -3,6 +3,10 @@ package com.imps.activities;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,25 +22,35 @@ import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.imps.IMPSDev;
 import com.imps.R;
+import com.imps.receivers.IMPSBroadcastReceiver;
+import com.imps.ui.map.CrashFixMyLocationOverlay;
 
 public class FriendLocation extends MapActivity implements View.OnClickListener{
 	private static boolean DEBUG = IMPSDev.isDEBUG();
 	private static String TAG = FriendLocation.class.getCanonicalName();
-	
+
 	private final static int RADIUS = 200;
 	private final static long ANIMATION_TIME = 300;
 	private final static long TIME_INTERVAL = 30;
+	
 	private Button mOption;
 	private Button mCheckin;
 	private Button mFriendsactivity;
 	private Button mMyvalidlocation;
 	private Button mNearbyactivity;
+
 	private List<AnimationSet> mOutAnimatinSets = new ArrayList<AnimationSet>();
 	private List<AnimationSet> mInAnimatinSets = new ArrayList<AnimationSet>();
 	private List<Button> mList = new ArrayList<Button> ();
 	private boolean isIn = true;
+	private boolean isInit = false;
+	private Rect[] after  =new Rect[4];
+	
     private MapView mMapView;
     private MapController mMapController;
+    private CrashFixMyLocationOverlay mMyLocationOverlay;
+    private View mMyPopView;
+    private FriendLocationReceiver receiver = new FriendLocationReceiver();
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,7 +59,34 @@ public class FriendLocation extends MapActivity implements View.OnClickListener{
         initViews();
         initAnimation();
     }
+    @Override
+    public void onResume(){
+    	super.onResume();
+    	registerReceiver(receiver,receiver.getFilter());
+    	mMyLocationOverlay.enableMyLocation();
+    	mMyLocationOverlay.enableCompass();
+    }
+    @Override
+    public void onStop(){
+    	super.onStop();
+    	unregisterReceiver(receiver);
+    }
+    public void initPopview(){
+    	if(null == mMyPopView){
+    		mMyPopView = getLayoutInflater().inflate(R.layout.mypopview, null);
+			mMapView.addView(mMyPopView, new MapView.LayoutParams(
+					MapView.LayoutParams.WRAP_CONTENT,
+					MapView.LayoutParams.WRAP_CONTENT, null,
+					MapView.LayoutParams.BOTTOM_CENTER));
+			mMyPopView.setVisibility(View.GONE);
+    	}
+    }
 	public void initViews(){
+		mMapView = (MapView) findViewById(R.id.MapView);
+		//mMapView.setBuiltInZoomControls(true);
+	    mMapController = mMapView.getController();
+	    mMapView.setClickable(true);
+	    
 		mOption = (Button)findViewById(R.id.map_option);
 		mCheckin = (Button)findViewById(R.id.map_checkin);
 		mFriendsactivity = (Button)findViewById(R.id.map_friendsactivity);
@@ -56,11 +97,16 @@ public class FriendLocation extends MapActivity implements View.OnClickListener{
 		mFriendsactivity.setOnClickListener(this);
 		mMyvalidlocation.setOnClickListener(this);
 		mNearbyactivity.setOnClickListener(this);
-
     	mList.add(mCheckin);
     	mList.add(mFriendsactivity);
     	mList.add(mMyvalidlocation);
     	mList.add(mNearbyactivity);
+    	mOption.setOnClickListener(this);
+    	
+    	initPopview();
+    	
+    	mMyLocationOverlay = new CrashFixMyLocationOverlay(this, mMapView,mMyPopView);
+    	mMapView.getOverlays().add(mMyLocationOverlay);
 	}
 	
 	
@@ -97,22 +143,11 @@ public class FriendLocation extends MapActivity implements View.OnClickListener{
 			startInAnimation();
 			isIn = true;
 		}
-	}
-
-	private void startInAnimation() {
-		for (int i = 0; i < mList.size(); i ++) {
-			Button button = mList.get(i);
-			button.startAnimation(mInAnimatinSets.get(i));
+		else{
+			if(DEBUG) Log.d(TAG,"click:"+v.getId());
 		}
 	}
-
-	private void startOutAnimation() {
-		for (int i = 0; i < mList.size(); i ++) {
-			Button button = mList.get(i);
-			button.startAnimation(mOutAnimatinSets.get(i));
-		}
-	}
-   private void initAnimation() {
+    private void initAnimation() {
     	RotateAnimation outRotaAni = new RotateAnimation(0, 720, 0, 0);
     	outRotaAni.setDuration(ANIMATION_TIME);
     	RotateAnimation inRotaAni = new RotateAnimation(720, 0, 0, 0);
@@ -141,14 +176,15 @@ public class FriendLocation extends MapActivity implements View.OnClickListener{
     		outTranAni.setDuration(time);
     		AnimationSet outSet = new AnimationSet(true);
     		outSet.addAnimation(outTranAni);
-    		outSet.addAnimation(outRotaAni);
-    		outSet.setFillAfter(true);
+    		outSet.setFillAfter(false);
     		mOutAnimatinSets.add(outSet);
+    		//
     		final AnimationSet outAfterSet = new AnimationSet(true);
-    		TranslateAnimation outAfterTranAni = new TranslateAnimation(x, x * 8 / 9  ,-y , -y * 8 / 9);
+    		TranslateAnimation outAfterTranAni = new TranslateAnimation(x,x * 8 / 9,-y ,-y * 8 / 9);
+    		after[i] = new Rect(x*8/9, y*8/9, x*8/9, y*8/9);
     		outAfterTranAni.setDuration(time);
     		outAfterSet.addAnimation(outAfterTranAni);
-    		outAfterSet.setFillAfter(true);
+    		outAfterSet.setFillAfter(false);
     		outSet.setAnimationListener(new AnimationListener() {
 				@Override
 				public void onAnimationEnd(Animation animation) {
@@ -162,15 +198,79 @@ public class FriendLocation extends MapActivity implements View.OnClickListener{
 				}
     			
     		});
+    		outAfterSet.setAnimationListener(new AnimationListener() {
+				@Override
+				public void onAnimationEnd(Animation animation) {
+					if(button==mCheckin){
+						button.layout(after[0].left, after[0].top,after[0].right,after[0].bottom);
+					}else if(button==mFriendsactivity){
+						button.layout(after[1].left, after[1].top,after[1].right,after[1].bottom);
+					}else if(button==mMyvalidlocation){
+						button.layout(after[2].left, after[2].top,after[2].right,after[2].bottom);
+					}else if(button==mNearbyactivity){
+						button.layout(after[3].left, after[3].top,after[3].right,after[3].bottom);
+					}	
+					button.clearAnimation();
+				}
+				@Override
+				public void onAnimationRepeat(Animation animation) {
+				}
+				@Override
+				public void onAnimationStart(Animation animation) {
+				}
+    			
+    		});
     		//
-    		TranslateAnimation inTranAni = new TranslateAnimation(x * 8 / 9, 0 , -y * 8 / 9 , 0);
+    		TranslateAnimation inTranAni = new TranslateAnimation(0, -x*8/9,0 ,y*8/9);
     		inTranAni.setDuration(time);
     		AnimationSet inSet = new AnimationSet(true);
     		inSet.addAnimation(inTranAni);
-//	    		inSet.addAnimation(inRotaAni);
+    		inSet.setAnimationListener(new AnimationListener() {
+				@Override
+				public void onAnimationEnd(Animation animation) {
+					if(button!=mOption) button.layout(mOption.getLeft(), mOption.getTop(), mOption.getRight(), mOption.getBottom());
+				}
+				@Override
+				public void onAnimationRepeat(Animation animation) {
+				}
+				@Override
+				public void onAnimationStart(Animation animation) {
+				}
+    			
+    		});
     		inSet.setFillAfter(true);
     		mInAnimatinSets.add(inSet);
+    		
 		}
     }
+	private void startInAnimation() {
+		for (int i = 0; i < mList.size(); i ++) {
+			Button button = mList.get(i);
+			button.startAnimation(mInAnimatinSets.get(i));
+		}
+	}
+
+	private void startOutAnimation() {
+		for (int i = 0; i < mList.size(); i ++) {
+			Button button = mList.get(i);
+			if(!isInit){
+				after[i] = new Rect(after[i].left+button.getLeft(),button.getTop()-after[i].top,button.getRight()+after[i].right,button.getBottom()-after[i].bottom);
+			}
+			button.startAnimation(mOutAnimatinSets.get(i));
+		}
+		isInit=true;
+	}
+	public class FriendLocationReceiver extends IMPSBroadcastReceiver{
+		@Override
+		public void onReceive(Context context,Intent intent){
+			super.onReceive(context, intent);
+			
+		}
+		@Override
+		public IntentFilter getFilter(){
+			IntentFilter filter = super.getFilter();
+			return filter;
+		}
+	}
 
 }

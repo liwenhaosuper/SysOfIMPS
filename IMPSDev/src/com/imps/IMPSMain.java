@@ -2,6 +2,7 @@ package com.imps;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -25,13 +26,13 @@ public class IMPSMain extends Activity {
 	private static String TAG = IMPSMain.class.getCanonicalName();
 	private static boolean DEBUG = IMPSDev.isDEBUG();
 	private GifView gv;
+	private IMPSMainTask task = new IMPSMainTask();
 	@Override 
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.main);
         gv = (GifView)findViewById(R.id.earth);
-        gv.setGifImage(R.drawable.earth);
         if(DEBUG) Log.d(TAG,"onCreate");
 		if(ServiceManager.isStarted&&ServiceManager.getmAccount().isLogined()){
 			startMainActivity();	
@@ -42,25 +43,54 @@ public class IMPSMain extends Activity {
 		if(!ServiceManager.getmAccount().isLogined()){
 			if(DEBUG) Log.d(TAG,"ServiceManager.getmAccount().isLogined() false");
 		}
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable(){
-			@Override
-			public void run() {
-				if(ServiceManager.isStarted&&ServiceManager.getmAccount().isLogined()){
-					return;
-				}
-				ServiceManager.start();
-				ServiceManager.getmConfig().setupDefault();
-				UserManager.setGlobaluser(new User());
-				UserManager.getGlobaluser().setUsername("test");
-				if(ServiceManager.getmConfig().getPreferences().getBoolean(
-						ConfigurationService.PREFERENCE_SHOW_PRELAUNCH_ACTIVITY,true))
-				{
-					startPreLaunchActivity();
-				}else{
-					startLoginActivity();
-				}
-			}},1000);
+		gv.setGifImage(R.drawable.earth);
+		if(task!=null&&task.getStatus()==AsyncTask.Status.RUNNING){
+			task.cancel(true);
+		}
+		task = new IMPSMainTask();
+		task.execute();
+	}
+	@Override
+	public void onStop(){
+		super.onStop();
+		if(task!=null&&task.getStatus()==AsyncTask.Status.RUNNING){
+			task.cancel(true);
+		}
+	}
+	public class IMPSMainTask extends AsyncTask<Integer,Integer,Integer>{
+
+		@Override
+		protected Integer doInBackground(Integer... params) {
+			publishProgress();
+			ServiceManager.getmConfig().setupDefault();
+			UserManager.setGlobaluser(new User());
+			UserManager.getGlobaluser().setUsername("test");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
+		@Override
+		public void onProgressUpdate(Integer... params){
+		}
+		@Override
+		protected void onPostExecute(Integer params){
+			if(ServiceManager.getmConfig().getPreferences().getBoolean(
+					ConfigurationService.PREFERENCE_SHOW_PRELAUNCH_ACTIVITY,true))
+			{
+				startPreLaunchActivity();
+			}else{
+				startLoginActivity();
+			}
+		}
+		@Override
+		protected void onPreExecute(){
+			gv.showAnimation();
+			ServiceManager.start();
+		}
+		
 	}
 	
 	public void startLoginActivity(){

@@ -190,6 +190,12 @@ public class Login extends Activity{
 			if(pd.isShowing()){
 				pd.dismiss();	
 			}
+			//for DEBUG purpose
+/*			ServiceManager.getmTcpConn().stopTcp();
+			Intent start = new Intent(Login.this,IMPSContainer.class);
+			start.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(start);
+			finish();*/
 		}
 		@Override
 		protected void onProgressUpdate(String... params){
