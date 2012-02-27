@@ -2,8 +2,6 @@ package com.imps.util;
 
 import java.util.ArrayList;
 
-import sun.util.logging.resources.logging;
-
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
