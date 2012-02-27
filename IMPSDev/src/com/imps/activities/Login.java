@@ -27,6 +27,7 @@ import com.imps.IMPSDev;
 import com.imps.R;
 import com.imps.basetypes.Constant;
 import com.imps.basetypes.User;
+import com.imps.basetypes.UserStatus;
 import com.imps.net.handler.UserManager;
 import com.imps.receivers.IMPSBroadcastReceiver;
 import com.imps.services.impl.ConfigurationService;
@@ -131,6 +132,7 @@ public class Login extends Activity{
 			}});
 	}
 	public void startLogin(){
+		//for test purpose
 		if(!ServiceManager.getmNet().isAvailable()){
 			showDialog(NET_ERROR);
 			return;
@@ -176,7 +178,19 @@ public class Login extends Activity{
 
 		@Override
 		protected String doInBackground(String... params) {
+			//For DEBUG purpose
 			ServiceManager.getmAccount().login(username, password);
+/*			for(int i=0;i<10;i++){
+				User user = new User();
+				user.setDescription("test"+i+"号");
+				user.setEmail("li"+i);
+				user.setGender(i%2);
+				user.setLoctime("2012-12-23");
+				user.setLocX(100.5/(i+1));
+				user.setLocY(80.0/(i+1));
+				user.setStatus(i%2==0?UserStatus.OFFLINE:UserStatus.ONLINE);
+				UserManager.AllFriList.add(user);
+			}*/
 			return null;
 		}
 		@Override

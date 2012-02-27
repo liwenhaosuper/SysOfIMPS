@@ -15,6 +15,7 @@ import org.jboss.netty.channel.SimpleChannelUpstreamHandler;
 import com.imps.server.handler.baseLogic.AddFriendReq;
 import com.imps.server.handler.baseLogic.AddFriendRsp;
 import com.imps.server.handler.baseLogic.FriendListRequest;
+import com.imps.server.handler.baseLogic.HeartBeat;
 import com.imps.server.handler.baseLogic.Login;
 import com.imps.server.handler.baseLogic.OfflineMsg;
 import com.imps.server.handler.baseLogic.Register;
@@ -48,6 +49,7 @@ public class LogicHandler extends SimpleChannelUpstreamHandler{
 		case CommandId.C_HEARTBEAT_REQ:
 			/** 心跳检测客户端请求,同时接收地理位置信息 */
 			System.out.println("server: heartbeat received!");
+			new HeartBeat(e.getChannel(),buffer).run();
 			break;
 		case CommandId.C_FRIENDLIST_REFURBISH_REQ:
 			/**好友列表刷新请求*/

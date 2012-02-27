@@ -7,11 +7,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import android.R.array;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -40,12 +42,14 @@ import com.imps.R;
 import com.imps.basetypes.Constant;
 import com.imps.basetypes.ListContentEntity;
 import com.imps.basetypes.MediaType;
+import com.imps.basetypes.UserMessage;
 import com.imps.media.audio.Record;
 import com.imps.media.audio.Track;
 import com.imps.net.handler.UserManager;
 import com.imps.receivers.IMPSBroadcastReceiver;
 import com.imps.services.impl.ServiceManager;
 import com.imps.ui.widget.ChattingAdapter;
+import com.imps.util.LocalDBHelper;
 
 public class ChatView extends Activity{
 	protected static final String TAG = ChatView.class.getCanonicalName();
@@ -64,6 +68,7 @@ public class ChatView extends Activity{
 	private PopupWindow menuWindow = null;
 	private Record record = null;
 	private ChatViewReceiver receiver = new ChatViewReceiver();
+	private LocalDBHelper localDB = new LocalDBHelper(this); 
 	
 	@Override
 	public void onResume()
@@ -317,6 +322,23 @@ public class ChatView extends Activity{
 		if(mListView.getCount()==0&&UserManager.CurSessionFriList.containsKey(fUsername))
 		{
 			if(DEBUG) Log.d(TAG, "ChatView:initialing the chat view with old msg");
+			
+			// Add local history message to current session's message list
+			ArrayList<UserMessage> history = localDB.fetchMsg(fUsername);
+			if (history != null) {
+				for (UserMessage m : history) {
+					if (m.getDir() == 1)
+						list.add(new ListContentEntity(m.getFriend(), m
+								.getTime(), m.getContent(),
+								ListContentEntity.MESSAGE_FROM));
+					else
+						list.add(new ListContentEntity(m.getFriend(), m
+								.getTime(), m.getContent(),
+								ListContentEntity.MESSAGE_TO));
+				}
+			}
+			
+			// Add received messages in the active chat session
 			List<MediaType> mbox = UserManager.CurSessionFriList.get(fUsername);
 			MediaType media;
 			String msg;
@@ -366,6 +388,15 @@ public class ChatView extends Activity{
 						&& (sendStr = str.trim().replaceAll("\r", "").replaceAll("\t", "").replaceAll("\n", "")
 								.replaceAll("\f", "")) != "") {
 					sendMessage(sendStr);
+					
+					/**
+					 * Store messages which have been sent
+					 * into local message database
+					 * @author Styx
+					 */
+					localDB.storeMsg(textEditor.getText().toString(),
+							new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date()),
+							fUsername, 0);
 
 				}
 				textEditor.setText("");
@@ -464,6 +495,15 @@ public class ChatView extends Activity{
 					list.add(d4);
 					listAdapter.notifyDataSetChanged();
 				}
+
+				// Store received message into local database
+				// including displayed on the current chat session GUI
+				// and those from other friends
+				localDB.storeMsg(intent.getStringExtra(Constant.SMSCONTENT),
+						intent.getStringExtra(Constant.TIME),
+						intent.getStringExtra(Constant.USERNAME),
+						1/* From friend */);
+
 			}else if(intent.getAction().equals(Constant.SMSRSP)){
 				
 			}else if(intent.getAction().equals(Constant.IMAGE)){

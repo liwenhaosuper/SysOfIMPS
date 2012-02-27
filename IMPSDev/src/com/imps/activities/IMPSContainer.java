@@ -13,6 +13,7 @@ import android.widget.TabHost;
 import com.imps.IMPSDev;
 import com.imps.R;
 import com.imps.receivers.IMPSBroadcastReceiver;
+import com.imps.services.impl.ServiceManager;
 
 public class IMPSContainer extends TabActivity{
 	private static String TAG = IMPSContainer.class.getCanonicalName();
@@ -82,6 +83,8 @@ public class IMPSContainer extends TabActivity{
 				}
 			}
 		});
+		//start heart beat
+		ServiceManager.getmHeartbeat().start();
 	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)

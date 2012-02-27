@@ -159,4 +159,15 @@
 	
 	<string name="iamhear">我在这里</string>
 	<string name="card">名片设置</string>
+	<string name="longitude">经度</string>
+	<string name="latitude">纬度</string>
+	<string name="addressnotavailable">暂时无法获取位置</string>
+	<string name="locatedat">位于</string>
+	<string name="positioning_unavailable">暂时无法获取您的位置</string>
+	<string name="street_view">街景模式</string>
+	<string name="traffic_view">交通流量</string>
+	<string name="satellite_view">卫星视图</string>
+	<string name="select_mapview_mode">请选择地图模式</string>
+	<string name="lastupdatetime">更新时间</string>
+	<string name="friendlocation_loading">正在加载好友位置</string>
 </resources>
