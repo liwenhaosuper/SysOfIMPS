@@ -15,8 +15,8 @@
     <string name="password_again">确认密码</string>
     <string name="email">邮箱</string>
     <string name="gender">性别</string>
-    <string name="mail">男</string>
-    <string name="femail">女</string>
+    <string name="male">男</string>
+    <string name="female">女</string>
     <string name="login_loading">正在登陆，请稍候...</string>
     <string name="cancel">取消</string>
     <string name="ok">确定</string>
@@ -158,4 +158,5 @@
 	<string name="checkin">签到</string>
 	
 	<string name="iamhear">我在这里</string>
+	<string name="card">名片设置</string>
 </resources>

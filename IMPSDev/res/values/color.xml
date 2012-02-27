@@ -11,4 +11,5 @@
     <color name="pls_talk_normal">#ff707277</color>
     <color name="search_hint">#ffcccccc</color>
     <color name="sms">#ffd2d2d2</color>
+    <color name="transparent">#00000000</color>
 </resources>

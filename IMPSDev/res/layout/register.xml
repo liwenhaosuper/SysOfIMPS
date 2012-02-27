@@ -67,13 +67,13 @@
                android:orientation="horizontal"
                android:layout_width="wrap_content" android:layout_height="wrap_content"
                >
-               <RadioButton android:text="@string/mail"
+               <RadioButton android:text="@string/male"
                             android:id="@+id/mail"
                             android:checked="true"
                             android:layout_width="wrap_content" 
                             android:layout_height="wrap_content">
                </RadioButton>
-               <RadioButton android:text="@string/femail"
+               <RadioButton android:text="@string/female"
                             android:id="@+id/femail"
                             android:layout_width="wrap_content" 
                             android:layout_height="wrap_content">
