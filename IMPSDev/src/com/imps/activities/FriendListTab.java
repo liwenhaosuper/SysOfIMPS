@@ -257,10 +257,12 @@ public class FriendListTab extends ExpandableListActivity{
 		public View getGroupView(int groupPosition, boolean isExpanded,
 				View convertView, ViewGroup parent) {
 			// TODO Auto-generated method stub
+			
 	        View v;
 	        if (convertView == null) {
 	            v = newGroupView(groupPosition,isExpanded, parent);
 	        } else {
+	        	convertView.setBackgroundResource(R.drawable.list_bg);     //添加listitem的焦点事件
 	            v = convertView;
 	        }
 	        bindGroupView(v, groupPosition, isExpanded);

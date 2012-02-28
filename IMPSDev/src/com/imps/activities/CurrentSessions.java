@@ -164,19 +164,23 @@ public class CurrentSessions extends Activity{
 				}
 				LayoutInflater inflate=LayoutInflater.from(CurrentSessions.this);
 				convertView = inflate.inflate(R.layout.currsession_item, null);
+				//convertView.setBackgroundResource(R.drawable.list_bg);     //添加listitem的焦点事件
 				ImageView contactIcon=(ImageView)convertView.findViewById(R.id.contactIcon);
 				TextView name=(TextView)convertView.findViewById(R.id.name);
+				TextView date=(TextView)convertView.findViewById(R.id.date);
 				if(name!=null)name.setText(sessionsList.get(position).getUsername());
 				TextView description=(TextView)convertView.findViewById(R.id.description);
 				if(description!=null)description.setText(sessionsList.get(position).getDescription());
 				if(UserManager.CurSessionFriList.containsKey(sessionsList.get(position).getUsername())){
 					List<MediaType> items = UserManager.CurSessionFriList.get(sessionsList.get(position).getUsername());
-					for(int i=0;i<items.size();i++){
+					for(int i=items.size()-1;i>=0;i--){
 						if(items.get(i).getType()==MediaType.SMS){
 							description.setText(items.get(i).getMsgContant());
+							date.setText(items.get(i).getTime().substring(5));
 							break;
 						}
 					}
+				
 				}
 				TextView statusView = (TextView)convertView.findViewById(R.id.status);
 				if(statusView!=null)statusView.setText(sessionsList.get(position).getStatus()==UserStatus.ONLINE?getResources().getString(R.string.online):getResources().getString(R.string.offline));
