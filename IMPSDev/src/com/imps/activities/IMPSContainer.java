@@ -25,6 +25,7 @@ public class IMPSContainer extends TabActivity{
 	public static final String TAB_CURRENTSESSIONS="currentsession";
 	public static final String TAB_SYSMSG="sysmsg";
 	public static final String TAB_MAP = "map";
+	public static final String TAB_CARD = "card";
 	
 	public static final int SETTING = Menu.FIRST + 1;
 	public static final int ABOUT = Menu.FIRST+2;
@@ -49,6 +50,9 @@ public class IMPSContainer extends TabActivity{
 		tabHost.addTab(tabHost.newTabSpec(TAB_MAP)
 	    		.setIndicator(TAB_MAP)
 	    		.setContent(new Intent(this,MapContainer.class)));
+		tabHost.addTab(tabHost.newTabSpec(TAB_CARD)
+	    		.setIndicator(TAB_CARD)
+	    		.setContent(new Intent(this,MyCard.class)));
 		Intent intent = getIntent();
 		int tag = 0;
 		if(intent!=null){
@@ -70,6 +74,9 @@ public class IMPSContainer extends TabActivity{
 					break;
 				case R.id.radio_map:
 					tabHost.setCurrentTabByTag(TAB_MAP);
+					break;
+				case R.id.radio_card:
+					tabHost.setCurrentTabByTag(TAB_CARD);
 					break;
 				default:
 					break;
