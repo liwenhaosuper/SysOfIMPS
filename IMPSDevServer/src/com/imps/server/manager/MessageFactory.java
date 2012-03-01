@@ -21,10 +21,12 @@ public class MessageFactory {
 	//IM:image data
 	//FL:file data
 	//OK:plain text
+	//DD:doodle
 	public static String AM = "AM";
 	public static String IM = "IM";
 	public static String FL = "FL";
 	public static String OK = "OK";
+	public static String DD ="DD";
 
 	public static OutputMessage createSLoginRsp() {
 		OutputMessage outMsg = new OutputMessage(CommandId.S_LOGIN_RSP);
@@ -301,6 +303,31 @@ public class MessageFactory {
 			//flag
 			outMsg.getOutputStream().writeInt(isEOF==true?1:0);
 		} catch (IOException e) {e.printStackTrace();}
+		return outMsg;
+	}
+	public static OutputMessage createSDoodleReq(String friName){
+		OutputMessage outMsg = new OutputMessage(DD,CommandId.S_DOODLE_REQ);
+		try{
+			outMsg.getOutputStream().writeInt(friName.getBytes("gb2312").length);
+			outMsg.getOutputStream().write(friName.getBytes("gb2312"));
+		}catch (IOException e) {e.printStackTrace();}
+		return outMsg;
+	}
+	public static OutputMessage createSDoodleRsp(String friName,boolean res){
+		OutputMessage outMsg = new OutputMessage(DD,CommandId.S_DOODLE_RSP);
+		try{
+			outMsg.getOutputStream().writeInt(friName.getBytes("gb2312").length);
+			outMsg.getOutputStream().write(friName.getBytes("gb2312"));
+			outMsg.getOutputStream().writeInt(res==true?1:0);
+		}catch (IOException e) {e.printStackTrace();}
+		return outMsg;
+	}
+	public static OutputMessage createDoodleData(String name){
+		OutputMessage outMsg = new OutputMessage(DD,CommandId.DOODLE_DATA);
+		try{
+			outMsg.getOutputStream().writeInt(name.getBytes("gb2312").length);
+			outMsg.getOutputStream().write(name.getBytes("gb2312"));
+		}catch (IOException e) {e.printStackTrace();}
 		return outMsg;
 	}
 	

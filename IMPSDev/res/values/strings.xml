@@ -163,10 +163,23 @@
 	<string name="addressnotavailable">暂时无法获取位置</string>
 	<string name="locatedat">位于</string>
 	<string name="positioning_unavailable">暂时无法获取您的位置</string>
+	<string name="loading_your_address">正在加载您的地址信息</string>
 	<string name="street_view">街景模式</string>
 	<string name="traffic_view">交通流量</string>
 	<string name="satellite_view">卫星视图</string>
 	<string name="select_mapview_mode">请选择地图模式</string>
 	<string name="lastupdatetime">更新时间</string>
 	<string name="friendlocation_loading">正在加载好友位置</string>
+	
+	<string name="invitefriend">邀请好友</string>
+	<string name="invition_sending">正在发送邀请</string>
+	<string name="invition_failed">发送邀请失败</string>
+	<string name="invition_success">邀请已发送</string>
+	
+	<string name="not_connected">未连接</string>
+	<string name="connected">已连接</string>
+	<string name="roommaster">房主:%1$s</string>
+	<string name="couplelist">用户列表:</string>
+	<string name="friend_invite_you_for_coupledoodle">好友%1$s邀请您一起玩CoupleDoodle</string>
+	<string name="friend_rsp_yourinvite">好友%1$s %1$s了您的邀请</string>
 </resources>

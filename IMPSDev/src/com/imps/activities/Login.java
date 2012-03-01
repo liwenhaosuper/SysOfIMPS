@@ -182,6 +182,7 @@ public class Login extends Activity{
 			ServiceManager.getmAccount().login(username, password);
 /*			for(int i=0;i<10;i++){
 				User user = new User();
+				user.setUsername("I am tester"+i);
 				user.setDescription("test"+i+"号");
 				user.setEmail("li"+i);
 				user.setGender(i%2);
@@ -190,7 +191,23 @@ public class Login extends Activity{
 				user.setLocY(80.0/(i+1));
 				user.setStatus(i%2==0?UserStatus.OFFLINE:UserStatus.ONLINE);
 				UserManager.AllFriList.add(user);
-			}*/
+			}
+			User user = new User();
+			user.setUsername("li");
+			user.setPassword("li");
+			user.setEmail("li");
+			user.setGender(1);
+			user.setLoctime("2012-12-23");
+			user.setStatus(UserStatus.OFFLINE);
+			UserManager.AllFriList.add(user);
+			User user1 = new User();
+			user1.setUsername("lili");
+			user1.setPassword("lili");
+			user1.setEmail("lili");
+			user1.setGender(1);
+			user1.setLoctime("2012-12-23");
+			user1.setStatus(UserStatus.OFFLINE);
+			UserManager.AllFriList.add(user1);*/
 			return null;
 		}
 		@Override
@@ -206,7 +223,7 @@ public class Login extends Activity{
 			}
 			//for DEBUG purpose
 /*			ServiceManager.getmTcpConn().stopTcp();
-			Intent start = new Intent(Login.this,IMPSContainer.class);
+			Intent start = new Intent(Login.this,CoupleDoodle.class);
 			start.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(start);
 			finish();*/

@@ -104,4 +104,11 @@ public class CommandId {
 	
 	public static final int C_OFFLINE_MSG_REQ = 34;
 	public static final int S_OFFLINE_MSG_RSP = 35;
+	
+	public static final byte C_DOODLE_REQ = 36;
+	public static final byte C_DOODLE_RSP = 37;
+	public static final byte S_DOODLE_REQ = 38;
+	public static final byte S_DOODLE_RSP = 39;
+	public static final byte DOODLE_DATA = 40;
+	public static final byte DOODLE_LOGIN = 41;
 }

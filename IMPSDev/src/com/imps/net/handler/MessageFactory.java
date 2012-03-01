@@ -297,8 +297,62 @@ public class MessageFactory {
 	public static OutputMessage createCOfflineMsgReq(String username) {
 		OutputMessage outMsg = new OutputMessage(CommandId.C_OFFLINE_MSG_REQ);
 		try {
-			outMsg.getOutputStream().writeInt(username.length());
+			outMsg.getOutputStream().writeInt(username.getBytes("gb2312").length);
 			outMsg.getOutputStream().write(username.getBytes("GB2312"));
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+		return outMsg;
+	}
+	public static OutputMessage createCDoodleLogin(String username){
+		OutputMessage outMsg = new OutputMessage("DD",CommandId.DOODLE_LOGIN);
+		try {
+			outMsg.getOutputStream().writeInt(username.getBytes("gb2312").length);
+			outMsg.getOutputStream().write(username.getBytes("GB2312"));
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+		return outMsg;
+	}
+	public static OutputMessage createCDoodleReq(String username,String... friName){
+		OutputMessage outMsg = new OutputMessage("DD",CommandId.C_DOODLE_REQ);
+		try {
+			outMsg.getOutputStream().writeInt(username.getBytes("gb2312").length);
+			outMsg.getOutputStream().write(username.getBytes("GB2312"));
+			int sz = friName.length;
+			outMsg.getOutputStream().writeInt(sz);
+			for(int i=0;i<sz;i++){
+				outMsg.getOutputStream().writeInt(friName[i].getBytes("gb2312").length);
+				outMsg.getOutputStream().write(friName[i].getBytes("GB2312"));
+			}
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+		return outMsg;
+	}
+	public static OutputMessage createCDoodleRsp(String username,String friName,boolean res){
+		OutputMessage outMsg = new OutputMessage("DD",CommandId.C_DOODLE_RSP);
+		try {
+			outMsg.getOutputStream().writeInt(username.getBytes("gb2312").length);
+			outMsg.getOutputStream().write(username.getBytes("GB2312"));
+			outMsg.getOutputStream().writeInt(friName.getBytes("gb2312").length);
+			outMsg.getOutputStream().write(friName.getBytes("GB2312"));
+			outMsg.getOutputStream().writeInt(res==true?1:0);
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+		return outMsg;
+	}
+	public static OutputMessage createCDoodleData(String username,String roomMaster,int action,float x,float y){
+		OutputMessage outMsg = new OutputMessage("DD",CommandId.DOODLE_DATA);
+		try {
+			outMsg.getOutputStream().writeInt(username.getBytes("gb2312").length);
+			outMsg.getOutputStream().write(username.getBytes("GB2312"));
+			outMsg.getOutputStream().writeInt(roomMaster.getBytes("gb2312").length);
+			outMsg.getOutputStream().write(roomMaster.getBytes("GB2312"));
+			outMsg.getOutputStream().writeInt(action);
+			outMsg.getOutputStream().writeFloat(x);
+			outMsg.getOutputStream().writeFloat(y);
 		}catch(IOException e){
 			e.printStackTrace();
 		}

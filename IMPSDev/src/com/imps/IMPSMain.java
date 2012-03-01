@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.Window;
 
@@ -34,6 +33,8 @@ public class IMPSMain extends Activity {
 		setContentView(R.layout.main);
         gv = (GifView)findViewById(R.id.earth);
         if(DEBUG) Log.d(TAG,"onCreate");
+        
+        
 		if(ServiceManager.isStarted&&ServiceManager.getmAccount().isLogined()){
 			startMainActivity();	
 		}

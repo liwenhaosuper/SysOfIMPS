@@ -67,6 +67,8 @@ public class FriendLocation extends MapActivity implements View.OnClickListener{
     private CrashFixMyLocationOverlay mMyLocationOverlay;
     private FriendLocationOverlay mOnlineFrilocOverlay;
     private FriendLocationOverlay mOfflineFrilocOverlay;
+    private boolean isOnlineFriLoaded = false;
+    private boolean isOfflineFriLoaded = false;
     private View mMyPopView;
     private View mFriLocPopView;
     private FriendLocationReceiver receiver = new FriendLocationReceiver();
@@ -166,8 +168,9 @@ public class FriendLocation extends MapActivity implements View.OnClickListener{
 			}else{
 				mOfflineFrilocOverlay.addOverlay(item);
 			}
-			
 		}
+		isOnlineFriLoaded = true;
+		isOfflineFriLoaded = true;
 	}
 	
 	
@@ -195,8 +198,18 @@ public class FriendLocation extends MapActivity implements View.OnClickListener{
 			if(DEBUG) Log.d(TAG,"Friends Activity click...");
 			startInAnimation();
 			isIn = true;
-			Toast.makeText(FriendLocation.this,getResources().getString(R.string.friendlocation_loading), Toast.LENGTH_SHORT).show();
-			initAllFriendLocationOverlays();
+			if(isOnlineFriLoaded&&isOfflineFriLoaded){
+				mOnlineFrilocOverlay.removeAllItems();
+				mOfflineFrilocOverlay.removeAllItems();
+				isOnlineFriLoaded = false;
+				isOfflineFriLoaded = false;
+			}else{
+				Toast.makeText(FriendLocation.this,getResources().getString(R.string.friendlocation_loading), Toast.LENGTH_SHORT).show();
+				initAllFriendLocationOverlays();
+				isOnlineFriLoaded = true;
+				isOfflineFriLoaded = true;
+			}
+
 		}else if(v==mMyvalidlocation){
 			if(DEBUG) Log.d(TAG,"My location click...");
 			startInAnimation();

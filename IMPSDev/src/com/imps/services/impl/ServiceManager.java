@@ -31,6 +31,7 @@ public class ServiceManager extends Service implements IConnEvent{
 	private static AccountService mAccount;
 	private static ReceiverChannelService mReceiver;
 	private static HeartBeatService mHeartbeat;
+	private static DoodleConnectionService mDoodleService;
 	//TAG
 	public static String TAG = ServiceManager.class.getCanonicalName();
 	public static boolean DEBUG = IMPSDev.isDEBUG();
@@ -68,6 +69,7 @@ public class ServiceManager extends Service implements IConnEvent{
 		setmAccount(new AccountService());
 		setmReceiver(new ReceiverChannelService());
 		setmHeartbeat(new HeartBeatService());
+		setmDoodleService(new DoodleConnectionService("59.78.23.73",1400));
 	}
 	
 
@@ -442,6 +444,16 @@ public class ServiceManager extends Service implements IConnEvent{
 
 	public static HeartBeatService getmHeartbeat() {
 		return mHeartbeat;
+	}
+
+
+	public static void setmDoodleService(DoodleConnectionService mDoodleService) {
+		ServiceManager.mDoodleService = mDoodleService;
+	}
+
+
+	public static DoodleConnectionService getmDoodleService() {
+		return mDoodleService;
 	}
 
 }
