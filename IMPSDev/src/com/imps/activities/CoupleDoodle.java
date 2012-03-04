@@ -6,7 +6,10 @@ import java.util.List;
 import org.jboss.netty.buffer.ChannelBuffers;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnMultiChoiceClickListener;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.BlurMaskFilter;
@@ -54,7 +57,7 @@ public class CoupleDoodle extends Activity implements OnClickListener{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         setContentView(R.layout.coupledoodle);
         getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.coupledoodle_title);
         
@@ -64,7 +67,7 @@ public class CoupleDoodle extends Activity implements OnClickListener{
         mFriList = (TextView)findViewById(R.id.friendlist);
         mTitle = (TextView) findViewById(R.id.title_left_text);
         mConnectionStatus = (TextView) findViewById(R.id.title_right_text);
-        mConnectionStatus.setText(getResources().getString(R.string.not_connected));
+        //mConnectionStatus.setText(getResources().getString(R.string.not_connected));
         
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
@@ -83,6 +86,7 @@ public class CoupleDoodle extends Activity implements OnClickListener{
         mDoodle = (DoodleView)findViewById(R.id.doodle_view);
         mDoodle.init(mPaint);
         mDoodle.setmSender(mSender);
+        mDoodle.setClickable(false);
         updateUserListText();
     }
     public void updateUserListText(){
@@ -108,29 +112,67 @@ public class CoupleDoodle extends Activity implements OnClickListener{
     	ServiceManager.getmDoodleService().stopDoodle();
     	unregisterReceiver(receiver);
     }
+
 	@Override
 	public void onClick(View v) {
 		if(v.getId()==mInviteFri.getId()){
-	    	if(ServiceManager.getmDoodleService().getChannel()!=null&&ServiceManager.getmDoodleService().getChannel().isConnected()){
-	    		ServiceManager.getmDoodleService().getChannel().write(ChannelBuffers.wrappedBuffer(
-	    				MessageFactory.createCDoodleLogin(UserManager.getGlobaluser().getUsername()).build()));
-	    		if(DEBUG)  Log.d(TAG,"Logged in...");
-	    		mConnectionStatus.setText(getResources().getString(R.string.connected));
-	    	}else{
-	    		if(DEBUG) Log.d(TAG,"Logged in failed...");
-	    		mConnectionStatus.setText(getResources().getString(R.string.not_connected));
-	    	}
-			if(mInvitetask!=null&&mInvitetask.getStatus()==AsyncTask.Status.RUNNING){
-				mInvitetask.cancel(true);
-			}
-			roomMaster = UserManager.getGlobaluser().getUsername();
-			String[] fri = new String[UserManager.AllFriList.size()];
+			final String[] multiChoiceItems = new String[UserManager.AllFriList.size()];
+			final boolean[] defaultSelectedStatus = new boolean[UserManager.AllFriList.size()];
 			for(int i=0;i<UserManager.AllFriList.size();i++){
-				fri[i] = UserManager.AllFriList.get(i).getUsername();
+				multiChoiceItems[i] = UserManager.AllFriList.get(i).getUsername();
+				defaultSelectedStatus[i] = false;
 			}
-			mInvitetask = new InvitingProgress();
-			mInvitetask.execute(fri);
+			new AlertDialog.Builder(CoupleDoodle.this)
+				.setTitle(getResources().getString(R.string.select_friends))
+				.setMultiChoiceItems(multiChoiceItems, defaultSelectedStatus, new OnMultiChoiceClickListener(){
+					@Override
+					public void onClick(DialogInterface dialog, int which,
+							boolean isChecked) {
+						defaultSelectedStatus[which] = isChecked;
+					}})
+				.setPositiveButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener(){
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						String []sb = new String[defaultSelectedStatus.length];
+						int index = 0;
+						for(int i=0;i<defaultSelectedStatus.length;i++) {  
+		                    if(defaultSelectedStatus[i]) {  
+		                        sb[index++] =multiChoiceItems[i];  
+		                    }  
+		                }
+						if(index==0){
+							return;
+						}
+				    	if(ServiceManager.getmDoodleService().getChannel()!=null&&ServiceManager.getmDoodleService().getChannel().isConnected()){
+				    		ServiceManager.getmDoodleService().getChannel().write(ChannelBuffers.wrappedBuffer(
+				    				MessageFactory.createCDoodleLogin(UserManager.getGlobaluser().getUsername()).build()));
+				    		if(DEBUG)  Log.d(TAG,"Logged in...");
+				    		mConnectionStatus.setText(getResources().getString(R.string.connected));
+				    	}else{
+				    		if(DEBUG) Log.d(TAG,"Logged in failed...");
+				    		mConnectionStatus.setText(getResources().getString(R.string.not_connected));
+				    	}
+						if(mInvitetask!=null&&mInvitetask.getStatus()==AsyncTask.Status.RUNNING){
+							mInvitetask.cancel(true);
+						}
+						String[] list = new String[index];
+						for(int i=0;i<index;i++){
+							list[i] = sb[i];
+						}
+						roomMaster = UserManager.getGlobaluser().getUsername();
+						mInvitetask = new InvitingProgress();
+						mInvitetask.execute(list);
+						
+					}})
+				.setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener(){
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+					}})
+				.show();
+				
 			
+			
+
 		}
 	}
 	public class InvitingProgress extends AsyncTask<String,Void,Integer>{
@@ -175,6 +217,8 @@ public class CoupleDoodle extends Activity implements OnClickListener{
 						friList.add(roomMaster);
 						if(!mSender.isStarted()){
 							mSender.start();
+							
+							mDoodle.setClickable(true);
 						}
 						updateUserListText();
 						if(ServiceManager.getmDoodleService().getChannel()!=null&&ServiceManager.getmDoodleService().getChannel().isConnected()){
@@ -203,8 +247,11 @@ public class CoupleDoodle extends Activity implements OnClickListener{
 		        notifydialog.build(getResources().getString(R.string.friend_rsp_yourinvite,frirsp,resstr),getResources().getString(R.string.ok));
 		        notifydialog.show();
 		        if(res){
+		        	friList.add(frirsp);
+		        	updateUserListText();
 					if(!mSender.isStarted()){
 						mSender.start();
+						mDoodle.setClickable(true);
 						if(DEBUG) Log.d(TAG,"Start sender...");
 					}else{
 						if(DEBUG) Log.d(TAG,"not Start sender...");

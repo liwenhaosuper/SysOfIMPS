@@ -41,7 +41,7 @@ public class DoodleData extends MessageProcessTask{
 			e.printStackTrace();
 			return;
 		}
-		
+		System.out.println("Room master is:"+roomMaster);
 	}
 
 	@Override
@@ -57,6 +57,7 @@ public class DoodleData extends MessageProcessTask{
 		ChannelGroup group = DoodleTcpServer.roomGroups.get(roomMaster);
 		if(group!=null){
 			group.write(ChannelBuffers.wrappedBuffer(outMsg.build()));
+			System.out.println("Data sent...");
 		}
 	}
 

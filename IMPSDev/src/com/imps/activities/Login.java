@@ -180,7 +180,7 @@ public class Login extends Activity{
 		protected String doInBackground(String... params) {
 			//For DEBUG purpose
 			ServiceManager.getmAccount().login(username, password);
-/*			for(int i=0;i<10;i++){
+			/*for(int i=0;i<10;i++){
 				User user = new User();
 				user.setUsername("I am tester"+i);
 				user.setDescription("test"+i+"号");
@@ -223,7 +223,7 @@ public class Login extends Activity{
 			}
 			//for DEBUG purpose
 /*			ServiceManager.getmTcpConn().stopTcp();
-			Intent start = new Intent(Login.this,CoupleDoodle.class);
+			Intent start = new Intent(Login.this,IMPSContainer.class);
 			start.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(start);
 			finish();*/

@@ -25,7 +25,8 @@ public class DoodleView extends View{
  	private static boolean DEBUG = IMPSDev.isDEBUG();
 	private static String TAG = DoodleView.class.getCanonicalName();
      private DoodleSenderService mSender;
-     
+     private int mHeight = 0;
+     private int mWidth = 0;
      public Bitmap  mBitmap;
      private Canvas  mCanvas;
      private Path    mPath;
@@ -35,7 +36,7 @@ public class DoodleView extends View{
      //Parameter of friend’s
      private Path mFriPath;
      private float mFriX, mFriY;
-
+     
 	 public DoodleView(Context context) {
 		 super(context);
 		 metrics = new DisplayMetrics();
@@ -45,6 +46,8 @@ public class DoodleView extends View{
          mCanvas.drawColor(0xFFFFFFFF);
          mPath = new Path();
          mBitmapPaint = new Paint(Paint.DITHER_FLAG);
+         mHeight = metrics.heightPixels;
+         mWidth = metrics.widthPixels;
          //friend
          initFriendParameter();
 	}
@@ -56,6 +59,8 @@ public class DoodleView extends View{
          mCanvas = new Canvas(mBitmap);
          mCanvas.drawColor(0xFFFFFFFF);
          mPath = new Path();
+         mHeight = metrics.heightPixels;
+         mWidth = metrics.widthPixels;
          mBitmapPaint = new Paint(Paint.DITHER_FLAG);
          //friend
          initFriendParameter();
@@ -120,7 +125,7 @@ public class DoodleView extends View{
              case MotionEvent.ACTION_DOWN:
             	 if(mSender.isStarted()){
             		 mSender.addMsg(MessageFactory.createCDoodleData(UserManager.getGlobaluser().getUsername(),
-            				 CoupleDoodle.roomMaster,DoodleAction.ACTION_DOWN,x,y));
+            				 CoupleDoodle.roomMaster,DoodleAction.ACTION_DOWN,x/mWidth,y/mHeight));
             	 }
                  touch_start(x, y);
                  invalidate();
@@ -128,7 +133,7 @@ public class DoodleView extends View{
              case MotionEvent.ACTION_MOVE:
             	 if(mSender.isStarted()){
             		 mSender.addMsg(MessageFactory.createCDoodleData(UserManager.getGlobaluser().getUsername(),
-            				 CoupleDoodle.roomMaster,DoodleAction.ACTION_MOVE,x,y));
+            				 CoupleDoodle.roomMaster,DoodleAction.ACTION_MOVE,x/mWidth,y/mHeight));
             	 }
                  touch_move(x, y);
                  invalidate();
@@ -136,7 +141,7 @@ public class DoodleView extends View{
              case MotionEvent.ACTION_UP:
             	 if(mSender.isStarted()){
             		 mSender.addMsg(MessageFactory.createCDoodleData(UserManager.getGlobaluser().getUsername(),
-            				 CoupleDoodle.roomMaster,DoodleAction.ACTION_UP,x,y));
+            				 CoupleDoodle.roomMaster,DoodleAction.ACTION_UP,x/mWidth,y/mHeight));
             	 }
                  touch_up();
                  invalidate();
@@ -153,6 +158,8 @@ public class DoodleView extends View{
 	//the following functions can only be called by non-main thread
 	 
 	 public void touch_start_fri(float x, float y) {
+		 x = x*mWidth;
+		 y = y*mHeight;
 	     mFriPath.reset();
 	     mFriPath.moveTo(x, y);
 	     mFriX = x;
@@ -160,6 +167,8 @@ public class DoodleView extends View{
 	     postInvalidate();
 	 }
 	 public void touch_move_fri(float x, float y) {
+		 x = x*mWidth;
+		 y = y*mHeight;
          float dx = Math.abs(x - mFriX);
          float dy = Math.abs(y - mFriY);
          if (dx >= TOUCH_TOLERANCE || dy >= TOUCH_TOLERANCE) {

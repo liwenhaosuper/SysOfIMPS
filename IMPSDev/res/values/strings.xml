@@ -183,4 +183,7 @@
 	<string name="couplelist">用户列表:</string>
 	<string name="friend_invite_you_for_coupledoodle">好友%1$s邀请您一起玩CoupleDoodle</string>
 	<string name="friend_rsp_yourinvite">好友%1$s %1$s了您的邀请</string>
+	<string name="sns">云社交</string>
+	<string name="coupledoodle">Couple Doodle</string>
+	<string name="select_friends">选择好友</string>
 </resources>
