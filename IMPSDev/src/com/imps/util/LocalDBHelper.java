@@ -62,6 +62,7 @@ public class LocalDBHelper extends SQLiteOpenHelper {
 		}
 		msgdb.execSQL("INSERT INTO " + TABLE_NAME + "(content, time, friend, dir) values (\""
 				+ content + "\", \"" + time + "\", \"" + friend + "\", " + dir + ")");
+		msgdb.close();
 	}
 
 	/**
@@ -79,6 +80,7 @@ public class LocalDBHelper extends SQLiteOpenHelper {
 		ArrayList<UserMessage> historyList = new ArrayList<UserMessage>();
 		Cursor result = msgdb.query(TABLE_NAME, null, null, null, null, null, null);
 		if (result.getCount() < 1) {
+			msgdb.close();
 			return null;
 		} else {
 			do {
@@ -86,6 +88,7 @@ public class LocalDBHelper extends SQLiteOpenHelper {
 						result.getString(2), result.getString(3), result.getInt(4));
 				historyList.add(msg);
 			} while (result.isAfterLast());
+			msgdb.close();
 			return historyList;
 		}
 	}
@@ -106,6 +109,7 @@ public class LocalDBHelper extends SQLiteOpenHelper {
 				new String[] { friend }, null, null, null);
 		result.moveToFirst();
 		if (result.getCount() < 1) {
+			msgdb.close();
 			return null;
 		} else {
 			do {
@@ -113,6 +117,7 @@ public class LocalDBHelper extends SQLiteOpenHelper {
 						result.getString(2), result.getString(3), result.getInt(4));
 				historyList.add(msg);
 			} while (result.isAfterLast());
+			msgdb.close();
 			return historyList;
 		}
 	} 

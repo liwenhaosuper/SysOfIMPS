@@ -321,7 +321,7 @@ public class ChatView extends Activity{
 		if(DEBUG) Log.d(TAG, "ChatView:listview count is "+mListView.getCount());
 		if(mListView.getCount()==0&&UserManager.CurSessionFriList.containsKey(fUsername))
 		{
-			if(DEBUG) Log.d(TAG, "ChatView:initialing the chat view with old msg");
+			Log.d(TAG, "ChatView:initialing the chat view with old msg");
 			
 			// Add local history message to current session's message list
 			ArrayList<UserMessage> history = localDB.fetchMsg(fUsername);
