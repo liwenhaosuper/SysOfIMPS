@@ -34,7 +34,10 @@ public class DoodleLogin extends MessageProcessTask{
 
 	@Override
 	public void execute() {
-		DoodleTcpServer.allGroups.add(session);
+		if(DoodleTcpServer.allGroups.find(session.getId())==null){
+			DoodleTcpServer.allGroups.add(session);
+		}
+		
 		for(int i=0;i<DoodleTcpServer.doodleUsers.size();i++){
 			if(DoodleTcpServer.doodleUsers.get(i).getUsername().equals(userName)){
 				DoodleTcpServer.doodleUsers.get(i).setSessionId(session.getId());
@@ -54,6 +57,21 @@ public class DoodleLogin extends MessageProcessTask{
 					user.setSessionId(session.getId());
 					DoodleTcpServer.doodleUsers.add(user);
 				}
+			}
+		}
+		if(DoodleTcpServer.doodleUsers.size()==0){
+			User user = null;
+			try {
+				user = UserManager.getInstance().getUserFromDB(userName);
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return;
+			}
+			if(user==null){
+				return;
+			}else{
+				user.setSessionId(session.getId());
+				DoodleTcpServer.doodleUsers.add(user);
 			}
 		}
 	}

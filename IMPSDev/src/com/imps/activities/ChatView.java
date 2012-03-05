@@ -323,6 +323,7 @@ public class ChatView extends Activity{
 				String content=sysmsg.text;
 				content+="\n【进入系统消息查看】";
 				list.add(new ListContentEntity(fUsername,
+
 						sysmsg.time,content,ListContentEntity.MESSAGE_FROM));
 			}
 			return;

@@ -58,43 +58,43 @@ public class CurrentSessions extends Activity{
 	public void onResume(){
 		super.onResume();
 		
-//		Log.d(TAG, "onResume() started");
-//		if(sessionsList!=null){
-//		sessionsList.clear();
-//		Iterator<String> iter = UserManager.CurSessionFriList.keySet().iterator();
-//		int len = UserManager.AllFriList.size();
-//		while(iter.hasNext()){
-//			String nm =(String)iter.next();
-//			for(int i=0;i<len;i++)
-//			{			
-//				if(UserManager.AllFriList.get(i).getUsername().equals(nm))
-//				{
-//					User usr = UserManager.AllFriList.get(i);
-//					sessionsList.add(usr);
-//					break;
-//				}
-//			}
-//		}
-//		if(UserManager.mSysMsgs.size()!=0){
-//		User SysAdmin=new User();
-//		sysmsg = UserManager.mSysMsgs.get(UserManager.mSysMsgs.size()-1);
-//		SysAdmin.setUsername("SysAdmin");
-//		SysAdmin.setStatus(UserStatus.ONLINE);
-//		if(sysmsg.type==SystemMsgType.FROM){
-//			if(sysmsg.status==SystemMsgType.ACCEPTED){
-//				SysAdmin.setDescription(sysmsg.name+" 接受了您的添加好友请求");
-//			}
-//			else if(sysmsg.status==SystemMsgType.DENIED){
-//				SysAdmin.setDescription(sysmsg.name+" 拒绝了您的添加好友请求");
-//			}
-//			else{
-//				SysAdmin.setDescription(sysmsg.name+" 向您发来了添加好友请求");
-//			}
-//		}
-//		Log.d(TAG, "4444");
-//		sessionsList.add(SysAdmin);
-//		}
-//		}
+		Log.d(TAG, "onResume() started");
+		if(sessionsList!=null){
+		sessionsList.clear();
+		Iterator<String> iter = UserManager.CurSessionFriList.keySet().iterator();
+		int len = UserManager.AllFriList.size();
+		while(iter.hasNext()){
+			String nm =(String)iter.next();
+			for(int i=0;i<len;i++)
+			{			
+				if(UserManager.AllFriList.get(i).getUsername().equals(nm))
+				{
+					User usr = UserManager.AllFriList.get(i);
+					sessionsList.add(usr);
+					break;
+				}
+			}
+		}
+		if(UserManager.mSysMsgs.size()!=0){
+		User SysAdmin=new User();
+		sysmsg = UserManager.mSysMsgs.get(UserManager.mSysMsgs.size()-1);
+		SysAdmin.setUsername("SysAdmin");
+		SysAdmin.setStatus(UserStatus.ONLINE);
+		if(sysmsg.type==SystemMsgType.FROM){
+			if(sysmsg.status==SystemMsgType.ACCEPTED){
+				SysAdmin.setDescription(sysmsg.name+" 接受了您的添加好友请求");
+			}
+			else if(sysmsg.status==SystemMsgType.DENIED){
+				SysAdmin.setDescription(sysmsg.name+" 拒绝了您的添加好友请求");
+			}
+			else{
+				SysAdmin.setDescription(sysmsg.name+" 向您发来了添加好友请求");
+			}
+		}
+		Log.d(TAG, "4444");
+		sessionsList.add(SysAdmin);
+		}
+		}
 		registerReceiver(receiver,receiver.getFilter());
 		
 

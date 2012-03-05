@@ -396,9 +396,11 @@ public class FriendListTab extends ExpandableListActivity{
 		public void onReceive(Context context, Intent intent) {
 			super.onReceive(context, intent);
 			if(intent.getAction().equals(Constant.FRIENDLISTREFRESH)){
-				mAdapter.notifyDataSetChanged();
+				if(DEBUG) Log.d(TAG,"List recv...");
+				mAdapter.refresh();
 			}else if(intent.getAction().equals(Constant.FRIENDSTATUSNOTIFY)){
-				mAdapter.notifyDataSetChanged();
+				if(DEBUG) Log.d(TAG,"Notify recv...");
+				mAdapter.refresh();
 			}
 		}
 

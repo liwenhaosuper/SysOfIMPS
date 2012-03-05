@@ -36,20 +36,23 @@ public class IMPSMain extends Activity {
         
         
 		if(ServiceManager.isStarted&&ServiceManager.getmAccount().isLogined()){
-			startMainActivity();	
+			startMainActivity();
+			finish();
+		}else{
+			if(!ServiceManager.isStarted){
+				if(DEBUG) Log.d(TAG,"ServiceManager.isStarted false");
+			}
+			if(!ServiceManager.getmAccount().isLogined()){
+				if(DEBUG) Log.d(TAG,"ServiceManager.getmAccount().isLogined() false");
+			}
+			gv.setGifImage(R.drawable.earth);
+			if(task!=null&&task.getStatus()==AsyncTask.Status.RUNNING){
+				task.cancel(true);
+			}
+			task = new IMPSMainTask();
+			task.execute();
 		}
-		if(!ServiceManager.isStarted){
-			if(DEBUG) Log.d(TAG,"ServiceManager.isStarted false");
-		}
-		if(!ServiceManager.getmAccount().isLogined()){
-			if(DEBUG) Log.d(TAG,"ServiceManager.getmAccount().isLogined() false");
-		}
-		gv.setGifImage(R.drawable.earth);
-		if(task!=null&&task.getStatus()==AsyncTask.Status.RUNNING){
-			task.cancel(true);
-		}
-		task = new IMPSMainTask();
-		task.execute();
+
 	}
 	@Override
 	public void onStop(){
@@ -103,7 +106,7 @@ public class IMPSMain extends Activity {
 	}
 	public void startMainActivity(){
         Intent intent = new Intent(this, IMPSContainer.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
         finish();
 	}

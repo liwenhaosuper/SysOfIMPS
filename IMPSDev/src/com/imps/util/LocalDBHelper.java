@@ -22,23 +22,31 @@ import com.imps.net.handler.UserManager;
 public class LocalDBHelper extends SQLiteOpenHelper {
 
 	private static final int DATABASE_VERSION = 2;
-	private static final String TABLE_NAME = "localmsg_"
+	private static final String DB_NAME = "localmsg_"
 			+ UserManager.globaluser.getUsername();
-	private static final String TABLE_CREAT = "CREATE TABLE "
-			+ TABLE_NAME
-			+ " (msg_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
+	private static final String MSG_TABLE_NAME = "msg";
+	private static final String RCT_TABLE_NAME = "recent";
+	private static final String TABLE_CREAT_MAIN = "CREATE TABLE IF NOT EXISTS " +
+			MSG_TABLE_NAME + 
+			" (msg_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
 			"content TEXT NOT NULL, time TEXT NOT NULL, " +
 			"friend TEXT NOT NULL, " +
 			"dir INTEGER NOT NULL);";
+	
+	private static final String TABLE_CREAT_RECENT = "CREATE TABLE IF NOT EXISTS " + 
+			RCT_TABLE_NAME + 
+			" (friend TEXT NOT NULL PRIMARY KEY, " +
+			"time INT NOT NULL);";
 
 	public LocalDBHelper(Context context) {
-		super(context, TABLE_NAME, null, DATABASE_VERSION);
+		super(context, DB_NAME, null, DATABASE_VERSION);
 	}
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		Log.d("LOCALDBHELPER", "CREATING DB");
-		db.execSQL(TABLE_CREAT);
+		db.execSQL(TABLE_CREAT_MAIN);
+		db.execSQL(TABLE_CREAT_RECENT);
 	}
 
 	@Override
@@ -60,7 +68,7 @@ public class LocalDBHelper extends SQLiteOpenHelper {
 			Log.d("LOCALDB", "fail to get writable database");
 			return;
 		}
-		msgdb.execSQL("INSERT INTO " + TABLE_NAME + "(content, time, friend, dir) values (\""
+		msgdb.execSQL("INSERT INTO " + MSG_TABLE_NAME + "(content, time, friend, dir) values (\""
 				+ content + "\", \"" + time + "\", \"" + friend + "\", " + dir + ")");
 		msgdb.close();
 	}
@@ -78,16 +86,19 @@ public class LocalDBHelper extends SQLiteOpenHelper {
 			return null;
 		}
 		ArrayList<UserMessage> historyList = new ArrayList<UserMessage>();
-		Cursor result = msgdb.query(TABLE_NAME, null, null, null, null, null, null);
+		Cursor result = msgdb.query(MSG_TABLE_NAME, null, null, null, null, null, null);
 		if (result.getCount() < 1) {
 			msgdb.close();
+			result.close();
 			return null;
 		} else {
 			do {
 				UserMessage msg = new UserMessage(result.getString(1),
 						result.getString(2), result.getString(3), result.getInt(4));
 				historyList.add(msg);
-			} while (result.isAfterLast());
+				result.moveToNext();
+			} while (!result.isAfterLast());
+			result.close();
 			msgdb.close();
 			return historyList;
 		}
@@ -105,10 +116,11 @@ public class LocalDBHelper extends SQLiteOpenHelper {
 			return null;
 		}
 		ArrayList<UserMessage> historyList = new ArrayList<UserMessage>();
-		Cursor result = msgdb.query(TABLE_NAME, null, "friend=?",
+		Cursor result = msgdb.query(MSG_TABLE_NAME, null, "friend=?",
 				new String[] { friend }, null, null, null);
 		result.moveToFirst();
 		if (result.getCount() < 1) {
+			result.close();
 			msgdb.close();
 			return null;
 		} else {
@@ -116,9 +128,61 @@ public class LocalDBHelper extends SQLiteOpenHelper {
 				UserMessage msg = new UserMessage(result.getString(1),
 						result.getString(2), result.getString(3), result.getInt(4));
 				historyList.add(msg);
-			} while (result.isAfterLast());
+				result.moveToNext();
+			} while (!result.isAfterLast());
+			result.close();
 			msgdb.close();
 			return historyList;
 		}
-	} 
+	}
+	
+	/**
+	 * Retrieve records of recent contacts of current user</br>
+	 * ordered by the time of last conversation between the two</br>
+	 * @return list of contacts' names
+	 */
+	public ArrayList<String> fetchRecentContacts() {
+		SQLiteDatabase rcdb = getReadableDatabase();
+		if (rcdb == null) {
+			Log.d("LOCALDB", "fetchRecentContacts: fail to get readable database");
+			return null;
+		}
+		ArrayList<String> recentContacts = new ArrayList<String>();
+		Cursor result = rcdb.query(RCT_TABLE_NAME, null, null, null, null, null, "time");
+		result.moveToFirst();
+		if (result.getCount() < 1) {
+			result.close();
+			rcdb.close();
+			return null;
+		} else {
+			do {
+				recentContacts.add(result.getString(0));
+				result.moveToNext();
+			} while (!result.isAfterLast());
+			result.close();
+			rcdb.close();
+			return recentContacts;
+		}
+	}
+	
+	public void updateRecentContact(String friend) {
+		SQLiteDatabase rcdb = getWritableDatabase();
+		if (rcdb == null) {
+			Log.d("LOCALDB", "updateRecentContact: fail to get writable database");
+			return;
+		}
+		Cursor existResult = rcdb.query(RCT_TABLE_NAME, null, "friend=?",
+				new String[] { friend }, null, null, null);
+		if (existResult.getCount() < 1) {
+			// This friend does not exist in the recent contacts list
+			// and should be add to the list
+			existResult.close();
+			rcdb.execSQL("INSERT INTO " + RCT_TABLE_NAME + " VALUES (\"" +
+					friend + "\", " + new java.util.Date().getTime() + ")");
+			rcdb.close();
+		} else  {
+			rcdb.execSQL("UPDATE " + RCT_TABLE_NAME + " SET time=" +
+					new java.util.Date().getTime() + " WHERE friend=\"" + friend + "\"");
+		}
+	}
 }

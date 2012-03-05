@@ -40,7 +40,9 @@ public class DoodleReq extends MessageProcessTask{
 			//create a doodle room
 			ChannelGroup group = new DefaultChannelGroup();
 			group.add(session);
-			DoodleTcpServer.allGroups.add(session);
+			if(DoodleTcpServer.allGroups.find(session.getId())==null){
+				DoodleTcpServer.allGroups.add(session);
+			}
 			DoodleTcpServer.roomGroups.put(userName, group);
 		}
 		for(int i=0;i<DoodleTcpServer.doodleUsers.size();i++){

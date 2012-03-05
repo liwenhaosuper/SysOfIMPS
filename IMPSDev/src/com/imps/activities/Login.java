@@ -99,10 +99,10 @@ public class Login extends Activity{
 		mRemPwd = (CheckBox) findViewById(R.id.login_cb_savepwd);
 		mAutoLogin =(CheckBox)findViewById(R.id.login_auto);
 		if(ServiceManager.getmConfig().getPreferences().getBoolean(ConfigurationService.REMEMBERPASSWORD, false)){
-			mRemPwd.setChecked(true);
+			mRemPwd.setChecked(false);
 		}
 		if(ServiceManager.getmConfig().getPreferences().getBoolean(ConfigurationService.AUTOLOGIN, false)){
-			mAutoLogin.setChecked(true);
+			mAutoLogin.setChecked(false);
 		}
 	}
 	public void processClick(){
@@ -342,6 +342,7 @@ public class Login extends Activity{
 					{
 						executor.cancel(true);
 					}
+					ServiceManager.getmAccount().onLoginSuccess();
 					Intent start = new Intent(context,IMPSContainer.class);
 					start.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					context.startActivity(start);
