@@ -31,7 +31,7 @@ import com.imps.ui.widget.ViewFlow;
  */
 public class SnsMain extends Activity{
 	private static String TAG = SnsMain.class.getCanonicalName();
-	private static boolean DEBUG = IMPSDev.isDEBUG();
+	private static boolean DEBUG = false;//IMPSDev.isDEBUG();
 	private ViewFlow viewFlow;
 	private Map<Integer,ArrayList< SnsItem>> mItems = new HashMap<Integer,ArrayList< SnsItem>>();
 	@Override

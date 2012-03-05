@@ -342,6 +342,7 @@ public class Login extends Activity{
 					{
 						executor.cancel(true);
 					}
+					ServiceManager.getmAccount().onLoginSuccess();
 					Intent start = new Intent(context,IMPSContainer.class);
 					start.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					context.startActivity(start);

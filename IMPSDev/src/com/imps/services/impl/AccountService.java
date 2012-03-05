@@ -59,7 +59,7 @@ public class AccountService implements IConnEvent{
 		}
 	}
 	public void logout(){
-		if(isConnected&&isLogined){
+		if(isConnected&&isLogined&&ConnectionService.getChannel()!=null&&ConnectionService.getChannel().isConnected()){
 			ConnectionService.getChannel().write(ChannelBuffers.wrappedBuffer(
 					MessageFactory.createCStatusNotify(userName, UserStatus.OFFLINE).build()));
 		}
