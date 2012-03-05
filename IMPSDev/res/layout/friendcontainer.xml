@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TabHost xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@android:id/tabhost" 
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+	<LinearLayout android:orientation="vertical"
+		android:layout_width="fill_parent" 
+		android:layout_height="fill_parent">
+        <android.widget.TabWidget android:id="@android:id/tabs" android:visibility="gone" 
+            android:layout_width="fill_parent" android:layout_height="wrap_content" 
+            android:layout_weight="0.0" />
+		<RadioGroup android:gravity="center_vertical" android:layout_gravity="bottom" 
+            android:orientation="horizontal" android:id="@+id/tab_navigator" android:background="@drawable/tab_navigator_bg" 
+            android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <RadioButton android:id="@+id/radio_friendlist" android:tag="radio_friendlist" android:layout_marginTop="2.0dip" 
+                android:text="@string/friendlist"  style="@style/main_tab_bottom" android:drawableTop="@drawable/tab_myfriend" />
+            <RadioButton android:id="@+id/radio_findfriend" android:tag="radio_findfriend" android:layout_marginTop="2.0dip" 
+                android:text="@string/findfriend"  style="@style/main_tab_bottom" android:drawableTop="@drawable/tab_findfriend"/>
+        </RadioGroup>
+		<FrameLayout android:id="@android:id/tabcontent"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"/>
+	</LinearLayout>
+</TabHost>

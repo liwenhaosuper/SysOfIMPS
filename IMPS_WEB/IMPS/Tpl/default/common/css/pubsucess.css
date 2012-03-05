@@ -1,0 +1,183 @@
+﻿
+html{
+    background: #77d5fb;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    height: 100%
+}
+
+body{
+    background: transparent url('../images/Home/background/top_bg.png') top center repeat-y;
+    width: 100%;
+    height: 100%;
+    margin: 0 0;
+    padding-top: 200px;
+}
+
+a {
+	text-decoration: none;
+}
+
+input {
+    line-height: 24px;
+}
+
+label {
+    width: 56px;
+    text-align: right;
+    display: inline-block;
+}
+
+/* style for tag classes */
+.login-wrap {
+    background-color: #ffffff;
+    padding: 15px;
+    -moz-border-radius: 5px;
+    -moz-box-shadow: 5px 5px 7px #bbbbbb;
+    -webkit-border-radius: 10px;
+    -webkit-box-shadow: 5px 5px 7px #bbbbbb;
+    height: 300px;
+}
+
+.login-if {
+    width: 240px;
+}
+
+.wrap-up {
+	//background: url("../images/common/any_pic.png");
+	background-repeat: repeat-x;
+	width: 100%;
+	height: 100%;
+}
+.wrap-center table tr td {
+	vertical-align: top;
+}
+
+.splash {
+	background: url("../images/common/any_pic.png");
+	background-repeat: no-repeat;
+	height: 100%;
+    width: 100%;
+}
+
+.login-wrap, .wrap-up, .wrap-center, .wrap-bottom {
+    width: 720px;
+    position: relative;
+    clear: both;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.login-input {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+#login-btn {
+	border: 0px;
+	text-align: center;
+	display: inline-block;
+	background: url("../../Public/images/common/login-btn.gif");
+	height: 32px;
+	width: 130px;
+}
+
+#top {
+	background-color: #333;
+	box-shadow: 0px 0px 6px 2px #555;
+	color: #ffffff;
+	font-family: "Adobe 楷体 Std R", "Adobe 楷体 Std R", "Adobe 楷体 Std R", fantasy;
+	font-stretch: wider;
+	height: 45px;
+	margin-bottom: 10px;
+	padding-bottom: 0px;
+	padding-left: 0px;
+	padding-right: 100px;
+	padding-top: 0px;
+	position: fixed;
+	text-shadow: 1px 1px #666;
+	width: 100%;
+	z-index: 100;
+}
+
+#background {
+	background-color: #77d5fb;   /*#151f40*/
+ 	background-image: url("../images/Home/background/top_bg.png");
+	background-repeat: repeat-x;
+	height: 100%;
+	left: 0%;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 6;
+}
+
+#navigation li {
+	display: block;
+    float: left;
+	list-style-image: none;
+	list-style-style: none;
+	margin-bottom: 1em;
+	margin-left: 0.8em;
+	margin-right: 0.8em;
+	margin-top: 1em;
+}
+
+#navigation li a {
+	    text-shadow: 0 2px 1px rgba(0,0,0,0.5);
+        display: block;
+        text-decoration: none;
+        color: #f0f0f0;
+        font-size: 1.0em;
+        line-height: 28px;
+		padding-top: 0px;
+		margin-top: -20px;
+		font-weight:bold;
+}
+
+#search_top{
+    float:left;width:210px;height:23px;
+	margin-top:10px;margin-left:10px;
+	padding-right:1px!important;
+	background:url("../images/common/bg.gif")
+    no-repeat 4px -42px;text-decoration:none;
+	margin-top: -5px;
+}
+#search_top a{
+    font-size:12px;font-weight:normal;
+	
+}
+
+input.searchtextbox{
+    margin-top:1px;outline:none;
+    border:none;background:none;width:100%;
+    text-align:left;height:17px;padding-left:0;
+    min-width:30px;border:1px solid #f3f3f3;line-height:17px;
+	margin-top: -5px;
+}
+
+.search_go{
+    float:right;width:18px;height:18px;
+	margin-top: -5px;
+}
+.go{
+    font-weight:bold;text-decoration:none;
+    background:url("../images/common/bg.gif")no-repeat scroll -318px -45px transparent;
+    margin:0;height:18px;width:18px;padding:0;
+    position:absolute;float:right;
+}
+
+/*成功 | 错误 提示*/
+.Prompt_top,.Prompt_btm,.Prompt_ok,.Prompt_x{background:url(../images/common/message.gif) no-repeat;display:inline-block}
+.Prompt{width:640px;margin:100px auto 180px;text-align:left}
+.Prompt_top{background-position:0 0;height:15px;width:100%}
+.Prompt_con{border-left:1px solid #E7E7E7;border-right:1px solid #E7E7E7;background:#fff}
+.Prompt_btm{background-position:0 -27px;height:6px;width:100%;overflow:hidden}
+.Prompt_con dl{margin:0 30px;overflow:hidden}
+.Prompt_con dt{font-size:18px;padding:15px 0;border-bottom:1px solid #EEEEEE;font-weight:bold;_height:20px}
+.Prompt_con dd{float:left;display:block;padding:15px}
+.Prompt_con dd h2{font-size:14px;line-height:30px}
+.Prompt_ok{background-position:-72px -39px;width:68px;height:68px}
+.Prompt_x{background-position:0 -39px;width:68px;height:68px}

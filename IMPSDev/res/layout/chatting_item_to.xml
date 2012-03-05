@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  android:orientation="horizontal"
+  android:gravity="right"
+  >
+  <LinearLayout
+      android:orientation="vertical"
+      android:layout_width="249px"
+      android:layout_height="wrap_content"
+      android:background="@drawable/chatto_bg"
+  >    
+      <LinearLayout
+          android:orientation="horizontal"
+	      android:layout_width="fill_parent"
+	      android:layout_height="22dip"
+      >
+          <TextView
+              android:id="@+id/messagedetail_row_name"
+              android:layout_height="wrap_content"
+              android:textColor="#000000"
+              android:paddingTop="2px"
+              android:textSize="12dip"
+              android:gravity="right"
+              android:layout_width="wrap_content"/>
+          <TextView
+              android:id="@+id/messagedetail_row_date"
+              android:layout_height="wrap_content"
+              android:textColor="#000000"
+              android:paddingTop="2px"
+              android:textSize="12dip"
+              android:gravity="right"
+              android:layout_width="wrap_content"/>
+              
+          />
+          </LinearLayout>
+      <TextView
+          android:id="@+id/messagedetail_row_text"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:paddingLeft="2px"
+          android:textColor="#0000DD"
+          android:textSize="16dip"
+      />
+  </LinearLayout>
+</LinearLayout>

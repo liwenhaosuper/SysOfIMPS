@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:background="@drawable/default_bg">
+    <com.ant.liao.GifView android:id = "@+id/earth"
+			 android:layout_height = "wrap_content" 
+			 android:layout_width = "wrap_content" 
+			 android:enabled = "false"
+			 android:layout_marginBottom = "50px" 
+			 android:layout_gravity="bottom|center_horizontal" 
+			 android:background="#00000000"/>
+
+</LinearLayout>

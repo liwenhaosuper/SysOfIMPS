@@ -1,0 +1,258 @@
+@charset "utf-8";
+/*
+  活动样式
+  */
+a:visited, a:link {
+    text-decoration: none;
+}
+
+.tab-menu ul li, .tab-menu ul li.over {
+    cursor: pointer;
+    display: inline-block;
+    /* font-size: 16px; */
+    padding: 2px 2px 2px 2px;
+    -webkit-border-radius: 3px;
+}
+
+.tab-menu ul li a {
+    color: #369;
+}
+
+div {
+    display: block;
+}
+
+.tab-menu {
+    border-bottom: 1px solid #ccc;
+    height: 35px;
+    white-space: nowrap;
+}
+
+.tab-menu ul li.over {
+    background-color: #039;
+}
+.tab-menu ul li.over a {
+    color: white;
+}
+
+#actv-table{
+    border-collapse: collapse;
+    margin-left: 15px;
+}
+
+#actv-table tr {
+    border-bottom: 1px dashed #ccc;
+}
+
+.actv-item {
+    font-size: 12px;
+    list-style: none;
+    min-height: 75px;
+    padding-left: 100px;
+    padding-right: 75px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: left;
+    width: 350px;
+}
+
+.actv-logo, .author, .stamp, .operation {
+    display: block;
+}
+.actv-logo img {
+    height: 75px;
+    width: 75px;
+}
+.actv-logo, .author {
+    float: left;
+}
+
+.actv-logo {
+    margin-left: -85px;
+    /* padding-right: 10px; */
+}
+.actv-name {
+    font-size: 14px;
+    padding-top: 2px;
+    padding-bottom: 10px;
+}
+
+.actv-name span {
+    display: inline-block;
+    padding-left: 5px;
+}
+.disp-status {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.author {
+    margin-right: 5px;
+}
+
+.stamp {
+    margin-top: 5px;
+}
+
+.operation {
+    float: right;
+    position: absolute;
+    right: 5px;
+    top: 10px;
+    width: 40px;
+}
+
+.operation a {
+    display: block;
+    position: relative;
+    right: 15px;
+}
+
+#actv-wrap {
+    font-size: 12px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    text-align: left;
+}
+#activityName {
+    font-size: 36px;
+    line-height:40px;
+    padding-bottom: 5px;
+}
+#actv-avatar, #actv-info-simp {
+    display: inline;
+    float: left;
+    padding-bottom: 15px;
+}
+
+#actv-avatar {
+    padding-right: 15px;
+}
+#actv-avatar img {
+    max-width: 200px;
+}
+
+.actv-desc {
+    line-height: 20px;
+}
+
+#activitySTime span, #activityETime span, #join-actv-btn span, #quit-actv-btn span {
+    display: inline-block;
+}
+
+#activityDesc {
+    border-top: 1px dashed #369;
+    clear: both;
+    color: #444;
+    line-height: 20px;
+    padding-top: 10px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.actv-item.over {
+    background-color: #eee;
+}
+
+.disp-status, .disp-count, .actv-time {
+    color: #666;
+}
+
+.pl {
+    color: #666;
+}
+/* create activity */
+#actvform {
+    margin: 0 auto;
+}
+
+.tL {
+    text-align: right;
+    word-wrap: break-all;
+}
+
+.tR {
+    text-align: left;
+}
+
+.w578 { width:578px; }
+.content, .mainbox_C { min-height:550px; _height:550px; }
+.page_title .rmenu { }
+.page_title .rmenu a { display: block; line-height: 20px; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #CCCCCC; padding-left: 5px; }
+.page_title .rmenu a:hover { color: #FFFFFF; background-color: #005FAB; text-decoration: none; }
+.groupBox { width:100%; margin-top: 10px; position:relative; }
+.boxL { }
+.box1 { padding-bottom: 8px; overflow: hidden; }
+.box1 h3 { font-size: 14px; font-weight: normal; line-height: 30px; padding-left: 5px; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #A4C4DD; }
+.box1 h4 { font-size: 12px; font-weight: bold; line-height: 30px; }
+.zd { font-size: 12px; background-color: #0066CC; display: inline-block; color: #FFFFFF; padding-top: 1px; padding-right: 3px; padding-bottom: 1px; padding-left: 3px; margin-right: 5px; line-height: 140%; }
+.jh { font-size: 12px; background-color: #FF9900; display: inline-block; color: #FFFFFF; padding-top: 1px; padding-right: 3px; padding-bottom: 1px; padding-left: 3px; margin-right: 5px; line-height: 140%; }
+/*活动信息*/
+.info { height: 260px; }
+.info .img { height: 200px; width: 200px; margin-right: 20px; float: left; text-align: center; overflow: hidden; }
+.info .list { float: left; width: auto; }
+.info .list ul { margin: 0px; padding: 0px; width: 100%; }
+.info .list ul li { clear: both; line-height: 180%; }
+.info .list ul li .c1 { float: left; width: 66px; color: #999999; }
+.info .list ul li .c2 { float: left; width: auto; }
+/*全部活动式*/
+.search { overflow:hidden; margin: 0px; padding: 0px; width: 100%; }
+.search li { clear: both; padding: 5px; margin-bottom: 5px; }
+.search li h3 { font-size: 14px; font-weight: normal; line-height: 25px; }
+.search li p { line-height: 18px; margin: 0px; padding: 0px; }
+.search li .rmenu { }
+.search li .rmenu a { display: block; line-height: 20px; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #CCCCCC; padding-left: 5px; }
+.search li .rmenu a:hover { color: #FFFFFF; background-color: #005FAB; text-decoration: none; }
+.rSort { float: right; width: 200px; }
+.rSort h4 { font-weight: bold; line-height: 25px; font-size: 12px; }
+.rSort ul { width: auto; }
+.rSort ul li { line-height: 18px; }
+.rSort ul li.on a { color: #FF0000; text-decoration: underline; padding-left: 8px; background-image: url(../images/ico-xiaosanjiao.gif); background-repeat: no-repeat; background-position: 0px center; }
+/*参加成员列表*/
+.flist { padding-bottom: 10px; }
+.flist li { padding:5px; }
+.flist li h3 { font-size:14px; font-weight:bold; line-height:25px }
+.flist li p { line-height:20px; margin:0px; padding:0px }
+/*右边列表样式*/
+.boxR { border-bottom-color:#A4C4DD; border-bottom-style:solid; border-bottom-width:1px; border-left-color:#A4C4DD; border-left-style:solid; border-left-width:1px; border-right-color:#A4C4DD; border-right-style:solid; border-right-width:1px; border-top-color:#A4C4DD; border-top-style:solid; border-top-width:0px; clear:both; margin-bottom:10px; padding-bottom:5px; overflow: hidden; }
+.boxR h3 { background-color:#E7EFF5; border-top-color:#A4C4DD; border-top-style:solid; border-top-width:1px; font-size:12px; font-weight:bold; line-height:30px; margin:0px; padding:0px 0px 0px 5px }
+.boxR p { line-height:18px; margin:0px; padding:5px 0px 5px 5px }
+.ListBox { clear:both; overflow:hidden; width: 100%; }
+.ListBox li { background-image:none; display:block; float:left; height:auto; margin-top:8px; text-align:center; width:60px }
+.ListBox li span { display:block; margin-left:auto; margin-right:auto }
+.ListBox li a { display:block; line-height:20px; margin:0px; padding:0px }
+.ListBox li em { color:#666666; display:block; line-height:16px; text-align:center }
+/*活动成员*/
+.pic50box { overflow: hidden; clear: both; }
+.pic50box li { width: 80px; float: left; text-align: center; display: block; background-image: none; margin-top: 8px; height: auto; }
+.pic50box li span { margin-right: auto; margin-left: auto; display: block; }
+.pic50box li a { display: block; line-height: 20px; margin: 0px; padding: 0px; }
+/*相册样式*/
+.piclist { width: 640%; margin: 0px; padding: 0px; }
+.piclist li { float: left; width: 159px; text-align: center; margin-top: 5px; }
+.piclist li img { padding: 2px; border: 1px solid #CCCCCC; margin-bottom: 5px; background-color: #FFFFFF; }
+/*发起活动*/
+.elist { margin:10px auto 0; padding:0; }
+.add_event { width: 100%; }
+.add_event li { clear: both; line-height: 20px; margin-bottom: 10px; display: table; width: 100%; }
+.add_event li .c1 { float: left; width: 17%; text-align: right; }
+.add_event li .c2 { float: left; width: 82%; }
+
+.sidebar { float: right; width: 175px; }
+.sidebar p { margin: 0 8px; padding: 5px 0; }
+.FSort { margin-bottom: 10px; width: 175px; }
+.FSort .tit {font-size: 13px; font-weight: bold; height: 28px; line-height: 28px; margin: 0; padding: 0 0 0 14px; }
+.FSort ul { margin: 5px 2px 0; padding: 0; width: 171px; }
+.FSort li { margin: 0; padding: 0; width: 100%; }
+.FSort li a { line-height: 25px; padding-left: 14px; }
+.FSort li.on { display: inline-block; line-height: 25px; width: 100%; }
+.FSort li.on a { font-weight:bold; }
+.FSort .btm { clear: both; font-size: 0; height: 5px; line-height: 0; }
+.text22 { border: 1px solid #BDC7D8; font-size: 12px; height: 22px; line-height: 24px; margin: 0; padding: 0; vertical-align: middle; }
+/*推荐专辑*/
+.Recommended li { clear:both; margin:0 0 10px 0; }
+.Recommended li .c1 { float:left; margin:0 5px 0 0; }
+.Recommended li .c1 img { margin:4px 0 0 0; }
+.Recommended li .c2 { float:left; }

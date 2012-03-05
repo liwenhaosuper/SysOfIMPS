@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" 
+    android:id="@+id/layout_hand_write" 
+    android:layout_width="fill_parent" 
+    android:layout_height="fill_parent" >
+    
+      <LinearLayout android:gravity="center" android:orientation="horizontal"
+           android:background="@drawable/top_bg" android:padding="0.0dip"
+            android:layout_width="fill_parent" android:layout_height="48.0dip">
+      <TextView android:textSize="12.0dip" android:gravity="center" 
+          android:id="@+id/hand_write_btn_gesture" 
+          android:background="@drawable/friend_top_left_pressed" 
+          android:layout_width="160.0dip" 
+          android:layout_height="wrap_content" 
+          android:text="@string/hand_write_gesture" />
+
+      <TextView
+          android:id="@+id/hand_write_btn_graffiti"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@drawable/friend_top_right_normal"
+          android:gravity="center"
+          android:text="@string/hand_write_graffiti"
+          android:textSize="12.0dip" />
+
+    </LinearLayout>
+    <FrameLayout android:layout_width="fill_parent" android:layout_height="0.0dip" android:layout_weight="1.0">
+      <com.imps.ui.HandwritingView 
+          android:id="@+id/hand_write_view" 
+          android:layout_width="fill_parent" 
+          android:layout_height="fill_parent" 
+          android:fadeDuration="0"
+          >
+      </com.imps.ui.HandwritingView>
+      
+      <com.imps.ui.GraffitiView
+          android:id="@+id/graffiti_view"
+          android:layout_width="fill_parent"
+          android:layout_height="fill_parent"
+          android:visibility="gone">                 
+      </com.imps.ui.GraffitiView>
+    </FrameLayout>
+    
+         <LinearLayout 
+            	android:layout_width="fill_parent" 
+            	android:layout_height="wrap_content">
+                <ImageView 
+                	android:id="@+id/graffiti_undo" 
+                	android:background="@drawable/media_msg_bg" 
+                	android:paddingLeft="8.0dip" 
+                	android:paddingRight="8.0dip" 
+                	android:layout_width="wrap_content" 
+                	android:layout_height="fill_parent" 
+                	android:src="@drawable/graffiti_undo" />
+                <LinearLayout 
+                    android:id="@+id/send_bar"
+                	android:background="@drawable/hold_to_talk_bg" 
+                	android:layout_width="0.0dip" 
+                	android:layout_height="fill_parent" 
+                	android:layout_weight="2.0">
+                    <TextView 
+                    	android:layout_width="0.0dip" 
+                    	android:layout_height="1.0dip" 
+                    	android:layout_weight="1.0" />
+                    <TextView 
+                    	android:id="@+id/send_graffiti"
+                    	android:textSize="18.0sp" 
+                    	android:textColor="@color/pls_talk_normal" 
+                    	android:gravity="center" 
+                    	android:layout_gravity="center" 
+                    	android:layout_width="0.0dip" 
+                    	android:layout_height="wrap_content" 
+                    	android:text="发送" 
+                    	android:layout_weight="4.0" />
+                    <TextView 
+                    	android:layout_width="0.0dip" 
+                    	android:layout_height="1.0dip" 
+                    	android:layout_weight="1.0" />
+                </LinearLayout>                                              
+                <ImageView 
+                	android:id="@+id/graffiti_exit" 
+                	android:background="@drawable/media_msg_bg" 
+                	android:paddingLeft="18.0dip" 
+                	android:paddingRight="18.0dip" 
+                	android:layout_width="wrap_content" 
+                	android:layout_height="fill_parent" 
+                	android:src="@drawable/graffiti_back" />
+            </LinearLayout>
+        
+        
+    </LinearLayout>

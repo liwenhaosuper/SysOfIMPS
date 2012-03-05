@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<LinearLayout 
+xmlns:android="http://schemas.android.com/apk/res/android"
+   android:layout_width="fill_parent"
+   android:layout_height="fill_parent"
+   android:background="@drawable/black"
+   android:orientation="vertical">
+   
+   
+   <LinearLayout android:orientation="horizontal" 
+   android:layout_width="fill_parent"
+   android:layout_height="wrap_content"
+   >
+  <TextView  
+  android:id="@+id/con01"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"  
+  android:textColor="@drawable/white"
+  android:text="定位精度:          "
+  ></TextView>
+  <RadioGroup android:id="@+id/accuracy" android:contentDescription="精度" android:layout_width="wrap_content" android:layout_height="wrap_content">
+  <RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content"
+   android:id="@+id/fine" android:text="高精度" android:checked="true"></RadioButton>
+   <RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content" 
+   android:id="@+id/coarse" android:text="一般精度" android:checked="false"></RadioButton>
+  </RadioGroup>
+  </LinearLayout>
+  
+   <LinearLayout 
+   android:orientation="horizontal" 
+   android:layout_width="fill_parent"
+   android:layout_height="wrap_content"
+   >
+   <TextView  
+  android:id="@+id/con02"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"  
+  android:textColor="@drawable/white"
+  android:text="海拔需要:           "
+  ></TextView>
+  <RadioGroup android:id="@+id/altitude" android:contentDescription="海拔" android:layout_width="wrap_content" android:layout_height="wrap_content">
+  <RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content"
+   android:id="@+id/noatd" android:text="无需海拔" android:checked="true"></RadioButton>
+   <RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content" 
+   android:id="@+id/yesatd" android:text="需要海拔" android:checked="false"></RadioButton>
+  </RadioGroup>
+  </LinearLayout>
+  
+  
+  
+     <LinearLayout android:orientation="horizontal" 
+   android:layout_width="fill_parent"
+   android:layout_height="wrap_content"
+   >
+   <TextView  
+  android:id="@+id/con04"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"  
+  android:textColor="@drawable/white"
+  android:text="允许定位消耗付费流量"
+  ></TextView>
+  <RadioGroup android:id="@+id/money" android:contentDescription="流量" android:layout_width="wrap_content" android:layout_height="wrap_content">
+  <RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content"
+   android:id="@+id/permit" android:text="允许" android:checked="true"></RadioButton>
+   <RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content" 
+   android:id="@+id/refuse" android:text="不允许" android:checked="false"></RadioButton>
+  </RadioGroup>
+  </LinearLayout>
+  
+     <LinearLayout android:orientation="horizontal" 
+   android:layout_width="fill_parent"
+   android:layout_height="wrap_content"
+   >
+   <TextView  
+  android:id="@+id/con05"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"  
+  android:textColor="@drawable/white"
+  android:text="允许的最大电池消耗"
+  ></TextView>
+  <RadioGroup android:id="@+id/battery" android:contentDescription="耗电" android:layout_width="wrap_content" android:layout_height="wrap_content">
+  <RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content"
+   android:id="@+id/highbt" android:text="高耗电" android:checked="false"></RadioButton>
+   <RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content" 
+   android:id="@+id/lowbt" android:text="低耗电" android:checked="true"></RadioButton>
+  </RadioGroup>
+  </LinearLayout>
+  
+    <LinearLayout android:orientation="horizontal" 
+   android:layout_width="wrap_content"
+   android:layout_height="wrap_content"
+   >
+   <Button android:id="@+id/commit_con" android:layout_width="wrap_content" android:layout_height="wrap_content"
+   android:text="提交更改"></Button>  
+   <Button android:id="@+id/cancel_con" android:layout_width="wrap_content" android:layout_height="wrap_content"
+   android:text="撤销更改"></Button>
+   </LinearLayout>
+</LinearLayout>

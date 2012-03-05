@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+        <LinearLayout
+         android:layout_width="fill_parent" android:layout_height="40dp"
+         android:orientation="horizontal" android:background="@drawable/searchbg">
+         
+           <!-- 这个就是搜索按钮了，你别看它想个输入框，其实是个button -->
+         <Button android:id="@+id/search" android:background="@drawable/searchbtn"
+         		   android:layout_marginLeft="5dp"
+         		   android:layout_marginTop="5dp"
+                   android:layout_width="150dp"
+                   android:layout_height="30dp"
+                   android:hint="搜索地图"
+                   android:textSize="17sp"
+				   android:singleLine="true"
+				   android:gravity="center_vertical"
+                   android:textColor="#000000"/>
+                   
+                 
+                 <!-- 下面是三个图片按钮了，看效果图就知道是哪三个按钮了 -->
+        <ImageButton  android:background="@drawable/maptitlebtn" android:layout_marginLeft="10dp"
+			 android:id="@+id/loction"  android:src="@drawable/loction"
+			 android:layout_width="40dp"
+			 android:layout_height="wrap_content"
+			/>
+         <ImageButton  android:background="@drawable/maptitlebtn"  android:layout_marginLeft="10dp"
+			 android:id="@+id/layer"  android:src="@drawable/layer"
+			 android:layout_width="40dp" android:layout_height="wrap_content"/>
+			
+			<ImageButton  android:background="@drawable/maptitlebtn"  android:layout_marginLeft="20dp"
+			 android:id="@+id/about"  android:src="@android:drawable/ic_menu_info_details" 
+			 android:layout_width="40dp"
+			 android:layout_height="wrap_content"
+			/>
+			
+			
+                   
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical" >
+
+        <view class="com.google.android.maps.MapView"
+        android:id="@+id/MapView"  
+        android:layout_height="fill_parent" 
+        android:apiKey="08XREvkX9bvRUo8vmNke2xm9vas3WNEd6m53xfA" 
+        android:clickable="true" android:longClickable="true" android:layout_width="wrap_content"/>
+
+ 		<Button 
+			android:background="@drawable/map_checkin"
+			android:id="@+id/map_checkin" android:layout_above = "@id/MapView"
+			android:layout_width="40dp" 
+			android:layout_height="40dp"
+			android:layout_alignParentBottom="true"/>
+		<Button 
+			android:background="@drawable/map_friendsactivity"
+			android:id="@+id/map_friendsactivity" android:layout_above = "@id/MapView"
+			android:layout_width="40dp" 
+			android:layout_height="40dp"
+			android:layout_alignParentBottom="true"/>
+		<Button 
+			android:background="@drawable/map_myvalidlocation"
+			android:id="@+id/map_myvalidlocation" 
+			android:layout_width="40dp" android:layout_above = "@id/MapView"
+			android:layout_height="40dp"
+			android:layout_alignParentBottom="true"/>
+		<Button 
+			android:background="@drawable/map_nearbyactivity"
+			android:id="@+id/map_nearbyactivity" 
+			android:layout_width="40dp" 
+			android:layout_height="40dp" android:layout_above = "@id/MapView"
+			android:layout_alignParentBottom="true"/>
+		<Button 
+			android:background="@drawable/map_option"
+			android:id="@+id/map_option" android:layout_above = "@id/MapView"
+			android:layout_width="40dp" 
+			android:layout_height="40dp"
+			android:layout_alignParentBottom="true"/>
+
+    </RelativeLayout>
+    
+    
+</LinearLayout>

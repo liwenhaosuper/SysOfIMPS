@@ -1,0 +1,101 @@
+/* css for friends */
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    background-color: #665EB8;
+    color: #fff;
+    text-decoration: underline;
+}
+
+#friends-top {
+    margin: 0 auto;
+    padding-bottom: 20px;
+    text-align: left;
+    width: 900px;
+}
+
+#search-left {
+    padding-top: 20px;
+    padding-left: 30px;
+    text-align: left;
+    width: 160px;
+}
+
+#group, #disp-list {
+    display: inline-block;
+}
+
+#group {
+    padding-top: 10px;
+    text-align: left;
+    width: 160px;
+}
+
+#group ul {
+    display: block;
+    margin-left: 0px 0px 0px 0px;
+    padding-left: 10px;
+    list-style: none;
+    text-align: left;
+}
+
+#group ul li {
+    border-bottom: 1px solid #4FA9B8;
+    border-spacing: 0;
+    border-collapse: collapse;
+    cursor: pointer;
+    display: list-item;
+    font-size: 14px;
+    line-height: 26px;
+    width: 140px;
+}
+
+#group ul li.over {
+    background-image: url("../images/common/grouplist-bg.png");
+}
+
+#group ul li span {
+    padding-left: 10px;
+}
+
+#disp-list {
+    color: #5982DB;
+    padding-top: 30px;
+    padding-bottom: 50px;
+    width: 390px;
+}
+
+#disp-list table {
+    border-spacing: 0px;
+    border-collapse: collapse;
+}
+
+#disp-list table tr td {
+    border-bottom: 1px dashed #4FA9B8;
+    border-top: 1px dashed #4FA9B8;
+}
+
+.disp-item {
+    /* border-top: 1px dashed #4FA9B8; */
+    display: list-item;
+    height: auto;
+    list-style: none;
+    min-height: 45px;
+    padding-left: 75px;
+    padding-right: 75px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: left;
+    width: 200px;;
+}
+
+.disp-item.over {
+    background-color: #eee;
+}
+
+.disp-status {
+    color: #444;
+    padding-top: 10px;
+}

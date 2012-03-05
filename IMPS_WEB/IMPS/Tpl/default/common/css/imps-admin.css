@@ -1,0 +1,100 @@
+/* css for imps-admin.html */
+ul {
+    list-style: none;
+}
+
+body {
+    background: transparent url('../images/Home/background/top_bg.png') top center repeat-y;
+    background-color: #77d5fb;
+    margin: 0 auto;
+    text-align: center;
+    width: 100%;
+}
+
+form, input {
+    border: 0px;
+    margin: 0;
+}
+
+#main-frame {
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    margin: 0 auto;
+    width: 800px;
+}
+
+.op-item, .op-item.over {
+    color: #eee;
+    cursor: pointer;
+    display: block;
+    font-size: 18px;
+    line-height: 24px;
+    padding-top: 5px;
+    padding-bottom: 3px;
+    padding-left: 25px;
+    padding-right: 40px;
+    text-align: left;
+    width: auto;
+}
+
+.op-item.over {
+    background-color: #444;
+}
+
+.op-item.active {
+    border-left: 5px solid #fff;
+    padding-left: 20px;
+}
+
+/* #admin-menu { */
+/*     width: 300px; */
+/* } */
+
+#op-main {
+    background: transparent;
+    background-color: rgba(243, 243, 243, 0.85);
+    padding: 20px 0 20px 0;
+    width: 100%;
+}
+
+#user-list, #actv-list {
+    font-size: 18px;
+    line-height: 20px;
+    padding-left: 15px;
+    padding-right: 10px;
+    text-align: left;
+}
+
+#user-list li,#actv-list li {
+    padding: 5px 20px 5px 15px;
+}
+
+#user-list li.over, #actv-list li.over {
+    background-color: #eee;
+}
+
+#user-list li span, #actv-list li span {
+    display: inline-block;
+}
+
+.userid, .actvid {
+    width: 30px;
+}
+
+.username, .actvname {
+    width: 120px;
+}
+.password,.gender{
+    width:120px;
+}
+
+.useremail, .actvstime, .actvetime {
+    width: 150px;
+}
+
+.modify, .modify.over, .submit, .submit.over {
+    cursor: pointer;
+}
+
+.modify.over, .submit.over {
+    background-color: #5f5f5f
+}

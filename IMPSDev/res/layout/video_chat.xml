@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="right"
+    android:orientation="vertical" >
+
+    <TextView android:text="TextView"  android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/videoStatus" android:textSize="20px"></TextView> 
+<!-- <SurfaceView android:id="@+id/videoView" 
+android:layout_width="match_parent" android:visibility="visible"  android:layout_marginBottom="3px" android:layout_marginLeft="3px" android:layout_marginRight="3px" android:layout_marginTop="3px" android:layout_height="wrap_content"> 
+</SurfaceView>  -->
+<com.imps.media.video.VideoSurfaceView
+    android:id="@+id/videoView" 
+    android:layout_width="match_parent" android:visibility="visible"  
+    android:layout_marginBottom="3px" android:layout_marginLeft="3px" 
+    android:layout_marginRight="3px" 
+    android:layout_marginTop="3px" 
+    android:layout_height="wrap_content"  
+/>
+
+<LinearLayout 
+android:layout_width="fill_parent" android:layout_height="fill_parent">
+    <Button android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/stop" android:text="结束视频" android:layout_gravity="center_vertical" android:layout_weight="1"></Button> 
+<Button 
+android:layout_width="wrap_content" 
+android:layout_height="wrap_content" 
+android:text="交换画面" android:id="@+id/exchange" android:layout_gravity="center_vertical" android:layout_weight="1"/>
+<!-- <SurfaceView android:layout_width="wrap_content" android:visibility="visible" 
+     android:layout_alignParentRight="true" android:id="@+id/myVideoView" 
+     android:layout_height="fill_parent" android:layout_marginBottom="1px" 
+     android:layout_marginLeft="1px" android:layout_marginRight="1px" 
+     android:layout_marginTop="1px" android:layout_weight="2">
+</SurfaceView>  -->
+<com.imps.media.video.VideoSurfaceView android:layout_width="wrap_content" android:visibility="visible" 
+     android:layout_alignParentRight="true" android:id="@+id/myVideoView" 
+     android:layout_height="fill_parent" android:layout_marginBottom="1px" 
+     android:layout_marginLeft="1px" android:layout_marginRight="1px" 
+     android:layout_marginTop="1px" android:layout_weight="2">
+</com.imps.media.video.VideoSurfaceView> 
+</LinearLayout> 
+</LinearLayout> 

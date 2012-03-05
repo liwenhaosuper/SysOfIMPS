@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<resources> 
+  <drawable name="darkgray">#808080</drawable> 
+  <drawable name="white">#FFFFFF</drawable> 
+  <drawable name="blue">#0000FF</drawable> 
+  <drawable name="black">#000000</drawable>
+    <color name="white">#ffffffff</color>
+    <color name="black">#ff000000</color>
+    <color name="blue">#ff3aa4e3</color>
+    <color name="grey">#ff808080</color>
+    <color name="pls_talk_normal">#ff707277</color>
+    <color name="search_hint">#ffcccccc</color>
+    <color name="sms">#ffd2d2d2</color>
+    <color name="transparent">#00000000</color>
+</resources>

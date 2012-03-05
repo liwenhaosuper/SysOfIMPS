@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/default_bg" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <RelativeLayout
+            android:id="@+id/portraitPanel"
+            android:layout_width="match_parent"
+            android:layout_height="100.0dip"
+            android:layout_marginLeft="10.0dip"
+            android:layout_marginRight="10.0dip"
+            android:layout_marginTop="10.0dip"
+            android:background="@drawable/content_background" >
+
+            <ImageView
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:id="@+id/portrait"
+                android:layout_width="85.0dip"
+                android:layout_height="85.0dip"
+                android:layout_marginLeft="6.0dip"
+                android:layout_marginTop="5.0dip"
+                android:layout_marginRight="6.0dip"
+                android:layout_marginBottom="5.0dip"
+                android:src="@drawable/default_portrait"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true" />
+            <TextView
+                android:id="@+id/portrait_vline"
+                android:background="@drawable/vertical_line_card"
+                android:layout_width="1.0dip"
+                android:layout_height="fill_parent"
+                android:layout_toRightOf="@+id/portrait" />
+            <TextView
+                android:ellipsize="end"
+                android:gravity="left|center"
+                android:id="@+id/portrait_name"
+                android:background="@drawable/white_blue_selector"
+                android:paddingLeft="10.0dip"
+                android:layout_width="fill_parent"
+                android:layout_height="50.0dip"
+                android:layout_marginRight="0.0dip"
+                android:singleLine="true"
+                android:layout_toRightOf="@+id/portrait_vline"
+                android:layout_alignParentTop="true" />
+            <TextView
+                android:id="@+id/portrait_line"
+                android:background="@drawable/vertical_line_card"
+                android:layout_width="match_parent"
+                android:layout_height="1.0dip"
+                android:layout_toRightOf="@+id/portrait_vline"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true" />
+            <TextView
+                android:gravity="left|center"
+                android:id="@+id/portrait_sex"
+                android:background="@drawable/white_blue_selector"
+                android:paddingLeft="10.0dip"
+                android:layout_width="match_parent"
+                android:layout_height="50.0dip"
+                android:layout_toRightOf="@+id/lportrait_vline"
+                android:layout_below="@+id/portrait_line"
+                android:layout_alignLeft="@+id/portrait_name"
+                android:layout_alignParentBottom="true" />
+
+        </RelativeLayout>
+        
+        <RelativeLayout
+            android:id="@+id/email_panel"
+            android:background="@drawable/content_background"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10.0dip"
+            android:layout_marginTop="15.0dip"
+            android:layout_marginRight="10.0dip"
+            android:minHeight="30.0dip"
+            android:layout_below="@+id/portraitPanel">
+
+            <TextView
+                android:id="@+id/email_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10.0dip"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:text="@string/email" />
+
+            <TextView
+                android:textSize="14.0sp"
+                android:id="@+id/email_user"
+                android:paddingRight="20.0dip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+    
+
+</ScrollView>

@@ -1,0 +1,202 @@
+[ 2011-11-22T00:27:56+08:00 ] NOTIC: [2] include(../Public/Header.html) [<a href='function.include'>function.include</a>]: failed to open stream: No such file or directory 10b325c4e5ca218c6c63a6d2e00506e4.php 第 10 行.
+[ 2011-11-22T00:27:56+08:00 ] NOTIC: [2] include() [<a href='function.include'>function.include</a>]: Failed opening '../Public/Header.html' for inclusion (include_path='.;C:\php\pear;./ThinkPHP//Vendor/') 10b325c4e5ca218c6c63a6d2e00506e4.php 第 10 行.
+[ 2011-11-22T00:28:10+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/function.include.html]
+[ 2011-11-22T00:33:19+08:00 ] NOTIC: [2] file_get_contents(./Tpl/default/../Public/Header.html.html) [<a href='function.file-get-contents'>function.file-get-contents</a>]: failed to open stream: No such file or directory ThinkTemplate.class.php 第 770 行.
+[ 2011-11-22T00:35:31+08:00 ] NOTIC: [2] file_get_contents(./Tpl/default/../common/Header.html.html) [<a href='function.file-get-contents'>function.file-get-contents</a>]: failed to open stream: No such file or directory ThinkTemplate.class.php 第 770 行.
+[ 2011-11-22T00:36:56+08:00 ] NOTIC: [2] file_get_contents(./Tpl/default/../common/Header.html.html) [<a href='function.file-get-contents'>function.file-get-contents</a>]: failed to open stream: No such file or directory ThinkTemplate.class.php 第 770 行.
+[ 2011-11-22T00:37:16+08:00 ] NOTIC: [2] file_get_contents(./Tpl/default/Home/common/Header.html.html) [<a href='function.file-get-contents'>function.file-get-contents</a>]: failed to open stream: No such file or directory ThinkTemplate.class.php 第 770 行.
+[ 2011-11-22T00:37:35+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/css.html]
+[ 2011-11-22T00:37:35+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/images.html]
+[ 2011-11-22T00:40:21+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/css.html]
+[ 2011-11-22T00:40:21+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/images.html]
+[ 2011-11-22T00:40:22+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/css.html]
+[ 2011-11-22T00:40:22+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/images.html]
+[ 2011-11-22T00:40:37+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/css.html]
+[ 2011-11-22T00:40:37+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/images.html]
+[ 2011-11-22T00:40:41+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/css.html]
+[ 2011-11-22T00:40:41+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/images.html]
+[ 2011-11-22T00:41:19+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/css.html]
+[ 2011-11-22T00:41:19+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/images.html]
+[ 2011-11-22T00:41:22+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/css.html]
+[ 2011-11-22T00:41:22+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/images.html]
+[ 2011-11-22T00:41:33+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/css.html]
+[ 2011-11-22T00:41:33+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/images.html]
+[ 2011-11-22T00:41:33+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/css.html]
+[ 2011-11-22T00:41:33+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/images.html]
+[ 2011-11-22T00:41:34+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/css.html]
+[ 2011-11-22T00:41:34+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/images.html]
+[ 2011-11-22T00:41:34+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/css.html]
+[ 2011-11-22T00:41:34+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/images.html]
+[ 2011-11-22T00:42:03+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/css.html]
+[ 2011-11-22T00:42:03+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/images.html]
+[ 2011-11-22T00:42:04+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/css.html]
+[ 2011-11-22T00:42:04+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/images.html]
+[ 2011-11-22T00:42:05+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/css.html]
+[ 2011-11-22T00:42:05+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/images.html]
+[ 2011-11-22T00:42:51+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/css.html]
+[ 2011-11-22T00:42:51+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/images.html]
+[ 2011-11-22T00:44:47+08:00 ] ERR: (ThinkException) 无法加载模块common
+[ 2011-11-22T00:44:47+08:00 ] ERR: (ThinkException) 无法加载模块common
+[ 2011-11-22T00:45:17+08:00 ] ERR: (ThinkException) 无法加载模块common
+[ 2011-11-22T01:50:30+08:00 ] ERR: (ThinkException) 无法加载模块common
+[ 2011-11-22T01:50:30+08:00 ] ERR: (ThinkException) 无法加载模块common
+[ 2011-11-22T01:55:11+08:00 ] ERR: (ThinkException) 无法加载模块common
+[ 2011-11-22T01:55:11+08:00 ] ERR: (ThinkException) 无法加载模块common
+[ 2011-11-22T01:55:12+08:00 ] ERR: (ThinkException) 无法加载模块common
+[ 2011-11-22T01:55:12+08:00 ] ERR: (ThinkException) 无法加载模块common
+[ 2011-11-22T01:55:17+08:00 ] ERR: (ThinkException) 无法加载模块common
+[ 2011-11-22T01:55:17+08:00 ] ERR: (ThinkException) 无法加载模块common
+[ 2011-11-22T01:55:51+08:00 ] NOTIC: [2] file_get_contents(./Tpl/default/Home/common/Header.html) [<a href='function.file-get-contents'>function.file-get-contents</a>]: failed to open stream: No such file or directory ThinkTemplate.class.php 第 770 行.
+[ 2011-11-22T01:59:03+08:00 ] NOTIC: [2] file_get_contents(./Tpl/default/Home/__RES__/Header.html) [<a href='function.file-get-contents'>function.file-get-contents</a>]: failed to open stream: No such file or directory ThinkTemplate.class.php 第 770 行.
+[ 2011-11-22T01:59:29+08:00 ] NOTIC: [2] file_get_contents(./Tpl/default//__RES__/Header.html) [<a href='function.file-get-contents'>function.file-get-contents</a>]: failed to open stream: No such file or directory ThinkTemplate.class.php 第 770 行.
+[ 2011-11-22T02:02:42+08:00 ] NOTIC: [2] file_get_contents(./Tpl/default/Home/__RES__/Header.html) [<a href='function.file-get-contents'>function.file-get-contents</a>]: failed to open stream: No such file or directory ThinkTemplate.class.php 第 770 行.
+[ 2011-11-22T02:02:52+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/function.file-get-contents.html]
+[ 2011-11-22T02:05:18+08:00 ] ERR: (ThinkException) XML标签语法错误 : file=__RES__/Header 
+[ 2011-11-22T02:05:21+08:00 ] ERR: (ThinkException) XML标签语法错误 : file=__RES__/Header 
+[ 2011-11-22T02:05:41+08:00 ] NOTIC: [2] file_get_contents(./Tpl/default/Home/__RES__/Header.html.html) [<a href='function.file-get-contents'>function.file-get-contents</a>]: failed to open stream: No such file or directory ThinkTemplate.class.php 第 770 行.
+[ 2011-11-22T02:07:23+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/css.html]
+[ 2011-11-22T02:07:23+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/images.html]
+[ 2011-11-22T02:08:24+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/css.html]
+[ 2011-11-22T02:08:24+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/images.html]
+[ 2011-11-22T02:08:41+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/images.html]
+[ 2011-11-22T02:16:35+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/images.html]
+[ 2011-11-22T02:16:36+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/images.html]
+[ 2011-11-22T02:16:37+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/images.html]
+[ 2011-11-22T02:16:38+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/images.html]
+[ 2011-11-22T02:16:38+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/images.html]
+[ 2011-11-22T02:27:55+08:00 ] NOTIC: [2] file_get_contents(./Tpl/default/Home/__RES__/Header.html) [<a href='function.file-get-contents'>function.file-get-contents</a>]: failed to open stream: No such file or directory ThinkTemplate.class.php 第 770 行.
+[ 2011-11-22T02:29:44+08:00 ] NOTIC: [2] file_get_contents(./Tpl/default//__RES__/Header.html) [<a href='function.file-get-contents'>function.file-get-contents</a>]: failed to open stream: No such file or directory ThinkTemplate.class.php 第 770 行.
+[ 2011-11-22T02:44:39+08:00 ] NOTIC: [2] file_get_contents(./Tpl/default/../common/Header.html) [<a href='function.file-get-contents'>function.file-get-contents</a>]: failed to open stream: No such file or directory ThinkTemplate.class.php 第 770 行.
+[ 2011-11-22T02:45:55+08:00 ] NOTIC: [2] file_get_contents(./Tpl/default/../common/Header.html) [<a href='function.file-get-contents'>function.file-get-contents</a>]: failed to open stream: No such file or directory ThinkTemplate.class.php 第 770 行.
+[ 2011-11-22T02:46:19+08:00 ] NOTIC: [2] file_get_contents(./Tpl/default/Home/common/Header.html) [<a href='function.file-get-contents'>function.file-get-contents</a>]: failed to open stream: No such file or directory ThinkTemplate.class.php 第 770 行.
+[ 2011-11-22T02:46:40+08:00 ] NOTIC: [2] file_get_contents(./Tpl/default/../common/Header.html) [<a href='function.file-get-contents'>function.file-get-contents</a>]: failed to open stream: No such file or directory ThinkTemplate.class.php 第 770 行.
+[ 2011-11-22T02:47:04+08:00 ] NOTIC: [2] file_get_contents(./Tpl//../common/Header.html) [<a href='function.file-get-contents'>function.file-get-contents</a>]: failed to open stream: No such file or directory ThinkTemplate.class.php 第 770 行.
+[ 2011-11-22T02:47:23+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/css.html]
+[ 2011-11-22T02:47:23+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/images.html]
+[ 2011-11-22T02:49:15+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/css.html]
+[ 2011-11-22T02:49:15+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/images.html]
+[ 2011-11-22T12:08:04+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/success.html]
+[ 2011-11-22T12:15:53+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/success.html]
+[ 2011-11-22T12:19:38+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/success.html]
+[ 2011-11-22T12:21:50+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/success.html]
+[ 2011-11-22T12:23:52+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/success.html]
+[ 2011-11-22T12:26:47+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/success.html]
+[ 2011-11-22T12:31:09+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/eegister.html]
+[ 2011-11-22T12:31:27+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/success.html]
+[ 2011-11-22T12:37:46+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/success.html]
+[ 2011-11-22T12:42:11+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/success.html]
+[ 2011-11-22T12:57:35+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/success.html]
+[ 2011-11-22T13:01:23+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/success.html]
+[ 2011-11-22T13:04:14+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/success.html]
+[ 2011-11-22T13:31:46+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/success.html]
+[ 2011-11-22T13:40:39+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/success.html]
+[ 2011-11-22T13:45:08+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/success.html]
+[ 2011-11-22T13:49:06+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/success.html]
+[ 2011-11-22T20:35:54+08:00 ] SQL: SHOW COLUMNS FROM `user` [ RunTime:0.120787s ]
+[ 2011-11-22T20:35:54+08:00 ] SQL: SELECT * FROM `user` WHERE ( `username` = '2222' ) LIMIT 1  [ RunTime:0.002335s ]
+[ 2011-11-22T20:35:54+08:00 ] SQL: INSERT INTO `user` (`username`,`password`,`email`,`gender`) VALUES ('2222','2222','liwenhaosuper@126.com','M') [ RunTime:0.132827s ]
+[ 2011-11-22T20:35:56+08:00 ] NOTIC: [2] Cannot modify header information - headers already sent by (output started at F:\php_project\IMPS\Common\Libs\phpmailer\class.smtp.php:804) ~runtime.php 第 2 行.
+[ 2011-11-22T20:35:56+08:00 ] NOTIC: [2] Cannot modify header information - headers already sent by (output started at F:\php_project\IMPS\Common\Libs\phpmailer\class.smtp.php:804) ~runtime.php 第 2 行.
+[ 2011-11-22T20:35:56+08:00 ] NOTIC: [2] Cannot modify header information - headers already sent by (output started at F:\php_project\IMPS\Common\Libs\phpmailer\class.smtp.php:804) ~runtime.php 第 2 行.
+[ 2011-11-22T20:44:56+08:00 ] SQL: SHOW COLUMNS FROM `user` [ RunTime:0.002651s ]
+[ 2011-11-22T20:44:56+08:00 ] SQL: SELECT * FROM `user` WHERE ( `username` = '222' ) LIMIT 1  [ RunTime:0.000670s ]
+[ 2011-11-22T20:44:56+08:00 ] SQL: INSERT INTO `user` (`username`,`password`,`email`,`gender`) VALUES ('222','222','liwenhaosuper@126.com','M') [ RunTime:0.109692s ]
+[ 2011-11-22T20:44:59+08:00 ] NOTIC: [2] Cannot modify header information - headers already sent by (output started at F:\php_project\IMPS\Common\Libs\phpmailer\class.smtp.php:804) ~runtime.php 第 2 行.
+[ 2011-11-22T20:44:59+08:00 ] NOTIC: [2] Cannot modify header information - headers already sent by (output started at F:\php_project\IMPS\Common\Libs\phpmailer\class.smtp.php:804) ~runtime.php 第 2 行.
+[ 2011-11-22T20:44:59+08:00 ] NOTIC: [2] Cannot modify header information - headers already sent by (output started at F:\php_project\IMPS\Common\Libs\phpmailer\class.smtp.php:804) ~runtime.php 第 2 行.
+[ 2011-11-22T20:45:55+08:00 ] SQL: SHOW COLUMNS FROM `user` [ RunTime:0.002187s ]
+[ 2011-11-22T20:45:55+08:00 ] SQL: SELECT * FROM `user` WHERE ( `username` = '444' ) LIMIT 1  [ RunTime:0.000631s ]
+[ 2011-11-22T20:45:55+08:00 ] SQL: INSERT INTO `user` (`username`,`password`,`email`,`gender`) VALUES ('444','444','liwenhaosuper@126.com','M') [ RunTime:0.112404s ]
+[ 2011-11-22T20:45:55+08:00 ] NOTIC: [2] Cannot modify header information - headers already sent by (output started at F:\php_project\IMPS\Common\Libs\phpmailer\class.smtp.php:804) ~runtime.php 第 2 行.
+[ 2011-11-22T20:45:55+08:00 ] NOTIC: [2] Cannot modify header information - headers already sent by (output started at F:\php_project\IMPS\Common\Libs\phpmailer\class.smtp.php:804) ~runtime.php 第 2 行.
+[ 2011-11-22T20:45:55+08:00 ] NOTIC: [2] Cannot modify header information - headers already sent by (output started at F:\php_project\IMPS\Common\Libs\phpmailer\class.smtp.php:804) ~runtime.php 第 2 行.
+[ 2011-11-22T20:52:39+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/doActivate&validationid=1&validationcode=304dbee8afac9f91bc211009ce9de3e8.html]
+[ 2011-11-22T20:53:40+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/doActivate&validationid=1&validationcode=304dbee8afac9f91bc211009ce9de3e8.html]
+[ 2011-11-22T20:57:37+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/doActivate&validationid=1&validationcode=304dbee8afac9f91bc211009ce9de3e8.html]
+[ 2011-11-22T20:57:38+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/doActivate&validationid=1&validationcode=304dbee8afac9f91bc211009ce9de3e8.html]
+[ 2011-11-22T20:57:39+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/doActivate&validationid=1&validationcode=304dbee8afac9f91bc211009ce9de3e8.html]
+[ 2011-11-22T20:57:39+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/doActivate&validationid=1&validationcode=304dbee8afac9f91bc211009ce9de3e8.html]
+[ 2011-11-22T20:57:40+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/doActivate&validationid=1&validationcode=304dbee8afac9f91bc211009ce9de3e8.html]
+[ 2011-11-22T20:57:42+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/doActivate&validationid=1&validationcode=304dbee8afac9f91bc211009ce9de3e8.html]
+[ 2011-11-22T20:58:05+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/doActivate&validationid=1&validationcode=304dbee8afac9f91bc211009ce9de3e8.html]
+[ 2011-11-22T20:59:53+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/doActivate&validationid=1&validationcode=304dbee8afac9f91bc211009ce9de3e8.html]
+[ 2011-11-22T20:59:56+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/doActivate&validationid=1&validationcode=304dbee8afac9f91bc211009ce9de3e8.html]
+[ 2011-11-22T20:59:58+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/doActivate&validationid=1&validationcode=304dbee8afac9f91bc211009ce9de3e8.html]
+[ 2011-11-22T20:59:59+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/doActivate&validationid=1&validationcode=304dbee8afac9f91bc211009ce9de3e8.html]
+[ 2011-11-22T20:59:59+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/doActivate&validationid=1&validationcode=304dbee8afac9f91bc211009ce9de3e8.html]
+[ 2011-11-22T21:00:00+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/doActivate&validationid=1&validationcode=304dbee8afac9f91bc211009ce9de3e8.html]
+[ 2011-11-22T21:00:00+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/doActivate&validationid=1&validationcode=304dbee8afac9f91bc211009ce9de3e8.html]
+[ 2011-11-22T21:00:00+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/doActivate&validationid=1&validationcode=304dbee8afac9f91bc211009ce9de3e8.html]
+[ 2011-11-22T21:00:00+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/doActivate&validationid=1&validationcode=304dbee8afac9f91bc211009ce9de3e8.html]
+[ 2011-11-22T21:00:01+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/doActivate&validationid=1&validationcode=304dbee8afac9f91bc211009ce9de3e8.html]
+[ 2011-11-22T21:00:01+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/doActivate&validationid=1&validationcode=304dbee8afac9f91bc211009ce9de3e8.html]
+[ 2011-11-22T21:00:01+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/doActivate&validationid=1&validationcode=304dbee8afac9f91bc211009ce9de3e8.html]
+[ 2011-11-22T21:00:01+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/doActivate&validationid=1&validationcode=304dbee8afac9f91bc211009ce9de3e8.html]
+[ 2011-11-22T21:00:01+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/doActivate&validationid=1&validationcode=304dbee8afac9f91bc211009ce9de3e8.html]
+[ 2011-11-22T21:00:02+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/doActivate&validationid=1&validationcode=304dbee8afac9f91bc211009ce9de3e8.html]
+[ 2011-11-22T21:00:02+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/doActivate&validationid=1&validationcode=304dbee8afac9f91bc211009ce9de3e8.html]
+[ 2011-11-22T21:00:02+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/doActivate&validationid=1&validationcode=304dbee8afac9f91bc211009ce9de3e8.html]
+[ 2011-11-22T21:03:23+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/doActivate&validationid=1&validationcode=304dbee8afac9f91bc211009ce9de3e8.html]
+[ 2011-11-22T21:05:34+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/doActivate&validationid=1&validationcode=304dbee8afac9f91bc211009ce9de3e8.html]
+[ 2011-11-22T21:07:32+08:00 ] ERR: (ThinkException) 无法加载模块Home
+[ 2011-11-22T21:07:41+08:00 ] ERR: (ThinkException) 无法加载模块Home
+[ 2011-11-22T21:09:14+08:00 ] ERR: (ThinkException) 无法加载模块home
+[ 2011-11-22T21:09:22+08:00 ] ERR: (ThinkException) 无法加载模块Admin
+[ 2011-11-22T21:09:26+08:00 ] ERR: (ThinkException) 无法加载模块Home
+[ 2011-11-22T21:09:49+08:00 ] ERR: (ThinkException) 无法加载模块Home
+[ 2011-11-22T21:10:17+08:00 ] ERR: (ThinkException) 无法加载模块IMPS
+[ 2011-11-22T21:10:30+08:00 ] ERR: (ThinkException) 无法加载模块IMPS
+[ 2011-11-22T21:11:15+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/doActivate&validationid=1&validationcode=304dbee8afac9f91bc211009ce9de3e8.html]
+[ 2011-11-22T21:11:16+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/doActivate&validationid=1&validationcode=304dbee8afac9f91bc211009ce9de3e8.html]
+[ 2011-11-22T21:11:17+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/doActivate&validationid=1&validationcode=304dbee8afac9f91bc211009ce9de3e8.html]
+[ 2011-11-22T21:11:17+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/doActivate&validationid=1&validationcode=304dbee8afac9f91bc211009ce9de3e8.html]
+[ 2011-11-22T21:11:17+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/doActivate&validationid=1&validationcode=304dbee8afac9f91bc211009ce9de3e8.html]
+[ 2011-11-22T21:11:17+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/doActivate&validationid=1&validationcode=304dbee8afac9f91bc211009ce9de3e8.html]
+[ 2011-11-22T21:11:18+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/doActivate&validationid=1&validationcode=304dbee8afac9f91bc211009ce9de3e8.html]
+[ 2011-11-22T21:14:37+08:00 ] NOTIC: [8] Undefined index: username PublicAction.class.php 第 51 行.
+[ 2011-11-22T21:14:37+08:00 ] NOTIC: [8] Undefined index: password PublicAction.class.php 第 52 行.
+[ 2011-11-22T21:14:37+08:00 ] SQL: SHOW COLUMNS FROM `user` [ RunTime:0.002201s ]
+[ 2011-11-22T21:14:37+08:00 ] SQL: SELECT * FROM `user` WHERE ( `username` = null ) LIMIT 1  [ RunTime:0.000323s ]
+[ 2011-11-22T21:14:37+08:00 ] NOTIC: [8] Undefined variable: data 980dd3b5cf673af2c7fb884db6fd22bb.php 第 12 行.
+[ 2011-11-22T21:14:37+08:00 ] NOTIC: [8] Undefined variable: data 980dd3b5cf673af2c7fb884db6fd22bb.php 第 13 行.
+[ 2011-11-22T21:14:37+08:00 ] NOTIC: [8] Undefined variable: data 980dd3b5cf673af2c7fb884db6fd22bb.php 第 18 行.
+[ 2011-11-22T21:14:37+08:00 ] NOTIC: [8] Undefined variable: data 980dd3b5cf673af2c7fb884db6fd22bb.php 第 23 行.
+[ 2011-11-22T21:16:06+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/doActivate&validationid=1&validationcode=304dbee8afac9f91bc211009ce9de3e8.html]
+[ 2011-11-22T21:16:27+08:00 ] ERR: (ThinkException) 模板不存在[./Tpl/default/Home/Public/success.html]
+[ 2011-11-22T21:16:58+08:00 ] SQL: SHOW COLUMNS FROM `user` [ RunTime:0.002472s ]
+[ 2011-11-22T21:16:58+08:00 ] SQL: SELECT * FROM `user` WHERE ( `username` = '22222' ) LIMIT 1  [ RunTime:0.000568s ]
+[ 2011-11-22T21:16:58+08:00 ] SQL: INSERT INTO `user` (`username`,`password`,`email`,`gender`) VALUES ('22222','22222','liwenhaosuper@126.com','M') [ RunTime:0.103793s ]
+[ 2011-11-22T21:16:59+08:00 ] NOTIC: [2] Cannot modify header information - headers already sent by (output started at F:\php_project\IMPS\Common\Libs\phpmailer\class.smtp.php:804) ~runtime.php 第 2 行.
+[ 2011-11-22T21:16:59+08:00 ] NOTIC: [2] Cannot modify header information - headers already sent by (output started at F:\php_project\IMPS\Common\Libs\phpmailer\class.smtp.php:804) ~runtime.php 第 2 行.
+[ 2011-11-22T21:16:59+08:00 ] NOTIC: [2] Cannot modify header information - headers already sent by (output started at F:\php_project\IMPS\Common\Libs\phpmailer\class.smtp.php:804) ~runtime.php 第 2 行.
+[ 2011-11-22T22:31:18+08:00 ] ERR: (ThinkException) 无法加载模块common
+[ 2011-11-22T22:31:18+08:00 ] ERR: (ThinkException) 无法加载模块common
+[ 2011-11-22T23:19:22+08:00 ] ERR: (ThinkException) 无法加载模块common
+[ 2011-11-22T23:19:22+08:00 ] ERR: (ThinkException) 无法加载模块common
+[ 2011-11-22T23:20:54+08:00 ] ERR: (ThinkException) 无法加载模块common
+[ 2011-11-22T23:20:54+08:00 ] ERR: (ThinkException) 无法加载模块common
+[ 2011-11-22T23:20:54+08:00 ] ERR: (ThinkException) 无法加载模块common
+[ 2011-11-22T23:20:54+08:00 ] ERR: (ThinkException) 无法加载模块common
+[ 2011-11-22T23:20:54+08:00 ] ERR: (ThinkException) 无法加载模块common
+[ 2011-11-22T23:20:54+08:00 ] ERR: (ThinkException) 无法加载模块common
+[ 2011-11-22T23:20:55+08:00 ] ERR: (ThinkException) 无法加载模块common
+[ 2011-11-22T23:20:55+08:00 ] ERR: (ThinkException) 无法加载模块common
+[ 2011-11-22T23:20:55+08:00 ] ERR: (ThinkException) 无法加载模块common
+[ 2011-11-22T23:20:55+08:00 ] ERR: (ThinkException) 无法加载模块common
+[ 2011-11-22T23:20:55+08:00 ] ERR: (ThinkException) 无法加载模块common
+[ 2011-11-22T23:20:55+08:00 ] ERR: (ThinkException) 无法加载模块common
+[ 2011-11-22T23:20:56+08:00 ] ERR: (ThinkException) 无法加载模块common
+[ 2011-11-22T23:20:56+08:00 ] ERR: (ThinkException) 无法加载模块common
+[ 2011-11-22T23:20:56+08:00 ] ERR: (ThinkException) 无法加载模块common
+[ 2011-11-22T23:20:56+08:00 ] ERR: (ThinkException) 无法加载模块common
+[ 2011-11-22T23:20:56+08:00 ] ERR: (ThinkException) 无法加载模块common
+[ 2011-11-22T23:20:56+08:00 ] ERR: (ThinkException) 无法加载模块common
+[ 2011-11-22T23:20:56+08:00 ] ERR: (ThinkException) 无法加载模块common
+[ 2011-11-22T23:20:56+08:00 ] ERR: (ThinkException) 无法加载模块common
+[ 2011-11-22T23:20:56+08:00 ] ERR: (ThinkException) 无法加载模块common
+[ 2011-11-22T23:20:56+08:00 ] ERR: (ThinkException) 无法加载模块common
+[ 2011-11-22T23:20:57+08:00 ] ERR: (ThinkException) 无法加载模块common
+[ 2011-11-22T23:20:57+08:00 ] ERR: (ThinkException) 无法加载模块common
+[ 2011-11-22T23:21:18+08:00 ] ERR: (ThinkException) 无法加载模块common
+[ 2011-11-22T23:21:18+08:00 ] ERR: (ThinkException) 无法加载模块common
+[ 2011-11-22T23:21:46+08:00 ] ERR: (ThinkException) 无法加载模块common

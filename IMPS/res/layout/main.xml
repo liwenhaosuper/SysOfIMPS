@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>  
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"  
+android:orientation="vertical" android:layout_width="fill_parent"  
+android:layout_height="fill_parent">  
+        <LinearLayout android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        >
+           <ImageButton
+           android:id="@+id/menu_ImgButton01"
+           android:src="@drawable/current_talk"
+           android:layout_width="fill_parent"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           ></ImageButton>
+           <ImageButton
+           android:id="@+id/menu_ImgButton02"
+           android:src="@drawable/tab2_over"
+           android:layout_width="fill_parent"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"></ImageButton>
+           <ImageButton
+           android:id="@+id/menu_ImgButton03"
+           android:src="@drawable/tab3_over"
+           android:layout_width="fill_parent"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           ></ImageButton>
+        </LinearLayout>
+        <view class="com.google.android.maps.MapView"
+        android:id="@+id/MapView"  
+        android:layout_width="fill_parent"  
+        android:layout_height="fill_parent" 
+        android:apiKey="08XREvkX9bvRUo8vmNke2xm9vas3WNEd6m53xfA" 
+         android:clickable="true" android:longClickable="true"/>            
+</LinearLayout>
