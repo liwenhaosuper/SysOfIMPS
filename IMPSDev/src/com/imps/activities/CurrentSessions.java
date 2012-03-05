@@ -52,6 +52,7 @@ public class CurrentSessions extends Activity{
 	public void onResume(){
 		super.onResume();
 		registerReceiver(receiver,receiver.getFilter());
+		mAdapter.notifyDataSetChanged();
 	}
 	@Override
 	public void onStop(){
