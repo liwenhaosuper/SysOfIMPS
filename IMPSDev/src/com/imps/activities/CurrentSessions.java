@@ -13,6 +13,7 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,6 +28,7 @@ import android.widget.TextView;
 import com.imps.R;
 import com.imps.basetypes.Constant;
 import com.imps.basetypes.MediaType;
+import com.imps.basetypes.SystemMsgType;
 import com.imps.basetypes.User;
 import com.imps.basetypes.UserStatus;
 import com.imps.net.handler.UserManager;
@@ -34,24 +36,68 @@ import com.imps.receivers.IMPSBroadcastReceiver;
 import com.imps.services.impl.ServiceManager;
 
 public class CurrentSessions extends Activity{
+	protected static final String TAG = CurrentSessions.class.getCanonicalName();
 	private ListView concurSessionsList;
 	private List<User> sessionsList;
 	private CurrentSessionAdapter mAdapter;
 	private CurrentSessionsReceiver receiver = new CurrentSessionsReceiver();
+	private SystemMsgType sysmsg ;
 	@Override
 	public void onCreate(Bundle savedInstanceState	)
 	{
+		Log.d(TAG, "onCreate() started");
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.currentsessions);
 		setTitle(getResources().getString(R.string.currentsession));
 		sessionsList = new ArrayList<User>();
 		concurSessionsList = (ListView)findViewById(R.id.concurSessions);
+		
 		initAdapter();
 	}
 	@Override
 	public void onResume(){
 		super.onResume();
+		
+		Log.d(TAG, "onResume() started");
+		if(sessionsList!=null){
+		sessionsList.clear();
+		Iterator<String> iter = UserManager.CurSessionFriList.keySet().iterator();
+		int len = UserManager.AllFriList.size();
+		while(iter.hasNext()){
+			String nm =(String)iter.next();
+			for(int i=0;i<len;i++)
+			{			
+				if(UserManager.AllFriList.get(i).getUsername().equals(nm))
+				{
+					User usr = UserManager.AllFriList.get(i);
+					sessionsList.add(usr);
+					break;
+				}
+			}
+		}
+		if(UserManager.mSysMsgs.size()!=0){
+		User SysAdmin=new User();
+		sysmsg = UserManager.mSysMsgs.get(UserManager.mSysMsgs.size()-1);
+		SysAdmin.setUsername("SysAdmin");
+		SysAdmin.setStatus(UserStatus.ONLINE);
+		if(sysmsg.type==SystemMsgType.FROM){
+			if(sysmsg.status==SystemMsgType.ACCEPTED){
+				SysAdmin.setDescription(sysmsg.name+" 接受了您的添加好友请求");
+			}
+			else if(sysmsg.status==SystemMsgType.DENIED){
+				SysAdmin.setDescription(sysmsg.name+" 拒绝了您的添加好友请求");
+			}
+			else{
+				SysAdmin.setDescription(sysmsg.name+" 向您发来了添加好友请求");
+			}
+		}
+		Log.d(TAG, "4444");
+		sessionsList.add(SysAdmin);
+		}
+		}
 		registerReceiver(receiver,receiver.getFilter());
+		
+
 		mAdapter.notifyDataSetChanged();
 	}
 	@Override
@@ -92,6 +138,24 @@ public class CurrentSessions extends Activity{
 					break;
 				}
 			}
+		}
+		if(UserManager.mSysMsgs.size()!=0){
+			User SysAdmin=new User();
+			sysmsg = UserManager.mSysMsgs.get(UserManager.mSysMsgs.size()-1);
+			SysAdmin.setUsername("SysAdmin");
+			SysAdmin.setStatus(UserStatus.ONLINE);
+			if(sysmsg.type==SystemMsgType.FROM){
+				if(sysmsg.status==SystemMsgType.ACCEPTED){
+					SysAdmin.setDescription(sysmsg.name+" 接受了您的添加好友请求");
+				}
+				else if(sysmsg.status==SystemMsgType.DENIED){
+					SysAdmin.setDescription(sysmsg.name+" 拒绝了您的添加好友请求");
+				}
+				else{
+					SysAdmin.setDescription(sysmsg.name+" 向您发来了添加好友请求");
+				}
+			}
+			sessionsList.add(SysAdmin);
 		}
 		mAdapter.notifyDataSetChanged();
 	}
@@ -172,6 +236,14 @@ public class CurrentSessions extends Activity{
 				if(name!=null)name.setText(sessionsList.get(position).getUsername());
 				TextView description=(TextView)convertView.findViewById(R.id.description);
 				if(description!=null)description.setText(sessionsList.get(position).getDescription());
+				TextView statusView = (TextView)convertView.findViewById(R.id.status);
+				if(sessionsList.get(position).getUsername().equals("SysAdmin")){
+					description.setText(sessionsList.get(position).getDescription());
+					date.setText(sysmsg.time.substring(5));
+					statusView.setText(getResources().getString(R.string.online));
+				}
+				
+				
 				if(UserManager.CurSessionFriList.containsKey(sessionsList.get(position).getUsername())){
 					List<MediaType> items = UserManager.CurSessionFriList.get(sessionsList.get(position).getUsername());
 					for(int i=items.size()-1;i>=0;i--){
@@ -183,7 +255,7 @@ public class CurrentSessions extends Activity{
 					}
 				
 				}
-				TextView statusView = (TextView)convertView.findViewById(R.id.status);
+
 				if(statusView!=null)statusView.setText(sessionsList.get(position).getStatus()==UserStatus.ONLINE?getResources().getString(R.string.online):getResources().getString(R.string.offline));
 			}
 			return convertView;

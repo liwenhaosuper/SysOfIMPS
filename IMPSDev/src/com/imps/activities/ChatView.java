@@ -7,17 +7,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import android.R.array;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
@@ -42,6 +38,7 @@ import com.imps.R;
 import com.imps.basetypes.Constant;
 import com.imps.basetypes.ListContentEntity;
 import com.imps.basetypes.MediaType;
+import com.imps.basetypes.SystemMsgType;
 import com.imps.basetypes.UserMessage;
 import com.imps.media.audio.Record;
 import com.imps.media.audio.Track;
@@ -319,6 +316,19 @@ public class ChatView extends Activity{
 	private void initMessages() {
 		// TODO Auto-generated method stub
 		if(DEBUG) Log.d(TAG, "ChatView:listview count is "+mListView.getCount());
+		
+		if(fUsername.equals("SysAdmin")){
+			for(int i=UserManager.mSysMsgs.size()-1;i>=0;i--){
+				SystemMsgType sysmsg=UserManager.mSysMsgs.get(i);
+				String content=sysmsg.text;
+				content+="\n【进入系统消息查看】";
+				list.add(new ListContentEntity(sysmsg.name,
+						sysmsg.time,content,ListContentEntity.MESSAGE_FROM));
+			}
+			return;
+		}
+		
+		
 		if(mListView.getCount()==0&&UserManager.CurSessionFriList.containsKey(fUsername))
 		{
 			Log.d(TAG, "ChatView:initialing the chat view with old msg");
