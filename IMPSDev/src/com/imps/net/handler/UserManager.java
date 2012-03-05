@@ -7,11 +7,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 
+import android.content.Context;
+
 import com.imps.IMPSDev;
 import com.imps.basetypes.MediaType;
 import com.imps.basetypes.SystemMsgType;
 import com.imps.basetypes.User;
 import com.imps.basetypes.UserStatus;
+import com.imps.util.LocalDBHelper;
 
 public class UserManager {
 	private static String TAG = UserManager.class.getCanonicalName();
@@ -25,6 +28,7 @@ public class UserManager {
 	public static HashMap<String,List<MediaType>> UnReadMessages = new HashMap<String,List<MediaType>>();
 	public static List<SystemMsgType> mSysMsgs = new ArrayList<SystemMsgType>();
 	public static String activeFriend = new String();
+	public static LocalDBHelper localDB; 
 	
 	public static UserManager getInstance(){
 		if(instance==null){
@@ -95,5 +99,9 @@ public class UserManager {
         		break;
         	}
         }
+	}
+	
+	public static void buildLocalDB(Context ctx) {
+		localDB = new LocalDBHelper(ctx);
 	}
 }

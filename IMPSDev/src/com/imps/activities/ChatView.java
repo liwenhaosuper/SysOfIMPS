@@ -20,6 +20,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.LoginFilter.UsernameFilterGeneric;
 import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.Gravity;
@@ -68,7 +69,7 @@ public class ChatView extends Activity{
 	private PopupWindow menuWindow = null;
 	private Record record = null;
 	private ChatViewReceiver receiver = new ChatViewReceiver();
-	private LocalDBHelper localDB = new LocalDBHelper(this); 
+	private LocalDBHelper localDB = UserManager.localDB; 
 	
 	@Override
 	public void onResume()
@@ -342,36 +343,38 @@ public class ChatView extends Activity{
 			List<MediaType> mbox = UserManager.CurSessionFriList.get(fUsername);
 			MediaType media;
 			String msg;
-			for(int i=0;i<mbox.size();i++)
-			{
-				if(DEBUG) Log.d(TAG, ""+i+" "+ mbox.get(i));
-				media = mbox.get(i);
-                String fname = media.getDirecet()==MediaType.from?media.getFriend():UserManager.globaluser.getUsername();
-                msg = media.getMsgContant();
-                String date = media.getTime();
-                if(fname.equals(UserManager.getGlobaluser().getUsername()))
-                {
-                	if(media.getType()==MediaType.SMS){
-                    	ListContentEntity d1 = new ListContentEntity(fname,date,msg,ListContentEntity.MESSAGE_TO);
-                    	list.add(d1);
-                	}else if(media.getType()==MediaType.IMAGE){
-                		list.add(new ListContentEntity(fname,date,"",ListContentEntity.MESSAGE_TO_PICTURE,media.getMsgContant()));
-                	}else if(media.getType()==MediaType.AUDIO){
-                		list.add(new ListContentEntity(fname,date,"",ListContentEntity.MESSAGE_TO_AUDIO,media.getContant()));
-                	}
-                }
-                else{
-                	if(media.getType()==MediaType.SMS){
-                    	ListContentEntity d1 = new ListContentEntity(fname,date,msg,ListContentEntity.MESSAGE_FROM);
-                    	list.add(d1);
-                	}
-                	else if(media.getType()==MediaType.IMAGE){
-                		list.add(new ListContentEntity(fname,date,"",ListContentEntity.MESSAGE_FROM_PICTURE,media.getMsgContant()));
-                	}else if(media.getType()==MediaType.AUDIO){
-                		list.add(new ListContentEntity(fname,date,"",ListContentEntity.MESSAGE_FROM_AUDIO,media.getContant()));
-                	}
-                }
-                if(DEBUG) Log.d(TAG,"add the existing messages");
+			if (mbox != null) {
+				for(int i=0;i<mbox.size();i++)
+				{
+					if(DEBUG) Log.d(TAG, ""+i+" "+ mbox.get(i));
+					media = mbox.get(i);
+	                String fname = media.getDirecet()==MediaType.from?media.getFriend():UserManager.globaluser.getUsername();
+	                msg = media.getMsgContant();
+	                String date = media.getTime();
+	                if(fname.equals(UserManager.getGlobaluser().getUsername()))
+	                {
+	                	if(media.getType()==MediaType.SMS){
+	                    	ListContentEntity d1 = new ListContentEntity(fname,date,msg,ListContentEntity.MESSAGE_TO);
+	                    	list.add(d1);
+	                	}else if(media.getType()==MediaType.IMAGE){
+	                		list.add(new ListContentEntity(fname,date,"",ListContentEntity.MESSAGE_TO_PICTURE,media.getMsgContant()));
+	                	}else if(media.getType()==MediaType.AUDIO){
+	                		list.add(new ListContentEntity(fname,date,"",ListContentEntity.MESSAGE_TO_AUDIO,media.getContant()));
+	                	}
+	                }
+	                else{
+	                	if(media.getType()==MediaType.SMS){
+	                    	ListContentEntity d1 = new ListContentEntity(fname,date,msg,ListContentEntity.MESSAGE_FROM);
+	                    	list.add(d1);
+	                	}
+	                	else if(media.getType()==MediaType.IMAGE){
+	                		list.add(new ListContentEntity(fname,date,"",ListContentEntity.MESSAGE_FROM_PICTURE,media.getMsgContant()));
+	                	}else if(media.getType()==MediaType.AUDIO){
+	                		list.add(new ListContentEntity(fname,date,"",ListContentEntity.MESSAGE_FROM_AUDIO,media.getContant()));
+	                	}
+	                }
+	                if(DEBUG) Log.d(TAG,"add the existing messages");
+				}
 			}
 		}
 	}
@@ -441,6 +444,7 @@ public class ChatView extends Activity{
 				UserManager.CurSessionFriList.put(fUsername, newmsgbox);
 				if(DEBUG) Log.d(TAG,"adding to the list with new msg");
 			}
+			localDB.updateRecentContact(fUsername);
 			ServiceManager.getmSms().sendSms(item);
 			
 		}
