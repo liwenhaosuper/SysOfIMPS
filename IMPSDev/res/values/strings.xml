@@ -122,6 +122,7 @@
 	<!--Video Chat-->
 	<string name="unknow_request">无法解析的用户请求</string>
 	<string name="video_chat_title">与 %1$s 视频通话</string>
+	<string name="video_chat_request_notify">请求与您视频聊天</string>
 	<string name="video_request_reject">对方拒绝了您的通话请求</string>
 	<string name="video_chat_request_title">视频通话请求</string>
 	<string name="video_chat_request_message">是否接受 %1$s 的视频通话请求？</string>

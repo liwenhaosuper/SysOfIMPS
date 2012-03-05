@@ -58,6 +58,7 @@ public class DoodleLogicHandler extends SimpleChannelUpstreamHandler{
     	if(channel!=null){
     		DoodleTcpServer.allGroups.remove(channel);
     		System.out.println("Remove session from doodle group");
+    		//TODO: How to remove the user?
     	}
     }
     @Override
