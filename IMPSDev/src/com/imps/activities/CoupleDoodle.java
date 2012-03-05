@@ -19,10 +19,13 @@ import android.graphics.Paint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,7 +51,9 @@ public class CoupleDoodle extends Activity implements OnClickListener{
     private TextView mFriList;
     private TextView mTitle;
     private TextView mConnectionStatus;
-    
+    private PopupWindow popupWindow;
+    private View popViewItem;
+    private TextView notify_text;
     public static String roomMaster = "";
     private List<String> friList = new ArrayList<String>();
     private InvitingProgress mInvitetask;
@@ -68,6 +73,20 @@ public class CoupleDoodle extends Activity implements OnClickListener{
         mTitle = (TextView) findViewById(R.id.title_left_text);
         mConnectionStatus = (TextView) findViewById(R.id.title_right_text);
         //mConnectionStatus.setText(getResources().getString(R.string.not_connected));
+        
+		popViewItem = this.getLayoutInflater().inflate(R.layout.coupledoodle_notifyview, null);
+		popupWindow = new PopupWindow(popViewItem, ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+	    popupWindow.setTouchable(true);
+	    popupWindow.setFocusable(false);
+	    popViewItem.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				if(popupWindow!=null&&popupWindow.isShowing())
+				{
+					popupWindow.dismiss();
+				}
+			}});
+	    notify_text = (TextView)popViewItem.findViewById(R.id.notify_text);
         
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
@@ -96,11 +115,33 @@ public class CoupleDoodle extends Activity implements OnClickListener{
     	}
     	mFriList.setText(text);
     }
+    public void showNotify(String text){
+    	notify_text.setText(text);
+    	popupWindow.showAsDropDown(mInviteFri);
+    }
+	@Override
+	public boolean onTouchEvent(MotionEvent event)
+	{
+		if(popupWindow!=null&&popupWindow.isShowing())
+		{
+			popupWindow.dismiss();
+		}
+		return super.onTouchEvent(event);
+	}
     @Override
     public void onResume(){
     	super.onResume();
     	ServiceManager.getmDoodleService().startDoodle(mDoodle);
     	registerReceiver(receiver,receiver.getFilter());
+    	if(ServiceManager.getmDoodleService().getChannel()!=null&&ServiceManager.getmDoodleService().getChannel().isConnected()){
+    		ServiceManager.getmDoodleService().getChannel().write(ChannelBuffers.wrappedBuffer(
+    				MessageFactory.createCDoodleLogin(UserManager.getGlobaluser().getUsername()).build()));
+    		if(DEBUG)  Log.d(TAG,"Logged in...");
+    		mConnectionStatus.setText(getResources().getString(R.string.connected));
+    	}else{
+    		if(DEBUG) Log.d(TAG,"Logged in failed...");
+    		mConnectionStatus.setText(getResources().getString(R.string.not_connected));
+    	}
     }
     @Override
     public void onStop(){
@@ -143,15 +184,7 @@ public class CoupleDoodle extends Activity implements OnClickListener{
 						if(index==0){
 							return;
 						}
-				    	if(ServiceManager.getmDoodleService().getChannel()!=null&&ServiceManager.getmDoodleService().getChannel().isConnected()){
-				    		ServiceManager.getmDoodleService().getChannel().write(ChannelBuffers.wrappedBuffer(
-				    				MessageFactory.createCDoodleLogin(UserManager.getGlobaluser().getUsername()).build()));
-				    		if(DEBUG)  Log.d(TAG,"Logged in...");
-				    		mConnectionStatus.setText(getResources().getString(R.string.connected));
-				    	}else{
-				    		if(DEBUG) Log.d(TAG,"Logged in failed...");
-				    		mConnectionStatus.setText(getResources().getString(R.string.not_connected));
-				    	}
+
 						if(mInvitetask!=null&&mInvitetask.getStatus()==AsyncTask.Status.RUNNING){
 							mInvitetask.cancel(true);
 						}
@@ -242,10 +275,8 @@ public class CoupleDoodle extends Activity implements OnClickListener{
 				String frirsp = intent.getStringExtra(Constant.USERNAME);
 				boolean res = intent.getBooleanExtra(Constant.RESULT, true);
 				String resstr = res==true?getResources().getString(R.string.accept):getResources().getString(R.string.deny);
-		        BubbleDialog notifydialog = new BubbleDialog(CoupleDoodle.this);
 		        if(DEBUG) Log.d(TAG,"Doodle rsp..."+res);
-		        notifydialog.build(getResources().getString(R.string.friend_rsp_yourinvite,frirsp,resstr),getResources().getString(R.string.ok));
-		        notifydialog.show();
+		        showNotify(getResources().getString(R.string.friend_rsp_yourinvite,frirsp,resstr));
 		        if(res){
 		        	friList.add(frirsp);
 		        	updateUserListText();
@@ -268,4 +299,5 @@ public class CoupleDoodle extends Activity implements OnClickListener{
 			return filter;
 		}
 	}
+
 }

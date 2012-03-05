@@ -1,10 +1,7 @@
 package com.imps.util;
 
-import java.rmi.server.LogStream;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-import android.R.string;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;

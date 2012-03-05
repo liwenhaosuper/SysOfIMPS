@@ -3,7 +3,6 @@
 import java.util.HashMap;
 import java.util.List;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ExpandableListActivity;
 import android.content.ComponentName;
@@ -13,10 +12,8 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -26,7 +23,6 @@ import android.view.Window;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.ExpandableListView;
-import android.widget.Toast;
 import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
@@ -36,7 +32,6 @@ import com.imps.R;
 import com.imps.basetypes.Constant;
 import com.imps.basetypes.User;
 import com.imps.basetypes.UserStatus;
-import com.imps.events.IContactEvent;
 import com.imps.net.handler.UserManager;
 import com.imps.receivers.IMPSBroadcastReceiver;
 import com.imps.services.impl.ServiceManager;
@@ -401,9 +396,11 @@ public class FriendListTab extends ExpandableListActivity{
 		public void onReceive(Context context, Intent intent) {
 			super.onReceive(context, intent);
 			if(intent.getAction().equals(Constant.FRIENDLISTREFRESH)){
-				mAdapter.notifyDataSetChanged();
+				if(DEBUG) Log.d(TAG,"List recv...");
+				mAdapter.refresh();
 			}else if(intent.getAction().equals(Constant.FRIENDSTATUSNOTIFY)){
-				mAdapter.notifyDataSetChanged();
+				if(DEBUG) Log.d(TAG,"Notify recv...");
+				mAdapter.refresh();
 			}
 		}
 

@@ -1,6 +1,7 @@
 package com.imps.server.handler;
 
 import org.jboss.netty.buffer.ChannelBuffer;
+import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.ChannelStateEvent;
 import org.jboss.netty.channel.MessageEvent;
@@ -10,6 +11,7 @@ import com.imps.server.handler.doodleLogic.DoodleData;
 import com.imps.server.handler.doodleLogic.DoodleLogin;
 import com.imps.server.handler.doodleLogic.DoodleReq;
 import com.imps.server.handler.doodleLogic.DoodleRsp;
+import com.imps.server.main.DoodleTcpServer;
 import com.imps.server.main.basetype.CommandId;
 
 public class DoodleLogicHandler extends SimpleChannelUpstreamHandler{
@@ -47,6 +49,16 @@ public class DoodleLogicHandler extends SimpleChannelUpstreamHandler{
     @Override
     public void channelConnected(ChannelHandlerContext ctx, ChannelStateEvent e) {
     	System.out.println("client connected from:"+e.getChannel().getRemoteAddress().toString());
+    }
+    @Override
+    public void channelDisconnected(ChannelHandlerContext ctx, ChannelStateEvent e){
+    	System.out.println("client disconnected from:"+e.getChannel().getRemoteAddress().toString());
+    	Integer id = e.getChannel().getId();
+    	Channel channel = DoodleTcpServer.allGroups.find(id);
+    	if(channel!=null){
+    		DoodleTcpServer.allGroups.remove(channel);
+    		System.out.println("Remove session from doodle group");
+    	}
     }
     @Override
     public void channelClosed(ChannelHandlerContext ctx, ChannelStateEvent e){

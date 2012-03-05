@@ -30,6 +30,11 @@ public class DoodleConnectionService{
 		server_ip = ip;
 		server_port = port;
 	}
+	/**
+	 * connect and wait. That means it is synchronize
+	 * @param view
+	 * @return
+	 */
 	public boolean startDoodle(DoodleView view){
 		if(DEBUG) Log.d(TAG,"Start Doodle...");
 		isStarted = true;
@@ -52,7 +57,14 @@ public class DoodleConnectionService{
         bootstrap.setOption("child.keepAlive", true);
         bootstrap.setOption("child.tcpNoDelay", true);
         // Start the connection attempt.
-        future = bootstrap.connect(new InetSocketAddress(server_ip,server_port)).getChannel();
+        ChannelFuture channelFuture = bootstrap.connect(new InetSocketAddress(server_ip,server_port));
+        try {
+			channelFuture.await();
+		} catch (InterruptedException e) {
+			if(DEBUG) e.printStackTrace();
+		}
+        future = channelFuture.getChannel();
+        
 		return true;
 	}
 	public static void fireConnect(){
