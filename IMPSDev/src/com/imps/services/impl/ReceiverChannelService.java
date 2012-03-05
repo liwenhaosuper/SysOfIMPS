@@ -508,6 +508,7 @@ public class ReceiverChannelService {
 		if(rel){
 			item.status = SystemMsgType.ACCEPTED;
 			item.text = IMPSDev.getContext().getResources().getString(R.string.add_friend_rsp_accepted,friName);
+			ServiceManager.getmContact().sendFriListReq();
 		}else{
 			item.status = SystemMsgType.DENIED;
 			item.text = IMPSDev.getContext().getResources().getString(R.string.add_friend_rsp_denied,friName);
