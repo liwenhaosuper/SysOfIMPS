@@ -499,6 +499,7 @@ public class NetMsgLogicHandler extends SimpleChannelUpstreamHandler implements 
 			//port 
 			int port = inMsg.readInt();
 			rel.port = port;
+			//discard the rest message
 		}
 		catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
@@ -525,6 +526,7 @@ public class NetMsgLogicHandler extends SimpleChannelUpstreamHandler implements 
 			rel.ip = ip;
 			int port = inMsg.readInt();
 			rel.port = port;
+			//discard the rest message
 		}
 		catch (UnsupportedEncodingException e) {
 			

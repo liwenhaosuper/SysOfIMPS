@@ -13,6 +13,7 @@ import com.imps.server.handler.doodleLogic.DoodleReq;
 import com.imps.server.handler.doodleLogic.DoodleRsp;
 import com.imps.server.main.DoodleTcpServer;
 import com.imps.server.main.basetype.CommandId;
+import com.imps.server.manager.DoodleManager;
 
 public class DoodleLogicHandler extends SimpleChannelUpstreamHandler{
 
@@ -57,6 +58,13 @@ public class DoodleLogicHandler extends SimpleChannelUpstreamHandler{
     	Channel channel = DoodleTcpServer.allGroups.find(id);
     	if(channel!=null){
     		DoodleTcpServer.allGroups.remove(channel);
+    		for(int i=0;i<DoodleTcpServer.doodleUsers.size();i++){
+    			if(DoodleTcpServer.doodleUsers.get(i).getSessionId().intValue()==channel.getId().intValue()){
+    				DoodleManager.getInstance().notifyStatus(DoodleTcpServer.doodleUsers.get(i).getUsername(),false);
+    				DoodleTcpServer.doodleUsers.remove(i);
+    				break;
+    			}
+    		}
     		System.out.println("Remove session from doodle group");
     	}
     }

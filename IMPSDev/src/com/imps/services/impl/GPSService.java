@@ -40,6 +40,7 @@ public class GPSService extends Observable implements IGPSService,LocationListen
 	}
 	@Override
 	public boolean start() {
+		if(DEBUG)Log.d(TAG,"Starting GPS Service");
 		if (mLocationManager!=null&&mLocationManager.isProviderEnabled(android.location.LocationManager.GPS_PROVIDER )) {
 			if(DEBUG) Log.d(TAG,"GPS Not available");
 			isStarted = false;

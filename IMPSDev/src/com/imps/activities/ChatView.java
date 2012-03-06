@@ -336,17 +336,20 @@ public class ChatView extends Activity{
 			Log.d(TAG, "ChatView:initialing the chat view with old msg");
 			
 			// Add local history message to current session's message list
-			ArrayList<UserMessage> history = localDB.fetchMsg(fUsername);
-			if (history != null) {
-				for (UserMessage m : history) {
-					if (m.getDir() == 1)
-						list.add(new ListContentEntity(m.getFriend(), m
-								.getTime(), m.getContent(),
-								ListContentEntity.MESSAGE_FROM));
-					else
-						list.add(new ListContentEntity(m.getFriend(), m
-								.getTime(), m.getContent(),
-								ListContentEntity.MESSAGE_TO));
+			if (UserManager.CurSessionFriList.get(fUsername).size() < 1) {
+				// Add local history message to current session's message list
+				ArrayList<UserMessage> history = localDB.fetchMsg(fUsername);
+				if (history != null) {
+					for (UserMessage m : history) {
+						if (m.getDir() == 1)
+							list.add(new ListContentEntity(m.getFriend(), m
+									.getTime(), m.getContent(),
+									ListContentEntity.MESSAGE_FROM));
+						else
+							list.add(new ListContentEntity(UserManager.globaluser.getUsername(), m
+									.getTime(), m.getContent(),
+									ListContentEntity.MESSAGE_TO));
+					}
 				}
 			}
 			

@@ -18,6 +18,7 @@ import com.imps.R;
 import com.imps.activities.AudioChat;
 import com.imps.activities.ChatView;
 import com.imps.activities.IMPSContainer;
+import com.imps.activities.VideoContact;
 import com.imps.basetypes.Constant;
 import com.imps.basetypes.ListContentEntity;
 import com.imps.basetypes.MediaType;
@@ -232,6 +233,9 @@ public class ReceiverChannelService {
 				videop.putExtra(Constant.PORT, viden.port);
 				videop.putExtra(Constant.USERNAME, viden.userName);
 				IMPSDev.getContext().sendBroadcast(videop);
+				ServiceManager.showNotification(R.drawable.new_video_notification, R.drawable.new_video_notification,
+						viden.userName+":"+IMPSDev.getContext().getString(R.string.video_chat_request_notify), VideoContact.class, 
+						viden.userName,viden.ip,Integer.toString(viden.port));
 				break;
 			case P2PVIDEORSP:
 				if(DEBUG) Log.d(TAG,"P2P video rsp broadcast.");

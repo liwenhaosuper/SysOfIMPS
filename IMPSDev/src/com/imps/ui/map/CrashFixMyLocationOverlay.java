@@ -34,52 +34,23 @@ public class CrashFixMyLocationOverlay extends MyLocationOverlay implements OnCl
 	private int layout_x = 0; 
 	private int layout_y = -30; 
 	private Context context;
-	private String streetName = "";
+	public String streetName = "";
 	private final int ADDRESSLOADING = 1;
 	private final int ADDRESSLOADED = 2;
 	private final int ADDRESSLOADFAILED = 3;
+	private Handler handler;
 	
     public CrashFixMyLocationOverlay(Context context, MapView mapView) {
         super(context, mapView);
     }
-    public CrashFixMyLocationOverlay(Context context,MapView mapView,View popView){
+    public CrashFixMyLocationOverlay(Context context,Handler handler,MapView mapView,View popView){
     	super(context, mapView);
     	this.context = context;
+    	this.handler = handler;
     	this.mMapview = mapView;
     	this.mMapCtrl = mMapview.getController();
     	this.mPopView = popView;
     }
-    public Handler handler = new Handler(){
-    	@Override
-    	public void handleMessage(Message msg){
-    		switch(msg.what){
-    		case ADDRESSLOADING:
-		        TextView addView = (TextView) mPopView.findViewById(R.id.map_bubbleText);	
-    			if(addView!=null) addView.setText(loadingStreet());
-    			if(getMyLocation()==null){
-    				Message resmsg = new Message();
-    				resmsg.what = ADDRESSLOADFAILED;
-    				handler.sendMessage(resmsg);
-    			}else{
-    				streetName = getStreet();
-    				Message loadres = new Message();
-    				loadres.what = ADDRESSLOADED;
-    				handler.sendMessage(loadres);
-    			}
-    			break;
-    		case ADDRESSLOADED:
-		        TextView desc_TextView = (TextView) mPopView.findViewById(R.id.map_bubbleText);	
-    			if(desc_TextView!=null) desc_TextView.setText(streetName);
-    			break;
-    		case ADDRESSLOADFAILED:
-		        TextView desc = (TextView) mPopView.findViewById(R.id.map_bubbleText);	
-    			if(desc!=null) desc.setText(context.getResources().getString(R.string.positioning_unavailable));
-    			break;
-    		default:
-    			break;
-    		}
-    	}
-    };
     @Override
     public boolean draw(Canvas canvas, MapView mapView, boolean shadow, long when) {
         try {
@@ -107,9 +78,9 @@ public class CrashFixMyLocationOverlay extends MyLocationOverlay implements OnCl
     			mMapCtrl.animateTo(point);
     			TextView title_TextView = (TextView) mPopView.findViewById(R.id.map_bubbleTitle);
     			title_TextView.setText(context.getResources().getString(R.string.iamhear));
-/*    			TextView desc_TextView = (TextView) mPopView.findViewById(R.id.map_bubbleText);
+    			TextView desc_TextView = (TextView) mPopView.findViewById(R.id.map_bubbleText);
     			
-    			desc_TextView.setText(getStreet());*/
+    			desc_TextView.setText(streetName);
     			Message msg = new Message();
     			msg.what = ADDRESSLOADING;
     			handler.sendMessage(msg);
@@ -138,7 +109,7 @@ public class CrashFixMyLocationOverlay extends MyLocationOverlay implements OnCl
 			break;				
 		}
 	}
-	private String getStreet(){
+	public String getStreet(){
 		if(this.getMyLocation()==null){
 			return context.getResources().getString(R.string.addressnotavailable);
 		}
@@ -154,11 +125,11 @@ public class CrashFixMyLocationOverlay extends MyLocationOverlay implements OnCl
 			}
 		} catch (IOException e) {
 			if(DEBUG) e.printStackTrace();
-			return strname;
+			return strname+=context.getResources().getString(R.string.loading_your_address_fail);
 		}
 		return strname;
 	}
-	private String loadingStreet(){
+	public String loadingStreet(){
 		if(this.getMyLocation()==null){
 			return context.getResources().getString(R.string.addressnotavailable);
 		}
@@ -169,7 +140,7 @@ public class CrashFixMyLocationOverlay extends MyLocationOverlay implements OnCl
 	}
 	public void animateToMyLocation(int zoomLevel){
 		if(getMyLocation()==null){
-			Toast.makeText(context, context.getResources().getString(R.string.positioning_unavailable), Toast.LENGTH_LONG);
+			Toast.makeText(context, context.getResources().getString(R.string.positioning_unavailable), Toast.LENGTH_LONG).show();
 			return;
 		}
 		mMapCtrl.setZoom(zoomLevel);

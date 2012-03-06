@@ -59,6 +59,7 @@ public class CoupleDoodle extends Activity implements OnClickListener{
     private InvitingProgress mInvitetask;
     private DoodleSenderService mSender = new DoodleSenderService();
     private CoupleDoodleReceiver receiver = new CoupleDoodleReceiver();
+    public static List<String> onlineFriends = new ArrayList<String>();
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -157,11 +158,11 @@ public class CoupleDoodle extends Activity implements OnClickListener{
 	@Override
 	public void onClick(View v) {
 		if(v.getId()==mInviteFri.getId()){
-			final String[] multiChoiceItems = new String[UserManager.AllFriList.size()];
+			final String[] multiChoiceItems = new String[onlineFriends.size()];
 			final boolean[] defaultSelectedStatus = new boolean[UserManager.AllFriList.size()];
-			for(int i=0;i<UserManager.AllFriList.size();i++){
-				multiChoiceItems[i] = UserManager.AllFriList.get(i).getUsername();
+			for(int i=0;onlineFriends!=null&&i<onlineFriends.size();i++){
 				defaultSelectedStatus[i] = false;
+				multiChoiceItems[i] = onlineFriends.get(i);
 			}
 			new AlertDialog.Builder(CoupleDoodle.this)
 				.setTitle(getResources().getString(R.string.select_friends))
@@ -289,6 +290,24 @@ public class CoupleDoodle extends Activity implements OnClickListener{
 					}
 		        }
 		        updateUserListText();
+			}else if(intent.getAction().equals(Constant.DOODLELIST)){
+				if(DEBUG) Log.d(TAG,"Doodle list");
+			}else if(intent.getAction().equals(Constant.DOODLESTATUS)){
+				String frirsp = intent.getStringExtra(Constant.USERNAME);
+				boolean res = intent.getBooleanExtra(Constant.RESULT, true);
+				if(DEBUG) Log.d(TAG,"Doodle notify");
+				if(onlineFriends.contains(frirsp)){
+					if(res==false){
+						onlineFriends.remove(frirsp);
+					}
+				}else if(res==true){
+					onlineFriends.add(frirsp);
+				}
+				if(friList.contains(frirsp)&&res==false){
+					friList.remove(frirsp);
+					updateUserListText();
+				}
+				//TODO: TO be continued...
 			}
 		}
 		@Override
@@ -296,6 +315,8 @@ public class CoupleDoodle extends Activity implements OnClickListener{
 			IntentFilter filter = super.getFilter();
 			filter.addAction(Constant.DOODLEREQ);
 			filter.addAction(Constant.DOODLERSP);
+			filter.addAction(Constant.DOODLELIST);
+			filter.addAction(Constant.DOODLESTATUS);
 			return filter;
 		}
 	}

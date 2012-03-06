@@ -24,17 +24,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.imps.R;
+import com.imps.basetypes.Constant;
 import com.imps.media.rtp.core.NetworkFactory;
-import com.imps.media.video.IVideoEventListener;
 import com.imps.media.video.LiveVideoPlayer;
 import com.imps.media.video.VideoRenderer;
 import com.imps.media.video.VideoSurfaceView;
 import com.imps.media.video.codec.H263Config;
-import com.imps.net.handler.UserManager;
+import com.imps.receivers.IMPSBroadcastReceiver;
 import com.imps.services.impl.ServiceManager;
 import com.imps.util.CommonHelper;
 
-public class VideoContact extends Activity implements SurfaceHolder.Callback,IVideoEventListener{
+public class VideoContact extends Activity implements SurfaceHolder.Callback{
 
 	private final static byte READY = 0;
 	private final static byte CANCEL = 1;
@@ -101,7 +101,7 @@ public class VideoContact extends Activity implements SurfaceHolder.Callback,IVi
 	public static String ip = "127.0.0.1";
 	public static int port = 1300;
 	private String friName;
-	private ExitReceiver exitReceiver = new ExitReceiver();
+	private VideoContactReceiver receiver = new VideoContactReceiver();
 	private boolean isDebug = false;
 	private boolean isStarted = false;
 	@Override
@@ -132,7 +132,6 @@ public class VideoContact extends Activity implements SurfaceHolder.Callback,IVi
         }
         outgoingPlayer = new LiveVideoPlayer(outgoingVideoFormat);
         outgoingVideoView.setAspectRatio(videoWidth, videoHeight);
-        outgoingPlayer.addIMediaEventListener(this);
         mSurfaceHolder = outgoingVideoView.getHolder();
         mSurfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
         mSurfaceHolder.addCallback(this);
@@ -142,7 +141,6 @@ public class VideoContact extends Activity implements SurfaceHolder.Callback,IVi
         incomingVideoView.setAspectRatio(videoWidth, videoHeight);
         incomingRenderer = new VideoRenderer(incomingVideoFormat);
         incomingRenderer.setVideoSurface(incomingVideoView);
-        incomingRenderer.addIMediaEventListener(this);
         Intent fi = this.getIntent();
 		if(fi!=null)
 		{
@@ -163,25 +161,18 @@ public class VideoContact extends Activity implements SurfaceHolder.Callback,IVi
 			if(!"127.0.0.1".equals(ip))
 			    showDialog(ALERT);
 		}
-		if(isDebug)
-		{
-			updateStatus(START);
-		}
 	}
 	@Override
 	public void onResume()
 	{
 		super.onResume();
-		IntentFilter ifilter = new IntentFilter();
-		ifilter.addAction("exit");
-		ifilter.addAction("ptpvideo_rsp");
-		registerReceiver(exitReceiver,ifilter);
+		registerReceiver(receiver,receiver.getFilter());
 	}
 	@Override 
 	public void onStop()
 	{
 		super.onStop();
-		unregisterReceiver(exitReceiver);
+		unregisterReceiver(receiver);
 		updateStatus(CANCEL);
 		stopVideo();
 	}
@@ -352,47 +343,6 @@ public class VideoContact extends Activity implements SurfaceHolder.Callback,IVi
             return null;
         }
     }
-    public class ExitReceiver extends BroadcastReceiver
-	{
-
-		@Override
-		public void onReceive(Context context, Intent intent) {
-			// TODO Auto-generated method stub
-			if("exit".equals(intent.getAction()))
-			{
-				stopVideo();
-				finish();
-			}
-			else if("ptpvideo_rsp".equals(intent.getAction()))
-			{
-				Log.d("VideoChat", "video rsp broadcast received...");
-				Bundle bundle = intent.getExtras();
-				String fri = bundle.getString("fUsername");
-				if(fri!=null&&!"".equals(fri))
-				{
-					setTitle(getResources().getString(R.string.video_chat_title,fri));
-				}
-				int res = bundle.getInt("result");
-				//res = 3;
-				if(res==1)
-				{
-					ip = bundle.getString("ip");
-					Log.d("VideoContact", "rsp: IP received is "+ip);
-					if(ip==null||"".equals(ip))
-					{
-						ip = "127.0.0.1";
-					}
-					port = bundle.getInt("port", 1300);
-					//updateStatus(START);
-					onMediaAccept();
-				}
-				else {
-					//updateStatus(REJECT);
-					onMediaReject();
-				}
-			}
-		}		
-	}
     @Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if(keyCode == KeyEvent.KEYCODE_BACK)
@@ -506,43 +456,40 @@ public class VideoContact extends Activity implements SurfaceHolder.Callback,IVi
     	} 
     	return dialog;
 	}
-	@Override
-	public void onMediaOpened() {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void onMediaClosed() {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void onMediaStarted() {
-		// TODO Auto-generated method stub
-		startVideo();
-	}
-	@Override
-	public void onMediaStopped() {
-		// TODO Auto-generated method stub
-		//updateStatus("");
-		stopVideo();
-	}
-	@Override
-	public void onMediaError(String errorMsg) {
-		// TODO Auto-generated method stub
-		updateStatus(errorMsg);
-	}
-	@Override
-	public void onMediaAccept() {
-		// TODO Auto-generated method stub
-		updateStatus(getResources().getString(R.string.audio_status_start));
-		startVideo();
-	}
-	@Override
-	public void onMediaReject() {
-		// TODO Auto-generated method stub
-		updateStatus(getResources().getString(R.string.video_request_reject));
-		stopVideo();
-	}
-    
+
+    public class VideoContactReceiver extends IMPSBroadcastReceiver{
+    	@Override
+    	public void onReceive(Context context,Intent intent){
+    		super.onReceive(context, intent);
+    		if(intent.getAction().equals(Constant.P2PVIDEOREQ)){
+    			
+    		}else if(intent.getAction().equals(Constant.P2PVIDEORSP)){
+
+				String fip = intent.getStringExtra(Constant.IP);
+				String fname = intent.getStringExtra(Constant.USERNAME);
+				int fport = intent.getIntExtra(Constant.PORT, 0);
+				boolean result = intent.getBooleanExtra(Constant.RESULT, true);
+				if(fname.equals(friName)){
+					if(result){
+						ip = fip;
+						port = fport;
+						updateStatus(getResources().getString(R.string.audio_status_start));
+						startVideo();
+					}else{
+						updateStatus(getResources().getString(R.string.video_request_reject));
+						stopVideo();
+					}
+					ServiceManager.getmSound().stopRingTone();
+				}
+			
+    		}
+    	}
+    	@Override
+    	public IntentFilter getFilter(){
+    		IntentFilter filter = super.getFilter();
+    		filter.addAction(Constant.P2PVIDEOREQ);
+    		filter.addAction(Constant.P2PVIDEORSP);
+    		return filter;
+    	}
+    }
 }
