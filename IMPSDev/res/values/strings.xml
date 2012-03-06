@@ -166,6 +166,7 @@
 	<string name="locatedat">位于</string>
 	<string name="positioning_unavailable">暂时无法获取您的位置</string>
 	<string name="loading_your_address">正在加载您的地址信息</string>
+	<string name="loading_your_address_fail">获取您的地理位置信息失败</string>
 	<string name="street_view">街景模式</string>
 	<string name="traffic_view">交通流量</string>
 	<string name="satellite_view">卫星视图</string>

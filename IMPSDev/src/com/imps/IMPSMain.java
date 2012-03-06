@@ -81,14 +81,14 @@ public class IMPSMain extends Activity {
 		}
 		@Override
 		protected void onPostExecute(Integer params){
-			startLoginActivity();
-//			if(ServiceManager.getmConfig().getPreferences().getBoolean(
-//					ConfigurationService.PREFERENCE_SHOW_PRELAUNCH_ACTIVITY,true))
-//			{
-//				startPreLaunchActivity();
-//			}else{
-//				startLoginActivity();
-//			}
+			//startLoginActivity();
+			if(ServiceManager.getmConfig().getPreferences().getBoolean(
+					ConfigurationService.PREFERENCE_SHOW_PRELAUNCH_ACTIVITY,true))
+			{
+				startPreLaunchActivity();
+			}else{
+				startLoginActivity();
+			}
 		}
 		@Override
 		protected void onPreExecute(){

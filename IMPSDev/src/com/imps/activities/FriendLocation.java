@@ -12,6 +12,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
@@ -21,6 +23,7 @@ import android.view.animation.RotateAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.maps.GeoPoint;
@@ -72,6 +75,48 @@ public class FriendLocation extends MapActivity implements View.OnClickListener{
     private View mMyPopView;
     private View mFriLocPopView;
     private FriendLocationReceiver receiver = new FriendLocationReceiver();
+	private final int ADDRESSLOADING = 1;
+	private final int ADDRESSLOADED = 2;
+	private final int ADDRESSLOADFAILED = 3;
+    private Handler handler = new Handler(){//used to update data asynchronous,overlay of mylocation
+    	@Override
+    	public void handleMessage(Message msg){
+    		switch(msg.what){
+    		case ADDRESSLOADING:
+		        TextView addView = (TextView) mMyPopView.findViewById(R.id.map_bubbleText);	
+    			if(addView!=null) addView.setText(mMyLocationOverlay.loadingStreet());
+    			new Thread( new Runnable() {
+					@Override
+					public void run() {
+						if(mMyLocationOverlay.getMyLocation()==null){
+		    				Message resmsg = new Message();
+		    				resmsg.what = ADDRESSLOADFAILED;
+		    				handler.sendMessage(resmsg);
+		    			}else{
+		    				mMyLocationOverlay.streetName = mMyLocationOverlay.getStreet();
+		    				Message loadres = new Message();
+		    				loadres.what = ADDRESSLOADED;
+		    				handler.sendMessage(loadres);
+		    			}
+					}
+    			}).start();
+    			if(DEBUG) Log.d(TAG,"Loading...");
+    			break;
+    		case ADDRESSLOADED:
+		        TextView desc_TextView = (TextView) mMyPopView.findViewById(R.id.map_bubbleText);	
+    			if(desc_TextView!=null) desc_TextView.setText(mMyLocationOverlay.streetName);
+    			if(DEBUG) Log.d(TAG,"Loaded...");
+    			break;
+    		case ADDRESSLOADFAILED:
+    			if(DEBUG) Log.d(TAG,"Load fail...");
+		        TextView desc = (TextView) mMyPopView.findViewById(R.id.map_bubbleText);	
+    			if(desc!=null) desc.setText(getResources().getString(R.string.positioning_unavailable));
+    			break;
+    		default:
+    			break;
+    		}
+    	}
+    };
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -89,8 +134,16 @@ public class FriendLocation extends MapActivity implements View.OnClickListener{
     	mMyLocationOverlay.enableCompass();
     }
     @Override
+    public void onPause(){
+    	super.onPause();
+    	mMyLocationOverlay.disableMyLocation();
+    	mMyLocationOverlay.disableCompass();
+    }
+    @Override
     public void onStop(){
     	super.onStop();
+    	mMyLocationOverlay.disableMyLocation();
+    	mMyLocationOverlay.disableCompass();
     	unregisterReceiver(receiver);
     }
     public void initPopview(){
@@ -145,7 +198,7 @@ public class FriendLocation extends MapActivity implements View.OnClickListener{
     	
     	initPopview();
     	
-    	mMyLocationOverlay = new CrashFixMyLocationOverlay(this, mMapView,mMyPopView);
+    	mMyLocationOverlay = new CrashFixMyLocationOverlay(this,handler,mMapView,mMyPopView);
     	mMapView.getOverlays().add(mMyLocationOverlay);
     	
     	mOnlineFrilocOverlay = new FriendLocationOverlay(this.getResources().getDrawable(R.drawable.online),this,mMapView,
