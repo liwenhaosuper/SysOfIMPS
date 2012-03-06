@@ -2,13 +2,17 @@ package com.imps.server.handler.doodleLogic;
 
 import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
+import java.util.List;
 
 import org.jboss.netty.buffer.ChannelBuffer;
+import org.jboss.netty.buffer.ChannelBuffers;
 import org.jboss.netty.channel.Channel;
 
 import com.imps.server.main.DoodleTcpServer;
 import com.imps.server.main.basetype.MessageProcessTask;
 import com.imps.server.main.basetype.User;
+import com.imps.server.manager.DoodleManager;
+import com.imps.server.manager.MessageFactory;
 import com.imps.server.manager.UserManager;
 
 public class DoodleLogin extends MessageProcessTask{
@@ -74,6 +78,17 @@ public class DoodleLogin extends MessageProcessTask{
 				DoodleTcpServer.doodleUsers.add(user);
 			}
 		}
+		//TODO: Return online friendlist
+		List<User> friends = DoodleManager.getInstance().getOnlineFriendList(userName);
+		if(friends==null){
+			return;
+		}
+		String []friparams = new String[friends.size()];
+		for(int i=0;i<friends.size();i++){
+			friparams[i] = friends.get(i).getUsername();
+		}
+		session.write(ChannelBuffers.wrappedBuffer(MessageFactory.createDoodleOnlineFriendList(friparams).build()));
+		DoodleManager.getInstance().notifyStatus(userName, true);
 	}
 
 }

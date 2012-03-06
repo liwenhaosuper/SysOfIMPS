@@ -107,4 +107,6 @@ public class CommandId {
 	public static final byte S_DOODLE_RSP = 39;
 	public static final byte DOODLE_DATA = 40;
 	public static final byte DOODLE_LOGIN = 41;
+	public static final byte DOODLE_ONLINEFRIENDLIST = 42;
+	public static final byte DOODLE_STATUSNOTIFY = 43;
 }

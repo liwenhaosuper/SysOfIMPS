@@ -13,6 +13,7 @@ import android.os.Message;
 import android.util.Log;
 
 import com.imps.IMPSDev;
+import com.imps.activities.CoupleDoodle;
 import com.imps.basetypes.CommandId;
 import com.imps.basetypes.Constant;
 import com.imps.basetypes.DoodleAction;
@@ -28,6 +29,8 @@ public class DoodleChannelService extends SimpleChannelUpstreamHandler{
 	private DoodleView mDoodleView;
 	private static final int  DOODLEREQ = 1;
 	private static final int DOODLERSP = 2;
+	private static final int DOODLELIST = 3;
+	private static final int DOODLESTATUS = 4;
 	private Handler handler = new Handler(){
 		@Override
 		public void handleMessage(Message msg){
@@ -46,6 +49,25 @@ public class DoodleChannelService extends SimpleChannelUpstreamHandler{
 				intent.putExtra(Constant.RESULT, res);
 				IMPSDev.getContext().sendBroadcast(intent);
 				break;
+			case DOODLELIST:
+				String[] frilist = (String[])msg.obj;
+				//TODO: TO be continued...
+				Intent listintent = new Intent(Constant.DOODLELIST);
+				CoupleDoodle.onlineFriends.clear();
+				for(int i=0;i<frilist.length;i++){
+					CoupleDoodle.onlineFriends.add(frilist[i]);
+				}
+				IMPSDev.getContext().sendBroadcast(listintent);
+				break;
+			case DOODLESTATUS:
+				String frinm = (String)msg.obj;
+				boolean re = msg.arg1==1?true:false;
+				//TODO: To be continued...
+				Intent statusintent = new Intent(Constant.DOODLESTATUS);
+				statusintent.putExtra(Constant.USERNAME, frinm);
+				statusintent.putExtra(Constant.RESULT, re);
+				IMPSDev.getContext().sendBroadcast(statusintent);
+				break;
 			}
 		}
 	};
@@ -57,7 +79,6 @@ public class DoodleChannelService extends SimpleChannelUpstreamHandler{
     	case CommandId.S_DOODLE_REQ:
     		if(DEBUG) Log.d(TAG,"S_DOODLE_REQ");
     		String fri = parseUserName(buffer);
-    		//TODO:Notify
     		Message reqmsg = new Message();
     		reqmsg.what = DOODLEREQ;
     		reqmsg.obj = fri;
@@ -67,7 +88,6 @@ public class DoodleChannelService extends SimpleChannelUpstreamHandler{
     		if(DEBUG) Log.d(TAG,"S_DOODLE_RSP");
     		String frinm = parseUserName(buffer);
     		boolean res = buffer.readInt()==0?false:true;
-    		//TODO:Notify
     		Message rspmsg = new Message();
     		rspmsg.what = DOODLERSP;
     		rspmsg.obj = frinm;
@@ -103,6 +123,22 @@ public class DoodleChannelService extends SimpleChannelUpstreamHandler{
     	    	mDoodleView.touch_up_fri();
     	    }
     		break;
+    	case CommandId.DOODLE_ONLINEFRIENDLIST:
+    		String []doodlelist = parseUserList(buffer);
+    		Message msg = new Message();
+    		msg.what = DOODLELIST;
+    		msg.obj = doodlelist;
+    		handler.sendMessage(msg);
+    		break;
+    	case CommandId.DOODLE_STATUSNOTIFY:
+    		String name = parseUserName(buffer);
+    		boolean online = buffer.readInt()==0?false:true;
+    		Message notifymsg = new Message();
+    		notifymsg.what = DOODLESTATUS;
+    		notifymsg.obj = name;
+    		notifymsg.arg1 = online?1:0;
+    		handler.sendMessage(notifymsg);
+    		break;
     	default:
     		if(DEBUG) Log.d(TAG,"Unknown msg type of doodle...");
     		break;
@@ -124,6 +160,21 @@ public class DoodleChannelService extends SimpleChannelUpstreamHandler{
 			res = new String(nm,"gb2312");
 		} catch (UnsupportedEncodingException e) {
 			if(DEBUG)e.printStackTrace();
+		}
+		return res;
+	}
+	private String[] parseUserList(ChannelBuffer buffer){
+		int len = buffer.readInt();
+		String []res = new String[len];
+		for(int i=0;i<len;i++){
+			int sz = buffer.readInt();
+			byte []nm = new byte[sz];
+			buffer.readBytes(nm);
+			try {
+				res[i] = new String(nm,"gb2312");
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
 		}
 		return res;
 	}

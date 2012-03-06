@@ -28,7 +28,7 @@ public class DoodleTcpServer {
 	public static ChannelGroup allGroups = new DefaultChannelGroup();
 	public static List<User> doodleUsers = new ArrayList<User>();
 	public DoodleTcpServer(int port){
-		this.port = port;
+		DoodleTcpServer.port = port;
 	}
     public void run() {
         // Configure the tcp server.
@@ -53,5 +53,5 @@ public class DoodleTcpServer {
         Channel serverChannel = bootstrap.bind(new InetSocketAddress(port));
        // allGroups.add(serverChannel);
     }
-
+ 
 }

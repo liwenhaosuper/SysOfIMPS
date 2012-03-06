@@ -305,6 +305,11 @@ public class MessageFactory {
 		} catch (IOException e) {e.printStackTrace();}
 		return outMsg;
 	}
+	
+	
+	///Doodle part
+	
+	
 	public static OutputMessage createSDoodleReq(String friName){
 		OutputMessage outMsg = new OutputMessage(DD,CommandId.S_DOODLE_REQ);
 		try{
@@ -330,5 +335,24 @@ public class MessageFactory {
 		}catch (IOException e) {e.printStackTrace();}
 		return outMsg;
 	}
-	
+	public static OutputMessage createDoodleOnlineFriendList(String... friends){
+		OutputMessage outMsg = new OutputMessage(DD,CommandId.DOODLE_ONLINEFRIENDLIST);
+		try{
+			outMsg.getOutputStream().writeInt(friends.length);
+			for(int i=0;i<friends.length;i++){
+				outMsg.getOutputStream().writeInt(friends[i].getBytes("gb2312").length);
+				outMsg.getOutputStream().write(friends[i].getBytes("gb2312"));
+			}
+		}catch (IOException e) {e.printStackTrace();}
+		return outMsg;
+	}
+	public static OutputMessage createDoodleStatusNotify(String name,boolean online){
+		OutputMessage outMsg = new OutputMessage(DD,CommandId.DOODLE_STATUSNOTIFY);
+		try{
+			outMsg.getOutputStream().writeInt(name.getBytes("gb2312").length);
+			outMsg.getOutputStream().write(name.getBytes("gb2312"));
+			outMsg.getOutputStream().writeInt(online==true?1:0);
+		}catch (IOException e) {e.printStackTrace();}
+		return outMsg;
+	}
 }
