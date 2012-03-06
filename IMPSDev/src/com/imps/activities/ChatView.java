@@ -334,7 +334,6 @@ public class ChatView extends Activity{
 		{
 			Log.d(TAG, "ChatView:initialing the chat view with old msg");
 			
-			if (
 			// Add local history message to current session's message list
 			if (UserManager.CurSessionFriList.get(fUsername).size() < 1) {
 				// Add local history message to current session's message list
