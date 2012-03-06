@@ -82,13 +82,13 @@ public class CurrentSessions extends Activity{
 		SysAdmin.setStatus(UserStatus.ONLINE);
 		if(sysmsg.type==SystemMsgType.FROM){
 			if(sysmsg.status==SystemMsgType.ACCEPTED){
-				SysAdmin.setDescription(sysmsg.name+" 接受了您的添加好友请求");
+				SysAdmin.setDescription(sysmsg.name+getResources().getString(R.string.accept_friend_sysmsg));
 			}
 			else if(sysmsg.status==SystemMsgType.DENIED){
-				SysAdmin.setDescription(sysmsg.name+" 拒绝了您的添加好友请求");
+				SysAdmin.setDescription(sysmsg.name+getResources().getString(R.string.deny_friend_sysmsg));
 			}
 			else{
-				SysAdmin.setDescription(sysmsg.name+" 向您发来了添加好友请求");
+				SysAdmin.setDescription(sysmsg.name+getResources().getString(R.string.receive_friend_sysmsg));
 			}
 		}
 		Log.d(TAG, "4444");
@@ -146,13 +146,13 @@ public class CurrentSessions extends Activity{
 			SysAdmin.setStatus(UserStatus.ONLINE);
 			if(sysmsg.type==SystemMsgType.FROM){
 				if(sysmsg.status==SystemMsgType.ACCEPTED){
-					SysAdmin.setDescription(sysmsg.name+" 接受了您的添加好友请求");
+					SysAdmin.setDescription(sysmsg.name+getResources().getString(R.string.accept_friend_sysmsg));
 				}
 				else if(sysmsg.status==SystemMsgType.DENIED){
-					SysAdmin.setDescription(sysmsg.name+" 拒绝了您的添加好友请求");
+					SysAdmin.setDescription(sysmsg.name+getResources().getString(R.string.deny_friend_sysmsg));
 				}
 				else{
-					SysAdmin.setDescription(sysmsg.name+" 向您发来了添加好友请求");
+					SysAdmin.setDescription(sysmsg.name+getResources().getString(R.string.receive_friend_sysmsg));
 				}
 			}
 			sessionsList.add(SysAdmin);

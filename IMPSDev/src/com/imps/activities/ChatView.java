@@ -321,7 +321,8 @@ public class ChatView extends Activity{
 			for(int i=0;i<UserManager.mSysMsgs.size();i++){
 				SystemMsgType sysmsg=UserManager.mSysMsgs.get(i);
 				String content=sysmsg.text;
-				content+="\n【进入系统消息查看】";
+				content+="\n";
+				content+=getResources().getString(R.string.goto_sysmsg);
 				list.add(new ListContentEntity(fUsername,
 
 						sysmsg.time,content,ListContentEntity.MESSAGE_FROM));

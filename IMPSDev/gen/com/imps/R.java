@@ -658,6 +658,7 @@ containing a value of this type.
         public static final int about=0x7f080028;
         public static final int about_copyright=0x7f080029;
         public static final int accept=0x7f08006b;
+        public static final int accept_friend_sysmsg=0x7f080096;
         public static final int accepted=0x7f08006c;
         public static final int add_friend_accepted=0x7f080068;
         public static final int add_friend_denied=0x7f080067;
@@ -700,6 +701,7 @@ containing a value of this type.
         public static final int currentsession=0x7f080014;
         public static final int denied=0x7f08006e;
         public static final int deny=0x7f08006d;
+        public static final int deny_friend_sysmsg=0x7f080097;
         public static final int email=0x7f08000c;
         public static final int empty_sms_warning=0x7f08003e;
         public static final int emptymap=0x7f080079;
@@ -720,6 +722,7 @@ containing a value of this type.
         public static final int friendlocation=0x7f080074;
         public static final int friendlocation_loading=0x7f080088;
         public static final int gender=0x7f08000d;
+        public static final int goto_sysmsg=0x7f080099;
         public static final int graffiti_bold=0x7f08004b;
         public static final int graffiti_clear=0x7f08004e;
         public static final int graffiti_color=0x7f080049;
@@ -774,6 +777,7 @@ containing a value of this type.
         public static final int password=0x7f08000a;
         public static final int password_again=0x7f08000b;
         public static final int positioning_unavailable=0x7f080081;
+        public static final int receive_friend_sysmsg=0x7f080098;
         public static final int recommend_friend=0x7f080061;
         public static final int register_2pwd_not_valid=0x7f080019;
         public static final int register_fail=0x7f08001d;
@@ -804,7 +808,7 @@ containing a value of this type.
         public static final int street_view=0x7f080083;
         public static final int sysMsg=0x7f08002a;
         public static final int sysmsg=0x7f080015;
-        public static final int talk=0x7f080096;
+        public static final int talk=0x7f08009a;
         public static final int traffic_view=0x7f080084;
         /** Video Chat
          */
