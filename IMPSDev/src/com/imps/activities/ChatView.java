@@ -318,11 +318,12 @@ public class ChatView extends Activity{
 		if(DEBUG) Log.d(TAG, "ChatView:listview count is "+mListView.getCount());
 		
 		if(fUsername.equals("SysAdmin")){
-			for(int i=UserManager.mSysMsgs.size()-1;i>=0;i--){
+			for(int i=0;i<UserManager.mSysMsgs.size();i++){
 				SystemMsgType sysmsg=UserManager.mSysMsgs.get(i);
 				String content=sysmsg.text;
 				content+="\n【进入系统消息查看】";
-				list.add(new ListContentEntity(sysmsg.name,
+				list.add(new ListContentEntity(fUsername,
+
 						sysmsg.time,content,ListContentEntity.MESSAGE_FROM));
 			}
 			return;
@@ -443,13 +444,13 @@ public class ChatView extends Activity{
 			if(UserManager.CurSessionFriList.containsKey(fUsername))
 			{
 				 UserManager.CurSessionFriList.get(fUsername).add(item);
-				 if(DEBUG) Log.d(TAG,"adding to the list");
+				 if(DEBUG) Log.d(TAG,"adding to the list jyh");
 			}
 			else{
 				List<MediaType> newmsgbox = new ArrayList<MediaType>();
 				newmsgbox.add(item);
 				UserManager.CurSessionFriList.put(fUsername, newmsgbox);
-				if(DEBUG) Log.d(TAG,"adding to the list with new msg");
+				if(DEBUG) Log.d(TAG,"adding to the list with new msg jyh");
 			}
 			ServiceManager.getmSms().sendSms(item);
 			

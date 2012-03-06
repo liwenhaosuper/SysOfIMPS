@@ -37,7 +37,7 @@ import com.imps.receivers.IMPSBroadcastReceiver;
 import com.imps.services.impl.ServiceManager;
 
 public class FriendListTab extends ExpandableListActivity{
-
+	protected static final String TAG = FriendListTab.class.getCanonicalName();
 	private FriendListAdapter mAdapter;
 	private ExpandableListView friendList;
 	private View popViewItem;
@@ -200,6 +200,7 @@ public class FriendListTab extends ExpandableListActivity{
 			return mGroups.length;
 		}
 		public void refresh(){
+			Log.d(TAG,"Friendlist refreshed jyh");
 			mData.clear();
 			mData.put(mGroups[0], UserManager.AllFriList);
 			mData.put(mGroups[1],null);
@@ -252,7 +253,6 @@ public class FriendListTab extends ExpandableListActivity{
 		public View getGroupView(int groupPosition, boolean isExpanded,
 				View convertView, ViewGroup parent) {
 			// TODO Auto-generated method stub
-			
 	        View v;
 	        if (convertView == null) {
 	            v = newGroupView(groupPosition,isExpanded, parent);

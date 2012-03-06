@@ -223,6 +223,7 @@ public class CurrentSessions extends Activity{
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
+			Log.d(TAG,"getView:"+sessionsList.get(position).getUsername());
 			if(convertView==null){
 				if(sessionsList==null||sessionsList.get(position)==null){
 					return null;
@@ -241,6 +242,7 @@ public class CurrentSessions extends Activity{
 					description.setText(sessionsList.get(position).getDescription());
 					date.setText(sysmsg.time.substring(5));
 					statusView.setText(getResources().getString(R.string.online));
+					return convertView;
 				}
 				
 				
