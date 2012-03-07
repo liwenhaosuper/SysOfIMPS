@@ -54,6 +54,7 @@ public class ServiceManager extends Service implements IConnEvent{
 		if(isStarted){
 			return;
 		}
+
 		setmTcpConn(new ConnectionService("59.78.23.73",1200));
 		setmNetLogic(new NetMsgLogicHandler());
 		setmBsstion(new BaseStationService());

@@ -65,7 +65,8 @@ public class ChatView extends Activity{
 	private PopupWindow menuWindow = null;
 	private Record record = null;
 	private ChatViewReceiver receiver = new ChatViewReceiver();
-	private LocalDBHelper localDB = new LocalDBHelper(this); 
+	private LocalDBHelper localDB = new LocalDBHelper(this);
+	private static boolean resume = false;
 	
 	@Override
 	public void onResume()
@@ -321,7 +322,8 @@ public class ChatView extends Activity{
 			for(int i=0;i<UserManager.mSysMsgs.size();i++){
 				SystemMsgType sysmsg=UserManager.mSysMsgs.get(i);
 				String content=sysmsg.text;
-				content+="\n【进入系统消息查看】";
+				content+="\n";
+				content+=getResources().getString(R.string.goto_sysmsg);
 				list.add(new ListContentEntity(fUsername,
 
 						sysmsg.time,content,ListContentEntity.MESSAGE_FROM));
@@ -330,23 +332,30 @@ public class ChatView extends Activity{
 		}
 		
 		
-		if(mListView.getCount()==0&&UserManager.CurSessionFriList.containsKey(fUsername))
+		if(UserManager.CurSessionFriList.containsKey(fUsername))
 		{
 			Log.d(TAG, "ChatView:initialing the chat view with old msg");
 			
 			// Add local history message to current session's message list
-			ArrayList<UserMessage> history = localDB.fetchMsg(fUsername);
-			if (history != null) {
-				for (UserMessage m : history) {
-					if (m.getDir() == 1)
-						list.add(new ListContentEntity(m.getFriend(), m
-								.getTime(), m.getContent(),
-								ListContentEntity.MESSAGE_FROM));
-					else
-						list.add(new ListContentEntity(m.getFriend(), m
-								.getTime(), m.getContent(),
-								ListContentEntity.MESSAGE_TO));
+			if (!resume && UserManager.CurSessionFriList.get(fUsername).size() == 0) {
+				// Add local history message to current session's message list
+				ArrayList<UserMessage> history = localDB.fetchMsg(fUsername);
+				List<MediaType> mbox = UserManager.CurSessionFriList.get(fUsername);
+				if (history != null) {
+					for (UserMessage m : history) {
+						if (m.getDir() == 1)
+//							list.add(new ListContentEntity(m.getFriend(), m
+//									.getTime(), m.getContent(),
+//									ListContentEntity.MESSAGE_FROM));
+							mbox.add(new MediaType(MediaType.SMS,m.getContent(),MediaType.from));
+						else
+//							list.add(new ListContentEntity(UserManager.globaluser.getUsername(), m
+//									.getTime(), m.getContent(),
+//									ListContentEntity.MESSAGE_TO));
+							mbox.add(new MediaType(MediaType.SMS,m.getContent(),MediaType.to));
+					}
 				}
+				resume = true;
 			}
 			
 			// Add received messages in the active chat session
