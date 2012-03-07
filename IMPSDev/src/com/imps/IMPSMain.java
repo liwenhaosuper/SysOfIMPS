@@ -81,7 +81,8 @@ public class IMPSMain extends Activity {
 			if(ServiceManager.getmConfig().getPreferences().getBoolean(
 					ConfigurationService.PREFERENCE_SHOW_PRELAUNCH_ACTIVITY,true))
 			{
-				startPreLaunchActivity();
+				//startPreLaunchActivity();
+				startLoginActivity();
 			}else{
 				startLoginActivity();
 			}

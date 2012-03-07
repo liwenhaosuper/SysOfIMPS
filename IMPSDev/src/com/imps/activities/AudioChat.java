@@ -58,7 +58,6 @@ public class AudioChat extends Activity implements View.OnTouchListener{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.audiochat);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-		registerReceiver(broadRecv,broadRecv.getFilter());
 		pushToTalkButton = (ToggleButton) findViewById(R.id.pushToTalk);
 		registerReceiver(broadRecv,broadRecv.getFilter());
 		mContext = this;
@@ -231,7 +230,7 @@ public class AudioChat extends Activity implements View.OnTouchListener{
 		@Override
 		public void onReceive(Context context,Intent intent){
 			super.onReceive(context, intent);
-			if(intent.getAction().equals(Constant.P2PVIDEORSP)){
+			if(intent.getAction().equals(Constant.P2PAUDIORSP)){
 				String fip = intent.getStringExtra(Constant.IP);
 				String fname = intent.getStringExtra(Constant.USERNAME);
 				int fport = intent.getIntExtra(Constant.PORT, 0);
@@ -252,7 +251,7 @@ public class AudioChat extends Activity implements View.OnTouchListener{
 		@Override
 		public IntentFilter getFilter(){
 			IntentFilter filter = super.getFilter();
-			filter.addAction(Constant.ADDFRIENDRSP);
+			filter.addAction(Constant.P2PAUDIORSP);
 			return filter;
 		}
 	}

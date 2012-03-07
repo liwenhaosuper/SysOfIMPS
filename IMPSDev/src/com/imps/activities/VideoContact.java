@@ -113,15 +113,14 @@ public class VideoContact extends Activity implements SurfaceHolder.Callback{
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.video_chat);
-		if(isDebug)
-		{
-			try {
-				NetworkFactory.loadFactory("com.imps.media.rtp.core.AndroidNetworkFactory");
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+
+		try {
+			NetworkFactory.loadFactory("com.imps.media.rtp.core.AndroidNetworkFactory");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+
         incomingVideoFormat = H263Config.CODEC_NAME;
         outgoingVideoFormat = H263Config.CODEC_NAME;
         videoWidth = 176;
@@ -420,7 +419,7 @@ public class VideoContact extends Activity implements SurfaceHolder.Callback{
 						}
 					}
 					Log.d("VideoChat", "IP sent is "+ myip+" but IP received is "+ip);
-					//ServiceManager.getmMedia().SendPTPVideoRsp(friName,true,myip,1300);
+					ServiceManager.getmVideo().SendPTPVideoRsp(friName,myip,1300,true);
 					updateStatus(START);
 				}
 			});
@@ -446,7 +445,7 @@ public class VideoContact extends Activity implements SurfaceHolder.Callback{
 						}
 					}
 					Log.d("VideoContact", "IP sent is "+ myip+ " but IP received is "+ip);
-					//ServiceManager.getmMedia().SendPTPVideoRsp(friName,false,myip,1300);
+					ServiceManager.getmVideo().SendPTPVideoRsp(friName,myip,1300,false);
 					updateStatus(CANCEL);
 					finish();
 				}
