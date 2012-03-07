@@ -25,6 +25,7 @@ public class ServiceManager extends Service implements IConnEvent{
 	private static SmsService mSms;
 	private static P2PService mMedia;
 	private static P2PAudioService mAudio;
+	private static P2PVideoService mVideo;
 	private static NetworkService mNet;
 	private static NetMsgLogicHandler mNetLogic;
 	private static ConnectionService mTcpConn;
@@ -55,7 +56,7 @@ public class ServiceManager extends Service implements IConnEvent{
 			return;
 		}
 
-		setmTcpConn(new ConnectionService("59.78.23.73",1200));
+		setmTcpConn(new ConnectionService("59.78.23.15",1200));
 		setmNetLogic(new NetMsgLogicHandler());
 		setmBsstion(new BaseStationService());
 		setmGPS(new GPSService());
@@ -63,14 +64,15 @@ public class ServiceManager extends Service implements IConnEvent{
 		setmConfig(new ConfigurationService(IMPSDev.getPreferences()));
 		setmContact(new ContactService());
 		setmSms(new SmsService());
-		P2PService.init("59.78.23.73",1300);
+		P2PService.init("59.78.23.15",1300);
 		setmMedia(P2PService.getInstance());
 		setmAudio(new P2PAudioService());
+		setmVideo(new P2PVideoService());
 		setmNet(new NetworkService());
 		setmAccount(new AccountService());
 		setmReceiver(new ReceiverChannelService());
 		setmHeartbeat(new HeartBeatService());
-		setmDoodleService(new DoodleConnectionService("59.78.23.73",1400));
+		setmDoodleService(new DoodleConnectionService("59.78.23.15",1400));
 	}
 	
 
@@ -455,6 +457,16 @@ public class ServiceManager extends Service implements IConnEvent{
 
 	public static DoodleConnectionService getmDoodleService() {
 		return mDoodleService;
+	}
+
+
+	public static void setmVideo(P2PVideoService mVideo) {
+		ServiceManager.mVideo = mVideo;
+	}
+
+
+	public static P2PVideoService getmVideo() {
+		return mVideo;
 	}
 
 }

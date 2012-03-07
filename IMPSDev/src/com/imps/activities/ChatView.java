@@ -212,10 +212,14 @@ public class ChatView extends Activity{
 		case 0:{   //face
 			switch (resultCode){
 			case 0:{
-				if(data==null)
+				if(data==null){
+					if(DEBUG) Log.d(TAG,"Face data is null");
 					return;
+				}
 				int faceId = data.getIntExtra("selectedFace", 0);
+				if(DEBUG) Log.d(TAG,"FaceId:"+faceId);
 				String id = changeIdToStr(faceId);
+				if(DEBUG) Log.d(TAG,"Id:"+id);
 		        Drawable drawable = getResources().getDrawable(faceId);   
 		        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());   
 		        SpannableString spannable = new SpannableString(id);   
@@ -427,14 +431,18 @@ public class ChatView extends Activity{
 					return;
 				}
 				String ip = ServiceManager.getmNet().getLocalIP(false);
+				if(ip==null){
+					Toast.makeText(ChatView.this, getResources().getString(R.string.net_problem),Toast.LENGTH_SHORT).show();
+					return;
+				}
 				if(DEBUG) Log.d(TAG, "IP sent is "+ ip);
-				//ServiceManager.getmMedia().SendPTPVideoReq(fUsername, ip, 1300);
+				ServiceManager.getmVideo().SendPTPVideoReq(fUsername, ip, 1300);
 				if(DEBUG) Log.d(TAG, "ptp video request sent");
-				//ComponentName cn=new ComponentName(ChatView.this,VideoContact2.class);
-				//Intent intent=new Intent();
-				//intent.putExtra("fUsername", fUsername);
-				//intent.setComponent(cn);
-				//startActivity(intent);
+				ComponentName cn=new ComponentName(ChatView.this,VideoContact.class);
+				Intent intent=new Intent();
+				intent.putExtra("fUsername", fUsername);
+				intent.setComponent(cn);
+				startActivity(intent);
 			}else if(v.getId()==graffitiImageIv.getId()){
 				if(DEBUG) Log.d(TAG, "graffiti clicked...");
 				ComponentName cn=new ComponentName(ChatView.this,Graffiti.class);

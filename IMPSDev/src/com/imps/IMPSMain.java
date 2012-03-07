@@ -1,6 +1,7 @@
 package com.imps;
 
 import android.app.Activity;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -35,16 +36,10 @@ public class IMPSMain extends Activity {
         if(DEBUG) Log.d(TAG,"onCreate");
         
         
-		if(ServiceManager.isStarted&&ServiceManager.getmAccount().isLogined()){
+		if(ServiceManager.isStarted&&ServiceManager.getmAccount()!=null&&ServiceManager.getmAccount().isLogined()){
 			startMainActivity();
 			finish();
 		}else{
-			if(!ServiceManager.isStarted){
-				if(DEBUG) Log.d(TAG,"ServiceManager.isStarted false");
-			}
-			if(!ServiceManager.getmAccount().isLogined()){
-				if(DEBUG) Log.d(TAG,"ServiceManager.getmAccount().isLogined() false");
-			}
 			gv.setGifImage(R.drawable.earth);
 			if(task!=null&&task.getStatus()==AsyncTask.Status.RUNNING){
 				task.cancel(true);
@@ -66,11 +61,12 @@ public class IMPSMain extends Activity {
 		@Override
 		protected Integer doInBackground(Integer... params) {
 			publishProgress();
+			ServiceManager.start();
 			ServiceManager.getmConfig().setupDefault();
 			UserManager.setGlobaluser(new User());
 			UserManager.getGlobaluser().setUsername("test");
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(500);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

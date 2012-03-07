@@ -58,6 +58,7 @@ public class AudioChat extends Activity implements View.OnTouchListener{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.audiochat);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+		registerReceiver(broadRecv,broadRecv.getFilter());
 		pushToTalkButton = (ToggleButton) findViewById(R.id.pushToTalk);
 		registerReceiver(broadRecv,broadRecv.getFilter());
 		mContext = this;
@@ -215,7 +216,7 @@ public class AudioChat extends Activity implements View.OnTouchListener{
 					}
 					String myip = ServiceManager.getmNet().getLocalIP(false);
 					Log.d("AudioChat", "IP sent is "+ myip+ " but IP received is "+ip);
-					//ServiceManager.getmMedia().SendPTPAudioRsp(friname,false,myip,1300);
+					ServiceManager.getmAudio().SendPTPAudioRsp(friname,false);
 					updateStatus(CANCEL);
 					ServiceManager.getmSound().stopRingTone();
 				}
@@ -230,11 +231,12 @@ public class AudioChat extends Activity implements View.OnTouchListener{
 		@Override
 		public void onReceive(Context context,Intent intent){
 			super.onReceive(context, intent);
-			if(intent.getAction().equals(Constant.ADDFRIENDRSP)){
+			if(intent.getAction().equals(Constant.P2PVIDEORSP)){
 				String fip = intent.getStringExtra(Constant.IP);
 				String fname = intent.getStringExtra(Constant.USERNAME);
 				int fport = intent.getIntExtra(Constant.PORT, 0);
 				boolean result = intent.getBooleanExtra(Constant.RESULT, true);
+				if(DEBUG) Log.d(TAG,"Audio rsp:"+fip+":"+fname+":"+fport+":"+result);
 				if(fname.equals(friname)){
 					if(result){
 						ip = fip;

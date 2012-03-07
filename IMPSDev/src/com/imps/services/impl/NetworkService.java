@@ -73,7 +73,7 @@ public class NetworkService implements INetworkService{
 	            }
 	        }
 	    } catch (SocketException ex) {
-	        Log.e(TAG, ex.toString());
+	        if(DEBUG) Log.e(TAG, ex.toString());
 	    }	    
 	    //
 	    // Hack
@@ -83,9 +83,9 @@ public class NetworkService implements INetworkService{
 			//if(DEBUG) Log.d(NetworkService.TAG, socket.getLocalAddress().getHostAddress());
 			return socket.getLocalAddress().getHostAddress();
 		} catch (UnknownHostException e) {
-			Log.e(NetworkService.TAG, e.toString());
+			if(DEBUG)Log.e(NetworkService.TAG, e.toString());
 		} catch (IOException e) {
-			Log.e(NetworkService.TAG, e.toString());
+			if(DEBUG)Log.e(NetworkService.TAG, e.toString());
 		}
 		
 	    return null;

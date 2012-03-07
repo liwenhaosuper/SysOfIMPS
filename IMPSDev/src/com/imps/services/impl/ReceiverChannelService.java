@@ -217,7 +217,7 @@ public class ReceiverChannelService {
 				break;
 			case P2PAUDIORSP:
 				if(DEBUG) Log.d(TAG,"P2P audio rsp broadcast.");
-				Intent audiopp = new Intent(Constant.P2PAUDIOREQ);
+				Intent audiopp = new Intent(Constant.P2PAUDIORSP);
 				P2PIden idenp = (P2PIden)msg.obj;
 				audiopp.putExtra(Constant.IP, idenp.ip);
 				audiopp.putExtra(Constant.PORT, idenp.port);

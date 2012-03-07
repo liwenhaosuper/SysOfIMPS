@@ -33,7 +33,7 @@
         <activity android:name=".activities.FriendListTab" android:launchMode="singleTop" ></activity>
         <activity android:name=".activities.SystemMsg" android:launchMode="singleTop"></activity>
         <activity android:name=".activities.CurrentSessions" android:launchMode="singleTop"></activity>
-        <activity android:name=".activities.ChatView" android:launchMode="singleInstance"></activity>
+        <activity android:name=".activities.ChatView" android:launchMode="singleTop"></activity>
         <activity android:name=".activities.FaceDialog" android:launchMode="singleTop" android:theme="@android:style/Theme.Dialog"></activity>
         <activity android:name=".activities.PopupMsg"  android:launchMode="singleTop" android:theme="@android:style/Theme.Dialog"></activity>
         <activity android:name=".activities.Graffiti" android:launchMode="singleTop"></activity>

@@ -1,24 +1,23 @@
 ﻿package com.imps.activities;
 
-import com.imps.R;
-
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.view.Gravity;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import com.imps.IMPSDev;
+import com.imps.R;
+
 public class FaceDialog extends Activity {
-	
+	private static String TAG = FaceDialog.class.getCanonicalName();
+	private static boolean DEBUG = IMPSDev.isDEBUG();
 	private Window window = null;
 	private GridView gv;
 	private int[] faceNum = {R.drawable.exp_01, R.drawable.exp_02,
@@ -67,6 +66,7 @@ public class FaceDialog extends Activity {
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {  
 	    		Intent i = new Intent();
 	    		i.putExtra("selectedFace", faceNum[arg2]);
+	    		if(DEBUG) Log.d(TAG,"face:"+faceNum[arg2]);
 	    		setResult(0, i);
 	    		finish();
             }  

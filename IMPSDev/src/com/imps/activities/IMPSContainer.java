@@ -1,7 +1,6 @@
 package com.imps.activities;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import android.app.TabActivity;
 import android.content.Intent;
@@ -14,6 +13,7 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TabHost;
 
 import com.imps.IMPSDev;
+import com.imps.IMPSMain;
 import com.imps.R;
 import com.imps.basetypes.MediaType;
 import com.imps.net.handler.UserManager;
@@ -40,7 +40,11 @@ public class IMPSContainer extends TabActivity{
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		if(!ServiceManager.isStarted||ServiceManager.getmAccount()==null||!ServiceManager.getmAccount().isLogined()){	
+			startActivity(new Intent(IMPSContainer.this,IMPSMain.class));
+			finish();
+			return;
+		}
 		/* get recent contact from local database */
 		UserManager.buildLocalDB(this);
 		LocalDBHelper localDB = UserManager.localDB;
