@@ -12,7 +12,11 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -204,6 +208,87 @@ public class CurrentSessions extends Activity{
 		public CurrentSessionAdapter(List<User> list){
 			sessionsList = list;
 		}
+		private int changeStrToId(String str){
+			if ("exp_01".equals(str)){
+				return R.drawable.exp_01;
+			}
+			else if ("exp_02".equals(str)){
+				return R.drawable.exp_02;
+			}
+			else if ("exp_03".equals(str)){
+				return R.drawable.exp_03;
+			}
+			else if ("exp_04".equals(str)){
+				return R.drawable.exp_04;
+			}
+			else if ("exp_05".equals(str)){
+				return R.drawable.exp_05;
+			}
+			else if ("exp_06".equals(str)){
+				return R.drawable.exp_06;
+			}
+			else if ("exp_07".equals(str)){
+				return R.drawable.exp_07;
+			}
+			else if ("exp_08".equals(str)){
+				return R.drawable.exp_08;
+			}
+			else if ("exp_09".equals(str)){
+				return R.drawable.exp_09;
+			}
+			else if ("exp_10".equals(str)){
+				return R.drawable.exp_10;
+			}
+			else if ("exp_11".equals(str)){
+				return R.drawable.exp_11;
+			}
+			else if ("exp_12".equals(str)){
+				return R.drawable.exp_12;
+			}
+			else if ("exp_13".equals(str)){
+				return R.drawable.exp_13;
+			}
+			else if ("exp_14".equals(str)){
+				return R.drawable.exp_14;
+			}
+			else if ("exp_15".equals(str)){
+				return R.drawable.exp_15;
+			}
+			else if ("exp_16".equals(str)){
+				return R.drawable.exp_16;
+			}
+			else if ("exp_17".equals(str)){
+				return R.drawable.exp_17;
+			}
+			else if ("exp_18".equals(str)){
+				return R.drawable.exp_18;
+			}
+			else if ("exp_19".equals(str)){
+				return R.drawable.exp_19;
+			}
+			else if ("exp_20".equals(str)){
+				return R.drawable.exp_20;
+			}
+			else if ("exp_21".equals(str)){
+				return R.drawable.exp_21;
+			}
+			else if ("exp_22".equals(str)){
+				return R.drawable.exp_22;
+			}
+			else if ("exp_23".equals(str)){
+				return R.drawable.exp_23;
+			}
+			else if ("exp_24".equals(str)){
+				return R.drawable.exp_24;
+			}
+			else if ("exp_25".equals(str)){
+				return R.drawable.exp_25;
+			}
+			else if ("exp_26".equals(str)){
+				return R.drawable.exp_26;
+			}
+			return -1;
+		}
 		@Override
 		public int getCount() {
 			// TODO Auto-generated method stub
@@ -224,7 +309,7 @@ public class CurrentSessions extends Activity{
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			Log.d(TAG,"getView:"+sessionsList.get(position).getUsername());
-			if(convertView==null){
+
 				if(sessionsList==null||sessionsList.get(position)==null){
 					return null;
 				}
@@ -239,7 +324,36 @@ public class CurrentSessions extends Activity{
 				if(description!=null)description.setText(sessionsList.get(position).getDescription());
 				TextView statusView = (TextView)convertView.findViewById(R.id.status);
 				if(sessionsList.get(position).getUsername().equals("SysAdmin")){
-					description.setText(sessionsList.get(position).getDescription());
+					String t=(sessionsList.get(position).getDescription());
+					int pos = 0;
+					while ((pos = t.indexOf("[exp_")) != -1){
+						description.append(t.substring(0, pos));
+						t = t.substring(pos);
+						if (t.length() < 8){
+							description.append(t);
+							break;
+						}
+						String flag = t.substring(0, 8);
+						t = t.substring(8);
+						if (!flag.endsWith("]")){
+							description.append(flag);
+							continue;
+						}
+						int id = changeStrToId(flag.substring(1, 7));
+						if (id != -1){
+							Drawable drawable = getResources().getDrawable(id);   
+					        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());   
+					        SpannableString spannable = new SpannableString(flag);   
+					        ImageSpan span = new ImageSpan(drawable, ImageSpan.ALIGN_BASELINE);   
+					        spannable.setSpan(span, 0, flag.length(), 
+					        		Spannable.SPAN_INCLUSIVE_EXCLUSIVE);     
+					        description.append(spannable);	
+						}
+						else {
+							description.append(flag);
+						}
+					}
+					description.append(t);
 					date.setText(sysmsg.time.substring(5));
 					statusView.setText(getResources().getString(R.string.online));
 					return convertView;
@@ -250,7 +364,42 @@ public class CurrentSessions extends Activity{
 					List<MediaType> items = UserManager.CurSessionFriList.get(sessionsList.get(position).getUsername());
 					for(int i=items.size()-1;i>=0;i--){
 						if(items.get(i).getType()==MediaType.SMS){
-							description.setText(items.get(i).getMsgContant());
+							String t=(items.get(i).getMsgContant());
+
+							int pos = 0;
+							while ((pos = t.indexOf("[exp_")) != -1){
+								description.append(t.substring(0, pos));
+								t = t.substring(pos);
+								if (t.length() < 8){
+									description.append(t);
+									break;
+								}
+								String flag = t.substring(0, 8);
+								t = t.substring(8);
+								if (!flag.endsWith("]")){
+									description.append(flag);
+									continue;
+								}
+								int id = changeStrToId(flag.substring(1, 7));
+								if (id != -1){
+									Drawable drawable = getResources().getDrawable(id);   
+							        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());   
+							        SpannableString spannable = new SpannableString(flag);   
+							        ImageSpan span = new ImageSpan(drawable, ImageSpan.ALIGN_BASELINE);   
+							        spannable.setSpan(span, 0, flag.length(), 
+							        		Spannable.SPAN_INCLUSIVE_EXCLUSIVE);     
+							        description.append(spannable);	
+								}
+								else {
+									description.append(flag);
+								}
+							}
+							description.append(t);
+							
+							
+							
+							
+							
 							date.setText(items.get(i).getTime().substring(5));
 							break;
 						}
@@ -259,7 +408,7 @@ public class CurrentSessions extends Activity{
 				}
 
 				if(statusView!=null)statusView.setText(sessionsList.get(position).getStatus()==UserStatus.ONLINE?getResources().getString(R.string.online):getResources().getString(R.string.offline));
-			}
+			
 			return convertView;
 		}
 		

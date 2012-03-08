@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Window;
 import android.widget.ListView;
 
@@ -48,6 +49,8 @@ public class SystemMsg extends Activity{
 	}
 	public void initAdapter(){
 		mAdapter = new SystemMsgAdapter(this,UserManager.mSysMsgs);
+		Log.d(TAG,"The mSysMsgs [0] is "+UserManager.mSysMsgs.get(0).toString()+"\n");
+		Log.d(TAG,"The mSysMsgs [1] is "+UserManager.mSysMsgs.get(1).toString()+"\n");
 		mList.setAdapter(mAdapter);
 		initData();
 	}

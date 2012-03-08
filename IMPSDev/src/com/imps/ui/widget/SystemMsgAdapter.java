@@ -3,8 +3,7 @@ package com.imps.ui.widget;
 import java.util.List;
 
 import android.content.Context;
-import android.os.Handler;
-import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -15,7 +14,6 @@ import android.widget.TextView;
 
 import com.imps.IMPSDev;
 import com.imps.R;
-import com.imps.activities.SystemMsg;
 import com.imps.basetypes.SystemMsgType;
 import com.imps.services.impl.ServiceManager;
 

@@ -104,7 +104,7 @@ public class FindFriend extends Activity{
 		defaultAdapter.notifyDataSetChanged();
 	}
 
-
+ 
 	@Override
 	public boolean onMenuItemSelected(int id,MenuItem item)
 	{
