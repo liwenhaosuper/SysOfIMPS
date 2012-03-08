@@ -1,6 +1,5 @@
 package com.imps.activities;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
@@ -10,8 +9,6 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -21,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.imps.IMPSActivity;
 import com.imps.IMPSDev;
 import com.imps.R;
 import com.imps.basetypes.Constant;
@@ -30,7 +28,7 @@ import com.imps.media.audioEngine.net.RtpStreamSender;
 import com.imps.receivers.IMPSBroadcastReceiver;
 import com.imps.services.impl.ServiceManager;
 
-public class AudioChat extends Activity implements View.OnTouchListener{
+public class AudioChat extends IMPSActivity implements View.OnTouchListener{
 
 	private static String TAG = AudioChat.class.getCanonicalName();
 	private static boolean DEBUG = IMPSDev.isDEBUG();
@@ -58,7 +56,6 @@ public class AudioChat extends Activity implements View.OnTouchListener{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.audiochat);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-		registerReceiver(broadRecv,broadRecv.getFilter());
 		pushToTalkButton = (ToggleButton) findViewById(R.id.pushToTalk);
 		registerReceiver(broadRecv,broadRecv.getFilter());
 		mContext = this;
@@ -231,7 +228,7 @@ public class AudioChat extends Activity implements View.OnTouchListener{
 		@Override
 		public void onReceive(Context context,Intent intent){
 			super.onReceive(context, intent);
-			if(intent.getAction().equals(Constant.P2PVIDEORSP)){
+			if(intent.getAction().equals(Constant.P2PAUDIORSP)){
 				String fip = intent.getStringExtra(Constant.IP);
 				String fname = intent.getStringExtra(Constant.USERNAME);
 				int fport = intent.getIntExtra(Constant.PORT, 0);
@@ -252,7 +249,7 @@ public class AudioChat extends Activity implements View.OnTouchListener{
 		@Override
 		public IntentFilter getFilter(){
 			IntentFilter filter = super.getFilter();
-			filter.addAction(Constant.ADDFRIENDRSP);
+			filter.addAction(Constant.P2PAUDIORSP);
 			return filter;
 		}
 	}

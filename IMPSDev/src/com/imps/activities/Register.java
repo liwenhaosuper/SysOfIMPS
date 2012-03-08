@@ -1,18 +1,15 @@
 package com.imps.activities;
 
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -25,18 +22,15 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import com.imps.IMPSActivity;
 import com.imps.IMPSDev;
 import com.imps.R;
-import com.imps.activities.Login.LoginReceiver;
-import com.imps.activities.Login.ShowProgress;
 import com.imps.basetypes.Constant;
 import com.imps.basetypes.User;
-import com.imps.events.IRegisterEvent;
-import com.imps.net.handler.NetMsgLogicHandler;
 import com.imps.receivers.IMPSBroadcastReceiver;
 import com.imps.services.impl.ServiceManager;
 
-public class Register extends Activity{
+public class Register extends IMPSActivity{
 	private static String TAG = Register.class.getCanonicalName();
 	private static boolean DEBUG = IMPSDev.isDEBUG();
 	

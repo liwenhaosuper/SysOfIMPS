@@ -1,6 +1,5 @@
 package com.imps.activities;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
@@ -23,6 +22,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.imps.IMPSActivity;
 import com.imps.IMPSDev;
 import com.imps.R;
 import com.imps.basetypes.Constant;
@@ -37,7 +37,7 @@ import com.imps.services.impl.ServiceManager;
  * @author liwenhaosuper
  *
  */
-public class Login extends Activity{
+public class Login extends IMPSActivity{
 	
 	private static String TAG = Login.class.getCanonicalName();
 	private static boolean DEBUG = IMPSDev.isDEBUG();
@@ -222,7 +222,7 @@ public class Login extends Activity{
 				pd.dismiss();	
 			}
 			//for DEBUG purpose
-/*			ServiceManager.getmTcpConn().stopTcp();
+	/*		ServiceManager.getmTcpConn().stopTcp();
 			Intent start = new Intent(Login.this,IMPSContainer.class);
 			start.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(start);

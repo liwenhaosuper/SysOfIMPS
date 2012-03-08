@@ -1,17 +1,17 @@
 package com.imps.activities;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.Window;
 import android.widget.TextView;
 
+import com.imps.IMPSActivity;
 import com.imps.R;
 
-public class About extends Activity {
+public class About extends IMPSActivity {
 
 	private TextView aboutView;
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		getWindow().requestFeature(Window.FEATURE_NO_TITLE);
@@ -22,5 +22,8 @@ public class About extends Activity {
 				);		
 		//aboutView.setTextColor(color.darker_gray);
 	}
-
+	@Override
+	public void onStop(){
+		super.onStop();
+	}
 }

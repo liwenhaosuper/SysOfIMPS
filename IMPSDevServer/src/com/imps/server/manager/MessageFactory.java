@@ -306,6 +306,29 @@ public class MessageFactory {
 		return outMsg;
 	}
 	
+	public static OutputMessage createSUpdateUserInfoRsp() {
+		OutputMessage outMsg = new OutputMessage(CommandId.S_UPDATE_USER_INFO_RSP);
+		return outMsg;
+	}
+	
+	public static OutputMessage createSUploadPortraitRsp() {
+		OutputMessage outMsg = new OutputMessage(CommandId.S_UPLOAD_PORTRAIT_RSP);
+		return outMsg;
+	}
+	
+	public static OutputMessage createSSendPortraitReq(String username){
+		OutputMessage outMsg = new OutputMessage(CommandId.S_SEND_PORTRAIT_REQ);
+		try {
+			//username
+			int len = username.getBytes("gb2312").length;
+			byte[] nm = username.getBytes("GB2312");
+			outMsg.getOutputStream().writeInt(len);
+			outMsg.getOutputStream().write(nm);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return outMsg;
+	}
 	
 	///Doodle part
 	

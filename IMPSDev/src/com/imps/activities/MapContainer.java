@@ -10,6 +10,7 @@ import android.widget.TabHost;
 
 import com.imps.R;
 import com.imps.receivers.IMPSBroadcastReceiver;
+import com.imps.services.impl.ServiceManager;
 
 public class MapContainer extends TabActivity{
 	private TabHost tabHost;
@@ -23,6 +24,7 @@ public class MapContainer extends TabActivity{
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.mapcontainer);
+		ServiceManager.getmScreen().addScreen(this.getClass());
 		registerReceiver(receiver,receiver.getFilter());
 		navigator = (RadioGroup)findViewById(R.id.tab_navigator);
 		tabHost = getTabHost();
@@ -58,5 +60,6 @@ public class MapContainer extends TabActivity{
 	public void onStop(){
 		super.onStop();
 		unregisterReceiver(receiver);
+		ServiceManager.getmScreen().removeScreen(this.getClass());
 	}
 }

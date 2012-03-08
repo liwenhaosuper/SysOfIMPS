@@ -52,6 +52,7 @@ public class FriendListTab extends ExpandableListActivity{
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.friendtab);		
+		ServiceManager.getmScreen().addScreen(this.getClass());
 		registerForContextMenu(getExpandableListView());
 		registerReceiver(receiver,receiver.getFilter());
 		friendList = getExpandableListView();
@@ -125,6 +126,7 @@ public class FriendListTab extends ExpandableListActivity{
 	{
 		super.onStop();
 		unregisterReceiver(receiver);
+		ServiceManager.getmScreen().removeScreen(this.getClass());
 	}
 	@Override
 	public boolean onMenuItemSelected(int id,MenuItem item)
@@ -132,11 +134,21 @@ public class FriendListTab extends ExpandableListActivity{
 		switch(item.getItemId())
 		{
 		case IMPSContainer.SETTING:
+		{
 			ComponentName cn=new ComponentName(FriendListTab.this,FindFriend.class);
 			
 			Intent intent=new Intent();
 			intent.setComponent(cn);
 			startActivity(intent);
+		}
+			break;
+		case IMPSContainer.MYCARD:
+		{
+			ComponentName cn = new ComponentName(FriendListTab.this,MyCard.class);
+			Intent intent = new Intent();
+			intent.setComponent(cn);
+			startActivity(intent);
+		}
 			break;
 		case IMPSContainer.ABOUT:
 		{

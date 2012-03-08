@@ -1,6 +1,5 @@
 ﻿package com.imps.activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.BlurMaskFilter;
 import android.graphics.EmbossMaskFilter;
@@ -18,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.imps.IMPSActivity;
 import com.imps.R;
 import com.imps.ui.GraffitiView;
 import com.imps.ui.HandwritingView;
@@ -27,7 +27,7 @@ import com.imps.ui.widget.ColorPickerDialog;
  * @author liwenhaosuper
  *
  */
-public class Graffiti extends Activity
+public class Graffiti extends IMPSActivity
 implements ColorPickerDialog.OnColorChangedListener {
     /** Called when the activity is first created. */
     private Paint       mPaint;

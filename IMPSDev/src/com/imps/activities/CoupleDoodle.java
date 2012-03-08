@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.jboss.netty.buffer.ChannelBuffers;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -29,6 +28,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.imps.IMPSActivity;
 import com.imps.IMPSDev;
 import com.imps.R;
 import com.imps.basetypes.Constant;
@@ -40,7 +40,7 @@ import com.imps.services.impl.ServiceManager;
 import com.imps.ui.BubbleDialog;
 import com.imps.ui.DoodleView;
 
-public class CoupleDoodle extends Activity implements OnClickListener{
+public class CoupleDoodle extends IMPSActivity implements OnClickListener{
 	private static boolean DEBUG = IMPSDev.isDEBUG();
 	private static String TAG = CoupleDoodle.class.getCanonicalName();
     private Paint       mPaint;
@@ -66,7 +66,6 @@ public class CoupleDoodle extends Activity implements OnClickListener{
         requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         setContentView(R.layout.coupledoodle);
         getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.coupledoodle_title);
-        
         mInviteFri = (Button)findViewById(R.id.inviteFriend);
         mInviteFri.setOnClickListener(this);
         

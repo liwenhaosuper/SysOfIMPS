@@ -18,11 +18,8 @@
                 android:text="@string/sysmsg" android:drawableTop="@drawable/icon_friendlist" style="@style/main_tab_bottom" />
             <RadioButton android:id="@+id/radio_map" android:tag="radio_map" android:layout_marginTop="2.0dip" 
                 android:text="@string/map" android:drawableTop="@drawable/icon_friendlist" style="@style/main_tab_bottom" />
-            <RadioButton android:id="@+id/radio_card" android:tag="radio_card" android:layout_marginTop="2.0dip" 
-                android:text="@string/card" android:drawableTop="@drawable/icon_friendlist" style="@style/main_tab_bottom" />
             <RadioButton android:id="@+id/radio_sns" android:tag="radio_sns" android:layout_marginTop="2.0dip" 
                 android:text="@string/sns" android:drawableTop="@drawable/icon_friendlist" style="@style/main_tab_bottom" />
-            
             </RadioGroup>
     </LinearLayout>
 </TabHost>
