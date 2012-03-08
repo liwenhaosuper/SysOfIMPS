@@ -104,4 +104,12 @@ public class CommandId {
 	
 	public static final int C_OFFLINE_MSG_REQ = 34;
 	public static final int S_OFFLINE_MSG_RSP = 35;
+	
+	/* 客户端用户更改信息 */
+	public static final byte C_UPDATE_USER_INFO_REQ = 36;
+	public static final byte S_UPDATE_USER_INFO_RSP = 37;
+	public static final byte C_UPLOAD_PORTRAIT_REQ = 38;
+	public static final byte S_UPLOAD_PORTRAIT_RSP = 39;
+	
+	public static final byte S_SEND_PORTRAIT_REQ = 40;
 }

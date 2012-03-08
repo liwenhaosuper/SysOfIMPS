@@ -25,11 +25,11 @@ public class IMPSContainer extends TabActivity{
 	public static final String TAB_CURRENTSESSIONS="currentsession";
 	public static final String TAB_SYSMSG="sysmsg";
 	public static final String TAB_MAP = "map";
-	public static final String TAB_CARD = "card";
 	
 	public static final int SETTING = Menu.FIRST + 1;
-	public static final int ABOUT = Menu.FIRST+2;
-	public static final int EXIT = Menu.FIRST+3;
+	public static final int MYCARD = Menu.FIRST+2;
+	public static final int ABOUT = Menu.FIRST+3;
+	public static final int EXIT = Menu.FIRST+4;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -50,9 +50,6 @@ public class IMPSContainer extends TabActivity{
 		tabHost.addTab(tabHost.newTabSpec(TAB_MAP)
 	    		.setIndicator(TAB_MAP)
 	    		.setContent(new Intent(this,MapContainer.class)));
-		tabHost.addTab(tabHost.newTabSpec(TAB_CARD)
-	    		.setIndicator(TAB_CARD)
-	    		.setContent(new Intent(this,MyCard.class)));
 		Intent intent = getIntent();
 		int tag = 0;
 		if(intent!=null){
@@ -75,9 +72,6 @@ public class IMPSContainer extends TabActivity{
 				case R.id.radio_map:
 					tabHost.setCurrentTabByTag(TAB_MAP);
 					break;
-				case R.id.radio_card:
-					tabHost.setCurrentTabByTag(TAB_CARD);
-					break;
 				default:
 					break;
 				}
@@ -91,6 +85,7 @@ public class IMPSContainer extends TabActivity{
 	{
 		boolean result = super.onCreateOptionsMenu(menu);
 		menu.add(0,SETTING, 0, R.string.setting).setIcon(R.drawable.menu_setting);
+		menu.add(0,MYCARD, 0, R.string.card).setIcon(R.drawable.menu_setting);
         menu.add(0,ABOUT,0,R.string.about).setIcon(R.drawable.menu_about);
         menu.add(0,EXIT,0,R.string.exit).setIcon(R.drawable.menu_exit);
 		return result;

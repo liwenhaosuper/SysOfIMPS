@@ -72,6 +72,13 @@ public class AccountService implements IConnEvent{
 				MessageFactory.createCRegisterReq(user.getUsername(), user.getPassword(), user.getGender(), user.getEmail()).build()));
 		}
 	}
+	public void updateUserInfo(User user){
+		if(isConnected){
+			if(DEBUG)Log.d(TAG,"Update user info: sent...");
+			ConnectionService.getChannel().write(ChannelBuffers.wrappedBuffer(
+				MessageFactory.createCUpdateUserInfoReq(user.getUsername(), user.getGender(), user.getEmail()).build()));
+		}
+	}
 	@Override
 	public void onConnected() {
 		// TODO Auto-generated method stub

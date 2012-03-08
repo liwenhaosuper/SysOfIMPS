@@ -558,7 +558,7 @@ public class UserManager {
 
 		// fill the message list to be returned
 		ArrayList< UserMessage > msgs = new ArrayList< UserMessage >();
-		while (msgList.next()) {
+		while (msgList != null && msgList.next()) {
 			UserMessage msg = new UserMessage(msgList.getInt(1),
 					msgList.getInt(2), msgList.getInt(3), msgList.getString(4),
 					msgList.getString(5));
@@ -575,8 +575,48 @@ public class UserManager {
 			e.printStackTrace();
 		}
 	}
+
+	/**
+	 * update a user's gender
+	 * @throws SQLException 
+	 */
+	public boolean updateUserGender(User user) throws SQLException
+	{
+		boolean flag = false;
+		ConnectDB tdb = new ConnectDB();
+		try{
+			String gender = "'M'";
+			if (user.getGender() == 0)
+				gender = "'F'";
+			int res = tdb.executeUpdate("update user set gender="+gender+" where username='"+user.getUsername()+"'");
+			if (res > 0)
+				flag = true;
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return flag;
+	}
 	
-	
-	
-	
+	/**
+	 * update a user's info
+	 * @throws SQLException 
+	 */
+	public boolean updateUserEmail(User user) throws SQLException
+	{
+		boolean flag = false;
+		ConnectDB tdb = new ConnectDB();
+		try{
+			String gender = "'M'";
+			if (user.getGender() == 0)
+				gender = "'F'";
+			int res = tdb.executeUpdate("update user set gender="+gender+", email='"+user.getEmail()+"' where username='"+user.getUsername()+"'");
+			if (res > 0)
+				flag = true;
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return flag;
+	}
 }

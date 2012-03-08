@@ -170,4 +170,7 @@
 	<string name="select_mapview_mode">请选择地图模式</string>
 	<string name="lastupdatetime">更新时间</string>
 	<string name="friendlocation_loading">正在加载好友位置</string>
+	<string name="chooseGender">请选择性别</string>
+	<string name="update_email">请输入邮箱地址</string>
+	<string name="updateEmailTitle">更改邮箱</string>
 </resources>

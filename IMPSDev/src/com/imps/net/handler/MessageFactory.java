@@ -304,4 +304,32 @@ public class MessageFactory {
 		}
 		return outMsg;
 	}
+
+	public static OutputMessage createCUpdateUserInfoReq(String username, int gender, String email){
+		OutputMessage outMsg = new OutputMessage(CommandId.C_UPDATE_USER_INFO_REQ);
+		try {
+			outMsg.getOutputStream().writeInt(username.length());
+			outMsg.getOutputStream().write(username.getBytes("GB2312"));
+			outMsg.getOutputStream().writeInt(gender);
+			outMsg.getOutputStream().writeInt(email.length());
+			outMsg.getOutputStream().write(email.getBytes("GB2312"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return outMsg;
+	}
+	
+	public static OutputMessage createCUploadPortraitReq(String username) {
+		OutputMessage outMsg = new OutputMessage(CommandId.C_UPLOAD_PORTRAIT_REQ);
+		
+		try {
+			outMsg.getOutputStream().writeInt((int)username.getBytes("gb2312").length);
+			outMsg.getOutputStream().write(username.getBytes("GB2312"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return outMsg;
+	}
 }
