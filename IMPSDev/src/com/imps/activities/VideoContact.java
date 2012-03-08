@@ -3,11 +3,9 @@
 import java.lang.reflect.Method;
 import java.util.List;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -23,6 +21,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.imps.IMPSActivity;
 import com.imps.R;
 import com.imps.basetypes.Constant;
 import com.imps.media.rtp.core.NetworkFactory;
@@ -34,7 +33,7 @@ import com.imps.receivers.IMPSBroadcastReceiver;
 import com.imps.services.impl.ServiceManager;
 import com.imps.util.CommonHelper;
 
-public class VideoContact extends Activity implements SurfaceHolder.Callback{
+public class VideoContact extends IMPSActivity implements SurfaceHolder.Callback{
 
 	private final static byte READY = 0;
 	private final static byte CANCEL = 1;

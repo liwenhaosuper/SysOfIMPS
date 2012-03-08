@@ -3,7 +3,6 @@ package com.imps.activities;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
@@ -12,8 +11,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -26,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.imps.IMPSActivity;
 import com.imps.IMPSDev;
 import com.imps.R;
 import com.imps.basetypes.Constant;
@@ -34,7 +32,7 @@ import com.imps.receivers.IMPSBroadcastReceiver;
 import com.imps.services.impl.ServiceManager;
 import com.imps.ui.widget.FindFriendAdapter;
 
-public class SearchFriend extends Activity{
+public class SearchFriend extends IMPSActivity{
 	private static String TAG = SearchFriend.class.getCanonicalName();
 	private static boolean DEBUG = IMPSDev.isDEBUG();
 	private static final int FRIENDLIST = Menu.FIRST+1;

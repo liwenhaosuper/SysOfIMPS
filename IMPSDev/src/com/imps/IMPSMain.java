@@ -1,7 +1,5 @@
 package com.imps;
 
-import android.app.Activity;
-import android.app.NotificationManager;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -21,7 +19,7 @@ import com.imps.services.impl.ServiceManager;
  * @author liwenhaosuper
  *
  */
-public class IMPSMain extends Activity {
+public class IMPSMain extends IMPSActivity {
 
 	private static String TAG = IMPSMain.class.getCanonicalName();
 	private static boolean DEBUG = IMPSDev.isDEBUG();
@@ -34,7 +32,6 @@ public class IMPSMain extends Activity {
 		setContentView(R.layout.main);
         gv = (GifView)findViewById(R.id.earth);
         if(DEBUG) Log.d(TAG,"onCreate");
-        
         
 		if(ServiceManager.isStarted&&ServiceManager.getmAccount()!=null&&ServiceManager.getmAccount().isLogined()){
 			startMainActivity();

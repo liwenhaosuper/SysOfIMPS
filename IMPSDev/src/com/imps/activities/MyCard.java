@@ -1,14 +1,10 @@
 package com.imps.activities;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.imps.IMPSActivity;
 import com.imps.R;
 import com.imps.basetypes.User;
 import com.imps.net.handler.UserManager;
@@ -18,7 +14,7 @@ import com.imps.net.handler.UserManager;
  * @author Amesists
  *
  */
-public class MyCard extends Activity {
+public class MyCard extends IMPSActivity {
 	private static String TAG = MyCard.class.getCanonicalName();
 	private User currentUser;
 

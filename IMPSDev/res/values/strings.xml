@@ -192,4 +192,7 @@
 	<string name="deny_friend_sysmsg"> 拒绝了您的添加好友请求</string>
 	<string name="receive_friend_sysmsg"> 向您发来了添加好友请求</string>
 	<string name="goto_sysmsg">【进入系统消息查看】</string>
+	<string name="default_smiley">默认</string>
+	<string name="emoji_smiley">Emoji</string>
+	<string name="replay_msg">回复信息</string>
 </resources>

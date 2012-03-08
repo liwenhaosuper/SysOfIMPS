@@ -36,6 +36,7 @@ import com.imps.R;
 import com.imps.basetypes.UserStatus;
 import com.imps.net.handler.UserManager;
 import com.imps.receivers.IMPSBroadcastReceiver;
+import com.imps.services.impl.ServiceManager;
 import com.imps.ui.map.CrashFixMyLocationOverlay;
 import com.imps.ui.map.FriendLocationOverlay;
 
@@ -125,6 +126,7 @@ public class FriendLocation extends MapActivity implements View.OnClickListener{
         initViews();
         initAnimation();
         //initOverlays();
+        ServiceManager.getmScreen().addScreen(this.getClass());
     }
     @Override
     public void onResume(){
@@ -145,6 +147,7 @@ public class FriendLocation extends MapActivity implements View.OnClickListener{
     	mMyLocationOverlay.disableMyLocation();
     	mMyLocationOverlay.disableCompass();
     	unregisterReceiver(receiver);
+    	ServiceManager.getmScreen().removeScreen(this.getClass());
     }
     public void initPopview(){
     	if(null == mMyPopView){

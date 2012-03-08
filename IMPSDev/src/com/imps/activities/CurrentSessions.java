@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
@@ -25,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.imps.IMPSActivity;
 import com.imps.R;
 import com.imps.basetypes.Constant;
 import com.imps.basetypes.MediaType;
@@ -35,7 +35,7 @@ import com.imps.net.handler.UserManager;
 import com.imps.receivers.IMPSBroadcastReceiver;
 import com.imps.services.impl.ServiceManager;
 
-public class CurrentSessions extends Activity{
+public class CurrentSessions extends IMPSActivity{
 	protected static final String TAG = CurrentSessions.class.getCanonicalName();
 	private ListView concurSessionsList;
 	private List<User> sessionsList;
@@ -51,7 +51,6 @@ public class CurrentSessions extends Activity{
 		setTitle(getResources().getString(R.string.currentsession));
 		sessionsList = new ArrayList<User>();
 		concurSessionsList = (ListView)findViewById(R.id.concurSessions);
-		
 		initAdapter();
 	}
 	@Override

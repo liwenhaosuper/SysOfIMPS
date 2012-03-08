@@ -40,6 +40,8 @@ public class IMPSContainer extends TabActivity{
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		if(DEBUG) Log.d(TAG,"Container create");
+		ServiceManager.getmScreen().addScreen(this.getClass());
 		if(!ServiceManager.isStarted||ServiceManager.getmAccount()==null||!ServiceManager.getmAccount().isLogined()){	
 			startActivity(new Intent(IMPSContainer.this,IMPSMain.class));
 			finish();
@@ -128,11 +130,19 @@ public class IMPSContainer extends TabActivity{
 	@Override 
 	public void onResume(){
 		super.onResume();
+		if(DEBUG) Log.d(TAG,"Container resume");
 		registerReceiver(receiver,receiver.getFilter());
 	}
 	@Override
 	public void onStop(){
 		super.onStop();
+		if(DEBUG) Log.d(TAG,"Container stop");
 		unregisterReceiver(receiver);
+		ServiceManager.getmScreen().removeScreen(this.getClass());
+	}
+	@Override
+	public void onPause(){
+		super.onPause();
+		if(DEBUG) Log.d(TAG,"Container pause");
 	}
 }

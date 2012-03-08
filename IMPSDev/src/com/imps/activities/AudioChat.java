@@ -1,6 +1,5 @@
 package com.imps.activities;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
@@ -10,8 +9,6 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -21,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.imps.IMPSActivity;
 import com.imps.IMPSDev;
 import com.imps.R;
 import com.imps.basetypes.Constant;
@@ -30,7 +28,7 @@ import com.imps.media.audioEngine.net.RtpStreamSender;
 import com.imps.receivers.IMPSBroadcastReceiver;
 import com.imps.services.impl.ServiceManager;
 
-public class AudioChat extends Activity implements View.OnTouchListener{
+public class AudioChat extends IMPSActivity implements View.OnTouchListener{
 
 	private static String TAG = AudioChat.class.getCanonicalName();
 	private static boolean DEBUG = IMPSDev.isDEBUG();
