@@ -42,7 +42,6 @@ public class IMPSDev extends Application {
 		IMPSDev.packageName = IMPSDev.instance.getPackageName();
 		if(DEBUG){Log.d(TAG, "OnCreate...");}
 		java.lang.System.setProperty("java.net.preferIPv6Addresses", "false");
-		ServiceManager.start();
 		if(ServiceManager.notifManager == null){
 			ServiceManager.notifManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 			if(DEBUG) Log.d(TAG,"Notify manager is created");

@@ -49,7 +49,7 @@
         <view class="com.google.android.maps.MapView"
         android:id="@+id/MapView"  
         android:layout_height="fill_parent" 
-        android:apiKey="08XREvkX9bvRUo8vmNke2xm9vas3WNEd6m53xfA" 
+        android:apiKey="08XREvkX9bvTE0eIirtCk5wADliwJtvGryzNHbg" 
         android:clickable="true" android:longClickable="true" android:layout_width="wrap_content"/>
 
  		<Button 

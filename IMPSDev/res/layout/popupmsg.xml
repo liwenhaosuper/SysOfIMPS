@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<LinearLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:background="@color/blue"
+	android:background="@drawable/txt_msg_bg"
 	android:layout_width="fill_parent" 
 	android:layout_height="fill_parent"
+	android:orientation="vertical"
 	>
 	<LinearLayout
-		android:orientation="vertical"
+		android:orientation="horizontal"
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
 		android:paddingTop="5dip"
@@ -23,7 +24,11 @@
 			android:textColor="@color/black"
 			android:textSize="18sp"
 		/>
-		<TextView
+    </LinearLayout>
+    <FrameLayout android:layout_width="fill_parent" android:layout_height="200.0dip">
+		 <LinearLayout android:orientation="vertical" 
+		 android:layout_width="fill_parent" android:layout_height="fill_parent">
+		 		<TextView
 			android:id="@+id/popup_title"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
@@ -34,32 +39,39 @@
 			android:textSize="18sp"
 		>	
 		</TextView>
-		
-		    <TextView
+		<ScrollView  android:layout_width="fill_parent"
+  					android:layout_height="110dip">
+		  <TextView
 			android:id="@+id/popup_content"
 			android:layout_width="fill_parent"
 			android:layout_height="100dip"
 			android:text="@string/hello"
 			android:gravity="center"
+			android:scrollbars="vertical"
 			android:textColor="@color/black"
-			android:textSize="14sp"
+			android:autoLink="web"
+			android:textSize="17sp"
+			android:paddingTop="5dip"
+			android:paddingBottom="5dip"
 			>	
 			</TextView>
+		</ScrollView>
 			<EditText
 				android:id="@+id/popup_replaymsg"
 				android:gravity="top"
 				android:layout_width="fill_parent"
 				android:layout_height="50dip"
 				android:scrollHorizontally="true"
-				android:hint="回复信息"
+				android:hint="@string/replay_msg"
 				>
 			</EditText>
-			
-			<LinearLayout
+		 </LinearLayout>
+	</FrameLayout>
+	<LinearLayout
 				android:orientation="horizontal"
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
-				android:gravity="right"
+				android:gravity="center"
 				android:paddingTop="5dip"
 			>
 			<Button
@@ -71,7 +83,7 @@
 				android:minHeight="40dip"
 				android:text="@string/launch_main"
 				android:textColor="@color/white"
-				android:background="@color/grey"
+				android:background="@drawable/media_msg_bg"
 				/>		
 			<Button
 				android:id="@+id/popup_closePopupmsg"
@@ -82,7 +94,7 @@
 				android:minHeight="40dip"
 				android:text="@string/close"
 				android:textColor="@color/white"
-				android:background="@color/grey"
+				android:background="@drawable/media_msg_bg"
 				/>
 				<Button
 				android:id="@+id/popup_msgReplay"
@@ -93,9 +105,8 @@
 				android:minHeight="40dip"
 				android:text="@string/replay"
 				android:textColor="@color/white"
-				android:background="@color/grey"
+				android:background="@drawable/media_msg_bg"
 				>
 				</Button>
 			</LinearLayout>
-	</LinearLayout>
-</ScrollView>
+</LinearLayout>

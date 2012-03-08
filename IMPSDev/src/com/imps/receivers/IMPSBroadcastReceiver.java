@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.imps.IMPSDev;
 import com.imps.basetypes.Constant;
+import com.imps.services.impl.ServiceManager;
 
 public class IMPSBroadcastReceiver extends BroadcastReceiver{
 	
@@ -18,6 +19,7 @@ public class IMPSBroadcastReceiver extends BroadcastReceiver{
 	public void onReceive(Context context, Intent intent) {
 		String action = intent.getAction();
 		if(Constant.EXIT.equals(action)){
+			ServiceManager.getmAccount().logout();
 			if(DEBUG) Log.d(TAG,"Exit broadcast...");
 			if(context instanceof Activity){
 				((Activity)context).finish();

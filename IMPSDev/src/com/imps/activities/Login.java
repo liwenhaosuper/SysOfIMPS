@@ -1,6 +1,5 @@
 package com.imps.activities;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
@@ -23,6 +22,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.imps.IMPSActivity;
 import com.imps.IMPSDev;
 import com.imps.R;
 import com.imps.basetypes.Constant;
@@ -37,7 +37,7 @@ import com.imps.services.impl.ServiceManager;
  * @author liwenhaosuper
  *
  */
-public class Login extends Activity{
+public class Login extends IMPSActivity{
 	
 	private static String TAG = Login.class.getCanonicalName();
 	private static boolean DEBUG = IMPSDev.isDEBUG();
@@ -99,10 +99,10 @@ public class Login extends Activity{
 		mRemPwd = (CheckBox) findViewById(R.id.login_cb_savepwd);
 		mAutoLogin =(CheckBox)findViewById(R.id.login_auto);
 		if(ServiceManager.getmConfig().getPreferences().getBoolean(ConfigurationService.REMEMBERPASSWORD, false)){
-			mRemPwd.setChecked(true);
+			mRemPwd.setChecked(false);
 		}
 		if(ServiceManager.getmConfig().getPreferences().getBoolean(ConfigurationService.AUTOLOGIN, false)){
-			mAutoLogin.setChecked(true);
+			mAutoLogin.setChecked(false);
 		}
 	}
 	public void processClick(){
@@ -180,8 +180,9 @@ public class Login extends Activity{
 		protected String doInBackground(String... params) {
 			//For DEBUG purpose
 			ServiceManager.getmAccount().login(username, password);
-/*			for(int i=0;i<10;i++){
+			/*for(int i=0;i<10;i++){
 				User user = new User();
+				user.setUsername("I am tester"+i);
 				user.setDescription("test"+i+"号");
 				user.setEmail("li"+i);
 				user.setGender(i%2);
@@ -190,7 +191,23 @@ public class Login extends Activity{
 				user.setLocY(80.0/(i+1));
 				user.setStatus(i%2==0?UserStatus.OFFLINE:UserStatus.ONLINE);
 				UserManager.AllFriList.add(user);
-			}*/
+			}
+			User user = new User();
+			user.setUsername("li");
+			user.setPassword("li");
+			user.setEmail("li");
+			user.setGender(1);
+			user.setLoctime("2012-12-23");
+			user.setStatus(UserStatus.OFFLINE);
+			UserManager.AllFriList.add(user);
+			User user1 = new User();
+			user1.setUsername("lili");
+			user1.setPassword("lili");
+			user1.setEmail("lili");
+			user1.setGender(1);
+			user1.setLoctime("2012-12-23");
+			user1.setStatus(UserStatus.OFFLINE);
+			UserManager.AllFriList.add(user1);*/
 			return null;
 		}
 		@Override
@@ -205,7 +222,7 @@ public class Login extends Activity{
 				pd.dismiss();	
 			}
 			//for DEBUG purpose
-/*			ServiceManager.getmTcpConn().stopTcp();
+	/*		ServiceManager.getmTcpConn().stopTcp();
 			Intent start = new Intent(Login.this,IMPSContainer.class);
 			start.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(start);
@@ -325,6 +342,7 @@ public class Login extends Activity{
 					{
 						executor.cancel(true);
 					}
+					ServiceManager.getmAccount().onLoginSuccess();
 					Intent start = new Intent(context,IMPSContainer.class);
 					start.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					context.startActivity(start);

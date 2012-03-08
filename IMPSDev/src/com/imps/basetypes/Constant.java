@@ -48,4 +48,9 @@ public class Constant {
 	public static String CONNECTIONFAIL = "connection_fail";
 	public static String LOGOUT = "logout";
 	public static String EXIT = "exit";
+	
+	public static String DOODLEREQ = "doodle_req";
+	public static String DOODLERSP ="doodle_rsp";
+	public static String DOODLELIST = "doodle_list" ; //friend list
+	public static String DOODLESTATUS = "doodle_status";//status notify
 }

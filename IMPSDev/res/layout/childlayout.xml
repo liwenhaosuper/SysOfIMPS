@@ -33,7 +33,7 @@
   		android:orientation="horizontal"
   		>
   		  		<TextView
-  			android:textColor="#FFFFFFFF"
+  			android:textColor="#FF4500"
   			android:textSize="16px"
   			android:id="@+id/name"
   			android:layout_marginRight="5.0dip"
@@ -58,7 +58,7 @@
 
   		<TextView android:id="@+id/description"
          android:textSize="14.0px"
-         android:textColor="#7FFFFFFF"
+         android:textColor="#9400D3"
          android:text="description"
          android:ellipsize="marquee"
          android:layout_width="fill_parent"

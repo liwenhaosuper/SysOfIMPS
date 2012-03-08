@@ -604,5 +604,5 @@ for each row
 insert into friend(userid,use_userid) values(1,new.userid);
 
 /**2012-02-25*/
-alter table message add column state int default 1;
+alter table message add column sent int default 1;
 

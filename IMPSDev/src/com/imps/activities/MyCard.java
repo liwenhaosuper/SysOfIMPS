@@ -31,7 +31,6 @@ import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.imps.IMPSDev;
 import com.imps.R;
@@ -50,7 +49,7 @@ import com.imps.util.CommonHelper;
  * @author Amesists
  * 
  */
-public class MyCard extends Activity {
+public class MyCard extends IMPSActivity {
 	private static String TAG = MyCard.class.getCanonicalName();
 	private static boolean DEBUG = IMPSDev.isDEBUG();
 

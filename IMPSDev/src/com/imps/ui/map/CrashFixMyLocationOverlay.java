@@ -8,6 +8,8 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.location.Address;
 import android.location.Geocoder;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -21,7 +23,6 @@ import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
 import com.imps.IMPSDev;
 import com.imps.R;
-import com.imps.net.handler.UserManager;
 
 public class CrashFixMyLocationOverlay extends MyLocationOverlay implements OnClickListener{
     private static final String TAG = CrashFixMyLocationOverlay.class.getCanonicalName();
@@ -33,18 +34,23 @@ public class CrashFixMyLocationOverlay extends MyLocationOverlay implements OnCl
 	private int layout_x = 0; 
 	private int layout_y = -30; 
 	private Context context;
-	private String streetName = "";
+	public String streetName = "";
+	private final int ADDRESSLOADING = 1;
+	private final int ADDRESSLOADED = 2;
+	private final int ADDRESSLOADFAILED = 3;
+	private Handler handler;
+	
     public CrashFixMyLocationOverlay(Context context, MapView mapView) {
         super(context, mapView);
     }
-    public CrashFixMyLocationOverlay(Context context,MapView mapView,View popView){
+    public CrashFixMyLocationOverlay(Context context,Handler handler,MapView mapView,View popView){
     	super(context, mapView);
     	this.context = context;
+    	this.handler = handler;
     	this.mMapview = mapView;
     	this.mMapCtrl = mMapview.getController();
     	this.mPopView = popView;
     }
-
     @Override
     public boolean draw(Canvas canvas, MapView mapView, boolean shadow, long when) {
         try {
@@ -74,7 +80,10 @@ public class CrashFixMyLocationOverlay extends MyLocationOverlay implements OnCl
     			title_TextView.setText(context.getResources().getString(R.string.iamhear));
     			TextView desc_TextView = (TextView) mPopView.findViewById(R.id.map_bubbleText);
     			
-    			desc_TextView.setText(getStreet());
+    			desc_TextView.setText(streetName);
+    			Message msg = new Message();
+    			msg.what = ADDRESSLOADING;
+    			handler.sendMessage(msg);
     			
     			RelativeLayout button = (RelativeLayout) mPopView.findViewById(R.id.map_bubblebtn);
     			button.setOnClickListener(this);    			
@@ -100,7 +109,7 @@ public class CrashFixMyLocationOverlay extends MyLocationOverlay implements OnCl
 			break;				
 		}
 	}
-	private String getStreet(){
+	public String getStreet(){
 		if(this.getMyLocation()==null){
 			return context.getResources().getString(R.string.addressnotavailable);
 		}
@@ -116,13 +125,22 @@ public class CrashFixMyLocationOverlay extends MyLocationOverlay implements OnCl
 			}
 		} catch (IOException e) {
 			if(DEBUG) e.printStackTrace();
-			return strname;
+			return strname+=context.getResources().getString(R.string.loading_your_address_fail);
 		}
+		return strname;
+	}
+	public String loadingStreet(){
+		if(this.getMyLocation()==null){
+			return context.getResources().getString(R.string.addressnotavailable);
+		}
+		String strname = context.getResources().getString(R.string.longitude)+":"+this.getMyLocation().getLongitudeE6()/1E6+","+
+		 context.getResources().getString(R.string.latitude)+":"+this.getMyLocation().getLatitudeE6()/1E6+"\n";
+		strname+=context.getResources().getString(R.string.loading_your_address);
 		return strname;
 	}
 	public void animateToMyLocation(int zoomLevel){
 		if(getMyLocation()==null){
-			Toast.makeText(context, context.getResources().getString(R.string.positioning_unavailable), Toast.LENGTH_LONG);
+			Toast.makeText(context, context.getResources().getString(R.string.positioning_unavailable), Toast.LENGTH_LONG).show();
 			return;
 		}
 		mMapCtrl.setZoom(zoomLevel);

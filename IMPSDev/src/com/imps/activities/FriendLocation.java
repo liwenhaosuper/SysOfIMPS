@@ -12,6 +12,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
@@ -21,6 +23,7 @@ import android.view.animation.RotateAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.maps.GeoPoint;
@@ -33,6 +36,7 @@ import com.imps.R;
 import com.imps.basetypes.UserStatus;
 import com.imps.net.handler.UserManager;
 import com.imps.receivers.IMPSBroadcastReceiver;
+import com.imps.services.impl.ServiceManager;
 import com.imps.ui.map.CrashFixMyLocationOverlay;
 import com.imps.ui.map.FriendLocationOverlay;
 
@@ -67,9 +71,53 @@ public class FriendLocation extends MapActivity implements View.OnClickListener{
     private CrashFixMyLocationOverlay mMyLocationOverlay;
     private FriendLocationOverlay mOnlineFrilocOverlay;
     private FriendLocationOverlay mOfflineFrilocOverlay;
+    private boolean isOnlineFriLoaded = false;
+    private boolean isOfflineFriLoaded = false;
     private View mMyPopView;
     private View mFriLocPopView;
     private FriendLocationReceiver receiver = new FriendLocationReceiver();
+	private final int ADDRESSLOADING = 1;
+	private final int ADDRESSLOADED = 2;
+	private final int ADDRESSLOADFAILED = 3;
+    private Handler handler = new Handler(){//used to update data asynchronous,overlay of mylocation
+    	@Override
+    	public void handleMessage(Message msg){
+    		switch(msg.what){
+    		case ADDRESSLOADING:
+		        TextView addView = (TextView) mMyPopView.findViewById(R.id.map_bubbleText);	
+    			if(addView!=null) addView.setText(mMyLocationOverlay.loadingStreet());
+    			new Thread( new Runnable() {
+					@Override
+					public void run() {
+						if(mMyLocationOverlay.getMyLocation()==null){
+		    				Message resmsg = new Message();
+		    				resmsg.what = ADDRESSLOADFAILED;
+		    				handler.sendMessage(resmsg);
+		    			}else{
+		    				mMyLocationOverlay.streetName = mMyLocationOverlay.getStreet();
+		    				Message loadres = new Message();
+		    				loadres.what = ADDRESSLOADED;
+		    				handler.sendMessage(loadres);
+		    			}
+					}
+    			}).start();
+    			if(DEBUG) Log.d(TAG,"Loading...");
+    			break;
+    		case ADDRESSLOADED:
+		        TextView desc_TextView = (TextView) mMyPopView.findViewById(R.id.map_bubbleText);	
+    			if(desc_TextView!=null) desc_TextView.setText(mMyLocationOverlay.streetName);
+    			if(DEBUG) Log.d(TAG,"Loaded...");
+    			break;
+    		case ADDRESSLOADFAILED:
+    			if(DEBUG) Log.d(TAG,"Load fail...");
+		        TextView desc = (TextView) mMyPopView.findViewById(R.id.map_bubbleText);	
+    			if(desc!=null) desc.setText(getResources().getString(R.string.positioning_unavailable));
+    			break;
+    		default:
+    			break;
+    		}
+    	}
+    };
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -78,6 +126,7 @@ public class FriendLocation extends MapActivity implements View.OnClickListener{
         initViews();
         initAnimation();
         //initOverlays();
+        ServiceManager.getmScreen().addScreen(this.getClass());
     }
     @Override
     public void onResume(){
@@ -87,9 +136,18 @@ public class FriendLocation extends MapActivity implements View.OnClickListener{
     	mMyLocationOverlay.enableCompass();
     }
     @Override
+    public void onPause(){
+    	super.onPause();
+    	mMyLocationOverlay.disableMyLocation();
+    	mMyLocationOverlay.disableCompass();
+    }
+    @Override
     public void onStop(){
     	super.onStop();
+    	mMyLocationOverlay.disableMyLocation();
+    	mMyLocationOverlay.disableCompass();
     	unregisterReceiver(receiver);
+    	ServiceManager.getmScreen().removeScreen(this.getClass());
     }
     public void initPopview(){
     	if(null == mMyPopView){
@@ -143,7 +201,7 @@ public class FriendLocation extends MapActivity implements View.OnClickListener{
     	
     	initPopview();
     	
-    	mMyLocationOverlay = new CrashFixMyLocationOverlay(this, mMapView,mMyPopView);
+    	mMyLocationOverlay = new CrashFixMyLocationOverlay(this,handler,mMapView,mMyPopView);
     	mMapView.getOverlays().add(mMyLocationOverlay);
     	
     	mOnlineFrilocOverlay = new FriendLocationOverlay(this.getResources().getDrawable(R.drawable.online),this,mMapView,
@@ -166,8 +224,9 @@ public class FriendLocation extends MapActivity implements View.OnClickListener{
 			}else{
 				mOfflineFrilocOverlay.addOverlay(item);
 			}
-			
 		}
+		isOnlineFriLoaded = true;
+		isOfflineFriLoaded = true;
 	}
 	
 	
@@ -195,8 +254,18 @@ public class FriendLocation extends MapActivity implements View.OnClickListener{
 			if(DEBUG) Log.d(TAG,"Friends Activity click...");
 			startInAnimation();
 			isIn = true;
-			Toast.makeText(FriendLocation.this,getResources().getString(R.string.friendlocation_loading), Toast.LENGTH_SHORT).show();
-			initAllFriendLocationOverlays();
+			if(isOnlineFriLoaded&&isOfflineFriLoaded){
+				mOnlineFrilocOverlay.removeAllItems();
+				mOfflineFrilocOverlay.removeAllItems();
+				isOnlineFriLoaded = false;
+				isOfflineFriLoaded = false;
+			}else{
+				Toast.makeText(FriendLocation.this,getResources().getString(R.string.friendlocation_loading), Toast.LENGTH_SHORT).show();
+				initAllFriendLocationOverlays();
+				isOnlineFriLoaded = true;
+				isOfflineFriLoaded = true;
+			}
+
 		}else if(v==mMyvalidlocation){
 			if(DEBUG) Log.d(TAG,"My location click...");
 			startInAnimation();

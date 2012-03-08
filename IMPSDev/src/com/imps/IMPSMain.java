@@ -1,10 +1,8 @@
 package com.imps;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.Window;
 
@@ -21,7 +19,7 @@ import com.imps.services.impl.ServiceManager;
  * @author liwenhaosuper
  *
  */
-public class IMPSMain extends Activity {
+public class IMPSMain extends IMPSActivity {
 
 	private static String TAG = IMPSMain.class.getCanonicalName();
 	private static boolean DEBUG = IMPSDev.isDEBUG();
@@ -34,21 +32,19 @@ public class IMPSMain extends Activity {
 		setContentView(R.layout.main);
         gv = (GifView)findViewById(R.id.earth);
         if(DEBUG) Log.d(TAG,"onCreate");
-		if(ServiceManager.isStarted&&ServiceManager.getmAccount().isLogined()){
-			startMainActivity();	
+        
+		if(ServiceManager.isStarted&&ServiceManager.getmAccount()!=null&&ServiceManager.getmAccount().isLogined()){
+			startMainActivity();
+			finish();
+		}else{
+			gv.setGifImage(R.drawable.earth);
+			if(task!=null&&task.getStatus()==AsyncTask.Status.RUNNING){
+				task.cancel(true);
+			}
+			task = new IMPSMainTask();
+			task.execute();
 		}
-		if(!ServiceManager.isStarted){
-			if(DEBUG) Log.d(TAG,"ServiceManager.isStarted false");
-		}
-		if(!ServiceManager.getmAccount().isLogined()){
-			if(DEBUG) Log.d(TAG,"ServiceManager.getmAccount().isLogined() false");
-		}
-		gv.setGifImage(R.drawable.earth);
-		if(task!=null&&task.getStatus()==AsyncTask.Status.RUNNING){
-			task.cancel(true);
-		}
-		task = new IMPSMainTask();
-		task.execute();
+
 	}
 	@Override
 	public void onStop(){
@@ -62,11 +58,12 @@ public class IMPSMain extends Activity {
 		@Override
 		protected Integer doInBackground(Integer... params) {
 			publishProgress();
+			ServiceManager.start();
 			ServiceManager.getmConfig().setupDefault();
 			UserManager.setGlobaluser(new User());
 			UserManager.getGlobaluser().setUsername("test");
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(500);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -77,14 +74,15 @@ public class IMPSMain extends Activity {
 		}
 		@Override
 		protected void onPostExecute(Integer params){
-			startLoginActivity();
-//			if(ServiceManager.getmConfig().getPreferences().getBoolean(
-//					ConfigurationService.PREFERENCE_SHOW_PRELAUNCH_ACTIVITY,true))
-//			{
-//				startPreLaunchActivity();
-//			}else{
-//				startLoginActivity();
-//			}
+			//startLoginActivity();
+			if(ServiceManager.getmConfig().getPreferences().getBoolean(
+					ConfigurationService.PREFERENCE_SHOW_PRELAUNCH_ACTIVITY,true))
+			{
+				//startPreLaunchActivity();
+				startLoginActivity();
+			}else{
+				startLoginActivity();
+			}
 		}
 		@Override
 		protected void onPreExecute(){
@@ -102,7 +100,7 @@ public class IMPSMain extends Activity {
 	}
 	public void startMainActivity(){
         Intent intent = new Intent(this, IMPSContainer.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
         finish();
 	}

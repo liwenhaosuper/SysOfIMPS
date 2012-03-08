@@ -27,6 +27,8 @@ import com.imps.server.handler.baseLogic.SendPTPAudioReq;
 import com.imps.server.handler.baseLogic.SendPTPAudioRsp;
 import com.imps.server.handler.baseLogic.UpdateUserInfo;
 import com.imps.server.handler.baseLogic.UploadPortrait;
+import com.imps.server.handler.baseLogic.SendPTPVideoReq;
+import com.imps.server.handler.baseLogic.SendPTPVideoRsp;
 import com.imps.server.main.IMPSTcpServer;
 import com.imps.server.main.basetype.CommandId;
 import com.imps.server.main.basetype.User;
@@ -92,10 +94,12 @@ public class LogicHandler extends SimpleChannelUpstreamHandler{
 			new SendPTPAudioRsp(e.getChannel(),buffer,e.getRemoteAddress()).run();
 			break;
 		case CommandId.C_PTP_VIDEO_REQ:
-
+			System.out.println("server:p2p video req received");
+			new SendPTPVideoReq(e.getChannel(),buffer,e.getRemoteAddress()).run();
 			break;
 		case CommandId.C_PTP_VIDEO_RSP:
-
+			System.out.println("server:p2p video rsp received");
+			new SendPTPVideoRsp(e.getChannel(),buffer,e.getRemoteAddress()).run();
 			break;
 		case CommandId.C_SEARCH_FRIEND_REQ:
 			new SearchFriendReq(e.getChannel(),buffer).run();

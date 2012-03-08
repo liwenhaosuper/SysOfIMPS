@@ -5,19 +5,16 @@ package com.imps.activities;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import android.R.array;
-import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
@@ -37,11 +34,13 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.imps.IMPSActivity;
 import com.imps.IMPSDev;
 import com.imps.R;
 import com.imps.basetypes.Constant;
 import com.imps.basetypes.ListContentEntity;
 import com.imps.basetypes.MediaType;
+import com.imps.basetypes.SystemMsgType;
 import com.imps.basetypes.UserMessage;
 import com.imps.media.audio.Record;
 import com.imps.media.audio.Track;
@@ -51,7 +50,7 @@ import com.imps.services.impl.ServiceManager;
 import com.imps.ui.widget.ChattingAdapter;
 import com.imps.util.LocalDBHelper;
 
-public class ChatView extends Activity{
+public class ChatView extends IMPSActivity{
 	protected static final String TAG = ChatView.class.getCanonicalName();
 	private static boolean DEBUG = IMPSDev.isDEBUG();
 	private ListView mListView;
@@ -68,7 +67,10 @@ public class ChatView extends Activity{
 	private PopupWindow menuWindow = null;
 	private Record record = null;
 	private ChatViewReceiver receiver = new ChatViewReceiver();
-	private LocalDBHelper localDB = new LocalDBHelper(this); 
+	private LocalDBHelper localDB = new LocalDBHelper(this);
+	private static boolean resume = false;
+	
+	private static Map<Integer, String> faces = new HashMap<Integer, String>();
 	
 	@Override
 	public void onResume()
@@ -88,6 +90,7 @@ public class ChatView extends Activity{
 	public void onStop(){
 		super.onStop();
 		unregisterReceiver(receiver);
+
 	}
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
@@ -204,6 +207,174 @@ public class ChatView extends Activity{
 			}
 			
 		});
+		initFaceMap();
+	}
+	
+	private void initFaceMap() {
+		// TODO Auto-generated method stub
+		faces.put(R.drawable.exp_01, "[exp_01]");
+		faces.put(R.drawable.exp_02, "[exp_02]");
+		faces.put(R.drawable.exp_03, "[exp_03]");
+		faces.put(R.drawable.exp_04, "[exp_04]");
+		faces.put(R.drawable.exp_05, "[exp_05]");
+		faces.put(R.drawable.exp_06, "[exp_06]");
+		faces.put(R.drawable.exp_07, "[exp_07]");
+		faces.put(R.drawable.exp_08, "[exp_08]");
+		faces.put(R.drawable.exp_09, "[exp_09]");
+		faces.put(R.drawable.exp_10, "[exp_10]");
+		faces.put(R.drawable.exp_11, "[exp_11]");
+		faces.put(R.drawable.exp_12, "[exp_12]");
+		faces.put(R.drawable.exp_13, "[exp_13]");
+		faces.put(R.drawable.exp_14, "[exp_14]");
+		faces.put(R.drawable.exp_15, "[exp_15]");
+		faces.put(R.drawable.exp_16, "[exp_16]");
+		faces.put(R.drawable.exp_17, "[exp_17]");
+		faces.put(R.drawable.exp_18, "[exp_18]");
+		faces.put(R.drawable.exp_19, "[exp_19]");
+		faces.put(R.drawable.exp_20, "[exp_20]");
+		faces.put(R.drawable.exp_21, "[exp_21]");
+		faces.put(R.drawable.exp_22, "[exp_22]");
+		faces.put(R.drawable.exp_23, "[exp_23]");
+		faces.put(R.drawable.exp_24, "[exp_24]");
+		faces.put(R.drawable.exp_25, "[exp_25]");
+		faces.put(R.drawable.exp_26, "[exp_26]");
+		faces.put(R.drawable.e001, "[e001]");
+		faces.put(R.drawable.e002, "[e002]");
+		faces.put(R.drawable.e003, "[e003]");
+		faces.put(R.drawable.e004, "[e004]");
+		faces.put(R.drawable.e005, "[e005]");
+		faces.put(R.drawable.e00d, "[e00d]");
+		faces.put(R.drawable.e00e, "[e00e]");
+		faces.put(R.drawable.e00f, "[e00f]");
+		faces.put(R.drawable.e010, "[e010]");
+		faces.put(R.drawable.e011, "[e011]");
+		faces.put(R.drawable.e012, "[e012]");
+		faces.put(R.drawable.e020, "[e020]");
+		faces.put(R.drawable.e021, "[e021]");
+		faces.put(R.drawable.e022, "[e022]");
+		faces.put(R.drawable.e023, "[e023]");
+		faces.put(R.drawable.e036, "[e036]");
+		faces.put(R.drawable.e038, "[e038]");
+		faces.put(R.drawable.e03e, "[e03e]");
+		faces.put(R.drawable.e048, "[e048]");
+		faces.put(R.drawable.e049, "[e049]");
+		faces.put(R.drawable.e04a, "[e04a]");
+		faces.put(R.drawable.e04b, "[e04b]");
+		faces.put(R.drawable.e04c, "[e04c]");
+		faces.put(R.drawable.e04e, "[e04e]");
+		faces.put(R.drawable.e056, "[e056]");
+		faces.put(R.drawable.e057, "[e057]");
+		faces.put(R.drawable.e058, "[e058]");
+		faces.put(R.drawable.e059, "[e059]");
+		faces.put(R.drawable.e05a, "[e05a]");
+		faces.put(R.drawable.e105, "[e105]");
+		faces.put(R.drawable.e106, "[e106]");
+		faces.put(R.drawable.e107, "[e107]");
+		faces.put(R.drawable.e108, "[e108]");
+		faces.put(R.drawable.e10c, "[e10c]");
+		faces.put(R.drawable.e111, "[e111]");
+		faces.put(R.drawable.e115, "[e115]");
+		faces.put(R.drawable.e117, "[e117]");
+		faces.put(R.drawable.e11a, "[e11a]");
+		faces.put(R.drawable.e11c, "[e11c]");
+		faces.put(R.drawable.e11d, "[e11d]");
+		faces.put(R.drawable.e13c, "[e13c]");
+		faces.put(R.drawable.e13d, "[e13d]");
+		faces.put(R.drawable.e14c, "[e14c]");
+		faces.put(R.drawable.e14d, "[e14d]");
+		faces.put(R.drawable.e152, "[e152]");
+		faces.put(R.drawable.e153, "[e153]");
+		faces.put(R.drawable.e155, "[e155]");
+		faces.put(R.drawable.e156, "[e156]");
+		faces.put(R.drawable.e157, "[e157]");
+		faces.put(R.drawable.e201, "[e201]");
+		faces.put(R.drawable.e21c, "[e21c]");
+		faces.put(R.drawable.e21d, "[e21d]");
+		faces.put(R.drawable.e21e, "[e21e]");
+		faces.put(R.drawable.e21f, "[e21f]");
+		faces.put(R.drawable.e220, "[e220]");
+		faces.put(R.drawable.e221, "[e221]");
+		faces.put(R.drawable.e222, "[e222]");
+		faces.put(R.drawable.e22e, "[e22e]");
+		faces.put(R.drawable.e22f, "[e22f]");
+		faces.put(R.drawable.e230, "[e230]");
+		faces.put(R.drawable.e231, "[e231]");
+		faces.put(R.drawable.e253, "[e253]");
+		faces.put(R.drawable.e31d, "[e31d]");
+		faces.put(R.drawable.e31e, "[e31e]");
+		faces.put(R.drawable.e31f, "[e31f]");
+		faces.put(R.drawable.e326, "[e326]");
+		faces.put(R.drawable.e327, "[e327]");
+		faces.put(R.drawable.e328, "[e328]");
+		faces.put(R.drawable.e329, "[e329]");
+		faces.put(R.drawable.e32a, "[e32a]");
+		faces.put(R.drawable.e32b, "[e32b]");
+		faces.put(R.drawable.e32c, "[e32c]");
+		faces.put(R.drawable.e32d, "[e32d]");
+		faces.put(R.drawable.e32e, "[e32e]");
+		faces.put(R.drawable.e32f, "[e32f]");
+		faces.put(R.drawable.e330, "[e330]");
+		faces.put(R.drawable.e331, "[e331]");
+		faces.put(R.drawable.e334, "[e334]");
+		faces.put(R.drawable.e401, "[e401]");
+		faces.put(R.drawable.e402, "[e402]");
+		faces.put(R.drawable.e403, "[e403]");
+		faces.put(R.drawable.e404, "[e404]");
+		faces.put(R.drawable.e405, "[e405]");
+		faces.put(R.drawable.e406, "[e406]");
+		faces.put(R.drawable.e407, "[e407]");
+		faces.put(R.drawable.e408, "[e408]");
+		faces.put(R.drawable.e409, "[e409]");
+		faces.put(R.drawable.e40a, "[e40a]");
+		faces.put(R.drawable.e40b, "[e40b]");
+		faces.put(R.drawable.e40c, "[e40c]");
+		faces.put(R.drawable.e40d, "[e40d]");
+		faces.put(R.drawable.e40e, "[e40e]");
+		faces.put(R.drawable.e40f, "[e40f]");
+		faces.put(R.drawable.e410, "[e410]");
+		faces.put(R.drawable.e411, "[e411]");
+		faces.put(R.drawable.e412, "[e412]");
+		faces.put(R.drawable.e413, "[e413]");
+		faces.put(R.drawable.e414, "[e414]");
+		faces.put(R.drawable.e415, "[e415]");
+		faces.put(R.drawable.e416, "[e416]");
+		faces.put(R.drawable.e417, "[e417]");
+		faces.put(R.drawable.e418, "[e418]");
+		faces.put(R.drawable.e419, "[e419]");
+		faces.put(R.drawable.e41a, "[e41a]");
+		faces.put(R.drawable.e41b, "[e41b]");
+		faces.put(R.drawable.e41c, "[e41c]");
+		faces.put(R.drawable.e41d, "[e41d]");
+		faces.put(R.drawable.e41e, "[e41e]");
+		faces.put(R.drawable.e41f, "[e41f]");
+		faces.put(R.drawable.e420, "[e420]");
+		faces.put(R.drawable.e421, "[e421]");
+		faces.put(R.drawable.e422, "[e422]");
+		faces.put(R.drawable.e423, "[e423]");
+		faces.put(R.drawable.e424, "[e424]");
+		faces.put(R.drawable.e425, "[e425]");
+		faces.put(R.drawable.e426, "[e426]");
+		faces.put(R.drawable.e427, "[e427]");
+		faces.put(R.drawable.e428, "[e428]");
+		faces.put(R.drawable.e429, "[e429]");
+		faces.put(R.drawable.e436, "[e436]");
+		faces.put(R.drawable.e437, "[e437]");
+		faces.put(R.drawable.e438, "[e438]");
+		faces.put(R.drawable.e439, "[e439]");
+		faces.put(R.drawable.e43a, "[e43a]");
+		faces.put(R.drawable.e43b, "[e43b]");
+		faces.put(R.drawable.e443, "[e443]");
+		faces.put(R.drawable.e515, "[e515]");
+		faces.put(R.drawable.e516, "[e516]");
+		faces.put(R.drawable.e517, "[e517]");
+		faces.put(R.drawable.e518, "[e518]");
+		faces.put(R.drawable.e519, "[e519]");
+		faces.put(R.drawable.e51a, "[e51a]");
+		faces.put(R.drawable.e51b, "[e51b]");
+		faces.put(R.drawable.e51c, "[e51c]");
+		faces.put(R.drawable.e51e, "[e51e]");
+		faces.put(R.drawable.e51f, "[e51f]");
+		faces.put(R.drawable.e536, "[e536]");
 	}
 	
 	@Override
@@ -214,10 +385,14 @@ public class ChatView extends Activity{
 		case 0:{   //face
 			switch (resultCode){
 			case 0:{
-				if(data==null)
+				if(data==null){
+					if(DEBUG) Log.d(TAG,"Face data is null");
 					return;
+				}
 				int faceId = data.getIntExtra("selectedFace", 0);
-				String id = changeIdToStr(faceId);
+				if(DEBUG) Log.d(TAG,"FaceId:"+faceId);
+				String id = faces.get(faceId);
+				if(DEBUG) Log.d(TAG,"Id:"+id);
 		        Drawable drawable = getResources().getDrawable(faceId);   
 		        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());   
 		        SpannableString spannable = new SpannableString(id);   
@@ -249,65 +424,7 @@ public class ChatView extends Activity{
 		}
 		
 	}
-	
-	private String changeIdToStr(int faceId) {
-		// TODO Auto-generated method stub
-		switch (faceId){
-		case R.drawable.exp_01:
-			return "[exp_01]";
-		case R.drawable.exp_02:
-			return "[exp_02]";
-		case R.drawable.exp_03:
-			return "[exp_03]";
-		case R.drawable.exp_04:
-			return "[exp_04]";
-		case R.drawable.exp_05:
-			return "[exp_05]";
-		case R.drawable.exp_06:
-			return "[exp_06]";
-		case R.drawable.exp_07:
-			return "[exp_07]";
-		case R.drawable.exp_08:
-			return "[exp_08]";
-		case R.drawable.exp_09:
-			return "[exp_09]";
-		case R.drawable.exp_10:
-			return "[exp_10]";
-		case R.drawable.exp_11:
-			return "[exp_11]";
-		case R.drawable.exp_12:
-			return "[exp_12]";
-		case R.drawable.exp_13:
-			return "[exp_13]";
-		case R.drawable.exp_14:
-			return "[exp_14]";
-		case R.drawable.exp_15:
-			return "[exp_15]";
-		case R.drawable.exp_16:
-			return "[exp_16]";
-		case R.drawable.exp_17:
-			return "[exp_17]";
-		case R.drawable.exp_18:
-			return "[exp_18]";
-		case R.drawable.exp_19:
-			return "[exp_19]";
-		case R.drawable.exp_20:
-			return "[exp_20]";
-		case R.drawable.exp_21:
-			return "[exp_21]";
-		case R.drawable.exp_22:
-			return "[exp_22]";
-		case R.drawable.exp_23:
-			return "[exp_23]";
-		case R.drawable.exp_24:
-			return "[exp_24]";
-		case R.drawable.exp_25:
-			return "[exp_25]";
-		case R.drawable.exp_26:
-			return "[exp_26]";
-		}
-		return null;
-	}
+
 	private void setAdapterForThis() {
 		// TODO Auto-generated method stub
 		listAdapter = new ChattingAdapter(this,list);
@@ -319,23 +436,45 @@ public class ChatView extends Activity{
 	private void initMessages() {
 		// TODO Auto-generated method stub
 		if(DEBUG) Log.d(TAG, "ChatView:listview count is "+mListView.getCount());
-		if(mListView.getCount()==0&&UserManager.CurSessionFriList.containsKey(fUsername))
+		
+		if(fUsername.equals("SysAdmin")){
+			for(int i=0;i<UserManager.mSysMsgs.size();i++){
+				SystemMsgType sysmsg=UserManager.mSysMsgs.get(i);
+				String content=sysmsg.text;
+				content+="\n";
+				content+=getResources().getString(R.string.goto_sysmsg);
+				list.add(new ListContentEntity(fUsername,
+
+						sysmsg.time,content,ListContentEntity.MESSAGE_FROM));
+			}
+			return;
+		}
+		
+		
+		if(UserManager.CurSessionFriList.containsKey(fUsername))
 		{
-			if(DEBUG) Log.d(TAG, "ChatView:initialing the chat view with old msg");
+			Log.d(TAG, "ChatView:initialing the chat view with old msg");
 			
 			// Add local history message to current session's message list
-			ArrayList<UserMessage> history = localDB.fetchMsg(fUsername);
-			if (history != null) {
-				for (UserMessage m : history) {
-					if (m.getDir() == 1)
-						list.add(new ListContentEntity(m.getFriend(), m
-								.getTime(), m.getContent(),
-								ListContentEntity.MESSAGE_FROM));
-					else
-						list.add(new ListContentEntity(m.getFriend(), m
-								.getTime(), m.getContent(),
-								ListContentEntity.MESSAGE_TO));
+			if (!resume && UserManager.CurSessionFriList.get(fUsername).size() == 0) {
+				// Add local history message to current session's message list
+				ArrayList<UserMessage> history = localDB.fetchMsg(fUsername);
+				List<MediaType> mbox = UserManager.CurSessionFriList.get(fUsername);
+				if (history != null) {
+					for (UserMessage m : history) {
+						if (m.getDir() == 1)
+//							list.add(new ListContentEntity(m.getFriend(), m
+//									.getTime(), m.getContent(),
+//									ListContentEntity.MESSAGE_FROM));
+							mbox.add(new MediaType(MediaType.SMS,m.getContent(),MediaType.from));
+						else
+//							list.add(new ListContentEntity(UserManager.globaluser.getUsername(), m
+//									.getTime(), m.getContent(),
+//									ListContentEntity.MESSAGE_TO));
+							mbox.add(new MediaType(MediaType.SMS,m.getContent(),MediaType.to));
+					}
 				}
+				resume = true;
 			}
 			
 			// Add received messages in the active chat session
@@ -407,14 +546,18 @@ public class ChatView extends Activity{
 					return;
 				}
 				String ip = ServiceManager.getmNet().getLocalIP(false);
+				if(ip==null){
+					Toast.makeText(ChatView.this, getResources().getString(R.string.net_problem),Toast.LENGTH_SHORT).show();
+					return;
+				}
 				if(DEBUG) Log.d(TAG, "IP sent is "+ ip);
-				//ServiceManager.getmMedia().SendPTPVideoReq(fUsername, ip, 1300);
+				ServiceManager.getmVideo().SendPTPVideoReq(fUsername, ip, 1300);
 				if(DEBUG) Log.d(TAG, "ptp video request sent");
-				//ComponentName cn=new ComponentName(ChatView.this,VideoContact2.class);
-				//Intent intent=new Intent();
-				//intent.putExtra("fUsername", fUsername);
-				//intent.setComponent(cn);
-				//startActivity(intent);
+				ComponentName cn=new ComponentName(ChatView.this,VideoContact.class);
+				Intent intent=new Intent();
+				intent.putExtra("fUsername", fUsername);
+				intent.setComponent(cn);
+				startActivity(intent);
 			}else if(v.getId()==graffitiImageIv.getId()){
 				if(DEBUG) Log.d(TAG, "graffiti clicked...");
 				ComponentName cn=new ComponentName(ChatView.this,Graffiti.class);
@@ -433,13 +576,13 @@ public class ChatView extends Activity{
 			if(UserManager.CurSessionFriList.containsKey(fUsername))
 			{
 				 UserManager.CurSessionFriList.get(fUsername).add(item);
-				 if(DEBUG) Log.d(TAG,"adding to the list");
+				 if(DEBUG) Log.d(TAG,"adding to the list jyh");
 			}
 			else{
 				List<MediaType> newmsgbox = new ArrayList<MediaType>();
 				newmsgbox.add(item);
 				UserManager.CurSessionFriList.put(fUsername, newmsgbox);
-				if(DEBUG) Log.d(TAG,"adding to the list with new msg");
+				if(DEBUG) Log.d(TAG,"adding to the list with new msg jyh");
 			}
 			ServiceManager.getmSms().sendSms(item);
 			

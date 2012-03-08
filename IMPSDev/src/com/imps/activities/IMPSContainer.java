@@ -1,5 +1,7 @@
 package com.imps.activities;
 
+import java.util.ArrayList;
+
 import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,9 +13,13 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TabHost;
 
 import com.imps.IMPSDev;
+import com.imps.IMPSMain;
 import com.imps.R;
+import com.imps.basetypes.MediaType;
+import com.imps.net.handler.UserManager;
 import com.imps.receivers.IMPSBroadcastReceiver;
 import com.imps.services.impl.ServiceManager;
+import com.imps.util.LocalDBHelper;
 
 public class IMPSContainer extends TabActivity{
 	private static String TAG = IMPSContainer.class.getCanonicalName();
@@ -25,6 +31,7 @@ public class IMPSContainer extends TabActivity{
 	public static final String TAB_CURRENTSESSIONS="currentsession";
 	public static final String TAB_SYSMSG="sysmsg";
 	public static final String TAB_MAP = "map";
+	public static final String TAB_SNS = "sns";
 	
 	public static final int SETTING = Menu.FIRST + 1;
 	public static final int MYCARD = Menu.FIRST+2;
@@ -33,6 +40,25 @@ public class IMPSContainer extends TabActivity{
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		if(DEBUG) Log.d(TAG,"Container create");
+		ServiceManager.getmScreen().addScreen(this.getClass());
+		if(!ServiceManager.isStarted||ServiceManager.getmAccount()==null||!ServiceManager.getmAccount().isLogined()){	
+			startActivity(new Intent(IMPSContainer.this,IMPSMain.class));
+			finish();
+			return;
+		}
+		/* get recent contact from local database */
+		UserManager.buildLocalDB(this);
+		LocalDBHelper localDB = UserManager.localDB;
+		ArrayList<String> recentFriends = localDB.fetchRecentContacts();
+		if (recentFriends == null) {
+			Log.d(TAG, "fail to restore recent contact from local db");
+		} else {
+			for (String s : recentFriends) {
+				UserManager.CurSessionFriList.put(s, new ArrayList<MediaType>());
+			}
+		}
+
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.maincontainer);
 		registerReceiver(receiver,receiver.getFilter());
@@ -50,6 +76,9 @@ public class IMPSContainer extends TabActivity{
 		tabHost.addTab(tabHost.newTabSpec(TAB_MAP)
 	    		.setIndicator(TAB_MAP)
 	    		.setContent(new Intent(this,MapContainer.class)));
+		tabHost.addTab(tabHost.newTabSpec(TAB_SNS)
+	    		.setIndicator(TAB_SNS)
+	    		.setContent(new Intent(this,SnsMain.class)));
 		Intent intent = getIntent();
 		int tag = 0;
 		if(intent!=null){
@@ -72,6 +101,9 @@ public class IMPSContainer extends TabActivity{
 				case R.id.radio_map:
 					tabHost.setCurrentTabByTag(TAB_MAP);
 					break;
+				case R.id.radio_sns:
+					tabHost.setCurrentTabByTag(TAB_SNS);
+					break;
 				default:
 					break;
 				}
@@ -93,11 +125,19 @@ public class IMPSContainer extends TabActivity{
 	@Override 
 	public void onResume(){
 		super.onResume();
+		if(DEBUG) Log.d(TAG,"Container resume");
 		registerReceiver(receiver,receiver.getFilter());
 	}
 	@Override
 	public void onStop(){
 		super.onStop();
+		if(DEBUG) Log.d(TAG,"Container stop");
 		unregisterReceiver(receiver);
+		ServiceManager.getmScreen().removeScreen(this.getClass());
+	}
+	@Override
+	public void onPause(){
+		super.onPause();
+		if(DEBUG) Log.d(TAG,"Container pause");
 	}
 }

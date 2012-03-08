@@ -112,4 +112,12 @@ public class CommandId {
 	public static final byte S_UPLOAD_PORTRAIT_RSP = 39;
 	
 	public static final byte S_SEND_PORTRAIT_REQ = 40;
+	public static final byte C_DOODLE_REQ = 36;
+	public static final byte C_DOODLE_RSP = 37;
+	public static final byte S_DOODLE_REQ = 38;
+	public static final byte S_DOODLE_RSP = 39;
+	public static final byte DOODLE_DATA = 40;
+	public static final byte DOODLE_LOGIN = 41;
+	public static final byte DOODLE_ONLINEFRIENDLIST = 42;
+	public static final byte DOODLE_STATUSNOTIFY = 43;
 }
