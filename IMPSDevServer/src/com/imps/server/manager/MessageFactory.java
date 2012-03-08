@@ -324,7 +324,11 @@ public class MessageFactory {
 			byte[] nm = username.getBytes("GB2312");
 			outMsg.getOutputStream().writeInt(len);
 			outMsg.getOutputStream().write(nm);
-		} catch (IOException e) {e.printStackTrace();}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return outMsg;
+	}
 	
 	///Doodle part
 	
