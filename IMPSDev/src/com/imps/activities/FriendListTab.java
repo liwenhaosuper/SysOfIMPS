@@ -134,11 +134,21 @@ public class FriendListTab extends ExpandableListActivity{
 		switch(item.getItemId())
 		{
 		case IMPSContainer.SETTING:
+		{
 			ComponentName cn=new ComponentName(FriendListTab.this,FindFriend.class);
 			
 			Intent intent=new Intent();
 			intent.setComponent(cn);
 			startActivity(intent);
+		}
+			break;
+		case IMPSContainer.MYCARD:
+		{
+			ComponentName cn = new ComponentName(FriendListTab.this,MyCard.class);
+			Intent intent = new Intent();
+			intent.setComponent(cn);
+			startActivity(intent);
+		}
 			break;
 		case IMPSContainer.ABOUT:
 		{
