@@ -1,9 +1,13 @@
 package com.imps.util;
 
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -29,9 +33,10 @@ public class LocalDBHelper extends SQLiteOpenHelper {
 	private static final String TABLE_CREAT_MAIN = "CREATE TABLE IF NOT EXISTS " +
 			MSG_TABLE_NAME + 
 			" (msg_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
-			"content TEXT NOT NULL, time TEXT NOT NULL, " +
+			"content TEXT NOT NULL, time LONG NOT NULL, " +
 			"friend TEXT NOT NULL, " +
-			"dir INTEGER NOT NULL);";
+			"dir INTEGER NOT NULL," +
+			"type INTEGER NOT NULL);";
 	
 	private static final String TABLE_CREAT_RECENT = "CREATE TABLE IF NOT EXISTS " + 
 			RCT_TABLE_NAME + 
@@ -61,16 +66,19 @@ public class LocalDBHelper extends SQLiteOpenHelper {
 	 * @param time time of the message
 	 * @param sender sender of the message
 	 * @param dir direction of the message, 1: from {@link friend}, 0: to {@link friend}
+	 * @throws ParseException 
+	 * @throws SQLException 
 	 */
-	public void storeMsg(String content, String time, String friend, int dir) {
+	public void storeMsg(String content, String time, String friend, int dir, int type) throws SQLException, ParseException {
 		SQLiteDatabase msgdb = getWritableDatabase();
 		if (msgdb == null) {
 			Log.d("LOCALDB", "fail to get writable database");
 			return;
 		}
-		msgdb.execSQL("INSERT INTO " + MSG_TABLE_NAME + "(content, time, friend, dir) values (\""
-				+ content + "\", \"" + time + "\", \"" + friend + "\", " + dir + ")");
+		msgdb.execSQL("INSERT INTO " + MSG_TABLE_NAME + "(content, time, friend, dir, type) values (\""
+				+ content + "\", " + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(time).getTime() + ", \"" + friend + "\", " + dir + ", " + type + ")");
 		msgdb.close();
+		updateRecentContact(friend);
 	}
 
 	/**
@@ -94,7 +102,10 @@ public class LocalDBHelper extends SQLiteOpenHelper {
 		} else {
 			do {
 				UserMessage msg = new UserMessage(result.getString(1),
-						result.getString(2), result.getString(3), result.getInt(4));
+						result.getString(2),
+						new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+						.format(new Date(result.getLong(3))),
+						result.getInt(4));
 				historyList.add(msg);
 				result.moveToNext();
 			} while (!result.isAfterLast());
@@ -126,13 +137,46 @@ public class LocalDBHelper extends SQLiteOpenHelper {
 		} else {
 			do {
 				UserMessage msg = new UserMessage(result.getString(1),
-						result.getString(2), result.getString(3), result.getInt(4));
+						result.getString(2),
+						new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+						.format(new Date(result.getLong(3))),
+						result.getInt(4));
 				historyList.add(msg);
 				result.moveToNext();
 			} while (!result.isAfterLast());
 			result.close();
 			msgdb.close();
 			return historyList;
+		}
+	}
+	
+	/**
+	 * Get the latest message belonging to current user
+	 * from  {@link #fetchMsg(String friend) friend}
+	 * @param friend
+	 * @return
+	 */
+	public UserMessage fetchLatest(String friend) {		
+		SQLiteDatabase msgdb = getReadableDatabase();
+		if (msgdb == null) {
+			Log.d("LOCALDB", "fail to get readable database");
+			return null;
+		}
+		Cursor result = msgdb.query(MSG_TABLE_NAME, null, "friend=?", new String[] { friend }, null, null, "msg_id desc");
+		if (result.getCount() < 1) {
+			result.close();
+			msgdb.close();
+			return null;
+		} else {
+				UserMessage msg = new UserMessage(result.getString(1),
+				result.getString(2),
+				new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+				.format(new Date(result.getLong(3))),
+				result.getInt(4));
+				result.moveToNext();
+			result.close();
+			msgdb.close();
+			return msg;
 		}
 	}
 	
@@ -183,6 +227,7 @@ public class LocalDBHelper extends SQLiteOpenHelper {
 		} else  {
 			rcdb.execSQL("UPDATE " + RCT_TABLE_NAME + " SET time=" +
 					new java.util.Date().getTime() + " WHERE friend=\"" + friend + "\"");
+			rcdb.close();
 		}
 	}
 }

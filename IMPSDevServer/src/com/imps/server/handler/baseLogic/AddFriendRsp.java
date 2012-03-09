@@ -87,6 +87,10 @@ public class AddFriendRsp extends MessageProcessTask{
 			}
 			int res = inMsg.readInt();
 	        User fri = manager.getUser(friendname);
+	        if (fri == null) {
+	        	// TODO SAVE THIS MSG TO DB
+	        	return;
+	        }
 	        if(res==1)
 	        {
 	        	System.out.println("add friend rsp:true");
