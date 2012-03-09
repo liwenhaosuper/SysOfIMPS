@@ -83,7 +83,7 @@ public class AccountService implements IConnEvent{
 	public void onConnected() {
 		// TODO Auto-generated method stub
 		isConnected = true;
-		if(autoAuth){
+		if(autoAuth&&isLogined){
 			if(DEBUG)Log.d(TAG,"loginning...");
 			login(userName,userPwd);
 		}

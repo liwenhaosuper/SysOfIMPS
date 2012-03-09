@@ -48,6 +48,9 @@ public class FriendListRequest extends MessageProcessTask{
 			if(user==null)
 			{
 				user = manager.getUserFromDB(userName);
+				if(user==null){
+					return;
+				}
 				user.setStatus(userStatus.ONLINE);
 				user.setSessionId(session.getId());
 				manager.addUser(user);

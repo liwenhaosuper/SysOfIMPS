@@ -119,6 +119,9 @@ public class LogicHandler extends SimpleChannelUpstreamHandler{
 			System.out.println("server: upload user portrait!");
 			new UploadPortrait(e.getChannel(),buffer).run();
 			break;
+		case CommandId.C_STATUS_NOTIFY:
+			System.out.println("server: status notify");
+			break;
 		default:
 			System.out.println("server:unhandled msg received:"+cmdType);
 			buffer.clear();

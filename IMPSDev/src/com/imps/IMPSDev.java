@@ -46,6 +46,7 @@ public class IMPSDev extends Application {
 			ServiceManager.notifManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 			if(DEBUG) Log.d(TAG,"Notify manager is created");
 		}
+		if(DEBUG) Log.d(TAG,"TEL:"+getDeviceURN());
 	}
 	@Override
 	public void onTerminate(){
