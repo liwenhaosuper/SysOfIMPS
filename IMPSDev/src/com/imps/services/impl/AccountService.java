@@ -86,12 +86,12 @@ public class AccountService implements IConnEvent{
 	public void onDisconnected() {
 		// TODO Auto-generated method stub
 		isConnected = false;
-		isLogined = false;
+		//isLogined = false;
 		if(DEBUG)Log.d(TAG,"onDisconnected...");
 	}
 	public void onLoginError() {
 		isConnected = true;
-		isLogined = false;
+		//isLogined = false;
 		autoAuth = false;
 	}
 	public void onLoginSuccess() {
