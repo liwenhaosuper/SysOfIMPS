@@ -330,7 +330,7 @@ public class MyCard extends IMPSActivity {
 		case KeyEvent.KEYCODE_BACK:
 			if (executor != null && !executor.isCancelled()) {
 				executor.cancel(true);
-				return true;
+				//return true;
 			}
 		}
 		return super.onKeyDown(keyCode, event);

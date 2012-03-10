@@ -28,6 +28,7 @@ public class TcpConnectionHandler extends ReplayingDecoder<VoidEnum> implements 
 	private static boolean DEBUG =IMPSDev.isDEBUG();
 	private static String TAG = TcpConnectionHandler.class.getCanonicalName();
 	private static int RECONNECT_DELAY = 2000;
+	private static int PERIOD = 5000;
 	private final ClientBootstrap bootstrap;
 	private List<IConnEvent> mConnList;
 	private InetSocketAddress addr;
@@ -86,7 +87,7 @@ public class TcpConnectionHandler extends ReplayingDecoder<VoidEnum> implements 
 				ConnectionService.setChannel(bootstrap.connect(addr).getChannel());
 				if(DEBUG) Log.d(TAG,"Reconnecting...");
 			}
-        }, RECONNECT_DELAY,RECONNECT_DELAY);
+        }, RECONNECT_DELAY,PERIOD);
     }
     @Override
     public void channelConnected(ChannelHandlerContext ctx, ChannelStateEvent e) {

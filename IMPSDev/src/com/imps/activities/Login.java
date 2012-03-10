@@ -79,7 +79,7 @@ public class Login extends IMPSActivity{
 				if(intent!=null){
 					String action = intent.getAction();
 					if(action==null||!action.equals(Constant.LOGOUT)){
-						startLogin();
+						//startLogin();
 					}
 				}
 				
@@ -99,7 +99,7 @@ public class Login extends IMPSActivity{
 		mRemPwd = (CheckBox) findViewById(R.id.login_cb_savepwd);
 		mAutoLogin =(CheckBox)findViewById(R.id.login_auto);
 		if(ServiceManager.getmConfig().getPreferences().getBoolean(ConfigurationService.REMEMBERPASSWORD, false)){
-			mRemPwd.setChecked(false);
+			mRemPwd.setChecked(true);
 		}
 		if(ServiceManager.getmConfig().getPreferences().getBoolean(ConfigurationService.AUTOLOGIN, false)){
 			mAutoLogin.setChecked(false);
@@ -137,6 +137,7 @@ public class Login extends IMPSActivity{
 			showDialog(NET_ERROR);
 			return;
 		}
+		if(DEBUG) Log.d(TAG,"StartLogin()");
 		username = account.getText().toString();
 		password = pwd.getText().toString();
 		if(username==null||password==null||"".equals(username)||"".equals(password)){
