@@ -91,13 +91,13 @@ public class SmsService implements ISmsService{
 		}*/
 		if(DEBUG)Log.d(TAG,"Sending audio...");
 		mUnsendList.add(item);
-		if(item.getType()==MediaType.AUDIO&&item.getContant()!=null){
-			for(int i=0;i<item.getContant().size();i++){
+		if(item.getType()==MediaType.AUDIO&&item.getContent()!=null){
+			for(int i=0;i<item.getContent().size();i++){
 				if(ServiceManager.getmTcpConn().getChannel().isConnected()){
 					ServiceManager.getmTcpConn().getChannel().write(ChannelBuffers.wrappedBuffer(
 							MessageFactory.createCAudioReq(UserManager.getGlobaluser().getUsername(), 
-									item.getFriend(), item.getContant().get(i),item.getId(),
-									i==(item.getContant().size()-1)?true:false).build()));
+									item.getFriend(), item.getContent().get(i),item.getId(),
+									i==(item.getContent().size()-1)?true:false).build()));
 				}
 			}
 		}

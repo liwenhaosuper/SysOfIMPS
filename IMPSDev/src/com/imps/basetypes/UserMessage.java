@@ -8,12 +8,16 @@ public class UserMessage {
 	private String time;
 	private String friend;
 	private int    dir;
+	private int    type;
 
-	public UserMessage(String content, String time, String friend, int dir) {
+	public UserMessage(String content, String time, String friend, int dir,
+			int type) {
+		super();
 		this.content = content;
 		this.time = time;
 		this.friend = friend;
 		this.dir = dir;
+		this.type = type;
 	}
 
 	public UserMessage() {
@@ -50,6 +54,14 @@ public class UserMessage {
 
 	public void setDir(int dir) {
 		this.dir = dir;
+	}
+
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
 	}
 
 }

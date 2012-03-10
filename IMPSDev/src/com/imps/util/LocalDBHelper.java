@@ -105,7 +105,7 @@ public class LocalDBHelper extends SQLiteOpenHelper {
 						result.getString(2),
 						new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
 						.format(new Date(result.getLong(3))),
-						result.getInt(4));
+						result.getInt(4), result.getInt(5));
 				historyList.add(msg);
 				result.moveToNext();
 			} while (!result.isAfterLast());
@@ -140,7 +140,7 @@ public class LocalDBHelper extends SQLiteOpenHelper {
 						result.getString(2),
 						new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
 						.format(new Date(result.getLong(3))),
-						result.getInt(4));
+						result.getInt(4), result.getInt(5));
 				historyList.add(msg);
 				result.moveToNext();
 			} while (!result.isAfterLast());
@@ -172,7 +172,7 @@ public class LocalDBHelper extends SQLiteOpenHelper {
 				result.getString(2),
 				new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
 				.format(new Date(result.getLong(3))),
-				result.getInt(4));
+				result.getInt(4), result.getInt(5));
 				result.moveToNext();
 			result.close();
 			msgdb.close();
@@ -209,6 +209,12 @@ public class LocalDBHelper extends SQLiteOpenHelper {
 		}
 	}
 	
+	/**
+	 * update recent contacts to database 
+	 * if the contact already exists, update its last-chat-time</br>
+	 * else insert a new recent contact to database
+	 * @param friend the contact to be added
+	 */
 	public void updateRecentContact(String friend) {
 		SQLiteDatabase rcdb = getWritableDatabase();
 		if (rcdb == null) {
@@ -225,6 +231,7 @@ public class LocalDBHelper extends SQLiteOpenHelper {
 					friend + "\", " + new java.util.Date().getTime() + ")");
 			rcdb.close();
 		} else  {
+			existResult.close();
 			rcdb.execSQL("UPDATE " + RCT_TABLE_NAME + " SET time=" +
 					new java.util.Date().getTime() + " WHERE friend=\"" + friend + "\"");
 			rcdb.close();

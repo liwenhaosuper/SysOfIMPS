@@ -48,12 +48,13 @@ public class IMPSContainer extends TabActivity{
 			return;
 		}
 		/* get recent contact from local database */
-		UserManager.buildLocalDB(this);
+		UserManager.buildLocalDB(IMPSDev.getContext());
 		LocalDBHelper localDB = UserManager.localDB;
 		ArrayList<String> recentFriends = localDB.fetchRecentContacts();
 		if (recentFriends == null) {
 			Log.d(TAG, "fail to restore recent contact from local db");
 		} else {
+			Log.d(TAG, recentFriends.toString());
 			for (String s : recentFriends) {
 				UserManager.CurSessionFriList.put(s, new ArrayList<MediaType>());
 			}

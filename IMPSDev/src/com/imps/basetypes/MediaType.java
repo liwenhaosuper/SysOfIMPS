@@ -63,7 +63,7 @@ public class MediaType {
 	public void setId(int id){
 		this.id = id;
 	}
-	public List<byte[]> getContant(){
+	public List<byte[]> getContent(){
 		return content;
 	}
 	public void setContant(List<byte[]> content){

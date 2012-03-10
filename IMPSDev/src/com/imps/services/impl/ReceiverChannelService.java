@@ -1,5 +1,6 @@
 package com.imps.services.impl;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -8,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import android.content.Intent;
+import android.database.SQLException;
 import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Message;
@@ -26,6 +28,7 @@ import com.imps.basetypes.SystemMsgType;
 import com.imps.basetypes.User;
 import com.imps.net.handler.UserManager;
 import com.imps.util.CommonHelper;
+import com.imps.util.LocalDBHelper;
 
 public class ReceiverChannelService {
 	private static boolean DEBUG = IMPSDev.isDEBUG();
@@ -134,12 +137,28 @@ public class ReceiverChannelService {
 					item.add(media);
 					UserManager.CurSessionFriList.put(media.getFriend(), item);
 				}
+				
+				// store received message to database
+				try {
+					new LocalDBHelper(IMPSDev.getContext()).storeMsg(((MediaType)msg.obj).getMsgContant(),
+							((MediaType)msg.obj).getTime(),
+							((MediaType)msg.obj).getFriend(),
+							MediaType.from/* From friend */, MediaType.SMS);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+				
 				Intent sms = new Intent(Constant.SMS);
 				sms.putExtra(Constant.SMSCONTENT, ((MediaType)msg.obj).getMsgContant());
 				sms.putExtra(Constant.USERNAME, ((MediaType)msg.obj).getFriend());
+				Log.d(TAG, ((MediaType)msg.obj).getFriend());
 				sms.putExtra(Constant.TIME, ((MediaType)msg.obj).getTime());
 				IMPSDev.getContext().sendBroadcast(sms);
-				
+
+				// if user is just chatting with the friend, then do nothing
+				// else send a notification
 				if(UserManager.activeFriend!=null&&UserManager.activeFriend.equals(media.getFriend())){
 					return;
 				}
@@ -389,7 +408,7 @@ public class ReceiverChannelService {
 			}
 			usersAudioData.remove(key);
 			if(UserManager.activeFriend!=null&&UserManager.activeFriend.equals(friName)){
-				ListContentEntity entity = new ListContentEntity(friName,media.getTime(),"",ListContentEntity.MESSAGE_FROM_AUDIO,media.getContant());
+				ListContentEntity entity = new ListContentEntity(friName,media.getTime(),"",ListContentEntity.MESSAGE_FROM_AUDIO,media.getContent());
 				ChatView.list.add(entity);
 				//TODO:Notify the user
 			}else{
