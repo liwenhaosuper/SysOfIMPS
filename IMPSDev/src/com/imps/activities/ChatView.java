@@ -2,6 +2,7 @@ package com.imps.activities;
 
 
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,6 +14,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.SQLException;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Spannable;
@@ -69,7 +71,7 @@ public class ChatView extends IMPSActivity{
 	private PopupWindow menuWindow = null;
 	private Record record = null;
 	private ChatViewReceiver receiver = new ChatViewReceiver();
-	private LocalDBHelper localDB = new LocalDBHelper(this);
+	private LocalDBHelper localDB = new LocalDBHelper(IMPSDev.getContext());
 	private static boolean resume = false;
 	
 	private static Map<Integer, String> faces = new HashMap<Integer, String>();
@@ -79,7 +81,6 @@ public class ChatView extends IMPSActivity{
 	{
 		UserManager.activeFriend = fUsername;
 		super.onResume();
-		registerReceiver(receiver,receiver.getFilter());
 		listAdapter.notifyDataSetChanged();
 	}
 	@Override
@@ -103,6 +104,7 @@ public class ChatView extends IMPSActivity{
 		mListView = (ListView) findViewById(R.id.chatting_history_lv);
 		Intent fi = this.getIntent();
 		fUsername = fi.getStringExtra("fUsername");
+		registerReceiver(receiver,receiver.getFilter());
 		setAdapterForThis();
 		send = (Button) findViewById(R.id.send_button);
 		send.setOnClickListener(l);
@@ -136,9 +138,9 @@ public class ChatView extends IMPSActivity{
                     MediaType media = new MediaType(MediaType.AUDIO,record.dataList,MediaType.to);
                     media.setFriend(fUsername);media.setTime(getTime());
                     if(DEBUG){
-                    	Log.d(TAG,"Audio size:"+media.getContant().size());
+                    	Log.d(TAG,"Audio size:"+media.getContent().size());
                     }
-                    if(media.getContant().size()<3){
+                    if(media.getContent().size()<3){
                     	if(DEBUG)Log.d(TAG,"Audio data too small...");
                     	break;
                     }
@@ -155,7 +157,7 @@ public class ChatView extends IMPSActivity{
         			}
                     ServiceManager.getmSms().SendAudio(media);
             	    ListContentEntity d4 = new ListContentEntity(UserManager.getGlobaluser().getUsername(),getTime(),
-            	    		"",ListContentEntity.MESSAGE_TO_AUDIO,media.getContant());
+            	    		"",ListContentEntity.MESSAGE_TO_AUDIO,media.getContent());
             		list.add(d4);
             		listAdapter.notifyDataSetChanged();
 					break;
@@ -474,58 +476,59 @@ public class ChatView extends IMPSActivity{
 			Log.d(TAG, "ChatView:initialing the chat view with old msg");
 			
 			// Add local history message to current session's message list
-			if (!resume && UserManager.CurSessionFriList.get(fUsername).size() == 0) {
-				// Add local history message to current session's message list
-				ArrayList<UserMessage> history = localDB.fetchMsg(fUsername);
-				List<MediaType> mbox = UserManager.CurSessionFriList.get(fUsername);
-				if (history != null) {
-					for (UserMessage m : history) {
-						if (m.getDir() == 1)
-//							list.add(new ListContentEntity(m.getFriend(), m
-//									.getTime(), m.getContent(),
-//									ListContentEntity.MESSAGE_FROM));
-							mbox.add(new MediaType(MediaType.SMS,m.getContent(),MediaType.from));
-						else
-//							list.add(new ListContentEntity(UserManager.globaluser.getUsername(), m
-//									.getTime(), m.getContent(),
-//									ListContentEntity.MESSAGE_TO));
-							mbox.add(new MediaType(MediaType.SMS,m.getContent(),MediaType.to));
-					}
-				}
-				resume = true;
-			}
-			
+//			if (!resume && UserManager.CurSessionFriList.get(fUsername).size() == 0) {
+//				// Add local history message to current session's message list
+//				ArrayList<UserMessage> history = localDB.fetchMsg(fUsername);
+//				List<MediaType> mbox = UserManager.CurSessionFriList.get(fUsername);
+//				if (history != null) {
+//					for (UserMessage m : history) {
+//						if (m.getDir() == 1)
+////							list.add(new ListContentEntity(m.getFriend(), m
+////									.getTime(), m.getContent(),
+////									ListContentEntity.MESSAGE_FROM));
+//							mbox.add(new MediaType(MediaType.SMS,m.getContent(),MediaType.from));
+//						else
+////							list.add(new ListContentEntity(UserManager.globaluser.getUsername(), m
+////									.getTime(), m.getContent(),
+////									ListContentEntity.MESSAGE_TO));
+//							mbox.add(new MediaType(MediaType.SMS,m.getContent(),MediaType.to));
+//					}
+//				}
+//				resume = true;
+//			}
+//			
 			// Add received messages in the active chat session
-			List<MediaType> mbox = UserManager.CurSessionFriList.get(fUsername);
-			MediaType media;
-			String msg;
-			for(int i=0;i<mbox.size();i++)
+//			List<MediaType> mbox = UserManager.CurSessionFriList.get(fUsername);
+			UserMessage record;
+			ArrayList<UserMessage> history = localDB.fetchMsg(fUsername);
+//			String msg;
+			for(int i=0;i<history.size();i++)
 			{
-				if(DEBUG) Log.d(TAG, ""+i+" "+ mbox.get(i));
-				media = mbox.get(i);
-                String fname = media.getDirecet()==MediaType.from?media.getFriend():UserManager.globaluser.getUsername();
-                msg = media.getMsgContant();
-                String date = media.getTime();
+				if(DEBUG) Log.d(TAG, ""+i+" "+ history.get(i));
+				record = history.get(i);
+                String fname = record.getDir()==MediaType.from?record.getFriend():UserManager.globaluser.getUsername();
+                String msg = record.getContent();
+                String date = record.getTime();
                 if(fname.equals(UserManager.getGlobaluser().getUsername()))
                 {
-                	if(media.getType()==MediaType.SMS){
+                	if(record.getType()==MediaType.SMS){
                     	ListContentEntity d1 = new ListContentEntity(fname,date,msg,ListContentEntity.MESSAGE_TO);
                     	list.add(d1);
-                	}else if(media.getType()==MediaType.IMAGE){
-                		list.add(new ListContentEntity(fname,date,"",ListContentEntity.MESSAGE_TO_PICTURE,media.getMsgContant()));
-                	}else if(media.getType()==MediaType.AUDIO){
-                		list.add(new ListContentEntity(fname,date,"",ListContentEntity.MESSAGE_TO_AUDIO,media.getContant()));
+                	}else if(record.getType()==MediaType.IMAGE){
+                		list.add(new ListContentEntity(fname,date,"",ListContentEntity.MESSAGE_TO_PICTURE,record.getContent()));
+                	}else if(record.getType()==MediaType.AUDIO){
+                		list.add(new ListContentEntity(fname,date,"",ListContentEntity.MESSAGE_TO_AUDIO,record.getContent()));
                 	}
                 }
                 else{
-                	if(media.getType()==MediaType.SMS){
+                	if(record.getType()==MediaType.SMS){
                     	ListContentEntity d1 = new ListContentEntity(fname,date,msg,ListContentEntity.MESSAGE_FROM);
                     	list.add(d1);
                 	}
-                	else if(media.getType()==MediaType.IMAGE){
-                		list.add(new ListContentEntity(fname,date,"",ListContentEntity.MESSAGE_FROM_PICTURE,media.getMsgContant()));
-                	}else if(media.getType()==MediaType.AUDIO){
-                		list.add(new ListContentEntity(fname,date,"",ListContentEntity.MESSAGE_FROM_AUDIO,media.getContant()));
+                	else if(record.getType()==MediaType.IMAGE){
+                		list.add(new ListContentEntity(fname,date,"",ListContentEntity.MESSAGE_FROM_PICTURE,record.getContent()));
+                	}else if(record.getType()==MediaType.AUDIO){
+                		list.add(new ListContentEntity(fname,date,"",ListContentEntity.MESSAGE_FROM_AUDIO,record.getContent()));
                 	}
                 }
                 if(DEBUG) Log.d(TAG,"add the existing messages");
@@ -551,9 +554,17 @@ public class ChatView extends IMPSActivity{
 					 * into local message database
 					 * @author Styx
 					 */
-					localDB.storeMsg(textEditor.getText().toString(),
-							new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date()),
-							fUsername, 0);
+					try {
+						localDB.storeMsg(textEditor.getText().toString(),
+								new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date()),
+								fUsername, MediaType.to, MediaType.SMS);
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 
 				}
 				textEditor.setText("");
@@ -660,10 +671,18 @@ public class ChatView extends IMPSActivity{
 				// Store received message into local database
 				// including displayed on the current chat session GUI
 				// and those from other friends
-				localDB.storeMsg(intent.getStringExtra(Constant.SMSCONTENT),
-						intent.getStringExtra(Constant.TIME),
-						intent.getStringExtra(Constant.USERNAME),
-						1/* From friend */);
+				try {
+					localDB.storeMsg(intent.getStringExtra(Constant.SMSCONTENT),
+							intent.getStringExtra(Constant.TIME),
+							intent.getStringExtra(Constant.USERNAME),
+							MediaType.from/* From friend */, MediaType.SMS);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 
 			}else if(intent.getAction().equals(Constant.SMSRSP)){
 				
