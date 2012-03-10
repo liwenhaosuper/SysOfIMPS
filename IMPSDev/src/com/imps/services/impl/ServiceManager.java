@@ -57,7 +57,7 @@ public class ServiceManager extends Service implements IConnEvent{
 			return;
 		}
 
-		setmTcpConn(new ConnectionService("59.78.23.73",1200));
+		setmTcpConn(new ConnectionService("111.186.50.24",1200));
 		setmNetLogic(new NetMsgLogicHandler());
 		setmBsstion(new BaseStationService());
 		setmGPS(new GPSService());
@@ -65,7 +65,7 @@ public class ServiceManager extends Service implements IConnEvent{
 		setmConfig(new ConfigurationService(IMPSDev.getPreferences()));
 		setmContact(new ContactService());
 		setmSms(new SmsService());
-		P2PService.init("59.78.23.73",1300);
+		P2PService.init("111.186.50.24",1300);
 		setmMedia(P2PService.getInstance());
 		setmAudio(new P2PAudioService());
 		setmVideo(new P2PVideoService());
@@ -73,7 +73,7 @@ public class ServiceManager extends Service implements IConnEvent{
 		setmAccount(new AccountService());
 		setmReceiver(new ReceiverChannelService());
 		setmHeartbeat(new HeartBeatService());
-		setmDoodleService(new DoodleConnectionService("59.78.23.73",1400));
+		setmDoodleService(new DoodleConnectionService("111.186.50.24",1400));
 	}
 	
 

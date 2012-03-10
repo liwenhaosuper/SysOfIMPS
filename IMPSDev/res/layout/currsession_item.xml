@@ -56,10 +56,10 @@
   			android:layout_gravity="right"/>
   		</LinearLayout>
 
-  		<TextView android:id="@+id/description"
+  		<com.imps.ui.widget.FaceTextView android:id="@+id/description"
          android:textSize="16.0px"
          android:textColor="#9400D3"
-         android:text="description"
+         android:text=""
          android:ellipsize="marquee"
          android:layout_width="fill_parent"
          android:layout_height="wrap_content"

@@ -26,6 +26,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -429,6 +431,22 @@ public class ChatView extends IMPSActivity{
 		// TODO Auto-generated method stub
 		listAdapter = new ChattingAdapter(this,list);
 		mListView.setAdapter(listAdapter);
+		mListView.setOnItemClickListener(new OnItemClickListener(){
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				Log.d(TAG,"list username is :"+list.get(position).getName());
+				if(!list.get(position).getName().equals(UserManager.getGlobaluser().getUsername())){
+				ComponentName cn=new ComponentName(ChatView.this,ViewFriend.class);
+				Intent intent=new Intent();
+				intent.setComponent(cn);
+				
+				String fUsername = list.get(position).getName();
+				intent.putExtra("fUsername", fUsername);
+				startActivity(intent);
+				}
+			}			
+		});
 		initMessages();
 		
 	}
