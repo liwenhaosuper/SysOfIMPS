@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"    
+    android:id="@+id/hometabs"
+    android:orientation="vertical"  
+    android:layout_width="fill_parent"    
+    android:layout_height="wrap_content">   
+    <TabHost android:id="@+id/tabhost"  
+        android:layout_width="wrap_content"  
+        android:layout_height="wrap_content">  
+        <LinearLayout  
+            android:orientation="vertical"  
+            android:layout_width="fill_parent"  
+            android:layout_height="fill_parent">
+            <TabWidget android:id="@android:id/tabs"   
+              android:orientation="horizontal"  
+              android:layout_width="150dp"  
+              android:layout_height="wrap_content">  
+            </TabWidget>
+            <FrameLayout
+			 android:id="@android:id/tabcontent"  
+                  android:layout_width="wrap_content"  
+                  android:layout_height="wrap_content">
+               <FrameLayout android:id="@+id/layout1"
+               		android:orientation="vertical" 
+               		android:layout_width="fill_parent"  
+                  	android:layout_height="wrap_content">
+					<com.imps.ui.widget.ViewFlow
+						android:id="@+id/viewflow1" android:layout_width="fill_parent"
+						android:layout_height="fill_parent"></com.imps.ui.widget.ViewFlow>
+					<com.imps.ui.widget.CircleFlowIndicator 
+						android:layout_width="wrap_content" 
+						android:layout_gravity="center_horizontal" 
+						android:id="@+id/viewflowindic1" android:layout_height="wrap_content"
+                    	android:paddingTop="10dip"></com.imps.ui.widget.CircleFlowIndicator>
+				</FrameLayout>
+				<FrameLayout android:id="@+id/layout2"
+               		android:orientation="vertical" 
+               		android:layout_width="fill_parent"  
+                  	android:layout_height="wrap_content">			    
+					<com.imps.ui.widget.ViewFlow
+						android:id="@+id/viewflow2" android:layout_width="fill_parent"
+						android:layout_height="fill_parent"></com.imps.ui.widget.ViewFlow>
+					<com.imps.ui.widget.CircleFlowIndicator 
+						android:layout_width="wrap_content" 
+						android:layout_gravity="center_horizontal" 
+						android:id="@+id/viewflowindic2" android:layout_height="wrap_content"
+                    	android:paddingTop="10dip"></com.imps.ui.widget.CircleFlowIndicator>
+				</FrameLayout>
+			</FrameLayout> 
+         </LinearLayout>  
+    </TabHost>  
+</LinearLayout>

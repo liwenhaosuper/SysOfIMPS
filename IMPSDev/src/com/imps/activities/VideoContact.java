@@ -3,11 +3,9 @@
 import java.lang.reflect.Method;
 import java.util.List;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -23,6 +21,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.imps.IMPSActivity;
 import com.imps.R;
 import com.imps.basetypes.Constant;
 import com.imps.media.rtp.core.NetworkFactory;
@@ -34,7 +33,7 @@ import com.imps.receivers.IMPSBroadcastReceiver;
 import com.imps.services.impl.ServiceManager;
 import com.imps.util.CommonHelper;
 
-public class VideoContact extends Activity implements SurfaceHolder.Callback{
+public class VideoContact extends IMPSActivity implements SurfaceHolder.Callback{
 
 	private final static byte READY = 0;
 	private final static byte CANCEL = 1;
@@ -113,15 +112,14 @@ public class VideoContact extends Activity implements SurfaceHolder.Callback{
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.video_chat);
-		if(isDebug)
-		{
-			try {
-				NetworkFactory.loadFactory("com.imps.media.rtp.core.AndroidNetworkFactory");
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+
+		try {
+			NetworkFactory.loadFactory("com.imps.media.rtp.core.AndroidNetworkFactory");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+
         incomingVideoFormat = H263Config.CODEC_NAME;
         outgoingVideoFormat = H263Config.CODEC_NAME;
         videoWidth = 176;
@@ -420,7 +418,7 @@ public class VideoContact extends Activity implements SurfaceHolder.Callback{
 						}
 					}
 					Log.d("VideoChat", "IP sent is "+ myip+" but IP received is "+ip);
-					//ServiceManager.getmMedia().SendPTPVideoRsp(friName,true,myip,1300);
+					ServiceManager.getmVideo().SendPTPVideoRsp(friName,myip,1300,true);
 					updateStatus(START);
 				}
 			});
@@ -446,7 +444,7 @@ public class VideoContact extends Activity implements SurfaceHolder.Callback{
 						}
 					}
 					Log.d("VideoContact", "IP sent is "+ myip+ " but IP received is "+ip);
-					//ServiceManager.getmMedia().SendPTPVideoRsp(friName,false,myip,1300);
+					ServiceManager.getmVideo().SendPTPVideoRsp(friName,myip,1300,false);
 					updateStatus(CANCEL);
 					finish();
 				}

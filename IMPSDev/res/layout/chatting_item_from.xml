@@ -2,15 +2,15 @@
 <LinearLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_height="wrap_content"
+  android:layout_width="wrap_content"
   android:orientation="vertical"
-  android:layout_gravity="left" 
-  android:layout_marginLeft="20px" android:layout_width="fill_parent">
+  android:layout_gravity="left"  >
   <LinearLayout
       android:orientation="vertical"
       android:layout_height="wrap_content"
       android:background="@drawable/chatfrom_bg"
       android:layout_gravity="left"
-      android:layout_weight="1" android:layout_width="match_parent">    
+      android:layout_width="249px">    
       <LinearLayout
           android:orientation="horizontal"
 	      android:layout_width="fill_parent"
@@ -31,7 +31,7 @@
               android:textColor="#000000"
               android:paddingTop="2px"
               android:textSize="12dip"
-              android:layout_marginLeft="60dip"
+              android:gravity="right"
           />
           </LinearLayout>
       <TextView

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
@@ -25,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.imps.IMPSActivity;
 import com.imps.R;
 import com.imps.basetypes.Constant;
 import com.imps.basetypes.MediaType;
@@ -34,8 +34,9 @@ import com.imps.basetypes.UserStatus;
 import com.imps.net.handler.UserManager;
 import com.imps.receivers.IMPSBroadcastReceiver;
 import com.imps.services.impl.ServiceManager;
+import com.imps.ui.widget.FaceTextView;
 
-public class CurrentSessions extends Activity{
+public class CurrentSessions extends IMPSActivity{
 	protected static final String TAG = CurrentSessions.class.getCanonicalName();
 	private ListView concurSessionsList;
 	private List<User> sessionsList;
@@ -51,7 +52,6 @@ public class CurrentSessions extends Activity{
 		setTitle(getResources().getString(R.string.currentsession));
 		sessionsList = new ArrayList<User>();
 		concurSessionsList = (ListView)findViewById(R.id.concurSessions);
-		
 		initAdapter();
 	}
 	@Override
@@ -224,7 +224,7 @@ public class CurrentSessions extends Activity{
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			Log.d(TAG,"getView:"+sessionsList.get(position).getUsername());
-			if(convertView==null){
+
 				if(sessionsList==null||sessionsList.get(position)==null){
 					return null;
 				}
@@ -235,11 +235,10 @@ public class CurrentSessions extends Activity{
 				TextView name=(TextView)convertView.findViewById(R.id.name);
 				TextView date=(TextView)convertView.findViewById(R.id.date);
 				if(name!=null)name.setText(sessionsList.get(position).getUsername());
-				TextView description=(TextView)convertView.findViewById(R.id.description);
-				if(description!=null)description.setText(sessionsList.get(position).getDescription());
+				FaceTextView description=(FaceTextView)convertView.findViewById(R.id.description);
 				TextView statusView = (TextView)convertView.findViewById(R.id.status);
 				if(sessionsList.get(position).getUsername().equals("SysAdmin")){
-					description.setText(sessionsList.get(position).getDescription());
+					if(description!=null)description.setText(sessionsList.get(position).getDescription());					
 					date.setText(sysmsg.time.substring(5));
 					statusView.setText(getResources().getString(R.string.online));
 					return convertView;
@@ -249,8 +248,8 @@ public class CurrentSessions extends Activity{
 				if(UserManager.CurSessionFriList.containsKey(sessionsList.get(position).getUsername())){
 					List<MediaType> items = UserManager.CurSessionFriList.get(sessionsList.get(position).getUsername());
 					for(int i=items.size()-1;i>=0;i--){
-						if(items.get(i).getType()==MediaType.SMS){
-							description.setText(items.get(i).getMsgContant());
+						if(items.get(i).getType()==MediaType.SMS){	
+							if(description!=null)description.setText(items.get(i).getMsgContant());							
 							date.setText(items.get(i).getTime().substring(5));
 							break;
 						}
@@ -259,7 +258,7 @@ public class CurrentSessions extends Activity{
 				}
 
 				if(statusView!=null)statusView.setText(sessionsList.get(position).getStatus()==UserStatus.ONLINE?getResources().getString(R.string.online):getResources().getString(R.string.offline));
-			}
+			
 			return convertView;
 		}
 		

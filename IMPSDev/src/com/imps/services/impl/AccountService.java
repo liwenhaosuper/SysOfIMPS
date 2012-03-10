@@ -72,11 +72,18 @@ public class AccountService implements IConnEvent{
 				MessageFactory.createCRegisterReq(user.getUsername(), user.getPassword(), user.getGender(), user.getEmail()).build()));
 		}
 	}
+	public void updateUserInfo(User user){
+		if(isConnected){
+			if(DEBUG)Log.d(TAG,"Update user info: sent...");
+			ConnectionService.getChannel().write(ChannelBuffers.wrappedBuffer(
+				MessageFactory.createCUpdateUserInfoReq(user.getUsername(), user.getGender(), user.getEmail()).build()));
+		}
+	}
 	@Override
 	public void onConnected() {
 		// TODO Auto-generated method stub
 		isConnected = true;
-		if(autoAuth){
+		if(autoAuth&&isLogined){
 			if(DEBUG)Log.d(TAG,"loginning...");
 			login(userName,userPwd);
 		}
@@ -86,12 +93,12 @@ public class AccountService implements IConnEvent{
 	public void onDisconnected() {
 		// TODO Auto-generated method stub
 		isConnected = false;
-		isLogined = false;
+		//isLogined = false;
 		if(DEBUG)Log.d(TAG,"onDisconnected...");
 	}
 	public void onLoginError() {
 		isConnected = true;
-		isLogined = false;
+		//isLogined = false;
 		autoAuth = false;
 	}
 	public void onLoginSuccess() {

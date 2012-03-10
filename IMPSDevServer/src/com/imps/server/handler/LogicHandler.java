@@ -25,6 +25,8 @@ import com.imps.server.handler.baseLogic.SendImageReq;
 import com.imps.server.handler.baseLogic.SendMessage;
 import com.imps.server.handler.baseLogic.SendPTPAudioReq;
 import com.imps.server.handler.baseLogic.SendPTPAudioRsp;
+import com.imps.server.handler.baseLogic.UpdateUserInfo;
+import com.imps.server.handler.baseLogic.UploadPortrait;
 import com.imps.server.handler.baseLogic.SendPTPVideoReq;
 import com.imps.server.handler.baseLogic.SendPTPVideoRsp;
 import com.imps.server.main.IMPSTcpServer;
@@ -108,6 +110,17 @@ public class LogicHandler extends SimpleChannelUpstreamHandler{
 		case CommandId.C_OFFLINE_MSG_REQ:
 			System.out.println("== REQ: GET OFFLINE MSG ==");
 			new OfflineMsg(e.getChannel(), buffer).run();
+			break;
+		case CommandId.C_UPDATE_USER_INFO_REQ:
+			System.out.println("server: update user info request received!");
+			new UpdateUserInfo(e.getChannel(),buffer).run();
+			break;
+		case CommandId.C_UPLOAD_PORTRAIT_REQ:
+			System.out.println("server: upload user portrait!");
+			new UploadPortrait(e.getChannel(),buffer).run();
+			break;
+		case CommandId.C_STATUS_NOTIFY:
+			System.out.println("server: status notify");
 			break;
 		default:
 			System.out.println("server:unhandled msg received:"+cmdType);

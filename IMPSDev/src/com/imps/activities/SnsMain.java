@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,7 +18,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.imps.IMPSDev;
+import com.imps.IMPSActivity;
 import com.imps.R;
 import com.imps.ui.widget.CircleFlowIndicator;
 import com.imps.ui.widget.ViewFlow;
@@ -29,7 +28,7 @@ import com.imps.ui.widget.ViewFlow;
  * @author liwenhaosuper
  *
  */
-public class SnsMain extends Activity{
+public class SnsMain extends IMPSActivity{
 	private static String TAG = SnsMain.class.getCanonicalName();
 	private static boolean DEBUG = false;//IMPSDev.isDEBUG();
 	private ViewFlow viewFlow;

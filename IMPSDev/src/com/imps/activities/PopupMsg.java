@@ -1,6 +1,5 @@
 package com.imps.activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,13 +11,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.imps.IMPSActivity;
 import com.imps.IMPSDev;
-import com.imps.IMPSMain;
 import com.imps.R;
 import com.imps.basetypes.MediaType;
-import com.imps.services.impl.ServiceManager;
 
-public class PopupMsg extends Activity {
+public class PopupMsg extends IMPSActivity {
 	private static String TAG = PopupMsg.class.getCanonicalName();
 	private static boolean DEBUG =IMPSDev.isDEBUG();
 	
@@ -48,6 +46,10 @@ public class PopupMsg extends Activity {
 			mTitle.setText(getResources().getString(R.string.newSmsFrom,friName));
 			mMsgContent.setText(msg);
 		}
+		mMsgContent.setText("1111111111ldflskfjlasjflsakjfls" +
+				"akjflaskjflslsfjl请问我在哪里？kewfoijvnsafljklfwefoisdlfk" +
+				"23pfoijsafpjiuferhn好好学习天天向上ugvoe" +
+				"少年，你太年轻了ivioesnuinjqaoPDKNJEKAIsldkfj");
 		mBtnClose.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
@@ -58,7 +60,7 @@ public class PopupMsg extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent in = new Intent(PopupMsg.this,IMPSMain.class);
+				Intent in = new Intent(PopupMsg.this,IMPSContainer.class);
 				startActivity(in);
 				finish();
 			}});

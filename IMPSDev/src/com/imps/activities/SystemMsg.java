@@ -1,13 +1,14 @@
 package com.imps.activities;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Window;
 import android.widget.ListView;
 
+import com.imps.IMPSActivity;
 import com.imps.IMPSDev;
 import com.imps.R;
 import com.imps.basetypes.Constant;
@@ -19,7 +20,7 @@ import com.imps.ui.widget.SystemMsgAdapter;
  * @author liwenhaosuper
  *
  */
-public class SystemMsg extends Activity{
+public class SystemMsg extends IMPSActivity{
 	private static String TAG = SystemMsg.class.getCanonicalName();
 	private static boolean DEBUG = IMPSDev.isDEBUG();
 	public static final int REFRESH = 1;
@@ -48,6 +49,8 @@ public class SystemMsg extends Activity{
 	}
 	public void initAdapter(){
 		mAdapter = new SystemMsgAdapter(this,UserManager.mSysMsgs);
+		Log.d(TAG,"The mSysMsgs [0] is "+UserManager.mSysMsgs.get(0).toString()+"\n");
+		Log.d(TAG,"The mSysMsgs [1] is "+UserManager.mSysMsgs.get(1).toString()+"\n");
 		mList.setAdapter(mAdapter);
 		initData();
 	}
