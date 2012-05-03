@@ -12,10 +12,6 @@
             android:layout_width="fill_parent" android:layout_height="wrap_content">
             <RadioButton android:id="@+id/radio_friendlist" android:tag="radio_friendlist" android:layout_marginTop="2.0dip" 
                 android:text="@string/friend" android:drawableTop="@drawable/icon_friendlist" style="@style/main_tab_bottom" />
-            <RadioButton android:id="@+id/radio_currentsession" android:tag="radio_currentsession" android:layout_marginTop="2.0dip" 
-                android:text="@string/currentsession" android:drawableTop="@drawable/current_talk" style="@style/main_tab_bottom" />
-            <RadioButton android:id="@+id/radio_sysmsg" android:tag="radio_sysmsg" android:layout_marginTop="2.0dip" 
-                android:text="@string/sysmsg" android:drawableTop="@drawable/icon_friendlist" style="@style/main_tab_bottom" />
             <RadioButton android:id="@+id/radio_map" android:tag="radio_map" android:layout_marginTop="2.0dip" 
                 android:text="@string/map" android:drawableTop="@drawable/icon_friendlist" style="@style/main_tab_bottom" />
             <RadioButton android:id="@+id/radio_sns" android:tag="radio_sns" android:layout_marginTop="2.0dip" 

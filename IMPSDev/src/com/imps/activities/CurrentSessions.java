@@ -13,8 +13,10 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -35,6 +37,8 @@ import com.imps.net.handler.UserManager;
 import com.imps.receivers.IMPSBroadcastReceiver;
 import com.imps.services.impl.ServiceManager;
 import com.imps.ui.widget.FaceTextView;
+import com.imps.ui.widget.ScrollTabHostActivity;
+import com.imps.ui.widget.ScrollTabHostActivity.TabOnGestureListener;
 
 public class CurrentSessions extends IMPSActivity{
 	protected static final String TAG = CurrentSessions.class.getCanonicalName();
@@ -53,6 +57,17 @@ public class CurrentSessions extends IMPSActivity{
 		sessionsList = new ArrayList<User>();
 		concurSessionsList = (ListView)findViewById(R.id.concurSessions);
 		initAdapter();
+	}
+	@Override
+	public void onStart(){
+		super.onStart();
+		final GestureDetector detector = new GestureDetector(this, new ScrollTabHostActivity.TabOnGestureListener((ScrollTabHostActivity)this.getParent()));
+        this.getWindow().getDecorView().setOnTouchListener(new View.OnTouchListener(){
+          public boolean onTouch(View paramView, MotionEvent paramMotionEvent)
+          {		     
+              return detector.onTouchEvent(paramMotionEvent);
+          }
+        });
 	}
 	@Override
 	public void onResume(){

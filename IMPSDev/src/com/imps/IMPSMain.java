@@ -37,7 +37,7 @@ public class IMPSMain extends IMPSActivity {
 			startMainActivity();
 			finish();
 		}else{
-			gv.setGifImage(R.drawable.earth);
+			if(gv!=null)gv.setGifImage(R.drawable.earth);
 			if(task!=null&&task.getStatus()==AsyncTask.Status.RUNNING){
 				task.cancel(true);
 			}
@@ -86,7 +86,7 @@ public class IMPSMain extends IMPSActivity {
 		}
 		@Override
 		protected void onPreExecute(){
-			gv.showAnimation();
+			if(gv!=null)gv.showAnimation();
 			ServiceManager.start();
 		}
 		

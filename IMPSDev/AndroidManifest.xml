@@ -42,11 +42,13 @@
         <activity android:name=".activities.FindFriend" android:launchMode="singleTop"></activity>
         <activity android:name=".activities.AudioChat" android:launchMode="singleTop"></activity>
         <activity android:name=".activities.FriendContainer" android:launchMode="singleTop"></activity>
+        <activity android:name=".activities.FriendContainer1" android:launchMode="singleTop"></activity>
         <activity android:name=".activities.SearchFriend" android:launchMode="singleTop"></activity> 
         <activity android:name=".activities.MapContainer" android:launchMode="singleTop"></activity>
         <activity android:name=".activities.FriendLocation" android:launchMode="singleTask"></activity>
         <activity android:name=".activities.CoupleDoodle" android:launchMode="singleTask"></activity>
         <activity android:name=".activities.SnsMain" android:launchMode="singleTop"></activity>
+         <activity android:name=".activities.SnsMain1" android:launchMode="singleTop"></activity>
         <activity android:name=".activities.VideoContact" android:launchMode="singleTop"></activity>
         <activity android:name=".activities.ViewFriend" android:launchMode="singleTop"></activity>
         <uses-library android:name="com.google.android.maps" />

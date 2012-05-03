@@ -28,8 +28,6 @@ public class IMPSContainer extends TabActivity{
 	private TabHost tabHost;
 	private IMPSBroadcastReceiver receiver = new IMPSBroadcastReceiver();
 	public static final String TAB_FRIENDLIST="friendlist";
-	public static final String TAB_CURRENTSESSIONS="currentsession";
-	public static final String TAB_SYSMSG="sysmsg";
 	public static final String TAB_MAP = "map";
 	public static final String TAB_SNS = "sns";
 	
@@ -42,11 +40,11 @@ public class IMPSContainer extends TabActivity{
 		super.onCreate(savedInstanceState);
 		if(DEBUG) Log.d(TAG,"Container create");
 		ServiceManager.getmScreen().addScreen(this.getClass());
-		if(!ServiceManager.isStarted||ServiceManager.getmAccount()==null||!ServiceManager.getmAccount().isLogined()){	
-			startActivity(new Intent(IMPSContainer.this,IMPSMain.class));
-			finish();
-			return;
-		}
+//		if(!ServiceManager.isStarted||ServiceManager.getmAccount()==null||!ServiceManager.getmAccount().isLogined()){	
+//			startActivity(new Intent(IMPSContainer.this,IMPSMain.class));
+//			finish();
+//			return;
+//		}
 		/* get recent contact from local database */
 		UserManager.buildLocalDB(IMPSDev.getContext());
 		LocalDBHelper localDB = UserManager.localDB;
@@ -67,19 +65,13 @@ public class IMPSContainer extends TabActivity{
 		tabHost = getTabHost();
 		tabHost.addTab(tabHost.newTabSpec(TAB_FRIENDLIST)
                 .setIndicator(TAB_FRIENDLIST)
-                .setContent(new Intent(this,FriendContainer.class)));
-		tabHost.addTab(tabHost.newTabSpec(TAB_CURRENTSESSIONS)
-                .setIndicator(TAB_CURRENTSESSIONS)
-                .setContent(new Intent(this,CurrentSessions.class)));
-		tabHost.addTab(tabHost.newTabSpec(TAB_SYSMSG)
-    		.setIndicator(TAB_SYSMSG)
-    		.setContent(new Intent(this,SystemMsg.class)));
+                .setContent(new Intent(this,FriendContainer1.class)));
 		tabHost.addTab(tabHost.newTabSpec(TAB_MAP)
 	    		.setIndicator(TAB_MAP)
 	    		.setContent(new Intent(this,MapContainer.class)));
 		tabHost.addTab(tabHost.newTabSpec(TAB_SNS)
 	    		.setIndicator(TAB_SNS)
-	    		.setContent(new Intent(this,SnsMain.class)));
+	    		.setContent(new Intent(this,SnsMain1.class)));
 		Intent intent = getIntent();
 		int tag = 0;
 		if(intent!=null){
@@ -93,12 +85,6 @@ public class IMPSContainer extends TabActivity{
 				case R.id.radio_friendlist:
 					tabHost.setCurrentTabByTag(TAB_FRIENDLIST);
 					break;
-				case R.id.radio_currentsession:
-					tabHost.setCurrentTabByTag(TAB_CURRENTSESSIONS);
-					break;
-				case R.id.radio_sysmsg:
-					tabHost.setCurrentTabByTag(TAB_SYSMSG);
-					break;
 				case R.id.radio_map:
 					tabHost.setCurrentTabByTag(TAB_MAP);
 					break;
@@ -111,7 +97,7 @@ public class IMPSContainer extends TabActivity{
 			}
 		});
 		//start heart beat
-		ServiceManager.getmHeartbeat().start();
+		//ServiceManager.getmHeartbeat().start();
 	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)

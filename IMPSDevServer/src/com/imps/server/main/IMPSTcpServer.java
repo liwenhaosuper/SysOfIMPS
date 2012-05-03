@@ -32,7 +32,7 @@ public class IMPSTcpServer {
         bootstrap.setPipelineFactory(new ChannelPipelineFactory() {
         	@Override
             public ChannelPipeline getPipeline() throws Exception {
-                return Channels.pipeline(
+                return Channels.pipeline( 
                         new PortUnificationServerHandler(),
                         new LogicHandler());
             }

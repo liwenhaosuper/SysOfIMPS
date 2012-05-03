@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
+import android.view.View;
 import android.view.Window;
 import android.widget.ListView;
 
@@ -14,6 +17,7 @@ import com.imps.R;
 import com.imps.basetypes.Constant;
 import com.imps.net.handler.UserManager;
 import com.imps.receivers.IMPSBroadcastReceiver;
+import com.imps.ui.widget.ScrollTabHostActivity;
 import com.imps.ui.widget.SystemMsgAdapter;
 /**
  * SystemMsg contains add friend req&rsp msg,system notice and so on
@@ -43,14 +47,23 @@ public class SystemMsg extends IMPSActivity{
 			mAdapter.notifyDataSetChanged();
 		}
 	}
+	@Override
+	public void onStart(){
+		super.onStart();
+		final GestureDetector detector = new GestureDetector(this, new ScrollTabHostActivity.TabOnGestureListener((ScrollTabHostActivity)this.getParent()));
+        this.getWindow().getDecorView().setOnTouchListener(new View.OnTouchListener(){
+          public boolean onTouch(View paramView, MotionEvent paramMotionEvent)
+          {		     
+              return detector.onTouchEvent(paramMotionEvent);
+          }
+        });
+	}
 	public void onStop(){
 		super.onStop();
 		unregisterReceiver(receiver);
 	}
 	public void initAdapter(){
 		mAdapter = new SystemMsgAdapter(this,UserManager.mSysMsgs);
-		Log.d(TAG,"The mSysMsgs [0] is "+UserManager.mSysMsgs.get(0).toString()+"\n");
-		Log.d(TAG,"The mSysMsgs [1] is "+UserManager.mSysMsgs.get(1).toString()+"\n");
 		mList.setAdapter(mAdapter);
 		initData();
 	}

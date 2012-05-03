@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -35,6 +36,7 @@ import com.imps.basetypes.UserStatus;
 import com.imps.net.handler.UserManager;
 import com.imps.receivers.IMPSBroadcastReceiver;
 import com.imps.services.impl.ServiceManager;
+import com.imps.ui.widget.ScrollTabHostActivity;
 
 public class FriendListTab extends ExpandableListActivity{
 	protected static final String TAG = FriendListTab.class.getCanonicalName();
@@ -94,6 +96,17 @@ public class FriendListTab extends ExpandableListActivity{
 				return false;
 			}
 		});
+	}
+	@Override
+	public void onStart(){
+		super.onStart();
+		final GestureDetector detector = new GestureDetector(this, new ScrollTabHostActivity.TabOnGestureListener((ScrollTabHostActivity)this.getParent()));
+        this.getWindow().getDecorView().setOnTouchListener(new View.OnTouchListener(){
+          public boolean onTouch(View paramView, MotionEvent paramMotionEvent)
+          {		     
+              return detector.onTouchEvent(paramMotionEvent);
+          }
+        });
 	}
 	private void initAdapter(){
 		mAdapter = new FriendListAdapter();

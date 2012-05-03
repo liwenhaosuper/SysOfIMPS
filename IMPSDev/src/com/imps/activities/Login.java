@@ -109,18 +109,18 @@ public class Login extends IMPSActivity{
 		mLogin.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {	
-				if(!ServiceManager.getmNet().isAvailable()){
-					showDialog(NET_ERROR);
-					return;
-				}
-				else if (account.getText().toString().equals("")){
-        			showDialog(ALERT_DIALOG);
-        			return;
-        		}
-        		else if (pwd.getText().toString().equals("")){
-        			showDialog(ALERT_DIALOG + 1);
-        			return;
-        		}
+//				if(!ServiceManager.getmNet().isAvailable()){
+//					showDialog(NET_ERROR);
+//					return;
+//				}
+//				else if (account.getText().toString().equals("")){
+//        			showDialog(ALERT_DIALOG);
+//        			return;
+//        		}
+//        		else if (pwd.getText().toString().equals("")){
+//        			showDialog(ALERT_DIALOG + 1);
+//        			return;
+//        		}
         		startLogin();
 			}});
 		mRegister.setOnClickListener(new OnClickListener(){
@@ -133,10 +133,10 @@ public class Login extends IMPSActivity{
 	}
 	public void startLogin(){
 		//for test purpose
-		if(!ServiceManager.getmNet().isAvailable()){
-			showDialog(NET_ERROR);
-			return;
-		}
+//		if(!ServiceManager.getmNet().isAvailable()){
+//			showDialog(NET_ERROR);
+//			return;
+//		}
 		if(DEBUG) Log.d(TAG,"StartLogin()");
 		username = account.getText().toString();
 		password = pwd.getText().toString();
@@ -180,8 +180,8 @@ public class Login extends IMPSActivity{
 		@Override
 		protected String doInBackground(String... params) {
 			//For DEBUG purpose
-			ServiceManager.getmAccount().login(username, password);
-			/*for(int i=0;i<10;i++){
+			//ServiceManager.getmAccount().login(username, password);
+			for(int i=0;i<10;i++){
 				User user = new User();
 				user.setUsername("I am tester"+i);
 				user.setDescription("test"+i+"号");
@@ -208,7 +208,7 @@ public class Login extends IMPSActivity{
 			user1.setGender(1);
 			user1.setLoctime("2012-12-23");
 			user1.setStatus(UserStatus.OFFLINE);
-			UserManager.AllFriList.add(user1);*/
+			UserManager.AllFriList.add(user1);
 			return null;
 		}
 		@Override
@@ -223,11 +223,11 @@ public class Login extends IMPSActivity{
 				pd.dismiss();	
 			}
 			//for DEBUG purpose
-	/*		ServiceManager.getmTcpConn().stopTcp();
+			ServiceManager.getmTcpConn().stopTcp();
 			Intent start = new Intent(Login.this,IMPSContainer.class);
 			start.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(start);
-			finish();*/
+			finish();
 		}
 		@Override
 		protected void onProgressUpdate(String... params){

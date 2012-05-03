@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout android:layout_width="90.0dip" android:layout_height="90.0dip"
+    
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <ImageView android:id="@+id/plugsIcon" android:layout_width="50.0dip" android:layout_height="50.0dip" android:layout_margin="10.0dip" android:layout_centerHorizontal="true" />
+    <TextView android:textSize="15.0dip" android:textColor="#ff3b5998" android:gravity="center_horizontal" android:id="@+id/plugsName" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="5.0dip" android:layout_marginRight="5.0dip" android:layout_marginBottom="5.0dip" android:layout_below="@id/plugsIcon" android:layout_centerHorizontal="true" />
+</RelativeLayout>
