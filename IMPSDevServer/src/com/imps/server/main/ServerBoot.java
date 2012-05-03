@@ -8,6 +8,7 @@ public class ServerBoot {
 	private static int tcpPort = 1200;
 	private static int udpPort = 1300;
 	private static int doodlePort = 1400;
+	private static int httpPort = 1500;
 	private static ChannelGroup allGroups;
     public static void main(String argv[]) {
     	allGroups = new DefaultChannelGroup();

@@ -33,8 +33,7 @@ public class IMPSTcpServer {
         	@Override
             public ChannelPipeline getPipeline() throws Exception {
                 return Channels.pipeline( 
-                        new PortUnificationServerHandler(),
-                        new LogicHandler());
+                        new PortUnificationServerHandler());
             }
         });
         bootstrap.setOption("reuseAddress", true);

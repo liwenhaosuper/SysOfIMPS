@@ -1,72 +1,70 @@
 package com.imps.server.handler;
 
-import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelHandlerContext;
+import org.jboss.netty.channel.ChannelPipeline;
 import org.jboss.netty.channel.ChannelStateEvent;
 import org.jboss.netty.channel.ExceptionEvent;
-import org.jboss.netty.handler.codec.replay.ReplayingDecoder;
-import org.jboss.netty.handler.codec.replay.VoidEnum;
+import org.jboss.netty.handler.codec.frame.FrameDecoder;
+import org.jboss.netty.handler.codec.http.HttpRequestDecoder;
+import org.jboss.netty.handler.codec.http.HttpResponseEncoder;
 
-import com.imps.server.main.IMPSTcpServer;
-import com.imps.server.main.basetype.User;
-import com.imps.server.main.basetype.userStatus;
-import com.imps.server.manager.UserManager;
-
-public class PortUnificationServerHandler extends ReplayingDecoder<VoidEnum>{
+public class PortUnificationServerHandler extends FrameDecoder{
 	//tag is the packet label to identify what the message is
-	//AU:audio data
-	//IM:image data
-	//FL:file data
 	//OK:plain text
+	
 	private byte[] tag = new byte[2];
     private static final Logger logger = Logger.getLogger(
             PortUnificationServerHandler.class.getName());
 	@Override
-	protected Object decode(ChannelHandlerContext ctx, Channel channel,
-			ChannelBuffer buffer, VoidEnum state) throws Exception {
-		buffer.readBytes(tag);
-		int len = buffer.readInt();
-		if(tag[0]=='A'&&tag[1]=='U'){
-			throw new Error("Unknow tag recv1:"+tag);
-			//return buffer.readBytes(len);
-		}else if(tag[0]=='I'&&tag[1]=='M'){
-			throw new Error("Unknow tag recv2:"+tag);
-		}else if(tag[0]=='F'&&tag[1]=='L'){
-			throw new Error("Unknow tag recv3:"+tag);
-		}else if(tag[0]=='O'&&tag[1]=='K'){
-			//ctx.getPipeline().addLast("Logic_Handler", new LogicHandler());
-			//System.out.println("tag:OK:"+len);
-			return buffer.readBytes(len);
-		}else{//exception...
-			throw new Error("Unknow tag recv:"+tag);
-			//return tag;
+	protected Object decode(ChannelHandlerContext ctx, Channel channel, ChannelBuffer buffer) throws Exception {
+		tag[0] = buffer.getByte(buffer.readerIndex());
+		tag[1] = buffer.getByte(buffer.readerIndex()+1);
+		if(tag[0]=='O'&&tag[1]=='K'){//plain text
+			logger.log(Level.INFO,"plain text req");
+	        ChannelPipeline p = ctx.getPipeline();
+	        p.addLast("PlainTextHandler", new PlainTextHandler());
+	        p.addLast("LogicHandler",new LogicHandler());
+	        p.remove(this);
+	        buffer.readBytes(tag);
+		}else if(isHttp(tag[0],tag[1])){ //http request
+			logger.log(Level.INFO,"http req:");
+	        ChannelPipeline p = ctx.getPipeline();
+	        p.addLast("HttpRequestDecoder", new HttpRequestDecoder());
+	        p.addLast("HttpResponseEncoder", new HttpResponseEncoder());
+	        p.addLast("HttpLogicHandler", new HttpLogicHandler());
+	        p.remove(this);
 		}
+		else{//exception...
+			logger.log(Level.INFO,"Unknow tag recv:"+tag);
+            buffer.skipBytes(buffer.readableBytes());
+            ctx.getChannel().close();
+            return null;
+		}
+        // Forward the current read buffer as is to the new handlers.
+        return buffer.readBytes(buffer.readableBytes());
 	}
+	private boolean isHttp(byte magic1, byte magic2) {
+        return
+            magic1 == 'G' && magic2 == 'E' || // GET
+            magic1 == 'P' && magic2 == 'O' || // POST
+            magic1 == 'P' && magic2 == 'U' || // PUT
+            magic1 == 'H' && magic2 == 'E' || // HEAD
+            magic1 == 'O' && magic2 == 'P' || // OPTIONS
+            magic1 == 'P' && magic2 == 'A' || // PATCH
+            magic1 == 'D' && magic2 == 'E' || // DELETE
+            magic1 == 'T' && magic2 == 'R' || // TRACE
+            magic1 == 'C' && magic2 == 'O';   // CONNECT
+    }
     @Override
     public void channelDisconnected(ChannelHandlerContext ctx, ChannelStateEvent e){
-		try {
-			User user = UserManager.getInstance().getUserBySessionId(e.getChannel().getId());
-	    	if(user!=null){
-	    		user.setSessionId(new Integer(-1));
-	    		user.setStatus(userStatus.OFFLINE);
-	    	}
-	    	UserManager.getInstance().updateUserStatus(user);
-	    	Channel session = e.getChannel();
-	    	if(IMPSTcpServer.getAllGroups().contains(session)){
-	    		//remove session
-	    		IMPSTcpServer.getAllGroups().remove(session);
-	    	}
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} 
 		logger.log(Level.INFO,"client disconnected from:"+e.getChannel().getRemoteAddress().toString());
     }
+    
     @Override
     public void channelConnected(ChannelHandlerContext ctx, ChannelStateEvent e) {
     	logger.log(Level.INFO,"client connected from:"+e.getChannel().getRemoteAddress().toString());
@@ -77,5 +75,7 @@ public class PortUnificationServerHandler extends ReplayingDecoder<VoidEnum>{
     }
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e) {
+    	//logger.log(Level.INFO,"tcp exception to:"+e.getChannel().getRemoteAddress().toString()+":"+e.toString());
+    	ctx.getChannel().close();
     }
 }
