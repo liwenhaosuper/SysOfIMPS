@@ -1,68 +1,68 @@
 package com.imps.server.handler.baseLogic;
 
-import java.io.UnsupportedEncodingException;
+import java.sql.SQLException;
+import java.util.HashMap;
 
-import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 import org.jboss.netty.channel.Channel;
 
-import com.imps.server.main.basetype.CommandId;
 import com.imps.server.main.basetype.MessageProcessTask;
-import com.imps.server.main.basetype.OutputMessage;
 import com.imps.server.main.basetype.User;
-import com.imps.server.manager.MessageFactory;
-import com.imps.server.manager.UserManager;
+import com.imps.server.model.CommandId;
+import com.imps.server.model.CommandType;
+import com.imps.server.model.IMPSType;
 
 public class Register extends MessageProcessTask{
-	private User user = new User();
-	public Register(Channel session, ChannelBuffer inMsg) {
+	public Register(Channel session,IMPSType inMsg) {
 		super(session, inMsg);
 	}
 	@Override
-	public void parse() {
-		try{
-			int len = inMsg.readInt();
-			byte nm[] = new byte[len];
-			inMsg.readBytes(nm);
-			user.setUsername(new String(nm,"gb2312"));
-			len = inMsg.readInt();
-			nm = new byte[len];
-			inMsg.readBytes(nm);
-			user.setPassword(new String(nm,"gb2312"));
-			user.setGender(inMsg.readInt());
-			len = inMsg.readInt();
-			nm = new byte[len];
-			inMsg.readBytes(nm);
-			user.setEmail(new String(nm,"gb2312"));
-		}catch (UnsupportedEncodingException e){
-			e.printStackTrace();
-		}
-
-	}
-	@Override
 	public void execute() {
-		OutputMessage outMsg = null;
-		try{
-		    UserManager manager = UserManager.getInstance();
-		    if(manager.registerUser(user))
-		    {
-		    	outMsg = MessageFactory.createSRegisterRsp();
-		    	//注册成功
-		    	System.out.println("注册成功!");
-		    	outMsg.getOutputStream().writeInt(1);
-		    }
-		    else{
-		    	outMsg = MessageFactory.createErrorMsg();
-		    	outMsg.getOutputStream().writeInt(CommandId.S_REG_ERROR);
-		    	outMsg.getOutputStream().writeInt(CommandId.S_REG_ERROR_USER_EXIST);//用户已经存在
-		    	System.out.println("注册失败:用户已经存在");
-		    }
-		}catch(Exception e)
-		{
-			System.out.println("注册失败!");
-			e.printStackTrace();
+		String userName = inMsg.getmHeader().get("UserName");
+		String pwd = inMsg.getmHeader().get("Password");
+		String email = inMsg.getmHeader().get("Email");
+		String gender = inMsg.getmHeader().get("Gender");
+		if(userName==null||pwd==null||userName.equals("")||pwd.equals("")){
+			return;
 		}
-		//反馈给客户端
-		session.write(ChannelBuffers.wrappedBuffer(outMsg.build()));
+		User user = new User();
+		user.setEmail(email);
+		user.setGender(gender=="M"?0:1);
+		user.setPassword(pwd);
+		user.setUsername(userName);
+		try {
+			if(manager.registerUser(user)){
+				HashMap<String,String> header = new HashMap<String,String>();
+				header.put("Command", CommandId.S_REGISTER);
+				header.put("Result","OK");
+				header.put("UserName", userName);
+				header.put("Email", email);
+				header.put("Gener", gender);
+				IMPSType result = new CommandType();
+				result.setmHeader(header);
+				session.write(ChannelBuffers.wrappedBuffer(result.MediaWrapper()));
+				if(DEBUG)System.out.println("user reg succ...");
+			}else{
+				HashMap<String,String> header = new HashMap<String,String>();
+				header.put("Command", CommandId.S_REG_ERROR_USER_EXIST);
+				header.put("Result","NO");
+				header.put("Description","username already exists.");
+				IMPSType result = new CommandType();
+				result.setmHeader(header);
+				session.write(ChannelBuffers.wrappedBuffer(result.MediaWrapper()));
+				if(DEBUG)System.out.println("user reg fail:username already exists...");
+			}
+		} catch (SQLException e) {
+			HashMap<String,String> header = new HashMap<String,String>();
+			header.put("Command", CommandId.S_REG_ERROR_UNKNOWN);
+			header.put("Result","NO");
+			header.put("Description","server internal error.");
+			IMPSType result = new CommandType();
+			result.setmHeader(header);
+			session.write(ChannelBuffers.wrappedBuffer(result.MediaWrapper()));
+			if(DEBUG) e.printStackTrace();
+			if(DEBUG)System.out.println("user reg:server internal error...");
+		}
+		
 	}
 }

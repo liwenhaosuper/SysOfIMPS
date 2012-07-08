@@ -12,10 +12,11 @@ import android.util.Log;
 import com.imps.IMPSDev;
 import com.imps.IMPSMain;
 import com.imps.R;
-import com.imps.events.IConnEvent;
 import com.imps.net.handler.NetMsgLogicHandler;
+import com.imps.net.tcp.ConnectionListener;
+import com.imps.net.tcp.ConnectionService;
 
-public class ServiceManager extends Service implements IConnEvent{
+public class ServiceManager extends Service implements ConnectionListener{
     //services
 	private static BaseStationService mBsstion;
 	private static GPSService mGPS;
@@ -27,7 +28,6 @@ public class ServiceManager extends Service implements IConnEvent{
 	private static P2PAudioService mAudio;
 	private static P2PVideoService mVideo;
 	private static NetworkService mNet;
-	private static NetMsgLogicHandler mNetLogic;
 	private static ConnectionService mTcpConn;
 	private static AccountService mAccount;
 	private static ReceiverChannelService mReceiver;
@@ -36,7 +36,7 @@ public class ServiceManager extends Service implements IConnEvent{
 	private static ScreenService mScreen = new ScreenService();
 	//TAG
 	public static String TAG = ServiceManager.class.getCanonicalName();
-	public static boolean DEBUG = IMPSDev.isDEBUG();
+	public static boolean DEBUG = false;
 	
 	public static boolean isStarted = false;
 	public static NotificationManager notifManager;
@@ -56,16 +56,14 @@ public class ServiceManager extends Service implements IConnEvent{
 		if(isStarted){
 			return;
 		}
-
-		setmTcpConn(new ConnectionService("59.78.23.73",1200));
-		setmNetLogic(new NetMsgLogicHandler());
+		setmTcpConn(new ConnectionService("192.168.168.44",1200));
 		setmBsstion(new BaseStationService());
 		setmGPS(new GPSService());
 		setmSound(new SoundService());
 		setmConfig(new ConfigurationService(IMPSDev.getPreferences()));
 		setmContact(new ContactService());
 		setmSms(new SmsService());
-		P2PService.init("59.78.23.73",1300);
+		P2PService.init("192.168.168.44",1300);
 		setmMedia(P2PService.getInstance());
 		setmAudio(new P2PAudioService());
 		setmVideo(new P2PVideoService());
@@ -73,10 +71,8 @@ public class ServiceManager extends Service implements IConnEvent{
 		setmAccount(new AccountService());
 		setmReceiver(new ReceiverChannelService());
 		setmHeartbeat(new HeartBeatService());
-		setmDoodleService(new DoodleConnectionService("59.78.23.73",1400));
+		setmDoodleService(new DoodleConnectionService("192.168.168.44",1400));
 	}
-	
-
 	@Override
 	public IBinder onBind(Intent intent) {
 		return null;
@@ -120,8 +116,10 @@ public class ServiceManager extends Service implements IConnEvent{
 				new Intent(IMPSDev.getContext(), ServiceManager.class));
 		boolean success = true;
 		//for DEBUG purpose
-		//success&=ServiceManager.getmTcpConn().startTcp();
-		//success&= ServiceManager.getmAccount().start();
+		if(!DEBUG){
+			success&=ServiceManager.getmTcpConn().startTcp(new ServiceManager());
+			success&= ServiceManager.getmAccount().start();
+		}
 		success&= ServiceManager.getmBsstion().start();
 		success&= ServiceManager.getmConfig().start();
 		success&= ServiceManager.getmNet().start();
@@ -378,17 +376,6 @@ public class ServiceManager extends Service implements IConnEvent{
 		return mNet;
 	}
 
-
-	public static void setmNetLogic(NetMsgLogicHandler mNetLogic) {
-		ServiceManager.mNetLogic = mNetLogic;
-	}
-
-
-	public static NetMsgLogicHandler getmNetLogic() {
-		return mNetLogic;
-	}
-
-
 	public static void setmTcpConn(ConnectionService mTcpConn) {
 		ServiceManager.mTcpConn = mTcpConn;
 	}
@@ -400,12 +387,12 @@ public class ServiceManager extends Service implements IConnEvent{
 
 
 	@Override
-	public void onConnected() {
-		// TODO Auto-generated method stub
-		
+	public void onTCPConnect() {
+		ServiceManager.getmAccount().onConnected();
 	}
 	@Override
-	public void onDisconnected() {
+	public void onTCPDisconnect() {
+		ServiceManager.getmAccount().onDisconnected();
 		showNotification(R.drawable.offline, R.drawable.offline,IMPSDev.getContext().getString(R.string.offline),
 				null, null);
 	}

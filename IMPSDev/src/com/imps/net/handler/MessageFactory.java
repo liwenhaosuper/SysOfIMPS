@@ -29,7 +29,6 @@ public class MessageFactory {
 			outMsg.getOutputStream().write(password.getBytes("gb2312"));
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return outMsg;

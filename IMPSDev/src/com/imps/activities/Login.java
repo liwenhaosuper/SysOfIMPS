@@ -40,7 +40,7 @@ import com.imps.services.impl.ServiceManager;
 public class Login extends IMPSActivity{
 	
 	private static String TAG = Login.class.getCanonicalName();
-	private static boolean DEBUG = IMPSDev.isDEBUG();
+	private static boolean DEBUG = false;
 	private EditText account;
 	private EditText pwd;
 	private Button mLogin;
@@ -108,19 +108,22 @@ public class Login extends IMPSActivity{
 	public void processClick(){
 		mLogin.setOnClickListener(new OnClickListener(){
 			@Override
-			public void onClick(View v) {	
-//				if(!ServiceManager.getmNet().isAvailable()){
-//					showDialog(NET_ERROR);
-//					return;
-//				}
-//				else if (account.getText().toString().equals("")){
-//        			showDialog(ALERT_DIALOG);
-//        			return;
-//        		}
-//        		else if (pwd.getText().toString().equals("")){
-//        			showDialog(ALERT_DIALOG + 1);
-//        			return;
-//        		}
+			public void onClick(View v) {
+				if(!DEBUG){
+					if(!ServiceManager.getmNet().isAvailable()){
+						showDialog(NET_ERROR);
+						return;
+					}
+					else if (account.getText().toString().equals("")){
+	        			showDialog(ALERT_DIALOG);
+	        			return;
+	        		}
+	        		else if (pwd.getText().toString().equals("")){
+	        			showDialog(ALERT_DIALOG + 1);
+	        			return;
+	        		}
+				}
+
         		startLogin();
 			}});
 		mRegister.setOnClickListener(new OnClickListener(){
@@ -133,10 +136,12 @@ public class Login extends IMPSActivity{
 	}
 	public void startLogin(){
 		//for test purpose
-//		if(!ServiceManager.getmNet().isAvailable()){
-//			showDialog(NET_ERROR);
-//			return;
-//		}
+		if(!DEBUG){
+			if(!ServiceManager.getmNet().isAvailable()){
+				showDialog(NET_ERROR);
+				return;
+			}
+		}
 		if(DEBUG) Log.d(TAG,"StartLogin()");
 		username = account.getText().toString();
 		password = pwd.getText().toString();
@@ -180,35 +185,39 @@ public class Login extends IMPSActivity{
 		@Override
 		protected String doInBackground(String... params) {
 			//For DEBUG purpose
-			//ServiceManager.getmAccount().login(username, password);
-			for(int i=0;i<10;i++){
+			if(!DEBUG){
+				ServiceManager.getmAccount().login(username, password);
+			}else{
+				for(int i=0;i<10;i++){
+					User user = new User();
+					user.setUsername("I am tester"+i);
+					user.setDescription("test"+i+"号");
+					user.setEmail("li"+i);
+					user.setGender(i%2);
+					user.setLoctime("2012-12-23");
+					user.setLocX(100.5/(i+1));
+					user.setLocY(80.0/(i+1));
+					user.setStatus(i%2==0?UserStatus.OFFLINE:UserStatus.ONLINE);
+					UserManager.AllFriList.add(user);
+				}
 				User user = new User();
-				user.setUsername("I am tester"+i);
-				user.setDescription("test"+i+"号");
-				user.setEmail("li"+i);
-				user.setGender(i%2);
+				user.setUsername("li");
+				user.setPassword("li");
+				user.setEmail("li");
+				user.setGender(1);
 				user.setLoctime("2012-12-23");
-				user.setLocX(100.5/(i+1));
-				user.setLocY(80.0/(i+1));
-				user.setStatus(i%2==0?UserStatus.OFFLINE:UserStatus.ONLINE);
+				user.setStatus(UserStatus.OFFLINE);
 				UserManager.AllFriList.add(user);
+				User user1 = new User();
+				user1.setUsername("lili");
+				user1.setPassword("lili");
+				user1.setEmail("lili");
+				user1.setGender(1);
+				user1.setLoctime("2012-12-23");
+				user1.setStatus(UserStatus.OFFLINE);
+				UserManager.AllFriList.add(user1);
 			}
-			User user = new User();
-			user.setUsername("li");
-			user.setPassword("li");
-			user.setEmail("li");
-			user.setGender(1);
-			user.setLoctime("2012-12-23");
-			user.setStatus(UserStatus.OFFLINE);
-			UserManager.AllFriList.add(user);
-			User user1 = new User();
-			user1.setUsername("lili");
-			user1.setPassword("lili");
-			user1.setEmail("lili");
-			user1.setGender(1);
-			user1.setLoctime("2012-12-23");
-			user1.setStatus(UserStatus.OFFLINE);
-			UserManager.AllFriList.add(user1);
+		
 			return null;
 		}
 		@Override
@@ -223,11 +232,14 @@ public class Login extends IMPSActivity{
 				pd.dismiss();	
 			}
 			//for DEBUG purpose
-			ServiceManager.getmTcpConn().stopTcp();
-			Intent start = new Intent(Login.this,IMPSContainer.class);
-			start.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(start);
-			finish();
+			if(DEBUG){
+				ServiceManager.getmTcpConn().stopTcp();
+				Intent start = new Intent(Login.this,IMPSContainer.class);
+				start.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(start);
+				finish();
+			}
+
 		}
 		@Override
 		protected void onProgressUpdate(String... params){
@@ -258,8 +270,7 @@ public class Login extends IMPSActivity{
 	    		b.setMessage(getResources().getString(R.string.login_username_required));
 	    		b.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {				
 					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						// TODO Auto-generated method stub				
+					public void onClick(DialogInterface dialog, int which) {			
 					}
 				});
 	    		dialog = b.create();

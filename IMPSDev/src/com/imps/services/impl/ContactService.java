@@ -45,7 +45,6 @@ public class ContactService implements IContactService{
 	}
 
 	public void sendFriListReq() {
-		// TODO Auto-generated method stub
 		if(ServiceManager.getmTcpConn().getChannel().isConnected()){
 			ServiceManager.getmTcpConn().getChannel().write(ChannelBuffers.wrappedBuffer(
 					MessageFactory.createCFriendListReq(UserManager.getGlobaluser().getUsername()).build()));

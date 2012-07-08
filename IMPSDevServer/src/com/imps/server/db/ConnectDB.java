@@ -12,7 +12,7 @@ public class ConnectDB {
 	private String pwd = "liwenhaosuper";
 	private String db = "impsdev";
 	private String dbDriver ="com.mysql.jdbc.Driver";
-	private String dbConnect = "jdbc:mysql://localhost:3306/"+db;
+	private String dbConnect = "jdbc:mysql://localhost:3307/"+db;
 	private Connection conn = null;
 	public Statement stmt = null;
 	public ResultSet rs = null;

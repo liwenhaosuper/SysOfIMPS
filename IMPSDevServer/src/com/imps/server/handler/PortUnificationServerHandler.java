@@ -25,19 +25,28 @@ public class PortUnificationServerHandler extends FrameDecoder{
 		tag[0] = buffer.getByte(buffer.readerIndex());
 		tag[1] = buffer.getByte(buffer.readerIndex()+1);
 		if(tag[0]=='O'&&tag[1]=='K'){//plain text
-			logger.log(Level.INFO,"plain text req");
+			logger.log(Level.INFO,"PortUnificationServerHandler:plain text req");
 	        ChannelPipeline p = ctx.getPipeline();
-	        p.addLast("PlainTextHandler", new PlainTextHandler());
-	        p.addLast("LogicHandler",new LogicHandler());
-	        p.remove(this);
+	        if(p.get("PlainTextHandler")==null){
+	        	p.addLast("PlainTextHandler", new PlainTextHandler());
+	        }
+	        if(p.get("LogicHandler")==null){
+	        	p.addLast("LogicHandler",new LogicHandler());
+	        }
 	        buffer.readBytes(tag);
 		}else if(isHttp(tag[0],tag[1])){ //http request
 			logger.log(Level.INFO,"http req:");
 	        ChannelPipeline p = ctx.getPipeline();
-	        p.addLast("HttpRequestDecoder", new HttpRequestDecoder());
-	        p.addLast("HttpResponseEncoder", new HttpResponseEncoder());
-	        p.addLast("HttpLogicHandler", new HttpLogicHandler());
-	        p.remove(this);
+	        if(p.get("PlainTextHandler")==null){
+	        	p.addLast("HttpRequestDecoder", new HttpRequestDecoder());
+	        }
+	        if(p.get("PlainTextHandler")==null){
+	        	p.addLast("HttpResponseEncoder", new HttpResponseEncoder());
+	        }
+	        if(p.get("PlainTextHandler")==null){
+	        	p.addLast("HttpLogicHandler", new HttpLogicHandler());
+	        }
+	        buffer.readBytes(tag);
 		}
 		else{//exception...
 			logger.log(Level.INFO,"Unknow tag recv:"+tag);

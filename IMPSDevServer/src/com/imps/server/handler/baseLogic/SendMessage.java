@@ -8,131 +8,74 @@
 
 package com.imps.server.handler.baseLogic;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 
-import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 import org.jboss.netty.channel.Channel;
 
 import com.imps.server.main.IMPSTcpServer;
-import com.imps.server.main.basetype.CommandId;
 import com.imps.server.main.basetype.MessageProcessTask;
-import com.imps.server.main.basetype.OutputMessage;
 import com.imps.server.main.basetype.User;
 import com.imps.server.main.basetype.userStatus;
-import com.imps.server.manager.MessageFactory;
-import com.imps.server.manager.UserManager;
+import com.imps.server.model.CommandId;
+import com.imps.server.model.CommandType;
+import com.imps.server.model.IMPSType;
 
 public class SendMessage extends MessageProcessTask{
 
-	private UserManager manager;
-	private User user;
-	public SendMessage(Channel session, ChannelBuffer message)
-			 {
+	public SendMessage(Channel session, IMPSType message){
 		super(session, message);
-		// TODO Auto-generated constructor stub
 	}
-
-	@Override
-	public void parse(){
-		int len = inMsg.readInt();
-		byte nm[] = new byte[len];
-		inMsg.readBytes(nm);
-		try {
-			String userName = new String(nm,"gb2312");
-			manager = UserManager.getInstance();
-			user = manager.getUser(userName);
-			if(user==null) // If the user is offline or heartbeats are not received
-			{
-				user = manager.getUserFromDB(userName);
-				user.setStatus(userStatus.ONLINE);
-				user.setSessionId(session.getId());
-				manager.addUser(user);
-				User[] friends = user.getOnlineFriendList();
-				// TODO 这里还是有问题
-				//通知所有朋友
-				if(friends==null)
-				    return;
-				for(int i=0;i<friends.length;i++)
-				{
-				     manager.updateUserStatus(user);
-				}
-			}
-			user.setSessionId(session.getId());
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}catch (Exception e){
-			e.printStackTrace();
-		}
-	}
-
 	@Override
 	public void execute() {
-		try {
-			//get the friend name
-			int len = inMsg.readInt();
-			byte[] fribyte = new byte[len];
-			inMsg.readBytes(fribyte);
-			String friendname = new String(fribyte,"gb2312");
-			//get sid
-			int sid = inMsg.readInt();
-			//get the message
-			len = inMsg.readInt();
-			byte[] bmsg = new byte[len];
-			inMsg.readBytes(bmsg);
-			String msg = new String(bmsg,"gb2312");		
-			System.out.println("friend:"+friendname+" msg:"+msg);
-			//获取时间
-			SimpleDateFormat tempDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			String datetime = tempDate.format(new java.util.Date());
-			
-			// decide whether the message is to be an OFFLINE-MSG
-			int sent = 1;
-			if (manager.getUser(friendname) == null
-			    || manager.getUser(friendname).getStatus() == userStatus.OFFLINE)
-			    sent = 0;
-
-			//存入数据库中
-			manager.addMessage(user.getUsername(), friendname, datetime, msg, sent);
-
-
-			if(manager.getUserMap().containsKey(friendname))
-			{
-				//向好友发送信息
-				//获取好友的session
-		        User fri = manager.getUser(friendname);
-		        Channel mysession = IMPSTcpServer.getAllGroups().find(fri.getSessionId());
-		       // OutputMessage;
-		        OutputMessage remsg = MessageFactory.createSSendMsg(user.getUsername(), msg, datetime);
-		        mysession.write(ChannelBuffers.wrappedBuffer(remsg.build()));
-		        System.out.println(" send msg to "+friendname+" successfully!");
-		        //反馈
-		        session.write(ChannelBuffers.wrappedBuffer(MessageFactory.createSSmsSuccess(friendname, sid).build()));
-			}
-			else{
-				//该好友不在线
-			    System.out.println("==   W: " + user.getUsername() + "[" + user.getStatus() + "] -> " + friendname + "[0] ==");
-				OutputMessage remsg = MessageFactory.createErrorMsg();
-				remsg.getOutputStream().writeInt(CommandId.S_SMS_ERROR);
-				remsg.getOutputStream().writeInt(CommandId.S_SMS_ERROR_OFFLINE);
-				remsg.getOutputStream().writeInt(sid);
-				session.write(ChannelBuffers.wrappedBuffer(remsg.build()));
-			}
-			
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}catch (IOException e2)
-		{
-			e2.printStackTrace();
+		String userName = inMsg.getmHeader().get("UserName");
+		String friendname = inMsg.getmHeader().get("FriendName");
+		byte[] msg = inMsg.getContent();
+		if(msg==null||userName==null||friendname==null){
+			if(DEBUG) System.out.println("illegal send message request");
+			return;
 		}
-
-
+		updateList(userName,true);
+		SimpleDateFormat tempDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String datetime = tempDate.format(new java.util.Date());
+		int sent = 1;
+		if (manager.getUser(friendname) == null
+		    || manager.getUser(friendname).getStatus() == userStatus.OFFLINE)
+		    sent = 0;
+		try{
+			manager.addMessage(userName, friendname, datetime, new String(msg,"gb2312"), sent);
+		}catch(Exception e){
+			if(DEBUG)e.printStackTrace();
+		}
+		if(sent==1){
+			User fri = manager.getUser(friendname);
+			if(fri==null||fri.getSessionId().intValue()==-1){
+				if(DEBUG) System.out.println("sth. go wrong");
+				//TODO: Add to db
+				return;
+			}
+			Channel frisession = IMPSTcpServer.getAllGroups().find(fri.getSessionId());
+			if(frisession!=null){
+				IMPSType result = new CommandType();
+				HashMap<String,String> header = new HashMap<String,String>();
+				header.put("Command", CommandId.S_SEND_MSG);
+				header.put("FriendName", userName);
+				header.put("Time", datetime);
+				result.setmHeader(header);
+				result.setContent(msg);
+				frisession.write(ChannelBuffers.wrappedBuffer(result.MediaWrapper()));
+			}else{
+				if(DEBUG) System.out.println("sth. go wrong,really");
+			}
+			
+		}
+		else{
+		    if(DEBUG) System.out.println("==   W: " + userName+" -> " + friendname + "[0] ==");
+		    //TODO: notify user
+		}
 		
-		
+			
 	}
 	
 }

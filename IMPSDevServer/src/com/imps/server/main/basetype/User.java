@@ -24,7 +24,7 @@ public class User {
 	private String password;
 	private int gender;
 	private String email;
-	private byte status;
+	private byte status = userStatus.OFFLINE;
 	public long lastAccessTime = System.currentTimeMillis(); //最近访问时间
 	
 	/**IoSessionId*/

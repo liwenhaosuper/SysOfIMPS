@@ -2,8 +2,8 @@ package com.imps.server.handler.baseLogic;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
-import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 import org.jboss.netty.channel.Channel;
 
@@ -14,6 +14,9 @@ import com.imps.server.main.basetype.UserMessage;
 import com.imps.server.main.basetype.userStatus;
 import com.imps.server.manager.MessageFactory;
 import com.imps.server.manager.UserManager;
+import com.imps.server.model.CommandId;
+import com.imps.server.model.CommandType;
+import com.imps.server.model.IMPSType;
 
 /**
  * This is a message processing thread
@@ -22,71 +25,34 @@ import com.imps.server.manager.UserManager;
  *
  */
 public class OfflineMsg extends MessageProcessTask {
-
-	private UserManager manager;
-	private User user;
-	public OfflineMsg(Channel session, ChannelBuffer inMsg) {
+	public OfflineMsg(Channel session, IMPSType inMsg) {
 		super(session, inMsg);
 	}
-
-	@Override
-	public void parse() {
-		int len = inMsg.readInt();
-		byte nm[] = new byte[len];
-		inMsg.readBytes(nm);
-		try {
-			// user's name of the receiver of offline message
-			// also the sender of the request
-			String userName = new String(nm,"gb2312");
-			manager = UserManager.getInstance();
-			user = manager.getUser(userName);
-			if (user == null) // If the user is offline or heartbeats are not received
-			{
-				user = manager.getUserFromDB(userName);
-				user.setStatus(userStatus.ONLINE);
-				user.setSessionId(session.getId());
-				manager.addUser(user);
-			}
-			user.setSessionId(session.getId());
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}catch (Exception e){
-			e.printStackTrace();
-		}
-	}
-
 	@Override
 	public void execute() {
+		String userName = inMsg.getmHeader().get("UserName");
+		if(userName==null){
+			if(DEBUG) System.out.println("illegal offlinemsg request");
+			return;
+		}
 		try {
 			// get off-line messages from database
-			ArrayList< UserMessage > msgs = manager.getOfflineMsg(user.getUsername());
-
+			ArrayList< UserMessage > msgs = manager.getOfflineMsg(userName);
 			// use a loop to send the messages
 			for (int i = 0; i < msgs.size(); i++) {
 				UserMessage msg = msgs.get(i);
-				OutputMessage outMsg = MessageFactory.createSSendMsg(manager.getUserFromDB(msg.getFrom()).getUsername(), msg.getMsg(), msg.getTime());
-		        session.write(ChannelBuffers.wrappedBuffer(outMsg.build()));
-		        manager.markRead(msg.getM_id());
+				manager.markRead(msg.getM_id());
+				IMPSType result = new CommandType();
+				HashMap<String,String> header = new HashMap<String,String>();
+				header.put("Command", CommandId.S_SEND_MSG);
+				header.put("FriendName",manager.getUserFromDB(msg.getFrom()).getUsername());
+				header.put("Time", msg.getTime());
+				result.setmHeader(header);
+				result.setContent(msg.getMsg().getBytes());
+				session.write(ChannelBuffers.wrappedBuffer(result.MediaWrapper()));		        
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	public UserManager getManager() {
-		return manager;
-	}
-
-	public void setManager(UserManager manager) {
-		this.manager = manager;
-	}
-
 }

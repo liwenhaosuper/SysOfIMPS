@@ -16,12 +16,14 @@ public class PlainTextHandler extends ReplayingDecoder<VoidEnum>{
 	//AU:audio data
 	//FL:file data
 	//OK:plain text
+	private static boolean DEBUG = true;
     private static final Logger logger = Logger.getLogger(
     		PlainTextHandler.class.getName());
 	@Override
 	protected Object decode(ChannelHandlerContext ctx, Channel channel,
 			ChannelBuffer buffer, VoidEnum state) throws Exception {
 		int len = buffer.readInt();
+		if(DEBUG)System.out.println("Req len:"+len);
 		return buffer.readBytes(len);
 	}
     @Override

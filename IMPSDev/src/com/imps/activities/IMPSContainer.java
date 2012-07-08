@@ -23,7 +23,7 @@ import com.imps.util.LocalDBHelper;
 
 public class IMPSContainer extends TabActivity{
 	private static String TAG = IMPSContainer.class.getCanonicalName();
-	private static boolean DEBUG = IMPSDev.isDEBUG();
+	private static boolean DEBUG = false;
 	private RadioGroup navigator;
 	private TabHost tabHost;
 	private IMPSBroadcastReceiver receiver = new IMPSBroadcastReceiver();
@@ -97,7 +97,7 @@ public class IMPSContainer extends TabActivity{
 			}
 		});
 		//start heart beat
-		//ServiceManager.getmHeartbeat().start();
+		if(DEBUG)ServiceManager.getmHeartbeat().start();
 	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)

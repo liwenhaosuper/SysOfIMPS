@@ -15,8 +15,8 @@ import com.imps.server.manager.DoodleManager;
 import com.imps.server.manager.MessageFactory;
 import com.imps.server.manager.UserManager;
 
-public class DoodleLogin extends MessageProcessTask{
-
+public class DoodleLogin /*extends MessageProcessTask*/{
+/*
 	private String userName = "";
 	public DoodleLogin(Channel session, ChannelBuffer inMsg) {
 		super(session, inMsg);
@@ -90,5 +90,5 @@ public class DoodleLogin extends MessageProcessTask{
 		session.write(ChannelBuffers.wrappedBuffer(MessageFactory.createDoodleOnlineFriendList(friparams).build()));
 		DoodleManager.getInstance().notifyStatus(userName, true);
 	}
-
+*/
 }

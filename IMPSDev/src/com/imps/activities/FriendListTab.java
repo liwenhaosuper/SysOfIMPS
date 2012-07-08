@@ -225,7 +225,6 @@ public class FriendListTab extends ExpandableListActivity{
 			return mGroups.length;
 		}
 		public void refresh(){
-			Log.d(TAG,"Friendlist refreshed jyh");
 			mData.clear();
 			mData.put(mGroups[0], UserManager.AllFriList);
 			mData.put(mGroups[1],null);

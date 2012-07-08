@@ -202,7 +202,10 @@ public class UserManager {
 		if(this.getUser(user.getUsername())==null)
 			return;
 		userMap.remove(user.getUsername());
+		user.setStatus(userStatus.OFFLINE);
 		//UserDatas.remove(user.getUsername());
+		//update status
+		updateUserStatus(user);
 		System.out.println(user.getUsername()+" has been removed from the online user list!");
 	}
 	

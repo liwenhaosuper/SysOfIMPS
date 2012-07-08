@@ -1,56 +1,46 @@
 package com.imps.server.handler.baseLogic;
 
-import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 
-import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.channel.Channel;
 
+import com.imps.server.main.IMPSTcpServer;
 import com.imps.server.main.basetype.MessageProcessTask;
 import com.imps.server.main.basetype.User;
 import com.imps.server.main.basetype.userStatus;
-import com.imps.server.manager.UserManager;
+import com.imps.server.model.IMPSType;
 
 public class NotifyStatus extends MessageProcessTask{
-	private String userName = "";
-	private byte status = 0;
-	public NotifyStatus(Channel session, ChannelBuffer inMsg) {
+	public NotifyStatus(Channel session, IMPSType inMsg) {
 		super(session, inMsg);
 	}
-
-	@Override
-	public void parse() {
-		int len = inMsg.readInt();
-		byte nm[] = new byte[len];
-		inMsg.readBytes(nm);
-		try {
-			userName = new String(nm,"gb2312");
-		} catch (UnsupportedEncodingException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		status = inMsg.readByte();
-	}
-
 	@Override
 	public void execute() {
+		String userName = inMsg.getmHeader().get("UserName");
+		String status = inMsg.getmHeader().get("Status");	 
+		if(userName==null||status==null){
+			if(DEBUG) System.out.println("illegal request of notify status");
+			return;
+		}
 		try {
-			UserManager manager = UserManager.getInstance();
 			User user = manager.getUser(userName);
-			if(user==null&&status==userStatus.ONLINE) 
+			if(user==null&&status.equals("ONLINE")) 
 			{
 				user = manager.getUserFromDB(userName);
-				user.setStatus(status);
+				user.setStatus(userStatus.ONLINE);
 				user.setSessionId(session.getId());
 				manager.addUser(user);
-			}else if(user!=null&&status==userStatus.OFFLINE){
+			}else if(user!=null&&status.equals("OFFLINE")){
 				manager.deleteUser(user);
+				session.close();
+				IMPSTcpServer.getAllGroups().remove(session);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}catch (Exception e){
 			e.printStackTrace();
 		}
+		if(DEBUG) System.out.println("notify status done");
 	}
 
 }

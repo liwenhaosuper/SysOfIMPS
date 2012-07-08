@@ -1,111 +1,64 @@
 package com.imps.server.handler.baseLogic;
 
-import java.io.UnsupportedEncodingException;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
-import java.sql.SQLException;
+import java.util.HashMap;
 
-import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 import org.jboss.netty.channel.Channel;
 
 import com.imps.server.main.IMPSTcpServer;
 import com.imps.server.main.basetype.MessageProcessTask;
 import com.imps.server.main.basetype.User;
-import com.imps.server.main.basetype.userStatus;
-import com.imps.server.manager.MessageFactory;
-import com.imps.server.manager.UserManager;
+import com.imps.server.model.CommandId;
+import com.imps.server.model.CommandType;
+import com.imps.server.model.IMPSType;
 
 public class SendPTPVideoRsp extends MessageProcessTask{
 
-	private String userName;
-	private String friName;
-	private String ip;
-	private int port;
 	private SocketAddress addr;
-	private boolean res;
-	public SendPTPVideoRsp(Channel session, ChannelBuffer inMsg,SocketAddress addr) {
+	public SendPTPVideoRsp(Channel session, IMPSType inMsg,SocketAddress addr) {
 		super(session, inMsg);
 		this.addr = addr;
 	}
-
-	@Override
-	public void parse() {
-		int len = inMsg.readInt();
-		byte []nm = new byte[len];
-		inMsg.readBytes(nm);
-		try {
-			userName = new String(nm,"gb2312");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-			return;
-		}
-		len = inMsg.readInt();
-		nm = new byte[len];
-		inMsg.readBytes(nm);
-		try {
-			friName = new String(nm,"gb2312");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-			return;
-		}
-		//get ip
-		len = inMsg.readInt();
-		byte[] IPbyte = new byte[(int)len];
-		inMsg.readBytes(IPbyte);
-		try {
-			ip = new String(IPbyte,"gb2312");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-			return;
-		}
-		//get port
-		port = inMsg.readInt();
-		//get result
-		res = inMsg.readInt()==0?false:true;
-		
-	}
-
 	@Override
 	public void execute() {
-		UserManager manager = null;
-		//update user status
-		try {
-			manager = UserManager.getInstance();
-			User user = manager.getUser(userName);
-			if(user==null)
-			{
-				user = manager.getUserFromDB(userName);
-				user.setStatus(userStatus.ONLINE);
-				user.setSessionId(session.getId());
-				manager.addUser(user);
-				User[] friends = user.getOnlineFriendList();
-				//notify all friends
-				if(friends==null)
-					return ;
-				for(int i=0;i<friends.length;i++)
-				{
-				     manager.updateUserStatus(user);
-				}
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+
+		String userName = inMsg.getmHeader().get("UserName");
+		String friendname = inMsg.getmHeader().get("FriendName");
+		String results = inMsg.getmHeader().get("Result");
+		if(userName==null||friendname==null||results==null){
+			if(DEBUG) System.out.println("illegal ptp video rsp.");
 			return;
 		}
-		//dispatch user request
-		if(manager.userMap.contains(friName)){
-			User fri = manager.getUser(friName);
+		updateList(userName,true);
+		if(manager.getUserMap().containsKey(friendname)){
+	        User fri = manager.getUser(friendname);
 	        Channel mysession = IMPSTcpServer.getAllGroups().find(fri.getSessionId());
-	        if(mysession.isConnected()){
-	        	mysession.write(ChannelBuffers.wrappedBuffer(
-	        			MessageFactory.createSPTPVideoRsp(userName, ip, port,res,((InetSocketAddress)addr).getAddress().getHostAddress()
-	        					,((InetSocketAddress)addr).getPort()).build()
-	        			));
-	        	System.out.println("dispatch video rsp succ.");
+	        if(mysession==null){
+	        	if(DEBUG) System.out.println("illegal video audio request..");
+				return;
 	        }
+			IMPSType result = new CommandType();
+			HashMap<String,String> header = new HashMap<String,String>();
+			header.put("Command", CommandId.S_PTP_VIDEO_RSP);
+			header.put("FriendName",userName);
+			header.put("Result",results);
+			result.setmHeader(header);
+			mysession.write(ChannelBuffers.wrappedBuffer(result.MediaWrapper()));
+	        if(DEBUG) System.out.println("ptp video rsp sent...");
 		}else{
-			System.out.println(" user is now offline and could not sent video rsp to him~");
+			IMPSType result = new CommandType();
+			HashMap<String,String> header = new HashMap<String,String>();
+			//TODO: Bug
+			header.put("Command", CommandId.S_PTP_VIDEO_RSP);
+			header.put("FriendName",friendname);
+			header.put("Result","Fail");
+			result.setmHeader(header);
+			session.write(ChannelBuffers.wrappedBuffer(result.MediaWrapper()));
+			if(DEBUG) System.out.println("ptp video rsp send failed: user offline...");
 		}
+	
 	}
 
 }

@@ -17,9 +17,9 @@ import com.imps.server.main.basetype.User;
 import com.imps.server.manager.MessageFactory;
 import com.imps.server.manager.UserManager;
 
-public class DoodleReq extends MessageProcessTask{
+public class DoodleReq/* extends MessageProcessTask*/{
 	
-	private String userName = "";
+/*	private String userName = "";
 	private List<String> friendList = new ArrayList<String>();
 	public DoodleReq(Channel session, ChannelBuffer inMsg) {
 		super(session, inMsg);
@@ -116,5 +116,5 @@ public class DoodleReq extends MessageProcessTask{
 			}
 		}
 	}
-
+*/
 }

@@ -139,16 +139,16 @@ public class ReceiverChannelService {
 				}
 				
 				// store received message to database
-				try {
-					new LocalDBHelper(IMPSDev.getContext()).storeMsg(((MediaType)msg.obj).getMsgContant(),
-							((MediaType)msg.obj).getTime(),
-							((MediaType)msg.obj).getFriend(),
-							MediaType.from/* From friend */, MediaType.SMS);
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} catch (ParseException e) {
-					e.printStackTrace();
-				}
+//				try {
+//					new LocalDBHelper(IMPSDev.getContext()).storeMsg(((MediaType)msg.obj).getMsgContant(),
+//							((MediaType)msg.obj).getTime(),
+//							((MediaType)msg.obj).getFriend(),
+//							MediaType.from/* From friend */, MediaType.SMS);
+//				} catch (SQLException e) {
+//					e.printStackTrace();
+//				} catch (ParseException e) {
+//					e.printStackTrace();
+//				}
 				
 				Intent sms = new Intent(Constant.SMS);
 				sms.putExtra(Constant.SMSCONTENT, ((MediaType)msg.obj).getMsgContant());

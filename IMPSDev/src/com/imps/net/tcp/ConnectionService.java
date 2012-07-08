@@ -1,4 +1,4 @@
-package com.imps.services.impl;
+package com.imps.net.tcp;
 
 import java.net.InetSocketAddress;
 import java.util.concurrent.Executors;
@@ -13,16 +13,12 @@ import org.jboss.netty.channel.socket.nio.NioClientSocketChannelFactory;
 
 import android.util.Log;
 
-import com.imps.IMPSDev;
-import com.imps.net.handler.TcpConnectionHandler;
-
 public class ConnectionService{
 	private static String TAG = ConnectionService.class.getCanonicalName();
-	private static boolean DEBUG = IMPSDev.isDEBUG();
+	private static boolean DEBUG = true;
 	private static String server_ip;
 	private static int server_port;
 	private static Channel future;
-	private static TcpConnectionHandler handler;
 	private static ClientBootstrap bootstrap;
 	private static boolean isStarted = false;
 	
@@ -30,30 +26,32 @@ public class ConnectionService{
 		server_ip = ip;
 		server_port = port;
 	}
-	public boolean startTcp(){
+	public boolean startTcp(final ConnectionListener listener){
 		if(DEBUG) Log.d(TAG,"Start tcp...");
 		isStarted = true;
-        // Configure the client.
         bootstrap = new ClientBootstrap(
                 new NioClientSocketChannelFactory(
                         Executors.newCachedThreadPool(),
                         Executors.newCachedThreadPool()));
-        // Set up the pipeline factory.
-        handler = new TcpConnectionHandler(bootstrap,new InetSocketAddress(server_ip,server_port));
+        
         bootstrap.setPipelineFactory(new ChannelPipelineFactory() {
             public ChannelPipeline getPipeline() throws Exception {
                 return Channels.pipeline(
-                		handler, ServiceManager.getmNetLogic());
+                		new TcpConnectionHandler(listener),new NetMsgLogicHandler(listener));
             }
         });
-        handler.addConnEventHandler(ServiceManager.getmAccount());
         bootstrap.setOption("reuseAddress", true);
         bootstrap.setOption("child.reuseAddress", true);
         bootstrap.setOption("child.keepAlive", true);
         bootstrap.setOption("child.tcpNoDelay", true);
-        // Start the connection attempt.
-        future = bootstrap.connect(new InetSocketAddress(server_ip,server_port)).getChannel();
-		return true;
+		ChannelFuture channelfuture = bootstrap.connect(new InetSocketAddress(server_ip,server_port));
+		try {
+			channelfuture.await(5000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+        future = channelfuture.getChannel();
+        return true;
 	}
 	public static void fireConnect(){
 		if(future.isConnected()){
@@ -62,11 +60,13 @@ public class ConnectionService{
 		if(!isStarted){
 			return;
 		}
+		if(future.isOpen()){
+			future.close();
+		}
 		ChannelFuture channelfuture = bootstrap.connect(new InetSocketAddress(server_ip,server_port));
 		try {
 			channelfuture.await();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		future = channelfuture.getChannel();
@@ -83,7 +83,6 @@ public class ConnectionService{
 				future.close().await();
 			}
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return true;
@@ -93,12 +92,5 @@ public class ConnectionService{
 	}
 	public static void setChannel(Channel futures){
 		future = futures;
-	}
-	public static void setHandler(TcpConnectionHandler handler) {
-		ConnectionService.handler = handler;
-	}
-	public static TcpConnectionHandler getHandler() {
-		return handler;
-	}
-	
+	}	
 }

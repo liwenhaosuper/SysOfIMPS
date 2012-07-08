@@ -13,8 +13,9 @@ import com.imps.basetypes.UserStatus;
 import com.imps.events.IConnEvent;
 import com.imps.events.ILoginEvent;
 import com.imps.net.handler.MessageFactory;
+import com.imps.net.tcp.ConnectionService;
 
-public class AccountService implements IConnEvent{
+public class AccountService {
 	private static boolean DEBUG =IMPSDev.isDEBUG();
 	private static String TAG = AccountService.class.getCanonicalName();
 	public boolean isConnected = false;
@@ -25,7 +26,6 @@ public class AccountService implements IConnEvent{
 	public AccountService(){
 	}
 	public boolean start(){
-		ServiceManager.getmNetLogic().addConnEventHandler(this);
 		return true;
 	}
 	public boolean isConnected(){
@@ -43,19 +43,12 @@ public class AccountService implements IConnEvent{
 		if(isConnected==false){
 			if(DEBUG)Log.d(TAG,"Login():not connected...fireConnect...");
 			ConnectionService.fireConnect();
-			autoAuth = true;
-			Timer timer = new Timer();
-			timer.schedule(new TimerTask(){
-				@Override
-				public void run(){
-					if(!isLogined)
-						login(userName,userPwd);
-				}
-			},3000);
 		}
 		if(ConnectionService.getChannel().isConnected()){
 			ConnectionService.getChannel().write(ChannelBuffers.wrappedBuffer(
 					MessageFactory.createCLoginReq(userName, userPwd).build()));
+		}else{
+			if(DEBUG)Log.d(TAG,"Login():not connected...");
 		}
 	}
 	public void logout(){
@@ -79,26 +72,18 @@ public class AccountService implements IConnEvent{
 				MessageFactory.createCUpdateUserInfoReq(user.getUsername(), user.getGender(), user.getEmail()).build()));
 		}
 	}
-	@Override
+
 	public void onConnected() {
-		// TODO Auto-generated method stub
 		isConnected = true;
-		if(autoAuth&&isLogined){
-			if(DEBUG)Log.d(TAG,"loginning...");
-			login(userName,userPwd);
-		}
 		if(DEBUG)Log.d(TAG,"onConnected...");
 	}
-	@Override
+
 	public void onDisconnected() {
-		// TODO Auto-generated method stub
 		isConnected = false;
-		//isLogined = false;
 		if(DEBUG)Log.d(TAG,"onDisconnected...");
 	}
 	public void onLoginError() {
 		isConnected = true;
-		//isLogined = false;
 		autoAuth = false;
 	}
 	public void onLoginSuccess() {

@@ -1,61 +1,56 @@
 package com.imps.server.handler.baseLogic;
 
-import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
 
-import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 import org.jboss.netty.channel.Channel;
 
 import com.imps.server.main.basetype.MessageProcessTask;
-import com.imps.server.main.basetype.OutputMessage;
 import com.imps.server.main.basetype.User;
-import com.imps.server.manager.MessageFactory;
-import com.imps.server.manager.UserManager;
+import com.imps.server.model.CommandId;
+import com.imps.server.model.CommandType;
+import com.imps.server.model.IMPSType;
 
 public class UpdateUserInfo extends MessageProcessTask{
-	private User user = new User();
-	public UpdateUserInfo(Channel session, ChannelBuffer inMsg) {
+	public UpdateUserInfo(Channel session, IMPSType inMsg) {
 		super(session, inMsg);
 	}
-
-	@Override
-	public void parse() {
-		try{
-			int len = inMsg.readInt();
-			byte nm[] = new byte[len];
-			inMsg.readBytes(nm);
-			user.setUsername(new String(nm,"gb2312"));
-			len = inMsg.readInt();
-			user.setGender(len);
-			len = inMsg.readInt();
-			nm = new byte[len];
-			inMsg.readBytes(nm);
-			user.setEmail(new String(nm,"gb2312"));
-			
-			System.out.println(user.getUsername()+","+user.getGender()+","+user.getEmail());
-		}catch (UnsupportedEncodingException e){
-			e.printStackTrace();
-		}
-	}
-
 	@Override
 	public void execute() {
-		OutputMessage outMsg = null;
-		try{
-		    UserManager manager = UserManager.getInstance();
-		    if(manager.updateUserEmail(user))
-		    {
-		    	outMsg = MessageFactory.createSUpdateUserInfoRsp();
-		    	//更新成功
-		    	System.out.println("更新成功!");
-		    } else{
-		    	System.out.println("更新失败!");
-		    }
-		} catch(Exception e) {
-			System.out.println("更新失败!");
-			e.printStackTrace();
+		String userName = inMsg.getmHeader().get("UserName");
+		String gender = inMsg.getmHeader().get("Gender");
+		String email = inMsg.getmHeader().get("Email");
+		if(userName==null||gender==null||email==null){
+			if(DEBUG) System.out.println("illegal update user info request");
+			return;
 		}
-		//反馈给客户端
-		session.write(ChannelBuffers.wrappedBuffer(outMsg.build()));
+		updateList(userName,true);
+		User user = manager.getUser(userName);
+		if(user==null){
+			if(DEBUG) System.out.println("illegal update user info request...");
+			return;
+		}
+		user.setEmail(email);
+		user.setGender(Integer.valueOf(gender));
+		boolean res = false;
+		try{
+			if(manager.updateUserEmail(user))
+		    {	    	
+				if(DEBUG)System.out.println("update user info ok");
+				res = true;
+		    } else{
+		    	if(DEBUG) System.out.println("update user info fail");
+		    	res = false;
+		    }
+		}catch(Exception e){
+			if(DEBUG) e.printStackTrace();
+			res = false;
+		}
+		HashMap<String,String> header = new HashMap<String,String>();
+		header.put("Command", CommandId.S_UPDATE_USER_INFO_RSP);
+		header.put("Result",res?"OK":"FAIL");
+		IMPSType result = new CommandType();
+		result.setmHeader(header);
+		session.write(ChannelBuffers.wrappedBuffer(result.MediaWrapper()));
 	}
 }

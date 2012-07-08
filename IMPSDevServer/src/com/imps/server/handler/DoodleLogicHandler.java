@@ -28,19 +28,19 @@ public class DoodleLogicHandler extends SimpleChannelUpstreamHandler{
     	switch(cmdType){
     	case CommandId.C_DOODLE_REQ:
     		System.out.println("Doodle Req...");
-    		new DoodleReq(e.getChannel(),buffer).run();
+    		//new DoodleReq(e.getChannel(),buffer).run();
     		break;
     	case CommandId.C_DOODLE_RSP:
     		System.out.println("Doodle Rsp...");
-    		new DoodleRsp(e.getChannel(),buffer).run();
+    		//new DoodleRsp(e.getChannel(),buffer).run();
     		break;
     	case CommandId.DOODLE_DATA:
     		System.out.println("Doodle Data...");
-    		new DoodleData(e.getChannel(),buffer).run();
+    		//new DoodleData(e.getChannel(),buffer).run();
     		break;
     	case CommandId.DOODLE_LOGIN:
     		System.out.println("Doodle Login...");
-    		new DoodleLogin(e.getChannel(),buffer).run();
+    		//new DoodleLogin(e.getChannel(),buffer).run();
     		break;
     	default:
     		System.out.println("Unknown msg type of doodle:"+cmdType);

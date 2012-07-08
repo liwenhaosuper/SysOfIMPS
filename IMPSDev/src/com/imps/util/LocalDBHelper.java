@@ -1,8 +1,6 @@
 package com.imps.util;
 
-import java.sql.Date;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import android.content.Context;
@@ -12,7 +10,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.imps.basetypes.UserMessage;
+import com.imps.model.AudioMedia;
+import com.imps.model.ImageMedia;
+import com.imps.model.MediaType;
+import com.imps.model.TextMedia;
 import com.imps.net.handler.UserManager;
 /**
  * Android local database helper</br>
@@ -33,9 +34,11 @@ public class LocalDBHelper extends SQLiteOpenHelper {
 	private static final String TABLE_CREAT_MAIN = "CREATE TABLE IF NOT EXISTS " +
 			MSG_TABLE_NAME + 
 			" (msg_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
-			"content TEXT NOT NULL, time LONG NOT NULL, " +
-			"friend TEXT NOT NULL, " +
-			"dir INTEGER NOT NULL," +
+			"content TEXT NOT NULL, time LONG NOT NULL, " +   
+			"sender TEXT NOT NULL, " +
+			"receiver TEXT NOT NULL, " +
+			"stime TEXT NOT NULL, " +
+			"send INTEGER NOT NULL," +
 			"type INTEGER NOT NULL);";
 	
 	private static final String TABLE_CREAT_RECENT = "CREATE TABLE IF NOT EXISTS " + 
@@ -62,23 +65,22 @@ public class LocalDBHelper extends SQLiteOpenHelper {
 	/**
 	 * Store the message to local database persistently</br>
 	 * called by event listener in {@link com.imps.activities.ChatView ChatView}
-	 * @param content message body content
-	 * @param time time of the message
-	 * @param sender sender of the message
-	 * @param dir direction of the message, 1: from {@link friend}, 0: to {@link friend}
 	 * @throws ParseException 
 	 * @throws SQLException 
 	 */
-	public void storeMsg(String content, String time, String friend, int dir, int type) throws SQLException, ParseException {
+	public void storeMsg(MediaType media) throws SQLException, ParseException {
 		SQLiteDatabase msgdb = getWritableDatabase();
 		if (msgdb == null) {
 			Log.d("LOCALDB", "fail to get writable database");
 			return;
 		}
-		msgdb.execSQL("INSERT INTO " + MSG_TABLE_NAME + "(content, time, friend, dir, type) values (\""
-				+ content + "\", " + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(time).getTime() + ", \"" + friend + "\", " + dir + ", " + type + ")");
+		if(media.getType()==MediaType.SMS||media.getType()==MediaType.AUDIO||media.getType()==MediaType.IMAGE){
+			msgdb.execSQL("INSERT INTO " + MSG_TABLE_NAME +"(content,sender,receiver, stime,send,type) values (\""
+					+media.getContent()+ "\", \""+media.getSender()+ "\", \"" +media.getReceiver() + "\", \"" + media.getTime()+ "\","+
+					(media.isSend()?1:0)+","+(int)media.getType()+ ")");
+		}
 		msgdb.close();
-		updateRecentContact(friend);
+		updateRecentContact(media.isSend()?media.getReceiver():media.getSender());
 	}
 
 	/**
@@ -87,13 +89,13 @@ public class LocalDBHelper extends SQLiteOpenHelper {
 	 * Maybe there are messages from many friends</br>
 	 * @return list of messages of the current user
 	 */
-	public ArrayList<UserMessage> fetchMsg() {
+	public ArrayList<MediaType> fetchMsg() {
 		SQLiteDatabase msgdb = getReadableDatabase();
 		if (msgdb == null) {
 			Log.d("LOCALDB", "fail to get readable database");
 			return null;
 		}
-		ArrayList<UserMessage> historyList = new ArrayList<UserMessage>();
+		ArrayList<MediaType> historyList = new ArrayList<MediaType>();
 		Cursor result = msgdb.query(MSG_TABLE_NAME, null, null, null, null, null, null);
 		if (result.getCount() < 1) {
 			msgdb.close();
@@ -101,11 +103,22 @@ public class LocalDBHelper extends SQLiteOpenHelper {
 			return null;
 		} else {
 			do {
-				UserMessage msg = new UserMessage(result.getString(1),
-						result.getString(2),
-						new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-						.format(new Date(result.getLong(3))),
-						result.getInt(4), result.getInt(5));
+				int type = result.getInt(6);
+				MediaType msg  = null;
+				if(type==MediaType.AUDIO){
+					msg = new AudioMedia(result.getInt(5)==1?true:false);
+				}else if(type==MediaType.SMS){
+					msg = new TextMedia(result.getInt(5)==1?true:false);
+				}else if(type==MediaType.IMAGE){
+					msg = new ImageMedia(result.getInt(5)==1?true:false);
+				}else{
+					continue;
+				}
+				msg.setContent(result.getString(1).getBytes());
+				msg.setReceiver(result.getString(3));
+				msg.setSender(result.getString(2));
+				msg.setTime(result.getString(4));
+				msg.setType((byte)result.getInt(6));
 				historyList.add(msg);
 				result.moveToNext();
 			} while (!result.isAfterLast());
@@ -120,15 +133,15 @@ public class LocalDBHelper extends SQLiteOpenHelper {
 	 * from the specified by {@link #fetchMsg(String friend) friend}
 	 * @return list of messages of the current user
 	 */
-	public ArrayList<UserMessage> fetchMsg(String friend) {
+	public ArrayList<MediaType> fetchMsg(String friend) {
 		SQLiteDatabase msgdb = getReadableDatabase();
 		if (msgdb == null) {
 			Log.d("LOCALDB", "fail to get readable database");
 			return null;
 		}
-		ArrayList<UserMessage> historyList = new ArrayList<UserMessage>();
-		Cursor result = msgdb.query(MSG_TABLE_NAME, null, "friend=?",
-				new String[] { friend }, null, null, null);
+		ArrayList<MediaType> historyList = new ArrayList<MediaType>();
+		Cursor result = msgdb.query(MSG_TABLE_NAME, null, "sender=? or receiver=?",
+				new String[] { friend,friend }, null, null, null);
 		result.moveToFirst();
 		if (result.getCount() < 1) {
 			result.close();
@@ -136,11 +149,22 @@ public class LocalDBHelper extends SQLiteOpenHelper {
 			return null;
 		} else {
 			do {
-				UserMessage msg = new UserMessage(result.getString(1),
-						result.getString(2),
-						new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-						.format(new Date(result.getLong(3))),
-						result.getInt(4), result.getInt(5));
+				int type = result.getInt(6);
+				MediaType msg  = null;
+				if(type==MediaType.AUDIO){
+					msg = new AudioMedia(result.getInt(5)==1?true:false);
+				}else if(type==MediaType.SMS){
+					msg = new TextMedia(result.getInt(5)==1?true:false);
+				}else if(type==MediaType.IMAGE){
+					msg = new ImageMedia(result.getInt(5)==1?true:false);
+				}else{
+					continue;
+				}
+				msg.setContent(result.getString(1).getBytes());
+				msg.setReceiver(result.getString(3));
+				msg.setSender(result.getString(2));
+				msg.setTime(result.getString(4));
+				msg.setType((byte)result.getInt(6));
 				historyList.add(msg);
 				result.moveToNext();
 			} while (!result.isAfterLast());
@@ -156,23 +180,34 @@ public class LocalDBHelper extends SQLiteOpenHelper {
 	 * @param friend
 	 * @return
 	 */
-	public UserMessage fetchLatest(String friend) {		
+	public MediaType fetchLatest(String friend) {		
 		SQLiteDatabase msgdb = getReadableDatabase();
 		if (msgdb == null) {
 			Log.d("LOCALDB", "fail to get readable database");
 			return null;
 		}
-		Cursor result = msgdb.query(MSG_TABLE_NAME, null, "friend=?", new String[] { friend }, null, null, "msg_id desc");
+		Cursor result = msgdb.query(MSG_TABLE_NAME, null, "sender=? or receiver=?", new String[] { friend,friend }, null, null, "msg_id desc");
 		if (result.getCount() < 1) {
 			result.close();
 			msgdb.close();
 			return null;
 		} else {
-				UserMessage msg = new UserMessage(result.getString(1),
-				result.getString(2),
-				new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-				.format(new Date(result.getLong(3))),
-				result.getInt(4), result.getInt(5));
+			int type = result.getInt(6);
+			MediaType msg  = null;
+			if(type==MediaType.AUDIO){
+				msg = new AudioMedia(result.getInt(5)==1?true:false);
+			}else if(type==MediaType.SMS){
+				msg = new TextMedia(result.getInt(5)==1?true:false);
+			}else if(type==MediaType.IMAGE){
+				msg = new ImageMedia(result.getInt(5)==1?true:false);
+			}else{
+				return null;
+			}
+			msg.setContent(result.getString(1).getBytes());
+			msg.setReceiver(result.getString(3));
+			msg.setSender(result.getString(2));
+			msg.setTime(result.getString(4));
+			msg.setType((byte)result.getInt(6));
 				result.moveToNext();
 			result.close();
 			msgdb.close();

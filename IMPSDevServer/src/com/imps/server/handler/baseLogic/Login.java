@@ -1,136 +1,90 @@
 package com.imps.server.handler.baseLogic;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
+import java.util.HashMap;
 
-import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 import org.jboss.netty.channel.Channel;
 
 import com.imps.server.main.IMPSTcpServer;
-import com.imps.server.main.basetype.CommandId;
 import com.imps.server.main.basetype.MessageProcessTask;
-import com.imps.server.main.basetype.OutputMessage;
 import com.imps.server.main.basetype.User;
-import com.imps.server.main.basetype.userStatus;
-import com.imps.server.manager.MessageFactory;
 import com.imps.server.manager.UserManager;
+import com.imps.server.model.CommandId;
+import com.imps.server.model.CommandType;
+import com.imps.server.model.IMPSType;
 
 public class Login extends MessageProcessTask{
-	private String userName;
-	private String pwd;
-
-	public Login(Channel session, ChannelBuffer inMsg) {
+	
+	public Login(Channel session, IMPSType inMsg) {
 		super(session, inMsg);
-		// TODO Auto-generated constructor stub
 	}
-
-	@Override
-	public void parse() {
-	}
-
 	@Override
 	public void execute() {
-		OutputMessage outMsg = null;
-		UserManager manager = null;
-		try {
-			manager = UserManager.getInstance();
-			if(!validate()){//wrong login
-				outMsg = MessageFactory.createErrorMsg();
-				try {
-					outMsg.getOutputStream().writeInt(CommandId.S_LOGIN_ERROR);
-					outMsg.getOutputStream().writeInt(CommandId.S_LOGIN_ERROR_UNVALID);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				System.out.println("Login error:username or pwd wrong...");
-				session.write(ChannelBuffers.wrappedBuffer(outMsg.build()));
+		String userName = inMsg.getmHeader().get("UserName");
+		String pwd = inMsg.getmHeader().get("Password");
+		if(userName==null||pwd==null){
+			HashMap<String,String> header = new HashMap<String,String>();
+			header.put("Command", CommandId.S_LOGIN_UNKNOWN);
+			header.put("Result","NO");
+			IMPSType result = new CommandType();
+			result.setmHeader(header);
+			session.write(ChannelBuffers.wrappedBuffer(result.MediaWrapper()));
+			if(DEBUG)System.out.println("illegal login request");
+			return;
+		}
+		if(validate(userName,pwd)){
+			//success
+			User user = manager.getUser(userName);
+			if(user==null){
+				updateList(userName,true);
+				user = manager.getUser(userName);
 			}else{
-				User user = manager.getUser(userName);
-				if(user==null)
-				{
-					user = manager.getUserFromDB(userName);
-					if(user==null){
-						outMsg = MessageFactory.createErrorMsg();
-						try {
-							outMsg.getOutputStream().writeInt(CommandId.S_LOGIN_ERROR);
-							outMsg.getOutputStream().writeInt(CommandId.S_LOGIN_UNKNOWN);
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-						System.out.println("Login error...");
-						session.write(ChannelBuffers.wrappedBuffer(outMsg.build()));
-						return;
-					}
-				}
 				Integer sid = user.getSessionId();
-				if(sid.intValue()!=-1)
-				{
+				if(sid.intValue()!=-1){
 					Channel mysession = IMPSTcpServer.getAllGroups().find(sid);
-					if(mysession!=null)
-					{
-						OutputMessage remsg = MessageFactory.createErrorMsg();
-						remsg.getOutputStream().writeInt(CommandId.S_LOGIN_ERROR);
-						remsg.getOutputStream().writeInt(CommandId.S_LOGIN_ERROR_OTHER_PLACE);
-						mysession.write(ChannelBuffers.wrappedBuffer(remsg.build()));
-						//mysession.close();
+					if(mysession!=null&&!mysession.getId().equals(session.getId())){
+						if(DEBUG) System.out.println("disconnect the older connection: "+user.getUsername());
+						HashMap<String,String> header = new HashMap<String,String>();
+						header.put("Command", CommandId.S_LOGIN_ERROR_OTHER_PLACE);
+						header.put("Result","OK");
+						IMPSType result = new CommandType();
+						result.setmHeader(header);
+						mysession.write(ChannelBuffers.wrappedBuffer(result.MediaWrapper()));
 						IMPSTcpServer.getAllGroups().remove(mysession);
-						System.out.println("disconnect the older connection: "+user.getUsername());
 					}
 				}
-				outMsg = MessageFactory.createSLoginRsp();
-				//username
-				outMsg.getOutputStream().writeInt(user.getUsername().getBytes("gb2312").length);
-				outMsg.getOutputStream().write(user.getUsername().getBytes("gb2312"));
-				
-				//gender
-				outMsg.getOutputStream().writeInt(user.getGender());
-				
-				//email
-				outMsg.getOutputStream().writeInt(user.getEmail().getBytes("gb2312").length);
-				outMsg.getOutputStream().write(user.getEmail().getBytes("gb2312"));
-				
-				//add the user to the userlist
-				user.setStatus(userStatus.ONLINE);
-				//set session id
-				user.setSessionId(session.getId());
-				manager.updateUserStatus(user);					
-				session.write(ChannelBuffers.wrappedBuffer(outMsg.build()));
-				System.out.println("Login ok...");
-				IMPSTcpServer.getAllGroups().add(session);
-			}			
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (Exception e){
-			e.printStackTrace();
+			}
+			HashMap<String,String> header = new HashMap<String,String>();
+			header.put("Command", CommandId.S_LOGIN_RSP);
+			header.put("Result","OK");
+			header.put("Email", user.getEmail());
+			header.put("Gender", user.getGender()==0?"F":"M");
+			IMPSType result = new CommandType();
+			result.setmHeader(header);
+			session.write(ChannelBuffers.wrappedBuffer(result.MediaWrapper()));
+			updateList(userName,true);
+			if(DEBUG)System.out.println("Login rsp sent...");
+		}else{
+			//fail
+			HashMap<String,String> header = new HashMap<String,String>();
+			header.put("Command", CommandId.S_LOGIN_ERROR_UNVALID);
+			header.put("Result", "NO");
+			header.put("Description","User Name or Password not valid.");
+			IMPSType result = new CommandType();
+			result.setmHeader(header);
+			session.write(ChannelBuffers.wrappedBuffer(result.MediaWrapper()));
+			if(DEBUG)System.out.println("login fail");
 		}
 	}
-	public boolean validate(){
+	public boolean validate(String userName,String pwd){
+		boolean res = false;
 		try {
-			boolean res = false;
-			int len = inMsg.readInt();
-			byte []nm = new byte[len];
-			inMsg.readBytes(nm);
-			userName = new String(nm,"gb2312");
-			len = inMsg.readInt();
-			nm = new byte[len];
-			inMsg.readBytes(nm);
-			pwd = new String(nm,"gb2312");
-			try {
-				if(UserManager.getInstance().checkUser(userName,pwd))
-					res = true;
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return res;
-			
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
+			if(UserManager.getInstance().checkUser(userName,pwd))
+				res = true;
+		} catch (SQLException e) {
 			e.printStackTrace();
-			return false;
-		}				
+		}
+		return res;			
 	}
 }

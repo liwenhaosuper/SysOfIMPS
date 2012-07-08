@@ -13,9 +13,9 @@ import com.imps.server.main.basetype.MessageProcessTask;
 import com.imps.server.main.basetype.OutputMessage;
 import com.imps.server.manager.MessageFactory;
 
-public class DoodleData extends MessageProcessTask{
+public class DoodleData/* extends MessageProcessTask*/{
 
-	private String userName="";
+/*	private String userName="";
 	private String roomMaster="";
 	public DoodleData(Channel session, ChannelBuffer inMsg) {
 		super(session, inMsg);
@@ -59,6 +59,6 @@ public class DoodleData extends MessageProcessTask{
 			group.write(ChannelBuffers.wrappedBuffer(outMsg.build()));
 			System.out.println("Data sent...");
 		}
-	}
+	}*/
 
 }

@@ -12,6 +12,7 @@ import org.jboss.netty.channel.group.ChannelGroup;
 import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
 
 import com.imps.server.handler.LogicHandler;
+import com.imps.server.handler.PlainTextHandler;
 import com.imps.server.handler.PortUnificationServerHandler;
 
 public class IMPSTcpServer {
@@ -48,6 +49,7 @@ public class IMPSTcpServer {
 		IMPSTcpServer.allGroups = allGroups;
 	}
 	public static ChannelGroup getAllGroups() {
+		System.err.println("group size:"+allGroups.size());
 		return allGroups;
 	}
 }

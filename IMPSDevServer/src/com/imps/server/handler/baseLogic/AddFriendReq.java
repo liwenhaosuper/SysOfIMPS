@@ -1,127 +1,99 @@
 package com.imps.server.handler.baseLogic;
 
-import java.io.DataInputStream;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
+import java.util.HashMap;
 
-import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 import org.jboss.netty.channel.Channel;
 
 import com.imps.server.main.IMPSTcpServer;
-import com.imps.server.main.ServerBoot;
 import com.imps.server.main.basetype.MessageProcessTask;
-import com.imps.server.main.basetype.NetAddress;
-import com.imps.server.main.basetype.OutputMessage;
 import com.imps.server.main.basetype.User;
-import com.imps.server.main.basetype.userStatus;
-import com.imps.server.manager.MessageFactory;
-import com.imps.server.manager.UserManager;
+import com.imps.server.model.CommandId;
+import com.imps.server.model.CommandType;
+import com.imps.server.model.IMPSType;
 
-
+/**
+ * processing add friend request
+ * @author liwenhaosuper
+ *
+ */
 public class AddFriendReq extends MessageProcessTask{
-
-	private 		User user=null;
-	private			UserManager manager=null;
-	public AddFriendReq(Channel session, ChannelBuffer message)
-		 {
+	public AddFriendReq(Channel session, IMPSType message){
 		super(session, message);
-		// TODO Auto-generated constructor stub
 	}
-
-	@Override
-	public void parse() {
-		// TODO Auto-generated method stub
-		int len = inMsg.readInt();
-		byte nm[] = new byte[len];
-		inMsg.readBytes(nm);
-		String userName="";
-		try {
-			userName = new String(nm,"gb2312");
-		} catch (UnsupportedEncodingException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		try {
-			manager = UserManager.getInstance();
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		try {
-			user = UserManager.getInstance().getUser(userName);
-			if(user==null)
-			{
-				user = manager.getUserFromDB(userName);
-				user.setStatus(userStatus.ONLINE);
-				user.setSessionId(session.getId());
-				manager.addUser(user);
-				User[] friends = user.getOnlineFriendList();
-				//通知所有朋友
-				if(friends==null)
-					return ;
-				for(int i=0;i<friends.length;i++)
-				{
-				     manager.updateUserStatus(user);
-				}
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
 	@Override
 	public void execute() {
-		try {
-			int len;
-			len = inMsg.readInt();
-			byte[] fribyte = new byte[(int)len];
-			inMsg.readBytes(fribyte);
-			String friendname = new String(fribyte,"gb2312");
-			User curuser = manager.getUser(user.getUsername());
-			if(curuser==null)
-			{
-				try {
-				    UserManager manager = UserManager.getInstance();
-				
-					curuser = manager.getUserFromDB(user.getUsername());
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				if(curuser==null)
-				{
-					System.out.println(" user is not exist!");
+		String userName = inMsg.getmHeader().get("UserName");
+		String friendName = inMsg.getmHeader().get("FriendName");
+		String reqMsg = inMsg.getmHeader().get("Message");
+		if(userName==null||friendName==null){
+			if(DEBUG) System.out.println("illegal add friend request.");
+			IMPSType result = new CommandType();
+			HashMap<String,String> header = new HashMap<String,String>();
+			header.put("Command", CommandId.S_ADDFRIEND_REQ_FAIL);
+			header.put("Message", "Illegal add friend request");
+			header.put("Result","Fail");
+			result.setmHeader(header);
+			session.write(ChannelBuffers.wrappedBuffer(result.MediaWrapper()));
+			return;
+		}
+		if(reqMsg==null){
+			reqMsg = "";
+		}
+		updateList(userName,true);
+		User fri = manager.getUser(friendName);
+		if(fri==null||fri.getSessionId().intValue()==-1){
+			try {
+				if(manager.getFriendlistFromDB(friendName)==null){	
+					if(DEBUG) System.out.println("user not exists");
+					IMPSType result = new CommandType();
+					HashMap<String,String> header = new HashMap<String,String>();
+					header.put("Command", CommandId.S_ADDFRIEND_REQ_FAIL);
+					header.put("Message", "User not exist");
+					header.put("Result","Fail");
+					result.setmHeader(header);
+					session.write(ChannelBuffers.wrappedBuffer(result.MediaWrapper()));
 					return;
 				}
-				curuser.setSessionId(session.getId());
-				manager.getUserMap().putIfAbsent(user.getUsername(), curuser);
+			} catch (SQLException e) {
+				if(DEBUG) e.printStackTrace();
 			}
-			if(curuser.getSessionId().intValue()==-1)
-				curuser.setSessionId(session.getId());
-	        User fri = manager.getUser(friendname);
-	        if(fri==null)
-	        {
-	        	System.out.println(" friend is now offline");
-	        	return;
-	        }
-	        if(fri.getSessionId().intValue()==-1)
-	        {
-	        	System.out.println(" friend is now offline");
-	        	return;
-	        }
-	        Channel mysession = IMPSTcpServer.getAllGroups().find(fri.getSessionId());
-	        OutputMessage outMsg = MessageFactory.createSAddFriReq(user.getUsername());
-	        mysession.write(ChannelBuffers.wrappedBuffer(outMsg.build()));
-	        System.out.println("req sent...");
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			if(DEBUG) System.out.println("friend is now offline");
+			IMPSType result = new CommandType();
+			HashMap<String,String> header = new HashMap<String,String>();
+			header.put("Command", CommandId.S_ADDFRIEND_REQ_FAIL);
+			header.put("Message", "User is Offline");
+			header.put("Result","Fail");
+			result.setmHeader(header);
+			session.write(ChannelBuffers.wrappedBuffer(result.MediaWrapper()));
+			return;
 		}
-
+		Channel frisession = IMPSTcpServer.getAllGroups().find(fri.getSessionId());
+		if(frisession!=null){
+			try {
+				IMPSType result = new CommandType();
+				HashMap<String,String> header = new HashMap<String,String>();
+				header.put("Command", CommandId.S_ADDFRIEND_REQ);
+				header.put("FriendName",userName);
+				header.put("Message", reqMsg);
+				result.setmHeader(header);
+				frisession.write(ChannelBuffers.wrappedBuffer(result.MediaWrapper()));
+		        if(DEBUG) System.out.println("req sent...");
+			} catch (Exception e) {
+				if(DEBUG)e.printStackTrace();
+			}
+		}else{
+			//TODO: add to database
+			if(DEBUG)System.out.println("add friend req: user is offline.");
+			IMPSType result = new CommandType();
+			HashMap<String,String> header = new HashMap<String,String>();
+			header.put("Command", CommandId.S_ADDFRIEND_REQ_FAIL);
+			header.put("Message", "User is Offline");
+			header.put("Result","Fail");
+			result.setmHeader(header);
+			session.write(ChannelBuffers.wrappedBuffer(result.MediaWrapper()));
+		}
 	}
 
 }

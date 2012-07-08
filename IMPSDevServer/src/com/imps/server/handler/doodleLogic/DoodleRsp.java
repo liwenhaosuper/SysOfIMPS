@@ -14,9 +14,9 @@ import com.imps.server.main.basetype.User;
 import com.imps.server.manager.MessageFactory;
 import com.imps.server.manager.UserManager;
 
-public class DoodleRsp extends MessageProcessTask{
+public class DoodleRsp /*extends MessageProcessTask*/{
 
-	private String userName;
+/*	private String userName;
 	private String friName;
 	private boolean res;
 	public DoodleRsp(Channel session, ChannelBuffer inMsg) {
@@ -85,6 +85,6 @@ public class DoodleRsp extends MessageProcessTask{
 				}
 			}
 		}
-	}
+	}*/
 
 }

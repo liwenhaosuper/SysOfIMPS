@@ -17,16 +17,15 @@ import com.imps.server.main.basetype.OutputMessage;
 
 
 public class MessageFactory {
-	//AU:audio data
-	//IM:image data
-	//FL:file data
-	//OK:plain text
-	//DD:doodle
+
 	public static String AM = "AM";
 	public static String IM = "IM";
 	public static String FL = "FL";
 	public static String OK = "OK";
 	public static String DD ="DD";
+	
+	
+	
 
 	public static OutputMessage createSLoginRsp() {
 		OutputMessage outMsg = new OutputMessage(CommandId.S_LOGIN_RSP);
