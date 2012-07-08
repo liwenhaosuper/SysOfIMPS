@@ -16,31 +16,24 @@ import android.util.Log;
 
 import com.imps.IMPSDev;
 import com.imps.R;
-import com.imps.basetypes.CommandId;
 import com.imps.basetypes.MediaType;
 import com.imps.basetypes.User;
 import com.imps.basetypes.UserStatus;
-import com.imps.events.IAudioEvent;
-import com.imps.events.IAudioEventDispacher;
 import com.imps.events.IConnEvent;
 import com.imps.events.IConnEventDispacher;
-import com.imps.events.IContactEvent;
-import com.imps.events.IContactEventDispacher;
-import com.imps.events.ILoginEvent;
-import com.imps.events.ILoginEventDispacher;
-import com.imps.events.IRegisterEvent;
-import com.imps.events.IRegisterEventDispacher;
-import com.imps.events.ISmsEvent;
-import com.imps.events.ISmsEventDispacher;
-import com.imps.events.IVideoEvent;
-import com.imps.events.IVideoEventDispacher;
+import com.imps.model.AudioMedia;
+import com.imps.model.CommandId;
+import com.imps.model.CommandType;
+import com.imps.model.IMPSType;
+import com.imps.model.ImageMedia;
+import com.imps.model.TextMedia;
 import com.imps.services.impl.ServiceManager;
 
 public class NetMsgLogicHandler extends SimpleChannelUpstreamHandler implements IConnEventDispacher{
 	
 	private static String TAG = NetMsgLogicHandler.class.getCanonicalName();
 	private static boolean DEBUG = IMPSDev.isDEBUG();
-	private byte cmdType;
+	private int cmdType;
 	private List<IConnEvent> mConnEvntList;
 
 	public NetMsgLogicHandler(){
@@ -67,7 +60,53 @@ public class NetMsgLogicHandler extends SimpleChannelUpstreamHandler implements 
 	{
 		Channel session = e.getChannel();
 		ChannelBuffer inMsg =(ChannelBuffer)e.getMessage();
-		cmdType = inMsg.readByte();
+		cmdType = inMsg.readInt();
+		IMPSType media = null;
+		switch(cmdType){
+    	case com.imps.model.MediaType.SMS:
+    		media = new TextMedia(false);
+    		break;
+    	case com.imps.model.MediaType.AUDIO:
+    		media = new AudioMedia(false);
+    		break;
+    	case com.imps.model.MediaType.COMMAND:
+    		media = new CommandType();
+    		break;
+    	case com.imps.model.MediaType.IMAGE:
+    		media = new ImageMedia(false);
+    		break;
+		default:
+			if(DEBUG) Log.d(TAG,"unhandled msg received:"+cmdType);
+			inMsg.skipBytes(inMsg.readableBytes());
+			e.getChannel().close();
+			return;
+    	}
+		media.MediaParser(inMsg.array());
+		if(media.getType()==IMPSType.COMMAND){
+			String command = media.getmHeader().get("Command");
+    		if(command==null){
+    			return;
+    		}
+    		if(command.equals(CommandId.S_LOGIN_RSP)){
+    			if(DEBUG)Log.d(TAG,"login request received!");
+    			
+    		}else if(command.equals(CommandId.C_REGISTER)){
+    			if(DEBUG)Log.d(TAG,"reg request received!");
+    			
+    		}else if(command.equals(CommandId.C_ADDFRIEND_REQ)){
+    			if(DEBUG)Log.d(TAG,"add friend request received!");
+    			
+    		}else if(command.equals(CommandId.C_FRIENDLIST_REFURBISH_REQ)){
+    			if(DEBUG)Log.d(TAG,"get friend list request received!");
+    			
+    		}
+		}else if(media.getType()==IMPSType.AUDIO||media.getType()==IMPSType.IMAGE||media.getType()==IMPSType.SMS){
+			
+		}else{
+			if(DEBUG) Log.d(TAG,"unhandled data type:"+cmdType);
+			return;
+		}
+		
 		switch(cmdType) {
 		case CommandId.S_ERROR:
 			if(DEBUG){Log.d(TAG,"error msg recv.");}

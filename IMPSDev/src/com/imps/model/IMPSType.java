@@ -103,4 +103,31 @@ public abstract class IMPSType {
 	public String getCHARSET() {
 		return CHARSET;
 	}
+	public String toString(){
+		String result ="";
+		result+="type:";
+		result+=type;
+		result+=";\theader{\t";
+		if(getmHeader()!=null&&getmHeader().size()>0){
+			Iterator iter = getmHeader().entrySet().iterator();
+       	 	while(iter.hasNext()){
+       	 		Entry entry = (Entry)iter.next();
+       	 		String nm = (String)entry.getKey();
+       	 		result+=nm;
+       	 		result+=":";
+       	 		String value = (String)entry.getValue();
+       	 		result+=value;
+       	 		result+=";";     	 		
+       	 	}
+        }
+		result+="};";
+		result+="content:";
+		if(body==null){
+			result+="null";
+		}else{
+			result+=body.length;
+		}
+		result+="\n";
+		return result;
+	}
 }

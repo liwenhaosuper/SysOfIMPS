@@ -13,9 +13,15 @@ import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelUpstreamHandler;
 
 import com.imps.server.handler.baseLogic.AddFriendReq;
+import com.imps.server.handler.baseLogic.AddFriendRsp;
 import com.imps.server.handler.baseLogic.FriendListRequest;
+import com.imps.server.handler.baseLogic.HeartBeat;
 import com.imps.server.handler.baseLogic.Login;
 import com.imps.server.handler.baseLogic.Register;
+import com.imps.server.handler.baseLogic.SearchFriendReq;
+import com.imps.server.handler.baseLogic.SendAudio;
+import com.imps.server.handler.baseLogic.SendImageReq;
+import com.imps.server.handler.baseLogic.SendMessage;
 import com.imps.server.main.IMPSTcpServer;
 import com.imps.server.main.basetype.User;
 import com.imps.server.main.basetype.userStatus;
@@ -76,9 +82,34 @@ public class LogicHandler extends SimpleChannelUpstreamHandler{
     		}else if(command.equals(CommandId.C_FRIENDLIST_REFURBISH_REQ)){
     			if(DEBUG)System.out.println("server:get friend list request received!");
     			new FriendListRequest(e.getChannel(),media).run();    			
+    		}else if(command.equals(CommandId.C_ADDFRIEND_RSP)){
+    			if(DEBUG)System.out.println("server:add friend response received!");
+    			new AddFriendRsp(e.getChannel(),media).run();
+    		}else if(command.equals(CommandId.C_HEARTBEAT_REQ)){
+    			if(DEBUG)System.out.println("server:heart beat received!");
+    			new HeartBeat(e.getChannel(),media).run();
+    		}else if(command.equals(CommandId.C_OFFLINE_MSG_REQ)){
+    			if(DEBUG)System.out.println("server:get offline message received!");
+    			new HeartBeat(e.getChannel(),media).run();
+    		}else if(command.equals(CommandId.C_SEARCH_FRIEND_REQ)){
+    			if(DEBUG)System.out.println("server:search friend request received!");
+    			new SearchFriendReq(e.getChannel(),media).run();
     		}
     	}else if(media.getType()==IMPSType.AUDIO||media.getType()==IMPSType.IMAGE||media.getType()==IMPSType.SMS){
-    		
+    		String command = media.getmHeader().get("Command");
+    		if(command==null){
+    			return;
+    		}
+    		if(command.equals(CommandId.C_AUDIO_REQ)){
+    			if(DEBUG)System.out.println("server:audio request received!");
+    			new SendAudio(e.getChannel(),media).run();
+    		}else if(command.equals(CommandId.C_IMAGE_REQ)){
+    			if(DEBUG)System.out.println("server:image request received!");
+    			new SendImageReq(e.getChannel(),media).run();
+    		}else if(command.equals(CommandId.C_SEND_MSG)){
+    			if(DEBUG)System.out.println("server:sms request received!");
+    			new SendMessage(e.getChannel(),media).run();
+    		}
     	}
 //    	
 //		case CommandId.C_LOGIN_REQ:

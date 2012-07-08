@@ -20,7 +20,7 @@ import android.util.Log;
 import com.imps.IMPSDev;
 import com.imps.events.IConnEvent;
 import com.imps.events.IConnEventDispacher;
-import com.imps.services.impl.ConnectionService;
+import com.imps.net.tcp.ConnectionService;
 import com.imps.services.impl.ServiceManager;
 
 public class TcpConnectionHandler extends ReplayingDecoder<VoidEnum> implements IConnEventDispacher {

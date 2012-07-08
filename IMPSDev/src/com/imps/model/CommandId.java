@@ -32,8 +32,10 @@ public class CommandId {
 	public static final String S_FRIENDLIST_REFURBISH_RSP = "S_FRIENDLIST_REFURBISH_RSP";
 	/**添加好友*/
 	public static final String C_ADDFRIEND_REQ = "C_ADDFRIEND_REQ";
+	public static final String S_ADDFRIEND_REQ_FAIL = "C_ADDFRIEND_REQ_FAIL";
 	public static final String C_ADDFRIEND_RSP = "C_ADDFRIEND_RSP";
 	public static final String S_ADDFRIEND_REQ = "S_ADDFRIEND_REQ";
+	public static final String S_ADDFRIEND_RSP_FAIL = "C_ADDFRIEND_RSP_FAIL";
 	public static final String S_ADDFRIEND_RSP = "S_ADDFRIEND_RSP";
 	/**发送消息*/
 	public static final String C_SEND_MSG = "C_SEND_MSG";
@@ -83,9 +85,7 @@ public class CommandId {
 	public static final String S_UPDATE_USER_INFO_RSP = "S_UPDATE_USER_INFO_RSP";
 	public static final String C_UPLOAD_PORTRAIT_REQ = "C_UPLOAD_PORTRAIT_REQ";
 	public static final String S_UPLOAD_PORTRAIT_RSP = "S_UPLOAD_PORTRAIT_RSP";
-	
-	//public static final String S_SEND_PORTRAIT_REQ = 40;
-	
+
 	/**
 	 * App Plugin  
 	 */
