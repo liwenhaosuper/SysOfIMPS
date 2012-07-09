@@ -500,9 +500,9 @@ public class ChatView extends IMPSActivity{
 			// Add received messages in the active chat session
 //			List<MediaType> mbox = UserManager.CurSessionFriList.get(fUsername);
 			UserMessage record;
-			ArrayList<UserMessage> history = localDB.fetchMsg(fUsername);
+			ArrayList<UserMessage> history = null;//;localDB.fetchMsg(fUsername);
 //			String msg;
-			for(int i=0;i<history.size();i++)
+			for(int i=0;history!=null&&i<history.size();i++)
 			{
 				if(DEBUG) Log.d(TAG, ""+i+" "+ history.get(i));
 				record = history.get(i);
@@ -555,13 +555,13 @@ public class ChatView extends IMPSActivity{
 					 * @author Styx
 					 */
 					try {
-						localDB.storeMsg(textEditor.getText().toString(),
-								new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date()),
-								fUsername, MediaType.to, MediaType.SMS);
+						//localDB.storeMsg(textEditor.getText().toString(),
+						//		new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date()),
+						//		fUsername, MediaType.to, MediaType.SMS);
 					} catch (SQLException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
-					} catch (ParseException e) {
+					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
@@ -672,14 +672,14 @@ public class ChatView extends IMPSActivity{
 				// including displayed on the current chat session GUI
 				// and those from other friends
 				try {
-					localDB.storeMsg(intent.getStringExtra(Constant.SMSCONTENT),
-							intent.getStringExtra(Constant.TIME),
-							intent.getStringExtra(Constant.USERNAME),
-							MediaType.from/* From friend */, MediaType.SMS);
+					//localDB.storeMsg(intent.getStringExtra(Constant.SMSCONTENT),
+					//		intent.getStringExtra(Constant.TIME),
+					//		intent.getStringExtra(Constant.USERNAME),
+					//		MediaType.from/* From friend */, MediaType.SMS);
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				} catch (ParseException e) {
+				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}

@@ -38,6 +38,7 @@ public class Register extends MessageProcessTask{
 				header.put("UserName", userName);
 				header.put("Email", email);
 				header.put("Gener", gender);
+				header.put("Password", pwd);
 				IMPSType result = new CommandType();
 				result.setmHeader(header);
 				session.write(ChannelBuffers.wrappedBuffer(result.MediaWrapper()));

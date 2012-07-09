@@ -37,7 +37,7 @@ public class ConnectionService{
         bootstrap.setPipelineFactory(new ChannelPipelineFactory() {
             public ChannelPipeline getPipeline() throws Exception {
                 return Channels.pipeline(
-                		new TcpConnectionHandler(listener),new NetMsgLogicHandler(listener));
+                		new TcpConnectionHandler(listener),new com.imps.net.handler.NetMsgLogicHandler());
             }
         });
         bootstrap.setOption("reuseAddress", true);

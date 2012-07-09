@@ -2,6 +2,7 @@ package com.imps.services.impl;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.jboss.netty.buffer.ChannelBuffers;
@@ -14,8 +15,12 @@ import com.imps.R;
 import com.imps.activities.IMPSContainer;
 import com.imps.basetypes.SystemMsgType;
 import com.imps.events.IContactEvent;
+import com.imps.model.CommandId;
+import com.imps.model.CommandType;
+import com.imps.model.IMPSType;
 import com.imps.net.handler.MessageFactory;
 import com.imps.net.handler.UserManager;
+import com.imps.net.tcp.ConnectionService;
 import com.imps.services.IContactService;
 
 public class ContactService implements IContactService{
@@ -46,12 +51,14 @@ public class ContactService implements IContactService{
 
 	public void sendFriListReq() {
 		if(ServiceManager.getmTcpConn().getChannel().isConnected()){
-			ServiceManager.getmTcpConn().getChannel().write(ChannelBuffers.wrappedBuffer(
-					MessageFactory.createCFriendListReq(UserManager.getGlobaluser().getUsername()).build()));
+			HashMap<String,String> header = new HashMap<String,String>();
+			header.put("Command", CommandId.C_FRIENDLIST_REFURBISH_REQ);
+			header.put("UserName",UserManager.globaluser.getUsername());
+			IMPSType result = new CommandType();
+			result.setmHeader(header);
+			ServiceManager.getmTcpConn().getChannel().write(ChannelBuffers.wrappedBuffer(result.MediaWrapper()));
 		}
 	}
-
-
 	public void sendUpdateMyStatusReq(byte status) {
 		// TODO Auto-generated method stub
 		if(ServiceManager.getmTcpConn().getChannel().isConnected()){

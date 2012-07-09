@@ -8,14 +8,14 @@ import java.util.Map.Entry;
 public abstract class IMPSType {
 	
 	//media type
-	public static int SMS = 1;
-	public static int IMAGE = 2;
-	public static int AUDIO = 3;
-	public static int FILE = 4;
-	public static int COMMAND = 5;
+	public final static int SMS = 1;
+	public final static int IMAGE = 2;
+	public final static int AUDIO = 3;
+	public final static int FILE = 4;
+	public final static int COMMAND = 5;
 	
 	
-	private String CHARSET = "utf-8";
+	private String CHARSET = "gb2312";
 	protected int type = COMMAND;//media type
 	protected byte[] body;
 	protected HashMap<String,String> mHeader = new HashMap<String,String>();
@@ -38,25 +38,29 @@ public abstract class IMPSType {
 	public byte[] MediaWrapper(){
 		OutputMessage out = new OutputMessage();
 		try {
-			out.getOutputStream().writeByte(type);
-			out.getOutputStream().write(getmHeader().size());
+			out.getOutputStream().writeInt(type);
+			out.getOutputStream().writeInt(getmHeader().size());
 			if(getmHeader()!=null&&getmHeader().size()>0){
 				Iterator iter = getmHeader().entrySet().iterator();
            	 	while(iter.hasNext()){
            	 		Entry entry = (Entry)iter.next();
            	 		String nm = (String)entry.getKey();
-           	 		out.getOutputStream().write(nm.getBytes("").length);
-           	 		out.getOutputStream().write(nm.getBytes(""));
+           	 		out.getOutputStream().writeInt(nm.getBytes(CHARSET).length);
+           	 		out.getOutputStream().write(nm.getBytes(CHARSET));
            	 		String value = (String)entry.getValue();
-           	 		out.getOutputStream().write(value.getBytes("").length);
-           	 		out.getOutputStream().write(value.getBytes(""));
+           	 		out.getOutputStream().writeInt(value.getBytes(CHARSET).length);
+           	 		out.getOutputStream().write(value.getBytes(CHARSET));
            	 	}
-           	 	byte[] content = getContent();
-           	 	out.getOutputStream().write(content.length);
+            }
+       	 	byte[] content = getContent();
+       	 	if(content!=null){
+           	 	out.getOutputStream().writeInt(content.length);
            	 	if(content.length>0){
            	 		out.getOutputStream().write(content);
            	 	}
-            }
+       	 	}else{
+       	 		out.getOutputStream().writeInt(0);
+       	 	}
 			return out.build();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -66,7 +70,7 @@ public abstract class IMPSType {
 	public void MediaParser(byte[] data){
 		InputMessage in = new InputMessage(data);
 		try {
-			type = in.getInputStream().readByte();
+			type = in.getInputStream().readInt();
 			//read header
 			int len = in.getInputStream().readInt();
 			byte[] key = new byte[0];
@@ -103,6 +107,7 @@ public abstract class IMPSType {
 	public String getCHARSET() {
 		return CHARSET;
 	}
+	
 	public String toString(){
 		String result ="";
 		result+="type:";

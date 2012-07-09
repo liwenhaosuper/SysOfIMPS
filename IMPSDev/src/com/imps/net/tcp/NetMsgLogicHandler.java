@@ -47,7 +47,7 @@ public class NetMsgLogicHandler extends SimpleChannelUpstreamHandler{
 			return;
 		}
 		IMPSType media = null;
-		byte type = inMsg.getByte(inMsg.readerIndex());
+		int type = inMsg.getInt(inMsg.readerIndex());
 		if(type==MediaType.AUDIO){
 			media = new AudioMedia(false);
 		}else if(type==MediaType.IMAGE){
@@ -67,7 +67,7 @@ public class NetMsgLogicHandler extends SimpleChannelUpstreamHandler{
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e) {
     	try {
-    		if(DEBUG) Log.d(TAG,"tcp exception...");
+    		if(DEBUG) Log.d(TAG,"tcp exception..."+e.toString());
     		ctx.getChannel().close();
     		listener.onTCPDisconnect();
 		} catch (Exception e1) {

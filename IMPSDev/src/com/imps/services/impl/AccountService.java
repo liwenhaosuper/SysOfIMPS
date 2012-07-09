@@ -1,7 +1,6 @@
 package com.imps.services.impl;
 
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.HashMap;
 
 import org.jboss.netty.buffer.ChannelBuffers;
 
@@ -10,8 +9,9 @@ import android.util.Log;
 import com.imps.IMPSDev;
 import com.imps.basetypes.User;
 import com.imps.basetypes.UserStatus;
-import com.imps.events.IConnEvent;
-import com.imps.events.ILoginEvent;
+import com.imps.model.CommandId;
+import com.imps.model.CommandType;
+import com.imps.model.IMPSType;
 import com.imps.net.handler.MessageFactory;
 import com.imps.net.tcp.ConnectionService;
 
@@ -45,8 +45,13 @@ public class AccountService {
 			ConnectionService.fireConnect();
 		}
 		if(ConnectionService.getChannel().isConnected()){
-			ConnectionService.getChannel().write(ChannelBuffers.wrappedBuffer(
-					MessageFactory.createCLoginReq(userName, userPwd).build()));
+			HashMap<String,String> header = new HashMap<String,String>();
+			header.put("Command", CommandId.C_LOGIN_REQ);
+			header.put("UserName",username);
+			header.put("Password",password);
+			IMPSType result = new CommandType();
+			result.setmHeader(header);
+			ConnectionService.getChannel().write(ChannelBuffers.wrappedBuffer(result.MediaWrapper()));
 		}else{
 			if(DEBUG)Log.d(TAG,"Login():not connected...");
 		}
@@ -60,9 +65,16 @@ public class AccountService {
 	}
 	public void register(User user){
 		if(isConnected){
-			if(DEBUG)Log.d(TAG,"Reg:sent...");
-			ConnectionService.getChannel().write(ChannelBuffers.wrappedBuffer(
-				MessageFactory.createCRegisterReq(user.getUsername(), user.getPassword(), user.getGender(), user.getEmail()).build()));
+			if(DEBUG)Log.d(TAG,"Reg:sent...");			
+			HashMap<String,String> header = new HashMap<String,String>();
+			header.put("Command", CommandId.C_REGISTER);
+			header.put("UserName",user.getUsername());
+			header.put("Password",user.getPassword());
+			header.put("Email",user.getEmail());
+			header.put("Gender",user.getGender()==1?"M":"F");
+			IMPSType result = new CommandType();
+			result.setmHeader(header);
+			ConnectionService.getChannel().write(ChannelBuffers.wrappedBuffer(result.MediaWrapper()));
 		}
 	}
 	public void updateUserInfo(User user){

@@ -18,7 +18,19 @@ public class ClientBoot {
 	private static int doodlePort = 1400;
 	private static int httpPort = 1500;
 	private static ChannelGroup allGroups;
+	private static boolean DEBUG = true;
     public static void main(String argv[]) {
+    	if(DEBUG){
+    		String res = "{s,ss},,{a,aaa},{ddd},";
+    		String[] r = res.split("\\{[^}]*\\}");
+    		for(int i=0;i<r.length;i++){
+    			if(r[i].equals("")){
+    				continue;
+    			}
+    			System.out.println(r[i]);
+    		}
+    		return;
+    	}
     	ConnectionService connservice = new ConnectionService(ip,tcpPort);
     	connservice.startTcp();
     	loginTest();

@@ -56,14 +56,14 @@ public class ServiceManager extends Service implements ConnectionListener{
 		if(isStarted){
 			return;
 		}
-		setmTcpConn(new ConnectionService("192.168.168.44",1200));
+		setmTcpConn(new ConnectionService("59.78.23.73",1200));
 		setmBsstion(new BaseStationService());
 		setmGPS(new GPSService());
 		setmSound(new SoundService());
 		setmConfig(new ConfigurationService(IMPSDev.getPreferences()));
 		setmContact(new ContactService());
 		setmSms(new SmsService());
-		P2PService.init("192.168.168.44",1300);
+		P2PService.init("59.78.23.73",1300);
 		setmMedia(P2PService.getInstance());
 		setmAudio(new P2PAudioService());
 		setmVideo(new P2PVideoService());
@@ -71,7 +71,7 @@ public class ServiceManager extends Service implements ConnectionListener{
 		setmAccount(new AccountService());
 		setmReceiver(new ReceiverChannelService());
 		setmHeartbeat(new HeartBeatService());
-		setmDoodleService(new DoodleConnectionService("192.168.168.44",1400));
+		setmDoodleService(new DoodleConnectionService("59.78.23.73",1400));
 	}
 	@Override
 	public IBinder onBind(Intent intent) {

@@ -51,7 +51,7 @@ public class TcpConnectionHandler extends ReplayingDecoder<VoidEnum>{
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e) {
     	try {
-    		if(DEBUG) Log.d(TAG,"tcp exception...");
+    		if(DEBUG) Log.d(TAG,"tcp exception..."+e.toString());
     		ctx.getChannel().close();
     		listener.onTCPDisconnect();
 		} catch (Exception e1) {
