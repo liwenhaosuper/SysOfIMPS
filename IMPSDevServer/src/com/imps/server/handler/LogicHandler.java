@@ -65,6 +65,7 @@ public class LogicHandler extends SimpleChannelUpstreamHandler{
 			return;
     	}
     	media.MediaParser(buffer.array());
+    	buffer.skipBytes(buffer.readableBytes());
     	if(media.getType()==IMPSType.COMMAND){
     		String command = media.getmHeader().get("Command");
     		if(command==null){

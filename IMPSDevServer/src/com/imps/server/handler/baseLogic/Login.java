@@ -35,6 +35,7 @@ public class Login extends MessageProcessTask{
 		}
 		if(validate(userName,pwd)){
 			//success
+			updateList(userName,true);
 			User user = manager.getUser(userName);
 			if(user==null){
 				updateList(userName,true);

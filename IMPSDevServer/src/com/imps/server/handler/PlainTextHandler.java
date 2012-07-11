@@ -19,12 +19,21 @@ public class PlainTextHandler extends ReplayingDecoder<VoidEnum>{
 	private static boolean DEBUG = true;
     private static final Logger logger = Logger.getLogger(
     		PlainTextHandler.class.getName());
+    private byte[] tags = new byte[2];
 	@Override
 	protected Object decode(ChannelHandlerContext ctx, Channel channel,
 			ChannelBuffer buffer, VoidEnum state) throws Exception {
-		int len = buffer.readInt();
-		if(DEBUG)System.out.println("Req len:"+len);
-		return buffer.readBytes(len);
+		buffer.readBytes(tags); //'OK'
+		if(tags[0]=='O'&&tags[1]=='K'){
+			int len = buffer.readInt();
+			if(DEBUG)System.out.println("Req len:"+len);
+			return buffer.readBytes(len);
+		}else{
+			logger.log(Level.INFO,"Unknow tag recv:"+tags);
+            buffer.skipBytes(buffer.readableBytes());
+            ctx.getChannel().close();
+            return null;
+		}
 	}
     @Override
     public void channelDisconnected(ChannelHandlerContext ctx, ChannelStateEvent e){

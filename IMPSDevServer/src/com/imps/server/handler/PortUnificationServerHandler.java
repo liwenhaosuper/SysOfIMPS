@@ -33,17 +33,17 @@ public class PortUnificationServerHandler extends FrameDecoder{
 	        if(p.get("LogicHandler")==null){
 	        	p.addLast("LogicHandler",new LogicHandler());
 	        }
-	        buffer.readBytes(tag);
+	       // buffer.readBytes(tag);
 		}else if(isHttp(tag[0],tag[1])){ //http request
 			logger.log(Level.INFO,"http req:");
 	        ChannelPipeline p = ctx.getPipeline();
 	        if(p.get("PlainTextHandler")==null){
 	        	p.addLast("HttpRequestDecoder", new HttpRequestDecoder());
 	        }
-	        if(p.get("PlainTextHandler")==null){
+	        if(p.get("HttpResponseEncoder")==null){
 	        	p.addLast("HttpResponseEncoder", new HttpResponseEncoder());
 	        }
-	        if(p.get("PlainTextHandler")==null){
+	        if(p.get("HttpResponseEncoder")==null){
 	        	p.addLast("HttpLogicHandler", new HttpLogicHandler());
 	        }
 	        buffer.readBytes(tag);

@@ -1,6 +1,7 @@
 package com.imps.net.tcp;
 
 import java.text.ParseException;
+import java.util.HashMap;
 
 import android.content.Intent;
 import android.database.SQLException;
@@ -68,6 +69,8 @@ public class ReceiverChannelService {
 		}
 		return instance;
 	}
+	
+	
 	//broadcast and dispatches message
 	private Handler dispatcher = new Handler(){
 		@Override

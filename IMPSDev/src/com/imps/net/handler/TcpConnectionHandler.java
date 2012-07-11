@@ -25,7 +25,7 @@ import com.imps.services.impl.ServiceManager;
 
 public class TcpConnectionHandler extends ReplayingDecoder<VoidEnum> implements IConnEventDispacher {
 
-	private static boolean DEBUG =IMPSDev.isDEBUG();
+	private static boolean DEBUG =true;
 	private static String TAG = TcpConnectionHandler.class.getCanonicalName();
 	private static int RECONNECT_DELAY = 2000;
 	private static int PERIOD = 5000;
@@ -58,6 +58,7 @@ public class TcpConnectionHandler extends ReplayingDecoder<VoidEnum> implements 
 		}else if(tag[0]=='F'&&tag[1]=='L'){
 			return buffer.readBytes(buffer.readInt());
 		}else if(tag[0]=='O'&&tag[1]=='K'){
+			if(DEBUG)	Log.d(TAG,"TAG is ok");
 			int len = buffer.readInt();
 			//ctx.getPipeline().remove(this);
 			return buffer.readBytes(len);

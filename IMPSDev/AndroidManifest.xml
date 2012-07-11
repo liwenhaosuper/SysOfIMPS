@@ -28,31 +28,31 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter> 
         </activity>
-        <activity android:name=".activities.Login" android:launchMode="singleTop"></activity>
-        <activity android:name=".activities.Register" android:launchMode="singleTop"></activity>
-        <activity android:name=".activities.About" android:launchMode="singleTop" android:theme="@android:style/Theme.Dialog"></activity>
-        <activity android:name=".activities.FriendListTab" android:launchMode="singleTop" ></activity>
-        <activity android:name=".activities.SystemMsg" android:launchMode="singleTop"></activity>
-        <activity android:name=".activities.CurrentSessions" android:launchMode="singleTop"></activity>
-        <activity android:name=".activities.ChatView" android:launchMode="singleTop"></activity>
-        <activity android:name=".activities.FaceDialog" android:launchMode="singleTop" android:theme="@android:style/Theme.Dialog"></activity>
-        <activity android:name=".activities.PopupMsg"  android:launchMode="singleTop" android:theme="@android:style/Theme.Dialog">
+        <activity android:name=".activities.Login" ></activity>
+        <activity android:name=".activities.Register" ></activity>
+        <activity android:name=".activities.About" android:theme="@android:style/Theme.Dialog"></activity>
+        <activity android:name=".activities.FriendListTab"></activity>
+        <activity android:name=".activities.SystemMsg"></activity>
+        <activity android:name=".activities.CurrentSessions"></activity>
+        <activity android:name=".activities.ChatView"></activity>
+        <activity android:name=".activities.FaceDialog" android:theme="@android:style/Theme.Dialog"></activity>
+        <activity android:name=".activities.PopupMsg" android:theme="@android:style/Theme.Dialog">
         </activity>
-        <activity android:name=".activities.Graffiti" android:launchMode="singleTop"></activity>
-        <activity android:name=".activities.FindFriend" android:launchMode="singleTop"></activity>
-        <activity android:name=".activities.AudioChat" android:launchMode="singleTop"></activity>
-        <activity android:name=".activities.FriendContainer" android:launchMode="singleTop"></activity>
-        <activity android:name=".activities.FriendContainer1" android:launchMode="singleTop"></activity>
-        <activity android:name=".activities.SearchFriend" android:launchMode="singleTop"></activity> 
-        <activity android:name=".activities.MapContainer" android:launchMode="singleTop"></activity>
-        <activity android:name=".activities.FriendLocation" android:launchMode="singleTask"></activity>
-        <activity android:name=".activities.CoupleDoodle" android:launchMode="singleTask"></activity>
-        <activity android:name=".activities.SnsMain" android:launchMode="singleTop"></activity>
-         <activity android:name=".activities.SnsMain1" android:launchMode="singleTop"></activity>
-        <activity android:name=".activities.VideoContact" android:launchMode="singleTop"></activity>
-        <activity android:name=".activities.ViewFriend" android:launchMode="singleTop"></activity>
+        <activity android:name=".activities.Graffiti" ></activity>
+        <activity android:name=".activities.FindFriend" ></activity>
+        <activity android:name=".activities.AudioChat" ></activity>
+        <activity android:name=".activities.FriendContainer" ></activity>
+        <activity android:name=".activities.FriendContainer1"></activity>
+        <activity android:name=".activities.SearchFriend"></activity> 
+        <activity android:name=".activities.MapContainer"></activity>
+        <activity android:name=".activities.FriendLocation"></activity>
+        <activity android:name=".activities.CoupleDoodle"></activity>
+        <activity android:name=".activities.SnsMain"></activity>
+         <activity android:name=".activities.SnsMain1"></activity>
+        <activity android:name=".activities.VideoContact"></activity>
+        <activity android:name=".activities.ViewFriend"></activity>
         <uses-library android:name="com.google.android.maps" />
-        <activity android:name=".activities.MyCard" android:launchMode="singleTop"></activity>
+        <activity android:name=".activities.MyCard"></activity>
  
         <receiver android:name=".receivers.ServiceManagerReceiver" android:enabled="true">
 			<intent-filter>

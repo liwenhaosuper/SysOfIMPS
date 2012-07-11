@@ -113,9 +113,13 @@ public class ContactService implements IContactService{
 	}
 
 	public void sendOfflineMsgReq() {
-		if(ServiceManager.getmTcpConn().getChannel().isConnected()){
-			ServiceManager.getmTcpConn().getChannel().write(ChannelBuffers.wrappedBuffer(
-					MessageFactory.createCOfflineMsgReq(UserManager.getGlobaluser().getUsername()).build()));
+		if(ServiceManager.getmTcpConn().getChannel().isConnected()){		
+			HashMap<String,String> header = new HashMap<String,String>();
+			header.put("Command", CommandId.C_OFFLINE_MSG_REQ);
+			header.put("UserName",UserManager.globaluser.getUsername());
+			IMPSType result = new CommandType();
+			result.setmHeader(header);
+			ServiceManager.getmTcpConn().getChannel().write(ChannelBuffers.wrappedBuffer(result.MediaWrapper()));
 		}
 	}
 }

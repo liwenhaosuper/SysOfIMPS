@@ -21,17 +21,17 @@ public class MediaType extends IMPSType{
 	}
 	@Override
 	public byte[] MediaWrapper(){
-		this.getmHeader().put("From", sender);
-		this.getmHeader().put("Receiver", receiver);
-		this.getmHeader().put("Time", stime);
+//		this.getmHeader().put("UserName", sender);
+//		this.getmHeader().put("FriendName", receiver);
+//		this.getmHeader().put("Time", stime);
 		return super.MediaWrapper();
 	}
 	@Override
 	public void MediaParser(byte[] data){
 		super.MediaParser(data);
-		this.sender = this.getmHeader().get("UserName");
-		this.receiver = this.getmHeader().get("Receiver");
-		this.stime = this.getmHeader().get("Time");
+//		this.sender = this.getmHeader().get("UserName");
+//		this.receiver = this.getmHeader().get("FriendName");
+//		this.stime = this.getmHeader().get("Time");
 	}
 	public void setReceiver(String friName){
 		this.receiver = friName;

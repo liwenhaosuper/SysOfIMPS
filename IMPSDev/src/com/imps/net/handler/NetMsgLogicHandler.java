@@ -25,8 +25,10 @@ import com.imps.model.CommandId;
 import com.imps.model.CommandType;
 import com.imps.model.IMPSType;
 import com.imps.model.ImageMedia;
+import com.imps.model.MediaType;
 import com.imps.model.TextMedia;
 import com.imps.services.impl.ServiceManager;
+import com.imps.util.CommonHelper;
 
 public class NetMsgLogicHandler extends SimpleChannelUpstreamHandler{
 	
@@ -205,32 +207,35 @@ public class NetMsgLogicHandler extends SimpleChannelUpstreamHandler{
     	        		if(command==null){
     	        			return;
     	        		}
+    	        		/** send image request received */
     	        		if(command.equals(CommandId.S_IMAGE_REQ)){
     	        			if(DEBUG){Log.d(TAG,"send image recv.");}
-    	        			String friend = media.getmHeader().get("FriendName");
     	        			byte[] content = media.getContent(); 
+    	        			String path = CommonHelper.saveImage(CommonHelper.bytesToBitmap(content));
+    	        			((MediaType)media).setPath(path);
+    	        			MsgHandler.getInstance().recvRequest((MediaType)media);
     	        			ServiceManager.getmSound().playNewSms();
     	        		}else if(command.equals(CommandId.S_OFFLINE_MSG_RSP)){
-    	        			
+    	        			if(DEBUG){Log.d(TAG,"offline message recv.");}
     	        		}
     	        		/** message received. */
     	        		else if(command.equals(CommandId.S_SEND_MSG)){
-    	        			if(DEBUG){Log.d(TAG,"send msg recv.");}
-    	        			String friend = media.getmHeader().get("FriendName");
-    	        			String time = media.getmHeader().get("Time");
-    	        			byte[] content = media.getContent(); 
+    	        			if(DEBUG){Log.d(TAG,"send msg recv.");}    	     
+    	        			MsgHandler.getInstance().recvRequest((MediaType)media); 
     	        			ServiceManager.getmSound().playNewSms();
     	        		    //ServiceManager.getmReceiver().onSmsRecv(media);
     	        		}
     	        		/** audio message received */
     	        		else if(command.equals(CommandId.S_AUDIO_REQ)){
     	        			if(DEBUG){Log.d(TAG,"send audio recv.");}
-    	        			String friend = media.getmHeader().get("FriendName");
     	        			byte[] content = media.getContent(); 
+    	        			String path = CommonHelper.saveImage(CommonHelper.bytesToBitmap(content));
+    	        			((MediaType)media).setPath(path);
+    	        			MsgHandler.getInstance().recvRequest((MediaType)media);
     	        			ServiceManager.getmSound().playNewSms();
     	        		}else {
     	        			//Unhandle command type
-    	        			
+    	        			if(DEBUG){Log.d(TAG,"unhandle media type recv.");}
     	        		}
     	    		}else{
     	    			if(DEBUG) Log.d(TAG,"unhandled data type:"+cmdType);
@@ -251,24 +256,29 @@ public class NetMsgLogicHandler extends SimpleChannelUpstreamHandler{
 		IMPSType media = null;
 		switch(cmdType){
     	case com.imps.model.MediaType.SMS:
+    		if(DEBUG) Log.d(TAG,"text media");
     		media = new TextMedia(false);
     		break;
     	case com.imps.model.MediaType.AUDIO:
+    		if(DEBUG) Log.d(TAG,"audio media");
     		media = new AudioMedia(false);
     		break;
     	case com.imps.model.MediaType.COMMAND:
+    		if(DEBUG) Log.d(TAG,"command media");
     		media = new CommandType();
     		break;
     	case com.imps.model.MediaType.IMAGE:
+    		if(DEBUG) Log.d(TAG,"image media");
     		media = new ImageMedia(false);
     		break;
 		default:
 			if(DEBUG) Log.d(TAG,"unhandled msg received:"+cmdType);
 			inMsg.skipBytes(inMsg.readableBytes());
-			e.getChannel().close();
 			return;
     	}
 		media.MediaParser(inMsg.array());
+		if(DEBUG)Log.d(TAG,media.toString());
+		inMsg.skipBytes(inMsg.readableBytes());
 		Message messageSender = Message.obtain();
 		messageSender.obj = media;
 		dispatcher.sendMessage(messageSender);

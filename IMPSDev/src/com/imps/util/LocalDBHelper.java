@@ -26,25 +26,26 @@ import com.imps.net.handler.UserManager;
  */
 public class LocalDBHelper extends SQLiteOpenHelper {
 
-	private static final int DATABASE_VERSION = 2;
+	private static final int DATABASE_VERSION = 1;
 	private static final String DB_NAME = "localmsg_"
 			+ UserManager.globaluser.getUsername();
 	private static final String MSG_TABLE_NAME = "msg";
 	private static final String RCT_TABLE_NAME = "recent";
 	private static final String TABLE_CREAT_MAIN = "CREATE TABLE IF NOT EXISTS " +
 			MSG_TABLE_NAME + 
-			" (msg_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
-			"content TEXT NOT NULL, time LONG NOT NULL, " +   
-			"sender TEXT NOT NULL, " +
-			"receiver TEXT NOT NULL, " +
-			"stime TEXT NOT NULL, " +
-			"send INTEGER NOT NULL," +
-			"type INTEGER NOT NULL);";
-	
+			" (msg_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " + //message id
+			"content TEXT NOT NULL, time LONG NOT NULL, " +   //message content
+			"sender TEXT NOT NULL, " +  //sender name
+			"receiver TEXT NOT NULL, " +  //receiver name
+			"time TEXT NOT NULL, " +    //message timestamp
+			"send INTEGER NOT NULL," +   //whether user send it or not
+			"type INTEGER NOT NULL);";   //message type:command ,audio,sms,image,file
+	private static final String TABLE_DROP_MAIN = "DROP TABLE IF EXISTS "+MSG_TABLE_NAME+";";
+	private static final String TABLE_DROP_RECENT = "DROP TABLE IF EXISTS " + RCT_TABLE_NAME+";";
 	private static final String TABLE_CREAT_RECENT = "CREATE TABLE IF NOT EXISTS " + 
 			RCT_TABLE_NAME + 
-			" (friend TEXT NOT NULL PRIMARY KEY, " +
-			"time INT NOT NULL);";
+			" (friend TEXT NOT NULL PRIMARY KEY, " +  //friend name
+			"time INT NOT NULL);";                    //message timestamp
 
 	public LocalDBHelper(Context context) {
 		super(context, DB_NAME, null, DATABASE_VERSION);
@@ -58,8 +59,8 @@ public class LocalDBHelper extends SQLiteOpenHelper {
 	}
 
 	@Override
-	public void onUpgrade(SQLiteDatabase arg0, int arg1, int arg2) {
-
+	public void onUpgrade(SQLiteDatabase db, int arg1, int arg2) {
+		Log.d("LOCALDBHELPER", "Upgrade DB");
 	}
 
 	/**
@@ -74,9 +75,14 @@ public class LocalDBHelper extends SQLiteOpenHelper {
 			Log.d("LOCALDB", "fail to get writable database");
 			return;
 		}
-		if(media.getType()==MediaType.SMS||media.getType()==MediaType.AUDIO||media.getType()==MediaType.IMAGE){
-			msgdb.execSQL("INSERT INTO " + MSG_TABLE_NAME +"(content,sender,receiver, stime,send,type) values (\""
-					+media.getContent()+ "\", \""+media.getSender()+ "\", \"" +media.getReceiver() + "\", \"" + media.getTime()+ "\","+
+		if(media.getType()==MediaType.AUDIO||media.getType()==MediaType.IMAGE){
+			msgdb.execSQL("INSERT INTO " + MSG_TABLE_NAME +"(content,sender,receiver,time,send,type) values (\""
+					+media.getPath()+ "\", \""+media.getSender()+ "\", \"" +media.getReceiver() + "\", \"" + media.getTime()+ "\","+
+					(media.isSend()?1:0)+","+(int)media.getType()+ ")");
+		}
+		else if(media.getType()==MediaType.SMS){
+			msgdb.execSQL("INSERT INTO " + MSG_TABLE_NAME +"(content,sender,receiver,time,send,type) values (\""
+					+new String(media.getContent())+ "\", \""+media.getSender()+ "\", \"" +media.getReceiver() + "\", \"" + media.getTime()+ "\","+
 					(media.isSend()?1:0)+","+(int)media.getType()+ ")");
 		}
 		msgdb.close();
@@ -114,7 +120,8 @@ public class LocalDBHelper extends SQLiteOpenHelper {
 				}else{
 					continue;
 				}
-				msg.setContent(result.getString(1).getBytes());
+				if(type==MediaType.SMS)msg.setContent(result.getString(1).getBytes());
+				else msg.setPath(result.getString(1));
 				msg.setReceiver(result.getString(3));
 				msg.setSender(result.getString(2));
 				msg.setTime(result.getString(4));
@@ -160,7 +167,8 @@ public class LocalDBHelper extends SQLiteOpenHelper {
 				}else{
 					continue;
 				}
-				msg.setContent(result.getString(1).getBytes());
+				if(type==MediaType.SMS)msg.setContent(result.getString(1).getBytes());
+				else msg.setPath(result.getString(1));
 				msg.setReceiver(result.getString(3));
 				msg.setSender(result.getString(2));
 				msg.setTime(result.getString(4));
@@ -203,7 +211,8 @@ public class LocalDBHelper extends SQLiteOpenHelper {
 			}else{
 				return null;
 			}
-			msg.setContent(result.getString(1).getBytes());
+			if(type==MediaType.SMS)msg.setContent(result.getString(1).getBytes());
+			else msg.setPath(result.getString(1));
 			msg.setReceiver(result.getString(3));
 			msg.setSender(result.getString(2));
 			msg.setTime(result.getString(4));

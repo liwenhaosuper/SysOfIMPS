@@ -28,7 +28,7 @@ public abstract class MessageProcessTask implements Runnable{
 	public abstract void execute();
 	public  void updateList(String userName,boolean status){
 		User user = manager.getUser(userName);
-		if (user == null&&status) 
+		if ((user == null&&status)) 
 		{
 			try {
 				user = manager.getUserFromDB(userName);
@@ -42,6 +42,8 @@ public abstract class MessageProcessTask implements Runnable{
 		}else if(user!=null&&!status){
 			user.setStatus(userStatus.OFFLINE);
 			manager.deleteUser(user);
+		}else if(status&&user!=null&&!session.getId().equals(user.getSessionId())){
+			user.setSessionId(session.getId());
 		}
 		Channel mysession = IMPSTcpServer.getAllGroups().find(session.getId());
 		if(mysession==null){

@@ -21,6 +21,7 @@ import com.imps.server.main.basetype.userStatus;
 import com.imps.server.model.CommandId;
 import com.imps.server.model.CommandType;
 import com.imps.server.model.IMPSType;
+import com.imps.server.model.TextMedia;
 
 public class SendMessage extends MessageProcessTask{
 
@@ -36,6 +37,7 @@ public class SendMessage extends MessageProcessTask{
 			if(DEBUG) System.out.println("illegal send message request");
 			return;
 		}
+		if(DEBUG)System.out.println("Processing send sms");
 		updateList(userName,true);
 		SimpleDateFormat tempDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String datetime = tempDate.format(new java.util.Date());
@@ -57,7 +59,7 @@ public class SendMessage extends MessageProcessTask{
 			}
 			Channel frisession = IMPSTcpServer.getAllGroups().find(fri.getSessionId());
 			if(frisession!=null){
-				IMPSType result = new CommandType();
+				IMPSType result = new TextMedia();
 				HashMap<String,String> header = new HashMap<String,String>();
 				header.put("Command", CommandId.S_SEND_MSG);
 				header.put("FriendName", userName);
@@ -65,13 +67,14 @@ public class SendMessage extends MessageProcessTask{
 				result.setmHeader(header);
 				result.setContent(msg);
 				frisession.write(ChannelBuffers.wrappedBuffer(result.MediaWrapper()));
+				if(DEBUG) System.out.println("sms sent to friend");
 			}else{
 				if(DEBUG) System.out.println("sth. go wrong,really");
 			}
 			
 		}
 		else{
-		    if(DEBUG) System.out.println("==   W: " + userName+" -> " + friendname + "[0] ==");
+		    if(DEBUG) System.out.println("friend offline.==   W: " + userName+" -> " + friendname + "[0] ==");
 		    //TODO: notify user
 		}
 		

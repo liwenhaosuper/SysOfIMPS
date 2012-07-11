@@ -28,6 +28,7 @@ public class NetMsgLogicHandler extends SimpleChannelUpstreamHandler{
 	{
 		Channel session = e.getChannel();
 		ChannelBuffer inMsg =(ChannelBuffer)e.getMessage();
+		System.out.println("Recv:\n"+inMsg.array());
 		cmdType = inMsg.readByte();
 		switch(cmdType) {
 		case CommandId.S_ERROR:

@@ -21,7 +21,7 @@ public class MediaType extends IMPSType{
 	protected String receiver = new String();
 	protected String sender = new String();
 	protected String stime = new String();
-	
+	private String path = new String();//data path
 	public MediaType(int type,boolean send){
 		super(type);
 		this.setSend(send);
@@ -33,7 +33,7 @@ public class MediaType extends IMPSType{
 	public byte[] MediaWrapper(){
 		if(isSend()){
 			this.getmHeader().put("UserName", sender);
-			this.getmHeader().put("Receiver", receiver);
+			this.getmHeader().put("FriendName", receiver);
 			this.getmHeader().put("Time", stime);
 			return super.MediaWrapper();
 		}else{
@@ -47,7 +47,7 @@ public class MediaType extends IMPSType{
 		}
 		super.MediaParser(data);
 		this.stime = this.getmHeader().get("Time");
-		this.sender = this.getmHeader().get("From");
+		this.sender = this.getmHeader().get("FriendName");
 		this.receiver = UserManager.getGlobaluser().getUsername();
 	}
 	public void setReceiver(String friName){
@@ -73,6 +73,12 @@ public class MediaType extends IMPSType{
 	}
 	public boolean isSend() {
 		return send;
+	}
+	public void setPath(String path) {
+		this.path = path;
+	}
+	public String getPath() {
+		return path;
 	}
 
 }
