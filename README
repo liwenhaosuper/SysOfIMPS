@@ -1,7 +1,7 @@
 Plan needed to be done 
 Due on 20th, January
 
-liwenhaosuper:
+Jia Yunhan:
 1. 
 Solve the NAT related problems and make the media chat available for Peers in GPRS-GPRS mode and GRPS-WIFI mode.
 Currently,I have found that the failure of connection between P2P is the NAT problems.
@@ -20,6 +20,6 @@ Wang Jiajun
 1.
 Find near place in the database according to the current location.
 
-JiaYunhan
+Li Wenhao
 1.
 Test the throughout and concurrency of the IMPS server.
